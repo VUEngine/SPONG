@@ -25,6 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Stage.h>
+#include <Fonts.h>
 #include <macros.h>
 
 
@@ -54,6 +55,8 @@ PositionedEntityROMDef PAUSE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 
 FontROMDef* const PAUSE_SCREEN_STAGE_ST_FONTS[] =
 {
+	&INDUSTRIAL_FONT,
+
 	NULL
 };
 

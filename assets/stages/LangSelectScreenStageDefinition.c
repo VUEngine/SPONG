@@ -25,6 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Stage.h>
+#include <Fonts.h>
 #include <macros.h>
 
 
@@ -67,6 +68,8 @@ PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 
 FontROMDef* const LANG_SELECT_SCREEN_STAGE_ST_FONTS[] =
 {
+	&INDUSTRIAL_FONT,
+
 	NULL
 };
 

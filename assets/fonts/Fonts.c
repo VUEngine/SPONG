@@ -19,46 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PONG_STATE_H_
-#define PONG_STATE_H_
-
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <Fonts.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
+//												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define PongState_METHODS(ClassName)																	\
- 		GameState_METHODS(ClassName)											 						\
-
-// declare the virtual methods which are redefined
-#define PongState_SET_VTABLE(ClassName)																	\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, PongState, enter);														\
-		__VIRTUAL_SET(ClassName, PongState, exit);														\
-		__VIRTUAL_SET(ClassName, PongState, resume);													\
-		__VIRTUAL_SET(ClassName, PongState, suspend);													\
-		__VIRTUAL_SET(ClassName, PongState, processUserInput);											\
-
-__CLASS(PongState);
-
-#define PongState_ATTRIBUTES								 											\
-		GameState_ATTRIBUTES																			\
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-PongState PongState_getInstance(void);
-void PongState_processUserInput(PongState this, UserInput userInput);
-
-
-#endif
+FontDefinition* const __FONTS[] =
+{
+	(FontDefinition*)&INDUSTRIAL_FONT,
+	NULL
+};

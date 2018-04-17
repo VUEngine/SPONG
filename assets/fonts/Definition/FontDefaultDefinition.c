@@ -19,46 +19,47 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PONG_STATE_H_
-#define PONG_STATE_H_
-
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
+//												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define PongState_METHODS(ClassName)																	\
- 		GameState_METHODS(ClassName)											 						\
-
-// declare the virtual methods which are redefined
-#define PongState_SET_VTABLE(ClassName)																	\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, PongState, enter);														\
-		__VIRTUAL_SET(ClassName, PongState, exit);														\
-		__VIRTUAL_SET(ClassName, PongState, resume);													\
-		__VIRTUAL_SET(ClassName, PongState, suspend);													\
-		__VIRTUAL_SET(ClassName, PongState, processUserInput);											\
-
-__CLASS(PongState);
-
-#define PongState_ATTRIBUTES								 											\
-		GameState_ATTRIBUTES																			\
+extern BYTE IndustrialFontTiles[];
 
 
 //---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
+//												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-PongState PongState_getInstance(void);
-void PongState_processUserInput(PongState this, UserInput userInput);
+CharSetROMDef INDUSTRIAL_FONT_CH =
+{
+	// number of chars
+	256,
 
+	// allocation type
+	__NOT_ANIMATED,
 
-#endif
+	// char definition
+	IndustrialFontTiles,
+};
+
+FontROMDef INDUSTRIAL_FONT =
+{
+	// font charset definition pointer
+	(CharSetDefinition*)&INDUSTRIAL_FONT_CH,
+
+	// character number at which the font starts, allows you to skip the control characters for example
+	0,
+
+	// size of a single character (in chars) ({width, height})
+	{1, 1},
+
+	// font's name
+	"Industrial",
+};
