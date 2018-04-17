@@ -29,6 +29,7 @@
 #include <MessageDispatcher.h>
 #include <SplashScreenState.h>
 #include <KeypadManager.h>
+#include <AnimatedEntity.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -82,6 +83,9 @@ void SplashScreenState_enter(SplashScreenState this, void* owner)
 
 	// start fade in effect in 1 ms, because a full render cycle is needed to put everything in place
 	MessageDispatcher_dispatchMessage(1, __SAFE_CAST(Object, this), __SAFE_CAST(Object, Game_getInstance()), kScreenStarted, NULL);
+
+	// start clocks to start animations
+	GameState_startClocks(__SAFE_CAST(GameState, this));
 
 	Game_disableKeypad(Game_getInstance());
 }
@@ -180,11 +184,18 @@ void SplashScreenState_loadNextState(SplashScreenState this)
 	// disable user input
 	Game_disableKeypad(Game_getInstance());
 
+	// transition layer animation
+	AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+	if(transitionLayerEntity)
+	{
+		AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+	}
+
 	// start fade out effect
 	Brightness brightness = (Brightness){0, 0, 0};
 	Camera_startEffect(Camera_getInstance(),
 		kFadeTo, // effect type
-		0, // initial delay (in ms)
+		500, // initial delay (in ms)
 		&brightness, // target brightness
 		__FADE_DELAY, // delay between fading steps (in ms)
 		(void (*)(Object, Object))SplashScreenState_onFadeOutComplete, // callback function

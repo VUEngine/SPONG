@@ -42,7 +42,6 @@
 #define PrecautionScreenState_SET_VTABLE(ClassName)														\
 		SplashScreenState_SET_VTABLE(ClassName)															\
 		__VIRTUAL_SET(ClassName, PrecautionScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, PrecautionScreenState, print);											\
 		__VIRTUAL_SET(ClassName, PrecautionScreenState, processMessage);								\
 
 

@@ -35,6 +35,7 @@
 
 extern EntityDefinition PADDLE_IM;
 extern EntityDefinition PLAYFIELD_IM;
+extern EntityDefinition TRANSITION_LAYER_AG;
 
 extern CharSetDefinition PADDLE_CH;
 extern CharSetDefinition PLAYFIELD_CH;
@@ -49,9 +50,10 @@ extern TextureDefinition PLAYFIELD_TX;
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-	{&PLAYFIELD_IM, 	{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PADDLE_IM, 		{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
-	{&PADDLE_IM, 		{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
+	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&PADDLE_IM, 			{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
+	{&PADDLE_IM, 			{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
+	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -160,7 +162,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		__TARGET_FPS / 10,
 
 		// maximum number of texture's rows to write each time the texture writing is active
-		12,
+		64,
 
 		// maximum number of rows to compute on each call to the affine functions
 		16,

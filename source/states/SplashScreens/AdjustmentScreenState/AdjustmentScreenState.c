@@ -46,7 +46,6 @@ extern StageROMDef ADJUSTMENT_SCREEN_STAGE_ST;
 static void AdjustmentScreenState_destructor(AdjustmentScreenState this);
 static void AdjustmentScreenState_constructor(AdjustmentScreenState this);
 static void AdjustmentScreenState_processInput(AdjustmentScreenState this, u32 pressedKey);
-void AdjustmentScreenState_rhombusEmitterPostProcessingEffect(u32 currentDrawingFrameBufferSet, SpatialObject spatialObject);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -85,9 +84,6 @@ void AdjustmentScreenState_enter(AdjustmentScreenState this, void* owner)
 
 	// move the printing area out of the visible screen to save CPU resources
 	Printing_setWorldCoordinates(Printing_getInstance(), __SCREEN_WIDTH, __SCREEN_HEIGHT);
-
-	// add rhombus effect
-	VIPManager_pushBackPostProcessingEffect(VIPManager_getInstance(), AdjustmentScreenState_rhombusEmitterPostProcessingEffect, NULL);
 }
 
 static void AdjustmentScreenState_processInput(AdjustmentScreenState this, u32 pressedKey __attribute__ ((unused)))
@@ -102,60 +98,4 @@ static void AdjustmentScreenState_processInput(AdjustmentScreenState this, u32 p
 	{
 		SplashScreenState_loadNextState(__SAFE_CAST(SplashScreenState, this));
 	}
-}
-
-void AdjustmentScreenState_rhombusEmitterPostProcessingEffect(u32 currentDrawingFrameBufferSet __attribute__ ((unused)), SpatialObject spatialObject __attribute__ ((unused)))
-{
-	// runtime working variables
-	// negative value to achieve an initial delay
-	static int radius = ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE;
-
-	// increase radius in each cycle
-	radius += 2;
-
-	if(radius < 68)
-	{
-		return;
-	}
-	else if(radius > 300)
-	{
-		// reset radius when reaching a certain length
-		radius = ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE;
-		return;
-	}
-
-	// draw rhombus around object with given radius
-	DirectDraw directDraw = DirectDraw_getInstance();
-
-	// top left line
-	DirectDraw_drawLine(
-		directDraw,
-		(PixelVector) {(192 - radius),	(112),			0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		(PixelVector) {(192),			(112 - radius),	0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		__COLOR_BRIGHT_RED
-	);
-
-	// top right line
-	DirectDraw_drawLine(
-		directDraw,
-		(PixelVector) {(192 + radius),	(112),			0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		(PixelVector) {(192),			(112 - radius),	0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		__COLOR_BRIGHT_RED
-	);
-
-	// bottom right line
-	DirectDraw_drawLine(
-		directDraw,
-		(PixelVector) {(192 + radius),	(112),			0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		(PixelVector) {(192),			(112 + radius),	0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		__COLOR_BRIGHT_RED
-	);
-
-	// bottom left line
-	DirectDraw_drawLine(
-		directDraw,
-		(PixelVector) {(192 - radius),	(112),			0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		(PixelVector) {(192),			(112 + radius),	0, -((radius + ADJUSTMENT_SCREEN_RHOMBUS_INITIAL_VALUE)>>5)},
-		__COLOR_BRIGHT_RED
-	);
 }

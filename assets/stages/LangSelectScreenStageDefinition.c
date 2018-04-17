@@ -38,6 +38,7 @@ extern EntityDefinition FLAG_FRANCE_IM;
 extern EntityDefinition FLAG_GERMANY_IM;
 extern EntityDefinition FLAG_SPAIN_IM;
 extern EntityDefinition FLAG_UNITED_KINGDOM_IM;
+extern EntityDefinition TRANSITION_LAYER_AG;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
 	{&FLAG_SPAIN_IM, {216, 96, 0, 0}, 0, NULL, NULL, NULL, false},
 	{&FLAG_FRANCE_IM, {264, 96, 0, 0}, 0, NULL, NULL, NULL, false},
 	{&FLAG_CURSOR_IM, {120, 96, 0, 0}, 0, "Cursor", NULL, NULL, false},
+	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -144,7 +146,7 @@ StageROMDef LANG_SELECT_SCREEN_STAGE_ST =
 		__TARGET_FPS / 10,
 
 		// maximum number of texture's rows to write each time the texture writing is active
-		12,
+		64,
 
 		// maximum number of rows to compute on each call to the affine functions
 		16,

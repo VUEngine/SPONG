@@ -42,7 +42,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef EMPTY_STAGE_ST;
+extern StageROMDef PRECAUTION_SCREEN_STAGE_ST;
 extern const u16 COLLECT_SND[];
 
 
@@ -52,7 +52,6 @@ extern const u16 COLLECT_SND[];
 
 static void PrecautionScreenState_destructor(PrecautionScreenState this);
 static void PrecautionScreenState_constructor(PrecautionScreenState this);
-static void PrecautionScreenState_print(PrecautionScreenState this);
 static bool PrecautionScreenState_processMessage(PrecautionScreenState this, void* owner __attribute__ ((unused)), Telegram telegram);
 
 
@@ -74,7 +73,7 @@ static void __attribute__ ((noinline)) PrecautionScreenState_constructor(Precaut
 	__CONSTRUCT_BASE(SplashScreenState);
 
 	SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, AdjustmentScreenState_getInstance()));
-	this->stageDefinition = (StageDefinition*)&EMPTY_STAGE_ST;
+	this->stageDefinition = (StageDefinition*)&PRECAUTION_SCREEN_STAGE_ST;
 }
 
 // class's destructor
@@ -126,31 +125,4 @@ void PrecautionScreenState_enter(PrecautionScreenState this, void* owner)
 
 	// call base
 	__CALL_BASE_METHOD(SplashScreenState, enter, this, owner);
-}
-
-static void PrecautionScreenState_print(PrecautionScreenState this __attribute__ ((unused)))
-{
-	const char* strPrecautionTitle = I18n_getText(I18n_getInstance(), STR_IMPORTANT);
-	FontSize titleSize = Printing_getTextSize(Printing_getInstance(), strPrecautionTitle, NULL);
-
-	const char* strPrecautionText = I18n_getText(I18n_getInstance(), STR_PRECAUTION_SCREEN_TEXT);
-	FontSize textSize = Printing_getTextSize(Printing_getInstance(), strPrecautionText, NULL);
-
-	u8 totalHeight = titleSize.y + textSize.y;
-
-	Printing_text(
-		Printing_getInstance(),
-		Utilities_toUppercase(strPrecautionTitle),
-		__HALF_SCREEN_WIDTH_IN_CHARS - (titleSize.x >> 1),
-		(__HALF_SCREEN_HEIGHT_IN_CHARS) - (totalHeight >> 1) - 1,
-		NULL
-	);
-
-	Printing_text(
-		Printing_getInstance(),
-		Utilities_toUppercase(strPrecautionText),
-		__HALF_SCREEN_WIDTH_IN_CHARS - (textSize.x >> 1),
-		(__HALF_SCREEN_HEIGHT_IN_CHARS) - (totalHeight >> 1) + titleSize.y,
-		NULL
-	);
 }

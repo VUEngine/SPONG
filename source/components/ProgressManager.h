@@ -85,10 +85,8 @@ typedef struct SaveData
 ProgressManager ProgressManager_getInstance();
 
 void ProgressManager_destructor(ProgressManager this);
-bool ProgressManager_getAutomaticPauseStatus(ProgressManager this);
 u8   ProgressManager_getLanguage(ProgressManager this);
 void ProgressManager_initialize(ProgressManager this);
-void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 automaticPause);
 void ProgressManager_setLanguage(ProgressManager this, u8 languageId);
 
 

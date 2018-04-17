@@ -30,11 +30,20 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//											DECLARATIONS
+//---------------------------------------------------------------------------------------------------------
+
+extern EntityDefinition TRANSITION_LAYER_AG;
+
+
+//---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
 PositionedEntityROMDef EMPTY_STAGE_ST_ENTITIES[] =
 {
+	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
@@ -126,7 +135,7 @@ StageROMDef EMPTY_STAGE_ST =
 		__TARGET_FPS / 10,
 
 		// maximum number of texture's rows to write each time the texture writing is active
-		12,
+		64,
 
 		// maximum number of rows to compute on each call to the affine functions
 		16,

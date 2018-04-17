@@ -25,7 +25,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Stage.h>
-#include <Fonts.h>
 #include <macros.h>
 
 
@@ -33,10 +32,8 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_BG_IM;
-extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L;
-extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R;
-extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM;
+extern EntityDefinition PRECAUTION_TEXT_BACKGROUND_IM;
+extern EntityDefinition PRECAUTION_TEXT_IM;
 extern EntityDefinition TRANSITION_LAYER_AG;
 
 
@@ -44,20 +41,16 @@ extern EntityDefinition TRANSITION_LAYER_AG;
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMDef PRECAUTION_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, {12, 12, 0, 0}, 0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, {12, 212, 0, 0}, 0, NULL, NULL, NULL, false}, // Icon Bottom Left (Right Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_BG_IM, 	{192, 112, 16, 0}, 0, NULL, NULL, NULL, false}, // Background
-	{&ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM, 	{192, 112, 0, 0}, 0, NULL, NULL, NULL, false}, // Logo
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, {372, 212, 0, 0}, 0, NULL, NULL, NULL, false}, // Icon Bottom Right (Left Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, {372, 12, 0, 0}, 0, NULL, NULL, NULL, false}, // Icon Top Right (Right Eye)
-	{&TRANSITION_LAYER_AG, 					{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&PRECAUTION_TEXT_BACKGROUND_IM, 	{192, 112, 16, 0}, 0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
+	{&PRECAUTION_TEXT_IM, 				{192, 112, 0, 0}, 0, "TEXT", NULL, NULL, false}, // Icon Top Left (Left Eye)
+	{&TRANSITION_LAYER_AG, 				{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMDef PRECAUTION_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -67,10 +60,8 @@ PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMDef* const ADJUSTMENT_SCREEN_STAGE_ST_FONTS[] =
+FontROMDef* const PRECAUTION_SCREEN_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
-
 	NULL
 };
 
@@ -79,7 +70,7 @@ FontROMDef* const ADJUSTMENT_SCREEN_STAGE_ST_FONTS[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
+StageROMDef PRECAUTION_SCREEN_STAGE_ST =
 {
 	// allocator
 	__TYPE(Stage),
@@ -258,7 +249,7 @@ StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontDefinition**)ADJUSTMENT_SCREEN_STAGE_ST_FONTS,
+		(FontDefinition**)PRECAUTION_SCREEN_STAGE_ST_FONTS,
 
 		// char sets to preload
 		(CharSetDefinition**)NULL,
@@ -274,12 +265,12 @@ StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES,
+			PRECAUTION_SCREEN_STAGE_ST_UI_ENTITIES,
 			__TYPE(UiContainer),
 		},
 
 		// children
-		ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES,
+		PRECAUTION_SCREEN_STAGE_ST_ENTITIES,
 	},
 
 	// post processing effects

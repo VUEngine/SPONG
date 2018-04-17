@@ -35,7 +35,6 @@
 #include <SRAMManager.h>
 #include <Utilities.h>
 #include <macros.h>
-#include <AutoPauseScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -54,7 +53,6 @@ bool ProgressManager_verifySaveStamp(ProgressManager this);
 u32 ProgressManager_computeChecksum(ProgressManager this);
 void ProgressManager_writeChecksum(ProgressManager this);
 bool ProgressManager_verifyChecksum(ProgressManager this);
-static void ProgressManager_onSecondChange(ProgressManager this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -74,18 +72,12 @@ static void __attribute__ ((noinline)) ProgressManager_constructor(ProgressManag
 
 	// init class variables
 	this->sramAvailable = false;
-
-	// add event listeners
-	//Object_addEventListener(__SAFE_CAST(Object, PlatformerLevelState_getClock(PlatformerLevelState_getInstance())), __SAFE_CAST(Object, this), (EventListener)ProgressManager_onSecondChange, kEventSecondChanged);
 }
 
 // class's destructor
 void ProgressManager_destructor(ProgressManager this)
 {
 	ASSERT(this, "ProgressManager::destructor: null this");
-
-	// remove event listeners
-	//Object_removeEventListener(__SAFE_CAST(Object, PlatformerLevelState_getClock(PlatformerLevelState_getInstance())), __SAFE_CAST(Object, this), (EventListener)ProgressManager_onSecondChange, kEventSecondChanged);
 
 	// destroy base
 	__SINGLETON_DESTROY;
@@ -174,10 +166,7 @@ void ProgressManager_initialize(ProgressManager this)
 		I18n_setActiveLanguage(I18n_getInstance(), ProgressManager_getLanguage(this));
 
 		// load and set auto pause state
-		Game_setAutomaticPauseState(Game_getInstance(), ProgressManager_getAutomaticPauseStatus(this)
-			? __SAFE_CAST(GameState, AutoPauseScreenState_getInstance())
-			: NULL
-		);
+		Game_setAutomaticPauseState(Game_getInstance(), NULL);
 	}
 }
 
@@ -206,40 +195,4 @@ void ProgressManager_setLanguage(ProgressManager this, u8 languageId)
 		// write checksum
 		ProgressManager_writeChecksum(this);
 	}
-}
-
-bool ProgressManager_getAutomaticPauseStatus(ProgressManager this)
-{
-	ASSERT(this, "ProgressManager::getAutomaticPause: null this");
-
-	u8 autoPauseStatus = 0;
-	if(this->sramAvailable)
-	{
-		SRAMManager_read(SRAMManager_getInstance(), (BYTE*)&autoPauseStatus, offsetof(struct SaveData, autoPauseStatus), sizeof(autoPauseStatus));
-	}
-
-	return !autoPauseStatus;
-}
-
-void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus)
-{
-	ASSERT(this, "ProgressManager::setAutomaticPause: null this");
-
-	if(this->sramAvailable)
-	{
-		// we save the inverted status, so that 0 = enabled, 1 = disabled.
-		// that way, a blank value means enabled, which is the standard setting.
-		autoPauseStatus = !autoPauseStatus;
-
-		// write auto pause status
-		SRAMManager_save(SRAMManager_getInstance(), (BYTE*)&autoPauseStatus, offsetof(struct SaveData, autoPauseStatus), sizeof(autoPauseStatus));
-
-		// write checksum
-		ProgressManager_writeChecksum(this);
-	}
-}
-
-// handle event
-static void ProgressManager_onSecondChange(ProgressManager this, Object eventFirer __attribute__ ((unused)))
-{
 }

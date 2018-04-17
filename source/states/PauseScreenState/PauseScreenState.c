@@ -32,10 +32,10 @@
 #include <I18n.h>
 #include <PhysicalWorld.h>
 #include <PauseScreenState.h>
-#include <OptionsScreenState.h>
 #include <Languages.h>
 #include <KeyPadManager.h>
 #include <Utilities.h>
+#include <AnimatedEntity.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -184,11 +184,18 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 					// disable user input
 					Game_disableKeypad(Game_getInstance());
 
+					// transition layer animation
+					AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+					if(transitionLayerEntity)
+					{
+						AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+					}
+
 					// fade out screen
 					Brightness brightness = (Brightness){0, 0, 0};
 					Camera_startEffect(Camera_getInstance(),
 						kFadeTo, // effect type
-						0, // initial delay (in ms)
+						500, // initial delay (in ms)
 						&brightness, // target brightness
 						__FADE_DELAY, // delay between fading steps (in ms)
 						(void (*)(Object, Object))PauseScreenState_onFadeOutComplete, // callback function
@@ -227,11 +234,18 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 			// disable user input
 			Game_disableKeypad(Game_getInstance());
 
+			// transition layer animation
+			AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+			if(transitionLayerEntity)
+			{
+				AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+			}
+
 			// fade out screen
 			Brightness brightness = (Brightness){0, 0, 0};
 			Camera_startEffect(Camera_getInstance(),
 				kFadeTo, // effect type
-				0, // initial delay (in ms)
+				500, // initial delay (in ms)
 				&brightness, // target brightness
 				__FADE_DELAY, // delay between fading steps (in ms)
 				(void (*)(Object, Object))PauseScreenState_onFadeOutComplete, // callback function
@@ -283,14 +297,14 @@ static void PauseScreenState_onFadeOutComplete(PauseScreenState this, Object eve
 			// resume game
 			Game_unpause(Game_getInstance(), __SAFE_CAST(GameState, this));
 			break;
-
+/*
 		case kPauseScreenOptionOptions:
 
 			// switch to options state
 			OptionsScreenState_setNextState(OptionsScreenState_getInstance(), __SAFE_CAST(GameState, this));
 			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, OptionsScreenState_getInstance()));
 			break;
-
+*/
 		case kPauseScreenOptionQuitLevel:
 
 			// switch to overworld after deleting paused game state

@@ -34,6 +34,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition TITLE_LOGO_IM;
+extern EntityDefinition TRANSITION_LAYER_AG;
 
 extern CharSetDefinition TITLE_LOGO_CH;
 
@@ -47,6 +48,7 @@ extern TextureDefinition TITLE_LOGO_TX;
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
 	{&TITLE_LOGO_IM, 	{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -153,7 +155,7 @@ StageROMDef TITLE_SCREEN_STAGE_ST =
 		__TARGET_FPS / 10,
 
 		// maximum number of texture's rows to write each time the texture writing is active
-		12,
+		64,
 
 		// maximum number of rows to compute on each call to the affine functions
 		16,

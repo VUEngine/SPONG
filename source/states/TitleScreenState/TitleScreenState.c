@@ -34,9 +34,9 @@
 #include <PhysicalWorld.h>
 #include <TitleScreenState.h>
 #include <ParticleSystem.h>
-#include <OptionsScreenState.h>
 #include <ProgressManager.h>
 #include <KeyPadManager.h>
+#include <AnimatedEntity.h>
 #include <PongState.h>
 
 
@@ -98,6 +98,9 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&TITLE_SCREEN_STAGE_ST, NULL, true);
 
+	// start clocks to start animations
+	GameState_startClocks(__SAFE_CAST(GameState, this));
+
 	// fade in screen
 	Camera_startEffect(Camera_getInstance(),
 		kFadeTo, // effect type
@@ -139,11 +142,18 @@ void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInpu
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
 
+		// transition layer animation
+		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+		if(transitionLayerEntity)
+		{
+			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+		}
+
 		// fade out screen
 		Brightness brightness = (Brightness){0, 0, 0};
 		Camera_startEffect(Camera_getInstance(),
 			kFadeTo, // effect type
-			0, // initial delay (in ms)
+			500, // initial delay (in ms)
 			&brightness, // target brightness
 			__FADE_DELAY, // delay between fading steps (in ms)
 			(void (*)(Object, Object))TitleScreenState_onFadeOutComplete, // callback function

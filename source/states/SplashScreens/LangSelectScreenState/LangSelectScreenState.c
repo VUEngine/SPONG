@@ -29,7 +29,7 @@
 #include <MessageDispatcher.h>
 #include <I18n.h>
 #include <LangSelectScreenState.h>
-#include <AutoPauseSelectScreenState.h>
+#include <TitleScreenState.h>
 #include <Languages.h>
 #include <KeyPadManager.h>
 #include <Utilities.h>
@@ -74,7 +74,7 @@ static void __attribute__ ((noinline)) LangSelectScreenState_constructor(LangSel
 
 	// init members
 	this->language = 0;
-	SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, AutoPauseSelectScreenState_getInstance()));
+	SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 	this->stageDefinition = (StageDefinition*)&LANG_SELECT_SCREEN_STAGE_ST;
 }
 
@@ -149,6 +149,7 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 	*/
 
 	// print current language
+	/*
 	const char* strActiveLanguageName = (char*)I18n_getActiveLanguageName(I18n_getInstance());
 	FontSize strActiveLanguageNameSize = Printing_getTextSize(Printing_getInstance(), strActiveLanguageName, NULL);
 	Printing_text(Printing_getInstance(), "                                                ", 0, 15, NULL);
@@ -159,5 +160,6 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 		15,
 		NULL
 	);
+	*/
 }
 
