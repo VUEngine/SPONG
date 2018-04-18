@@ -43,6 +43,8 @@ extern CharSetDefinition PLAYFIELD_CH;
 extern TextureDefinition PADDLE_TX;
 extern TextureDefinition PLAYFIELD_TX;
 
+extern u16 GAME_BGM_1[][2];
+
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -284,7 +286,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		(TextureDefinition**)PLAYFIELD_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])NULL,
+		(const u16 (*)[])GAME_BGM_1,
 	},
 
 	// entities

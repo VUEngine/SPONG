@@ -40,6 +40,8 @@ extern CharSetDefinition TITLE_LOGO_CH;
 
 extern TextureDefinition TITLE_LOGO_TX;
 
+extern u16 TITLE_BGM[][2];
+
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -277,7 +279,7 @@ StageROMDef TITLE_SCREEN_STAGE_ST =
 		(TextureDefinition**)TITLE_SCREEN_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])NULL,
+		(const u16 (*)[])TITLE_BGM,
 	},
 
 	// entities
