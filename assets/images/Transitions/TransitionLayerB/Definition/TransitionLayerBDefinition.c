@@ -1,7 +1,7 @@
 /* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
  * A universal game engine for the Nintendo Virtual Boy
  *
- * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * Copyright (C) 2007, 2018 by Jorge Eremiev<jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction, including
@@ -24,76 +24,130 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
-#include <Ball.h>
-#include <PongBall.h>
-#include <macros.h>
+#include <libgccvb.h>
+#include <AnimatedEntity.h>
+#include <BgmapAnimatedSprite.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BallTiles[];
-extern BYTE BallMap[];
+extern BYTE TransitionLayerBTiles[];
+extern BYTE TransitionLayerBMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef PONG_BALL_CH =
+// a function which defines the frames to play
+AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_IN_ANIM =
+{
+	// number of frames of this animation function
+	18,
+
+	// frames to play in animation
+	{17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
+
+	// number of cycles a frame of animation is displayed
+	1,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"FadeIn",
+};
+
+// a function which defines the frames to play
+AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_OUT_ANIM =
+{
+	// number of frames of this animation function
+	18,
+
+	// frames to play in animation
+	{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17},
+
+	// number of cycles a frame of animation is displayed
+	1,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"FadeOut",
+};
+
+// an animation definition
+AnimationDescriptionROMDef TRANSITION_LAYER_B_ANIM =
+{
+	// animation functions
+	{
+		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_IN_ANIM,
+		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_OUT_ANIM,
+		NULL,
+	}
+};
+
+CharSetROMDef TRANSITION_LAYER_B_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	1,
+	4,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__NOT_ANIMATED,
+	__ANIMATED_SINGLE_OPTIMIZED,
 
 	// char definition
-	BallTiles,
+	TransitionLayerBTiles,
 };
 
-TextureROMDef PONG_BALL_TX =
+TextureROMDef TRANSITION_LAYER_B_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PONG_BALL_CH,
+	(CharSetDefinition*)&TRANSITION_LAYER_B_CH,
 
 	// bgmap definition
-	BallMap,
+	TransitionLayerBMap,
 
 	// cols (max 64)
-	2,
+	48,
 
 	// rows (max 64)
-	2,
+	28,
 
-	// padding for affine/hbias transformations (cols, rows)
-	{1, 1},
+	// padding for affine transformations
+	{0, 0},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
 	// __ANIMATED_MULTI: total number of frames
-	1,
+	__ANIMATED_SINGLE_OPTIMIZED,
 
 	// palette number (0-3)
-	0,
+	1,
 
 	// recyclable
 	false,
 };
 
-BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
+BgmapSpriteROMDef TRANSITION_LAYER_B_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&PONG_BALL_TX,
+		(TextureDefinition*)&TRANSITION_LAYER_B_TX,
 
 		// transparent
 		false,
@@ -104,106 +158,47 @@ BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_AFFINE,
+	__WORLD_BGMAP,
 
-	// pointer to affine/hbias manipulation function
+	// pointer to affine / hbias manipulation function
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const PONG_BALL_AC_SPRITES[] =
+BgmapSpriteROMDef* const TRANSITION_LAYER_B_SPRITES[] =
 {
-	&PONG_BALL_AC_SPRITE,
+	&TRANSITION_LAYER_B_SPRITE,
 	NULL
 };
 
-ShapeROMDef PONG_BALL_AC_SHAPES[] =
+AnimatedEntityROMDef TRANSITION_LAYER_B_AG =
 {
-	// ball
 	{
-		// shape
-		__TYPE(Ball),
+		// class allocator
+		__TYPE(AnimatedEntity),
 
-		// size (x, y, z)
-		{16, 16, 16},
+		// sprites
+		(SpriteROMDef**)TRANSITION_LAYER_B_SPRITES,
 
-		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
+		// collision shapes
+		(ShapeDefinition*)NULL,
 
-		// rotation (x, y, z)
+		// size
+		// if 0, width and height will be inferred from the first sprite's texture's size
 		{0, 0, 0},
 
-		// scale (x, y, z)
-		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+		// gameworld's character's type
+		0,
 
-		// if true this shape checks for collisions against other shapes
-		true,
-
-		// layers in which I live
-		kMatchLayer,
-
-		// layers to ignore when checking for collisions
-		kNoLayer,
+		// physical specification
+		(PhysicalSpecification*)NULL,
 	},
 
-	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
-};
+	// pointer to the animation definition for the item
+	(AnimationDescription*)&TRANSITION_LAYER_B_ANIM,
 
-PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
-{
-	// mass
-	__F_TO_FIX10_6(0.1f),
-
-	// friction
-	__F_TO_FIX10_6(0),
-
-	// bounciness
-	__F_TO_FIX10_6(1.02f),
-};
-
-PongBallROMDef PONG_BALL_AC =
-{
-	{
-		{
-			{
-				// class allocator
-				__TYPE(PongBall),
-
-				// sprites
-				(SpriteROMDef**)PONG_BALL_AC_SPRITES,
-
-				// collision shapes
-				(ShapeDefinition*)PONG_BALL_AC_SHAPES,
-
-				// size
-				// if 0, width and height will be inferred from the first sprite's texture's size
-				{0, 0, 0},
-
-				// gameworld's character's type
-				kPongBallType,
-
-				// physical specification
-				(PhysicalSpecification*)&PONG_BALL_AC_PHYSICAL_PROPERTIES,
-			},
-
-			// pointer to the animation definition for the character
-			(AnimationDescription*)NULL,
-
-			// initial animation
-			NULL,
-		},
-
-		// true to create a body
-		true,
-
-		// axes subject to gravity
-		__Z_AXIS
-	},
-
-	// minimum velocity
-	{0, 0, 0},
-	// maximum velocity
-	{0, 0, 0},
+	// initial animation
+	"FadeIn",
 };

@@ -36,7 +36,7 @@
 extern EntityDefinition PONG_BALL_AC;
 extern EntityDefinition PADDLE_IM;
 extern EntityDefinition PLAYFIELD_IM;
-extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
 
 
@@ -62,7 +62,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 //	{&PADDLE_IM, 			{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
 	{&PONG_BALL_AC, 		{192, 112, 32, 0}, 	0, "PongBall", NULL, NULL, true},
 //	{&PADDLE_IM, 			{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
-//	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+//	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // front border
 	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // far border

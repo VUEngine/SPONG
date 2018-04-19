@@ -34,7 +34,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition TITLE_LOGO_IM;
-extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AG;
 
 extern CharSetDefinition TITLE_LOGO_CH;
 
@@ -50,7 +50,7 @@ extern u16 TITLE_BGM[][2];
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
 	{&TITLE_LOGO_IM, 	{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

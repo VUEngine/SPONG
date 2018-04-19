@@ -33,8 +33,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE TransitionLayerTiles[];
-extern BYTE TransitionLayerMap[];
+extern BYTE TransitionLayerATiles[];
+extern BYTE TransitionLayerAMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,14 +42,13 @@ extern BYTE TransitionLayerMap[];
 //---------------------------------------------------------------------------------------------------------
 
 // a function which defines the frames to play
-AnimationFunctionROMDef TRANSITION_LAYER_FADE_IN_ANIM =
+AnimationFunctionROMDef TRANSITION_LAYER_A_FADE_IN_ANIM =
 {
 	// number of frames of this animation function
-	17,//32,
+	17,
 
 	// frames to play in animation
-	{31, 29, 27, 25, 23, 21, 19, 17, 15, 13, 11, 9, 7, 5, 3, 1, 0},
-	//{31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
+	{16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
 
 	// number of cycles a frame of animation is displayed
 	1,
@@ -65,14 +64,13 @@ AnimationFunctionROMDef TRANSITION_LAYER_FADE_IN_ANIM =
 };
 
 // a function which defines the frames to play
-AnimationFunctionROMDef TRANSITION_LAYER_FADE_OUT_ANIM =
+AnimationFunctionROMDef TRANSITION_LAYER_A_FADE_OUT_ANIM =
 {
 	// number of frames of this animation function
-	17,//32,
+	17,
 
 	// frames to play in animation
-	{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 31},
-	//{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31},
+	{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16},
 
 	// number of cycles a frame of animation is displayed
 	1,
@@ -88,17 +86,17 @@ AnimationFunctionROMDef TRANSITION_LAYER_FADE_OUT_ANIM =
 };
 
 // an animation definition
-AnimationDescriptionROMDef TRANSITION_LAYER_ANIM =
+AnimationDescriptionROMDef TRANSITION_LAYER_A_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&TRANSITION_LAYER_FADE_IN_ANIM,
-		(AnimationFunction*)&TRANSITION_LAYER_FADE_OUT_ANIM,
+		(AnimationFunction*)&TRANSITION_LAYER_A_FADE_IN_ANIM,
+		(AnimationFunction*)&TRANSITION_LAYER_A_FADE_OUT_ANIM,
 		NULL,
 	}
 };
 
-CharSetROMDef TRANSITION_LAYER_CH =
+CharSetROMDef TRANSITION_LAYER_A_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -110,16 +108,16 @@ CharSetROMDef TRANSITION_LAYER_CH =
 	__ANIMATED_SINGLE_OPTIMIZED,
 
 	// char definition
-	TransitionLayerTiles,
+	TransitionLayerATiles,
 };
 
-TextureROMDef TRANSITION_LAYER_TX =
+TextureROMDef TRANSITION_LAYER_A_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&TRANSITION_LAYER_CH,
+	(CharSetDefinition*)&TRANSITION_LAYER_A_CH,
 
 	// bgmap definition
-	TransitionLayerMap,
+	TransitionLayerAMap,
 
 	// cols (max 64)
 	48,
@@ -142,14 +140,14 @@ TextureROMDef TRANSITION_LAYER_TX =
 	false,
 };
 
-BgmapSpriteROMDef TRANSITION_LAYER_SPRITE =
+BgmapSpriteROMDef TRANSITION_LAYER_A_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&TRANSITION_LAYER_TX,
+		(TextureDefinition*)&TRANSITION_LAYER_A_TX,
 
 		// transparent
 		false,
@@ -169,20 +167,20 @@ BgmapSpriteROMDef TRANSITION_LAYER_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const TRANSITION_LAYER_SPRITES[] =
+BgmapSpriteROMDef* const TRANSITION_LAYER_A_SPRITES[] =
 {
-	&TRANSITION_LAYER_SPRITE,
+	&TRANSITION_LAYER_A_SPRITE,
 	NULL
 };
 
-AnimatedEntityROMDef TRANSITION_LAYER_AG =
+AnimatedEntityROMDef TRANSITION_LAYER_A_AG =
 {
 	{
 		// class allocator
 		__TYPE(AnimatedEntity),
 
 		// sprites
-		(SpriteROMDef**)TRANSITION_LAYER_SPRITES,
+		(SpriteROMDef**)TRANSITION_LAYER_A_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -199,7 +197,7 @@ AnimatedEntityROMDef TRANSITION_LAYER_AG =
 	},
 
 	// pointer to the animation definition for the item
-	(AnimationDescription*)&TRANSITION_LAYER_ANIM,
+	(AnimationDescription*)&TRANSITION_LAYER_A_ANIM,
 
 	// initial animation
 	"FadeIn",

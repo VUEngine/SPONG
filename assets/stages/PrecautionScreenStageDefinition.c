@@ -34,7 +34,7 @@
 
 extern EntityDefinition PRECAUTION_TEXT_BACKGROUND_IM;
 extern EntityDefinition PRECAUTION_TEXT_IM;
-extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AG;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ PositionedEntityROMDef PRECAUTION_SCREEN_STAGE_ST_ENTITIES[] =
 {
 	{&PRECAUTION_TEXT_BACKGROUND_IM, 	{192, 112, 16, 0}, 0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
 	{&PRECAUTION_TEXT_IM, 				{192, 112, 0, 0}, 0, "TEXT", NULL, NULL, false}, // Icon Top Left (Left Eye)
-	{&TRANSITION_LAYER_AG, 				{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AG, 				{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

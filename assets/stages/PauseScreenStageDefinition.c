@@ -33,7 +33,7 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AG;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ extern EntityDefinition TRANSITION_LAYER_AG;
 
 PositionedEntityROMDef PAUSE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

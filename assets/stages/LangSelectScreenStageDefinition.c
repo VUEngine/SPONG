@@ -38,7 +38,7 @@ extern EntityDefinition FLAG_FRANCE_IM;
 extern EntityDefinition FLAG_GERMANY_IM;
 extern EntityDefinition FLAG_SPAIN_IM;
 extern EntityDefinition FLAG_UNITED_KINGDOM_IM;
-extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AG;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
 	{&FLAG_SPAIN_IM, {216, 96, 0, 0}, 0, NULL, NULL, NULL, false},
 	{&FLAG_FRANCE_IM, {264, 96, 0, 0}, 0, NULL, NULL, NULL, false},
 	{&FLAG_CURSOR_IM, {120, 96, 0, 0}, 0, "Cursor", NULL, NULL, false},
-	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
