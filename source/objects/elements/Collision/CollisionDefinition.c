@@ -19,34 +19,51 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef MACROS_H_
-#define MACROS_H_
+
+//---------------------------------------------------------------------------------------------------------
+//												INCLUDES
+//---------------------------------------------------------------------------------------------------------
+
+#include <Entity.h>
+#include <Collision.h>
+#include <Body.h>
+#include <macros.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINES
+//												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-// physics
-#define NO_FRICTION 		0
-#define FLOOR_FRICTION 		0.75f
-#define FLOOR_ELASTICITY 	0.0f
-
-// entity collision types
-enum InGameTypes
+PhysicalSpecificationROMDef COLLISION_CL_PHYSICAL_PROPERTIES =
 {
-	kPaddle = kNoType + 1,
-	kPongBallType,
+	// mass
+	__F_TO_FIX10_6(0),
+
+	// friction
+	__F_TO_FIX10_6(0.85f),
+
+	// elasticity
+	__F_TO_FIX10_6(FLOOR_ELASTICITY),
+};
+
+CollisionROMDef COLLISION_CL =
+{
+	// class allocator
+	__TYPE(Collision),
+
+	// sprites
+	(SpriteROMDef**)NULL,
+
+	// collision shapes
+	(ShapeDefinition*)NULL,
+
+	// pixelSize
+	// if 0, width and height will be inferred from the first sprite's texture's size
+	{100, 100, 16},
+
+	// gameworld's character's type
 	kShape,
+
+	// physical specification
+	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
 };
-
-// entity collision layers
-enum CollisionLayers
-{
-    kSolidLayer		 		= 1 << (kNoLayer + 0), 	// hex 00000001
-	kMatchLayer	 			= 1 << (kNoLayer + 1), 	// hex 00000002
-    kAllLayers				= 0xFFFFFFFF,
-};
-
-
-#endif
