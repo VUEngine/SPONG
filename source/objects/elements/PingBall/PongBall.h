@@ -43,6 +43,7 @@
 		__VIRTUAL_SET(ClassName, PongBall, ready);														\
 		__VIRTUAL_SET(ClassName, PongBall, update);														\
 		__VIRTUAL_SET(ClassName, PongBall, handleMessage);												\
+		__VIRTUAL_SET(ClassName, PongBall, enterCollision);												\
 
 __CLASS(PongBall);
 
@@ -82,6 +83,7 @@ void PongBall_stopMovement(PongBall this);
 void PongBall_ready(PongBall this, bool recursive);
 void PongBall_update(PongBall this, u32 elapsedTime);
 bool PongBall_handleMessage(PongBall this, Telegram telegram);
+bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation);
 
 
 #endif

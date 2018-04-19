@@ -160,7 +160,7 @@ PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(0),
 
 	// bounciness
-	__F_TO_FIX10_6(0),
+	__F_TO_FIX10_6(1.02f),
 };
 
 PongBallROMDef PONG_BALL_AC =

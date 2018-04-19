@@ -76,7 +76,7 @@ void PongBall_ready(PongBall this, bool recursive)
 	// call base
 	__CALL_BASE_METHOD(Actor, ready, this, recursive);
 
-	Entity_activateShapes(__SAFE_CAST(Entity, this), true);
+	PongBall_startMovement(this);
 }
 
 void PongBall_update(PongBall this, u32 elapsedTime)
@@ -91,7 +91,14 @@ void PongBall_update(PongBall this, u32 elapsedTime)
 // start moving
 void PongBall_startMovement(PongBall this)
 {
+	Force force =
+	{
+		__I_TO_FIX10_6(5),
+		__I_TO_FIX10_6(5),
+		0,
+	};
 
+	Actor_addForce(__SAFE_CAST(Actor, this), &force);
 }
 
 // move back to ejector
@@ -111,4 +118,36 @@ bool PongBall_handleMessage(PongBall this, Telegram telegram)
 	}
 
 	return Actor_handleMessage(__SAFE_CAST(Actor, this), telegram);
+}
+
+bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation)
+{
+
+	ASSERT(this, "Hero::enterCollision: null this");
+	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
+
+	Shape collidingShape = collisionInformation->collidingShape;
+	SpatialObject collidingObject = Shape_getOwner(collidingShape);
+
+	SolutionVector solutionVector = collisionInformation->solutionVector;
+	Velocity velocity = Body_getVelocity(this->body);
+	Vector3D direction = Vector3D_normalize(velocity);
+
+	Force force =
+	{
+		velocity.x ? __FIX10_6_MULT(__I_TO_FIX10_6(5), -direction.x) : __I_TO_FIX10_6(5),
+		velocity.y ? __FIX10_6_MULT(__I_TO_FIX10_6(5), -direction.y) : __I_TO_FIX10_6(5),
+		velocity.z ? __FIX10_6_MULT(__I_TO_FIX10_6(2), -direction.z) : __I_TO_FIX10_6(2),
+	};
+
+	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
+	{
+		// speed things up by breaking early
+		case kShape:
+
+			Actor_addForce(__SAFE_CAST(Actor, this), &force);
+			break;
+	}
+
+	return Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
 }

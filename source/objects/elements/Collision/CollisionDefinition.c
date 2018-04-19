@@ -40,7 +40,7 @@ PhysicalSpecificationROMDef COLLISION_CL_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(0),
 
 	// friction
-	__F_TO_FIX10_6(0.85f),
+	__F_TO_FIX10_6(0),
 
 	// bounciness
 	__F_TO_FIX10_6(0),
