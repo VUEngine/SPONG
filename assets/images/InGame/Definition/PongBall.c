@@ -159,8 +159,8 @@ PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 	// friction
 	__F_TO_FIX10_6(0),
 
-	// elasticity
-	__F_TO_FIX10_6(1),
+	// bounciness
+	__F_TO_FIX10_6(0),
 };
 
 PongBallROMDef PONG_BALL_AC =

@@ -33,9 +33,12 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern EntityDefinition PONG_BALL_AC;
 extern EntityDefinition PADDLE_IM;
 extern EntityDefinition PLAYFIELD_IM;
 extern EntityDefinition TRANSITION_LAYER_AG;
+extern EntityDefinition COLLISION_CL;
+
 
 extern CharSetDefinition PADDLE_CH;
 extern CharSetDefinition PLAYFIELD_CH;
@@ -45,6 +48,9 @@ extern TextureDefinition PLAYFIELD_TX;
 
 extern u16 GAME_BGM_1[][2];
 
+extern const PixelSize collision_48_28_2;
+extern const PixelSize collision_2_28_48;
+extern const PixelSize collision_48_2_48;
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -52,10 +58,18 @@ extern u16 GAME_BGM_1[][2];
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PADDLE_IM, 			{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
-	{&PADDLE_IM, 			{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
-	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+//	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
+//	{&PADDLE_IM, 			{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
+	{&PONG_BALL_AC, 		{192, 112, 32, 0}, 	0, "PongBall", NULL, NULL, true},
+//	{&PADDLE_IM, 			{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
+//	{&TRANSITION_LAYER_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+
+	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // front border
+	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // far border
+	{&COLLISION_CL,			{  0, 112, 128, 0},	0, NULL, NULL, (void*)&collision_2_28_48, false}, // left border
+	{&COLLISION_CL,			{384, 112, 128, 0},	0, NULL, NULL, (void*)&collision_2_28_48, false}, // right border
+	{&COLLISION_CL,			{192,   0, 128, 0},	0, NULL, NULL, (void*)&collision_48_2_48, false}, // top border
+	{&COLLISION_CL,			{192, 224,   0, 0},	0, NULL, NULL, (void*)&collision_48_2_48, false}, // bottom border
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -247,7 +261,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		// optical configuration values
 		{
 			// maximum view distance's power into the horizon
-			__MAXIMUM_X_VIEW_DISTANCE, __MAXIMUM_Y_VIEW_DISTANCE,
+			__MAXIMUM_X_VIEW_DISTANCE, __MAXIMUM_X_VIEW_DISTANCE,
 			// distance of the eyes to the screen
 			__DISTANCE_EYE_SCREEN,
 			// distance from left to right eye (depth sensation)
@@ -265,9 +279,9 @@ StageROMDef PLAYFIELD_STAGE_ST =
 	{
 		// gravity
 		{
-			__I_TO_FIX10_6(0),
-			__F_TO_FIX10_6(__GRAVITY),
-			__I_TO_FIX10_6(0)
+			__F_TO_FIX10_6(0),
+			__F_TO_FIX10_6(0),
+			__F_TO_FIX10_6(__GRAVITY)
 		},
 
 		// friction
