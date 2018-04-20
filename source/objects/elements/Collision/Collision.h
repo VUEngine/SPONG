@@ -47,11 +47,18 @@ __CLASS(Collision);
 
 #define Collision_ATTRIBUTES																			\
 		Entity_ATTRIBUTES																				\
-
+		u32 shapeLayers;																				\
 
 typedef const EntityDefinition CollisionDefinition;
 typedef const CollisionDefinition CollisionROMDef;
 
+
+typedef struct CollisionExtraInfo
+{
+	PixelSize size;
+	u32 shapeLayers;
+
+} CollisionExtraInfo;
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE

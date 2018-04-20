@@ -98,7 +98,7 @@ void PongBall_startMovement(PongBall this)
 		0,
 	};
 
-	Actor_addForce(__SAFE_CAST(Actor, this), &force);
+//	Actor_addForce(__SAFE_CAST(Actor, this), &force);
 }
 
 // move back to ejector
@@ -143,9 +143,9 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
 	{
 		// speed things up by breaking early
-		case kShape:
+		case kWall:
 
-			Actor_addForce(__SAFE_CAST(Actor, this), &force);
+			//Actor_addForce(__SAFE_CAST(Actor, this), &force);
 			break;
 	}
 

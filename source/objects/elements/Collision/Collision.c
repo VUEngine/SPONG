@@ -38,9 +38,6 @@
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-const PixelSize collision_48_28_2 = {48 * 8, 	28 * 8, 	2 * 8};
-const PixelSize collision_2_28_48 = {2 * 8, 	28 * 8, 	48 * 8};
-const PixelSize collision_48_2_48 = {48 * 8, 	2 * 8, 		48 * 8};
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -63,7 +60,9 @@ void Collision_constructor(Collision this, EntityDefinition* inGameEntityDefinit
 {
 	// construct base
 	__CONSTRUCT_BASE(Entity, inGameEntityDefinition, id, internalId, name);
-}
+
+	this->shapeLayers = kSolidLayer;
+ }
 
 // class's destructor
 void Collision_destructor(Collision this)
@@ -78,7 +77,8 @@ void Collision_setExtraInfo(Collision this, void* extraInfo)
 {
 	ASSERT(this, "Collision::setExtraInfo: null this");
 
-	this->size = Size_getFromPixelSize(*((PixelSize*)extraInfo));
+	this->size = Size_getFromPixelSize(((CollisionExtraInfo*)extraInfo)->size);
+	this->shapeLayers = (((CollisionExtraInfo*)extraInfo)->shapeLayers);
 }
 
 void Collision_initialTransform(Collision this, Transformation* environmentTransform, u32 recursive)
@@ -112,7 +112,7 @@ void Collision_initialTransform(Collision this, Transformation* environmentTrans
 			false,
 
 			/// layers in which I live
-			kSolidLayer,
+			this->shapeLayers,
 
 			/// layers to ignore when checking for collisions
 			kNoLayer,

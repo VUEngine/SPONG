@@ -25,6 +25,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Entity.h>
+#include <Ball.h>
+#include <PongBall.h>
 #include <macros.h>
 
 
@@ -32,45 +34,45 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PaddleTiles[];
-extern BYTE PaddleMap[];
+extern BYTE BallTiles[];
+extern BYTE BallMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef PADDLE_CH =
+CharSetROMDef PONG_BALL_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	3,
+	1,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__NOT_ANIMATED,
 
 	// char definition
-	PaddleTiles,
+	BallTiles,
 };
 
-TextureROMDef PADDLE_TX =
+TextureROMDef PONG_BALL_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PADDLE_CH,
+	(CharSetDefinition*)&PONG_BALL_CH,
 
 	// bgmap definition
-	PaddleMap,
+	BallMap,
 
 	// cols (max 64)
-	4,
+	2,
 
 	// rows (max 64)
-	4,
+	2,
 
 	// padding for affine/hbias transformations (cols, rows)
-	{0, 0},
+	{1, 1},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
@@ -84,14 +86,14 @@ TextureROMDef PADDLE_TX =
 	false,
 };
 
-BgmapSpriteROMDef PADDLE_IM_SPRITE =
+BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture definition
-		(TextureDefinition*)&PADDLE_TX,
+		(TextureDefinition*)&PONG_BALL_TX,
 
 		// transparent
 		false,
@@ -102,7 +104,7 @@ BgmapSpriteROMDef PADDLE_IM_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_BGMAP,
+	__WORLD_AFFINE,
 
 	// pointer to affine/hbias manipulation function
 	NULL,
@@ -111,30 +113,97 @@ BgmapSpriteROMDef PADDLE_IM_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const PADDLE_IM_SPRITES[] =
+BgmapSpriteROMDef* const PONG_BALL_AC_SPRITES[] =
 {
-	&PADDLE_IM_SPRITE,
+	&PONG_BALL_AC_SPRITE,
 	NULL
 };
 
-EntityROMDef PADDLE_IM =
+ShapeROMDef PONG_BALL_AC_SHAPES[] =
 {
-	// class allocator
-	__TYPE(Entity),
+	// ball
+	{
+		// shape
+		__TYPE(Ball),
 
-	// sprites
-	(SpriteROMDef**)PADDLE_IM_SPRITES,
+		// size (x, y, z)
+		{16, 16, 16},
 
-	// collision shapes
-	(ShapeDefinition*)NULL,
+		// displacement (x, y, z, p)
+		{0, 0, 0, 0},
 
-	// size
-	// if 0, width and height will be inferred from the first sprite's texture's size
+		// rotation (x, y, z)
+		{0, 0, 0},
+
+		// scale (x, y, z)
+		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+		// if true this shape checks for collisions against other shapes
+		true,
+
+		// layers in which I live
+		kPlayFieldLayer,
+
+		// layers to ignore when checking for collisions
+		kNoLayer,
+	},
+
+	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
+};
+
+PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
+{
+	// mass
+	__F_TO_FIX10_6(0.1f),
+
+	// friction
+	__F_TO_FIX10_6(0),
+
+	// bounciness
+	__F_TO_FIX10_6(1.02f),
+};
+
+PongBallROMDef PONG_BALL_AC =
+{
+	{
+		{
+			{
+				// class allocator
+				__TYPE(PongBall),
+
+				// sprites
+				(SpriteROMDef**)PONG_BALL_AC_SPRITES,
+
+				// collision shapes
+				(ShapeDefinition*)PONG_BALL_AC_SHAPES,
+
+				// size
+				// if 0, width and height will be inferred from the first sprite's texture's size
+				{0, 0, 0},
+
+				// gameworld's character's type
+				kPongBallType,
+
+				// physical specification
+				(PhysicalSpecification*)&PONG_BALL_AC_PHYSICAL_PROPERTIES,
+			},
+
+			// pointer to the animation definition for the character
+			(AnimationDescription*)NULL,
+
+			// initial animation
+			NULL,
+		},
+
+		// true to create a body
+		true,
+
+		// axes subject to gravity
+		__Z_AXIS
+	},
+
+	// minimum velocity
 	{0, 0, 0},
-
-	// gameworld's character's type
-	kNoType,
-
-	// physical specification
-	(PhysicalSpecification*)NULL,
+	// maximum velocity
+	{0, 0, 0},
 };

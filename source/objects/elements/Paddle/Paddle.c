@@ -25,9 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Game.h>
-#include <CollisionManager.h>
 #include <Optics.h>
-#include <CollisionManager.h>
 #include <MessageDispatcher.h>
 #include "Paddle.h"
 
@@ -57,6 +55,7 @@ void Paddle_constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id,
 
 	// save definition
 	this->paddleDefinition = paddleDefinition;
+	this->rotation = (Rotation){0, 0, 0};
 }
 
 // class's constructor
@@ -77,6 +76,8 @@ void Paddle_ready(Paddle this, bool recursive)
 	__CALL_BASE_METHOD(Actor, ready, this, recursive);
 
 	Paddle_stopMovement(this);
+
+	Entity_setLocalRotation(this, &this->rotation);
 }
 
 // start moving
@@ -101,4 +102,11 @@ bool Paddle_handleMessage(Paddle this, Telegram telegram)
 	}
 
 	return false;
+}
+
+void Paddle_setExtraInfo(Paddle this, void* extraInfo)
+{
+	ASSERT(this, "Paddle::setExtraInfo: null this");
+
+	this->rotation = *((Rotation*)extraInfo);
 }

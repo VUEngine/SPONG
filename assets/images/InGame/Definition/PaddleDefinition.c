@@ -25,8 +25,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Entity.h>
-#include <Ball.h>
-#include <PongBall.h>
+#include <Box.h>
+#include <Paddle.h>
 #include <macros.h>
 
 
@@ -42,7 +42,7 @@ extern BYTE BallMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef PONG_BALL_CH =
+CharSetROMDef PADDLE_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -57,10 +57,10 @@ CharSetROMDef PONG_BALL_CH =
 	BallTiles,
 };
 
-TextureROMDef PONG_BALL_TX =
+TextureROMDef PADDLE_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PONG_BALL_CH,
+	(CharSetDefinition*)&PADDLE_CH,
 
 	// bgmap definition
 	BallMap,
@@ -86,14 +86,14 @@ TextureROMDef PONG_BALL_TX =
 	false,
 };
 
-BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
+BgmapSpriteROMDef PADDLE_AC_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture definition
-		(TextureDefinition*)&PONG_BALL_TX,
+		(TextureDefinition*)&PADDLE_TX,
 
 		// transparent
 		false,
@@ -113,21 +113,21 @@ BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const PONG_BALL_AC_SPRITES[] =
+BgmapSpriteROMDef* const PADDLE_AC_SPRITES[] =
 {
-	&PONG_BALL_AC_SPRITE,
+	&PADDLE_AC_SPRITE,
 	NULL
 };
 
-ShapeROMDef PONG_BALL_AC_SHAPES[] =
+ShapeROMDef PADDLE_AC_SHAPES[] =
 {
-	// ball
+	// box
 	{
 		// shape
-		__TYPE(Ball),
+		__TYPE(Box),
 
 		// size (x, y, z)
-		{16, 16, 16},
+		{48, 48, 48},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},
@@ -142,7 +142,7 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 		true,
 
 		// layers in which I live
-		kMatchLayer,
+		kPlayFieldWallsLayer,
 
 		// layers to ignore when checking for collisions
 		kNoLayer,
@@ -151,7 +151,7 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
 };
 
-PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
+PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
 	__F_TO_FIX10_6(0.1f),
@@ -160,32 +160,32 @@ PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(0),
 
 	// bounciness
-	__F_TO_FIX10_6(1.02f),
+	__F_TO_FIX10_6(0.5f),
 };
 
-PongBallROMDef PONG_BALL_AC =
+PaddleROMDef PADDLE_AC =
 {
 	{
 		{
 			{
 				// class allocator
-				__TYPE(PongBall),
+				__TYPE(Paddle),
 
 				// sprites
-				(SpriteROMDef**)PONG_BALL_AC_SPRITES,
+				(SpriteROMDef**)NULL,
 
 				// collision shapes
-				(ShapeDefinition*)PONG_BALL_AC_SHAPES,
+				(ShapeDefinition*)PADDLE_AC_SHAPES,
 
 				// size
 				// if 0, width and height will be inferred from the first sprite's texture's size
 				{0, 0, 0},
 
 				// gameworld's character's type
-				kPongBallType,
+				kPaddleType,
 
 				// physical specification
-				(PhysicalSpecification*)&PONG_BALL_AC_PHYSICAL_PROPERTIES,
+				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
 			},
 
 			// pointer to the animation definition for the character
@@ -199,7 +199,7 @@ PongBallROMDef PONG_BALL_AC =
 		true,
 
 		// axes subject to gravity
-		__Z_AXIS
+		__NO_AXIS
 	},
 
 	// minimum velocity

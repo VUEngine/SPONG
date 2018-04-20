@@ -26,6 +26,7 @@
 
 #include <Stage.h>
 #include <Fonts.h>
+#include <Collision.h>
 #include <macros.h>
 
 
@@ -34,7 +35,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition PONG_BALL_AC;
-extern EntityDefinition PADDLE_IM;
+extern EntityDefinition PADDLE_AC;
 extern EntityDefinition PLAYFIELD_IM;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
@@ -48,9 +49,32 @@ extern TextureDefinition PLAYFIELD_TX;
 
 extern u16 GAME_BGM_1[][2];
 
-extern const PixelSize collision_48_28_2;
-extern const PixelSize collision_2_28_48;
-extern const PixelSize collision_48_2_48;
+const CollisionExtraInfo horizontalWallCollision =
+{
+	{48 * 8, 	2 * 8, 		48 * 8},
+	kPlayFieldWallsLayer
+};
+
+const CollisionExtraInfo verticalWallCollision =
+{
+	{2 * 8, 	28 * 8, 	48 * 8},
+	kPlayFieldWallsLayer
+};
+
+const CollisionExtraInfo ceilingCollision =
+{
+	{48 * 8, 	28 * 8, 	2 * 8},
+	kPlayFieldCeilingLayer
+};
+
+const CollisionExtraInfo floorCollision =
+{
+	{48 * 8, 	28 * 8, 	2 * 8},
+	kPlayFieldFloorLayer
+};
+
+const Rotation leftPaddleRotation = {0, 8, 0};
+const Rotation rightPaddleRotation = {0, -8, 0};
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -59,17 +83,21 @@ extern const PixelSize collision_48_2_48;
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
 //	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-//	{&PADDLE_IM, 			{ 52, 112, 0, 0}, 	0, "PLAYER1", NULL, NULL, false},
+	{&PADDLE_AC, 			{192-64, 112, 250, 0}, 	0, "PLAYER1", NULL, (void*)&leftPaddleRotation, false},
+	{&PADDLE_AC, 			{192+34, 112, 250, 0}, 	0, "PLAYER1", NULL, (void*)&rightPaddleRotation, false},
+	{&PONG_BALL_AC, 		{192-64, 112, 16, 0}, 	0, "PongBall", NULL, NULL, true},
+	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+
+	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&COLLISION_CL,			{  0, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
+	{&COLLISION_CL,			{384, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
+	{&COLLISION_CL,			{192,   0, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
+	{&COLLISION_CL,			{192, 224,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
+	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 	{&PONG_BALL_AC, 		{192, 112, 32, 0}, 	0, "PongBall", NULL, NULL, true},
-//	{&PADDLE_IM, 			{332, 112, 0, 0}, 	0, "PLAYER2", NULL, NULL, false},
 //	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
-	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // front border
-	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&collision_48_28_2, false}, // far border
-	{&COLLISION_CL,			{  0, 112, 128, 0},	0, NULL, NULL, (void*)&collision_2_28_48, false}, // left border
-	{&COLLISION_CL,			{384, 112, 128, 0},	0, NULL, NULL, (void*)&collision_2_28_48, false}, // right border
-	{&COLLISION_CL,			{192,   0, 128, 0},	0, NULL, NULL, (void*)&collision_48_2_48, false}, // top border
-	{&COLLISION_CL,			{192, 224,   0, 0},	0, NULL, NULL, (void*)&collision_48_2_48, false}, // bottom border
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -261,7 +289,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		// optical configuration values
 		{
 			// maximum view distance's power into the horizon
-			__MAXIMUM_X_VIEW_DISTANCE, __MAXIMUM_X_VIEW_DISTANCE,
+			__MAXIMUM_X_VIEW_DISTANCE*4, __MAXIMUM_X_VIEW_DISTANCE*4,
 			// distance of the eyes to the screen
 			__DISTANCE_EYE_SCREEN,
 			// distance from left to right eye (depth sensation)

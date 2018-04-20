@@ -42,6 +42,7 @@
 		Actor_SET_VTABLE(ClassName)																		\
 		__VIRTUAL_SET(ClassName, Paddle, ready);														\
 		__VIRTUAL_SET(ClassName, Paddle, handleMessage);												\
+		__VIRTUAL_SET(ClassName, Paddle, setExtraInfo);												\
 
 __CLASS(Paddle);
 
@@ -49,6 +50,7 @@ __CLASS(Paddle);
 		Actor_ATTRIBUTES																				\
 		/* definition pointer */																		\
 		PaddleDefinition* paddleDefinition;																\
+		Rotation rotation;																				\
 
 
 typedef struct PaddleDefinition
@@ -56,8 +58,11 @@ typedef struct PaddleDefinition
 	// the base animated entity
 	ActorDefinition actorDefinition;
 
-	// velocity when moving
-	Velocity velocity;
+	// minimum velocity when moving
+	Velocity minimumVelocity;
+
+	// maximum velocity when moving
+	Velocity maximumVelocity;
 
 } PaddleDefinition;
 
@@ -77,6 +82,7 @@ void Paddle_startMovement(Paddle this);
 void Paddle_stopMovement(Paddle this);
 void Paddle_ready(Paddle this, bool recursive);
 bool Paddle_handleMessage(Paddle this, Telegram telegram);
+void Paddle_setExtraInfo(Paddle this, void* extraInfo);
 
 
 #endif
