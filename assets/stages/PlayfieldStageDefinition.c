@@ -40,11 +40,12 @@ extern EntityDefinition PLAYFIELD_IM;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
 
-
-extern CharSetDefinition PADDLE_CH;
+extern CharSetDefinition PADDLE_L_CH;
+extern CharSetDefinition PADDLE_R_CH;
 extern CharSetDefinition PLAYFIELD_CH;
 
-extern TextureDefinition PADDLE_TX;
+extern TextureDefinition PADDLE_L_TX;
+extern TextureDefinition PADDLE_R_TX;
 extern TextureDefinition PLAYFIELD_TX;
 
 extern u16 GAME_BGM_1[][2];
@@ -74,7 +75,7 @@ const CollisionExtraInfo floorCollision =
 };
 
 const Rotation leftPaddleRotation = {0, 8, 0};
-const Rotation rightPaddleRotation = {0, -8, 0};
+const Rotation rightPaddleRotation = {0, -8, 256};
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -94,10 +95,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&COLLISION_CL,			{384, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
 	{&COLLISION_CL,			{192,   0, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
 	{&COLLISION_CL,			{192, 224,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
-	{&PONG_BALL_AC, 		{192, 112, 32, 0}, 	0, "PongBall", NULL, NULL, true},
-//	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
-
+	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -121,7 +119,8 @@ FontROMDef* const PLAYFIELD_STAGE_ST_FONTS[] =
 
 CharSetROMDef* const PLAYFIELD_STAGE_ST_CHARSETS[] =
 {
-	&PADDLE_CH,
+	&PADDLE_L_CH,
+	&PADDLE_R_CH,
 	&PLAYFIELD_CH,
 
 	NULL
@@ -129,7 +128,8 @@ CharSetROMDef* const PLAYFIELD_STAGE_ST_CHARSETS[] =
 
 TextureDefinition* const PLAYFIELD_STAGE_ST_TEXTURES[] =
 {
-	&PADDLE_TX,
+	&PADDLE_L_TX,
+	&PADDLE_R_TX,
 	&PLAYFIELD_TX,
 
 	NULL
