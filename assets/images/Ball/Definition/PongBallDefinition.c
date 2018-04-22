@@ -96,7 +96,7 @@ BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 		(TextureDefinition*)&PONG_BALL_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},

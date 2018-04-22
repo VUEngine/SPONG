@@ -97,7 +97,7 @@ BgmapSpriteROMDef PLAYFIELD_L_SPRITE =
 		(TextureDefinition*)&PLAYFIELD_L_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},
@@ -155,7 +155,7 @@ BgmapSpriteROMDef PLAYFIELD_R_SPRITE =
 		(TextureDefinition*)&PLAYFIELD_R_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},

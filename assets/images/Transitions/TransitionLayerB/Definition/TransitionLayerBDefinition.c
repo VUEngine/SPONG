@@ -150,7 +150,7 @@ BgmapSpriteROMDef TRANSITION_LAYER_B_SPRITE =
 		(TextureDefinition*)&TRANSITION_LAYER_B_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},

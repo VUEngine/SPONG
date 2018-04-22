@@ -127,7 +127,7 @@ BgmapSpriteROMDef PRECAUTION_TEXT_SPRITE =
 		(TextureDefinition*)&PRECAUTION_TEXT_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},

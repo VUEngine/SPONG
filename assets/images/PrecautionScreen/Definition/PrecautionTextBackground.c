@@ -94,7 +94,7 @@ BgmapSpriteROMDef PRECAUTION_TEXT_BACKGROUND_SPRITE =
 		(TextureDefinition*)&PRECAUTION_TEXT_BACKGROUND_TX,
 
 		// transparent
-		false,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},
