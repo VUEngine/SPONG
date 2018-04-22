@@ -33,7 +33,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern BYTE PlayfieldTiles[];
-extern BYTE PlayfieldMap[];
+extern BYTE PlayfieldLMap[];
+extern BYTE PlayfieldRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ CharSetROMDef PLAYFIELD_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	78,
+	26,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -55,19 +56,21 @@ CharSetROMDef PLAYFIELD_CH =
 	PlayfieldTiles,
 };
 
-TextureROMDef PLAYFIELD_TX =
+/* Left */
+
+TextureROMDef PLAYFIELD_L_TX =
 {
 	// charset definition
 	(CharSetDefinition*)&PLAYFIELD_CH,
 
 	// bgmap definition
-	PlayfieldMap,
+	PlayfieldLMap,
 
 	// cols (max 64)
 	48,
 
 	// rows (max 64)
-	28,
+	26,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -84,14 +87,14 @@ TextureROMDef PLAYFIELD_TX =
 	false,
 };
 
-BgmapSpriteROMDef PLAYFIELD_IM_SPRITE =
+BgmapSpriteROMDef PLAYFIELD_L_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture definition
-		(TextureDefinition*)&PLAYFIELD_TX,
+		(TextureDefinition*)&PLAYFIELD_L_TX,
 
 		// transparent
 		false,
@@ -108,22 +111,83 @@ BgmapSpriteROMDef PLAYFIELD_IM_SPRITE =
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
-	__WORLD_ON,
+	__WORLD_LON,
 };
 
-BgmapSpriteROMDef* const PLAYFIELD_IM_SPRITES[] =
+/* Right */
+
+TextureROMDef PLAYFIELD_R_TX =
 {
-	&PLAYFIELD_IM_SPRITE,
+	// charset definition
+	(CharSetDefinition*)&PLAYFIELD_CH,
+
+	// bgmap definition
+	PlayfieldRMap,
+
+	// cols (max 64)
+	48,
+
+	// rows (max 64)
+	26,
+
+	// padding for affine/hbias transformations (cols, rows)
+	{0, 0},
+
+	// number of frames, depending on charset's allocation type:
+	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
+	// __ANIMATED_MULTI: total number of frames
+	1,
+
+	// palette number (0-3)
+	0,
+
+	// recyclable
+	false,
+};
+
+BgmapSpriteROMDef PLAYFIELD_R_SPRITE =
+{
+	{
+		// sprite's type
+		__TYPE(BgmapSprite),
+
+		// texture definition
+		(TextureDefinition*)&PLAYFIELD_R_TX,
+
+		// transparent
+		false,
+
+		// displacement
+		{0, 0, 0, 0},
+	},
+
+	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
+	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
+	__WORLD_BGMAP,
+
+	// pointer to affine/hbias manipulation function
+	NULL,
+
+	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
+	__WORLD_RON,
+};
+
+/* Entity */
+
+BgmapSpriteROMDef* const PLAYFIELD_SPRITES[] =
+{
+	&PLAYFIELD_L_SPRITE,
+	&PLAYFIELD_R_SPRITE,
 	NULL
 };
 
-EntityROMDef PLAYFIELD_IM =
+EntityROMDef PLAYFIELD_EN =
 {
 	// class allocator
 	__TYPE(Entity),
 
 	// sprites
-	(SpriteROMDef**)PLAYFIELD_IM_SPRITES,
+	(SpriteROMDef**)PLAYFIELD_SPRITES,
 
 	// collision shapes
 	(ShapeDefinition*)NULL,

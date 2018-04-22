@@ -37,7 +37,7 @@
 extern EntityDefinition PONG_BALL_AC;
 extern EntityDefinition PADDLE_LEFT_AC;
 extern EntityDefinition PADDLE_RIGHT_AC;
-extern EntityDefinition PLAYFIELD_IM;
+extern EntityDefinition PLAYFIELD_EN;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
 
@@ -51,7 +51,8 @@ extern TextureDefinition PADDLE_LEFT_L_TX;
 extern TextureDefinition PADDLE_LEFT_R_TX;
 extern TextureDefinition PADDLE_RIGHT_L_TX;
 extern TextureDefinition PADDLE_RIGHT_R_TX;
-extern TextureDefinition PLAYFIELD_TX;
+extern TextureDefinition PLAYFIELD_L_TX;
+extern TextureDefinition PLAYFIELD_R_TX;
 
 extern u16 GAME_BGM_1[][2];
 
@@ -95,28 +96,28 @@ const Rotation leftPaddleRotation = {0, 0, 0};
 const Rotation rightPaddleRotation = {0, 0, 256};
 
 
-
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PADDLE_LEFT_AC, 			{192-64-32, 112, 250, 0}, 	0, "LeftPd", NULL, (void*)&leftPaddleRotation, false},
-	{&PADDLE_RIGHT_AC, 			{192+64+32, 112, 250, 0}, 	0, "RightPd", NULL, (void*)&rightPaddleRotation, false},
-	{&PONG_BALL_AC, 		{192-(64+32)*1, 112, 16, 0}, 	0, "PongBall", NULL, NULL, true},
+	{&PLAYFIELD_EN, 			{192,    120,     64, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&COLLISION_CL,			{192 - 192 / 2, 112, 256, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
-	{&COLLISION_CL,			{192 + 192 / 2, 112, 256, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
-	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
-	{&COLLISION_CL,			{  0 + 32, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
-	{&COLLISION_CL,			{384 - 32, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
-	{&COLLISION_CL,			{192,  48, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
-	{&COLLISION_CL,			{192, 224 - 32, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{&COLLISION_CL,			{192, 112, 128, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
-//	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&PADDLE_LEFT_AC, 			{192-32, 112,     48, 0}, 	0, "LeftPd", NULL, (void*)&leftPaddleRotation, false},
+	{&PADDLE_RIGHT_AC, 			{192+96, 112,     48, 0}, 	0, "RightPd", NULL, (void*)&rightPaddleRotation, false},
+	{&PONG_BALL_AC, 			{ 96,    112,    -80, 0}, 	0, "PongBall", NULL, NULL, true},
 
+	{&COLLISION_CL,				{192-96, 112,     64, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
+	{&COLLISION_CL,				{192+96, 112,     64, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
+	{&COLLISION_CL,				{192,    112,      0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&COLLISION_CL,				{  0+12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
+	{&COLLISION_CL,				{384-12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
+	{&COLLISION_CL,				{192,    16+12,    0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
+	{&COLLISION_CL,				{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
+	{&COLLISION_CL,				{192,    112,      0, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
+
+//	{&TRANSITION_LAYER_B_AG,	{192,    112,      0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -155,7 +156,8 @@ TextureDefinition* const PLAYFIELD_STAGE_ST_TEXTURES[] =
 	&PADDLE_LEFT_R_TX,
 	&PADDLE_RIGHT_L_TX,
 	&PADDLE_RIGHT_R_TX,
-	&PLAYFIELD_TX,
+	&PLAYFIELD_L_TX,
+	&PLAYFIELD_R_TX,
 
 	NULL
 };

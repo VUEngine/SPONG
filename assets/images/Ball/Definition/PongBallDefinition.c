@@ -72,7 +72,7 @@ TextureROMDef PONG_BALL_TX =
 	2,
 
 	// padding for affine/hbias transformations (cols, rows)
-	{1, 1},
+	{12, 12},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
