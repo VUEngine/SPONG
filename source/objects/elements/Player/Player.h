@@ -19,27 +19,47 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef GAME_EVENTS_H_
-#define GAME_EVENTS_H_
+#ifndef PLAYER_H_
+#define PLAYER_H_
 
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Events.h>
+#include <Object.h>
+#include <GameState.h>
+#include <Paddle.h>
+#include <macros.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											 DEFINITIONS
+//											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-enum GameEvents
-{
-	kSomeGameEvent = kLastEngineEvent + 1,
+#define Player_METHODS(ClassName)																		\
+		Object_METHODS(ClassName)																		\
 
-	kEventUserInput,
-};
+#define Player_SET_VTABLE(ClassName)																	\
+		Object_SET_VTABLE(ClassName)																	\
+		__VIRTUAL_SET(ClassName, Player, handleMessage);												\
 
+__CLASS(Player);
+
+#define Player_ATTRIBUTES																				\
+		Object_ATTRIBUTES																				\
+		/* definition pointer */																		\
+		Paddle paddles[2];																				\
+
+
+//---------------------------------------------------------------------------------------------------------
+//										PUBLIC INTERFACE
+//---------------------------------------------------------------------------------------------------------
+
+Player Player_getInstance();
+void Player_destructor(Player this);
+bool Player_handleMessage(Player this, Telegram telegram);
+void Player_getReady(Player this, GameState gameState);
+void Player_gameIsOver(Player this, GameState gameState);
 
 #endif

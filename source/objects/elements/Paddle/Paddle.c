@@ -25,9 +25,18 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Game.h>
+#include <Box.h>
 #include <Optics.h>
 #include <MessageDispatcher.h>
 #include "Paddle.h"
+
+
+//---------------------------------------------------------------------------------------------------------
+//											CLASS'S MACROS
+//---------------------------------------------------------------------------------------------------------
+
+#define HORIZONTAL_FORCE		60
+#define VERTICAL_FORCE			60
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -56,6 +65,7 @@ void Paddle_constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id,
 	// save definition
 	this->paddleDefinition = paddleDefinition;
 	this->rotation = (Rotation){0, 0, 0};
+	this->paddleShape = NULL;
 }
 
 // class's constructor
@@ -77,11 +87,15 @@ void Paddle_ready(Paddle this, bool recursive)
 
 	Paddle_stopMovement(this);
 
-	Entity_setLocalRotation(this, &this->rotation);
+	Entity_setLocalRotation(__SAFE_CAST(Entity, this), &this->rotation);
+
+	this->paddleShape = VirtualList_back(this->shapes);
+
+	NM_ASSERT(__GET_CAST(Box, this->paddleShape), "Paddle::ready: sencod shape must be a box");
 }
 
 // start moving
-void Paddle_startMovement(Paddle this)
+void Paddle_startMovement(Paddle this __attribute__ ((unused)))
 {
 }
 
@@ -101,7 +115,7 @@ bool Paddle_handleMessage(Paddle this, Telegram telegram)
 	{
 	}
 
-	return false;
+	return Actor_handleMessage(__SAFE_CAST(Actor, this), telegram);
 }
 
 void Paddle_setExtraInfo(Paddle this, void* extraInfo)
@@ -109,4 +123,54 @@ void Paddle_setExtraInfo(Paddle this, void* extraInfo)
 	ASSERT(this, "Paddle::setExtraInfo: null this");
 
 	this->rotation = *((Rotation*)extraInfo);
+}
+
+
+void Paddle_transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag)
+{
+	__CALL_BASE_METHOD(Actor, transform, this, environmentTransform, invalidateTransformationFlag);
+
+//	Shape_show(VirtualList_back(this->shapes));
+}
+
+void Paddle_syncRotationWithBody(Paddle this __attribute__ ((unused)))
+{
+
+}
+
+void Paddle_moveTowards(Paddle this, Direction direction)
+{
+	Force force =
+	{
+		__I_TO_FIX10_6(HORIZONTAL_FORCE * direction.x),
+		__I_TO_FIX10_6(VERTICAL_FORCE * direction.y),
+		0
+	};
+
+	Actor_addForce(__SAFE_CAST(Actor, this), &force);
+}
+
+void Paddle_stopTowards(Paddle this, Direction direction)
+{
+	u16 axis = __NO_AXIS;
+	axis |= direction.x ? __X_AXIS : 0;
+	axis |= direction.y ? __Y_AXIS : 0;
+	Actor_stopMovement(this, axis);
+}
+
+void Paddle_retract(Paddle this)
+{
+	if(Shape_isActive(this->paddleShape))
+	{
+		AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this), "Retracted");
+
+		Shape_setActive(this->paddleShape, false);
+	}
+}
+
+void Paddle_eject(Paddle this)
+{
+	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this), "Ejected");
+
+	Shape_setActive(this->paddleShape, true);
 }

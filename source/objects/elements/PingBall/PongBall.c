@@ -28,7 +28,9 @@
 #include <CollisionManager.h>
 #include <Optics.h>
 #include <CollisionManager.h>
+#include <Utilities.h>
 #include <MessageDispatcher.h>
+#include <debugUtilities.h>
 #include "PongBall.h"
 
 
@@ -83,22 +85,26 @@ void PongBall_update(PongBall this, u32 elapsedTime)
 {
 	__CALL_BASE_METHOD(Actor, update , this, elapsedTime);
 
-	Shape_show(__SAFE_CAST(Shape, VirtualList_front(this->shapes)));
-
-//	PongBall_stopMovement(this);
+	//Shape_show(__SAFE_CAST(Shape, VirtualList_front(this->shapes)));
+	Rotation localRotation = this->transformation.localRotation;
+	localRotation.z += __FIX10_6_TO_I(Vector3D_squareLength(Body_getVelocity(this->body))) >> 4;
+	Entity_setLocalRotation(this, &localRotation);
+//	Body_print(this->body, 1, 1);
 }
 
 // start moving
 void PongBall_startMovement(PongBall this)
 {
+	long seed = Utilities_randomSeed();
+/*
 	Force force =
 	{
-		__I_TO_FIX10_6(5),
-		__I_TO_FIX10_6(5),
+		__I_TO_FIX10_6(Utilities_random(seed, 10)),
+		__I_TO_FIX10_6(Utilities_random(seed, 10)),
 		0,
 	};
 
-//	Actor_addForce(__SAFE_CAST(Actor, this), &force);
+	Actor_addForce(__SAFE_CAST(Actor, this), &force);*/
 }
 
 // move back to ejector
@@ -135,19 +141,54 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	Force force =
 	{
-		velocity.x ? __FIX10_6_MULT(__I_TO_FIX10_6(5), -direction.x) : __I_TO_FIX10_6(5),
-		velocity.y ? __FIX10_6_MULT(__I_TO_FIX10_6(5), -direction.y) : __I_TO_FIX10_6(5),
-		velocity.z ? __FIX10_6_MULT(__I_TO_FIX10_6(2), -direction.z) : __I_TO_FIX10_6(2),
+		0,
+		0,
+		__I_TO_FIX10_6(-100)
+//			0 >= collisionInformation->solutionVector.direction.z ? __FIX10_6_MULT(__I_TO_FIX10_6(-100), (__1I_FIX10_6 - __ABS(collisionInformation->solutionVector.direction.z))) : 0
 	};
+
+	bool addForce = false;
 
 	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
 	{
-		// speed things up by breaking early
-		case kWall:
+		case kPaddleType:
 
-			//Actor_addForce(__SAFE_CAST(Actor, this), &force);
+			addForce = true;
+			force.y = this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x;
+			force.y += this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y;
+			force.y = __FIX10_6_MULT(force.y, __I_TO_FIX10_6(-100));
 			break;
+
+		case kWall:
+		{
+			addForce = true;
+			static int leftScore = 0;
+			static int rightScore = 0;
+
+			u32 collidingShapeLayers = Shape_getLayers(collidingShape);
+
+			if(kPlayFieldLeftFloorLayer == collidingShapeLayers)
+			{
+				rightScore++;
+				PRINT_INT(rightScore, 45, 0);
+			}
+			else if(kPlayFieldRightFloorLayer == collidingShapeLayers)
+			{
+				leftScore++;
+				PRINT_INT(leftScore, 1, 0);
+			}
+		}
+
+		break;
 	}
 
-	return Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
+	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
+
+	if(addForce)
+	{
+
+		Actor_addForce(__SAFE_CAST(Actor, this), &force);
+
+	}
+	return collisionResult;
 }

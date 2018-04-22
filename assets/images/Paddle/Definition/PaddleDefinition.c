@@ -1,7 +1,7 @@
 /* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
  * A universal game engine for the Nintendo Virtual Boy
  *
- * Copyright (C) 2007, 2017 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction, including
@@ -24,9 +24,11 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <libgccvb.h>
-#include <BgmapAnimatedSprite.h>
-#include "Paddle.h"
+#include <Entity.h>
+#include <Box.h>
+#include <Ball.h>
+#include <Paddle.h>
+#include <macros.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -188,11 +190,11 @@ TextureROMDef PADDLE_L_TX =
 	false,
 };
 
-BgmapSpriteROMDef PADDLE_L_SPRITE =
+ObjectSpriteROMDef PADDLE_L_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapAnimatedSprite),
+		__TYPE(ObjectAnimatedSprite),
 
 		// texture definition
 		(TextureDefinition*)&PADDLE_L_TX,
@@ -206,10 +208,7 @@ BgmapSpriteROMDef PADDLE_L_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_BGMAP,
-
-	// pointer to affine/hbias manipulation function
-	NULL,
+	__WORLD_OBJECT,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_LON,
@@ -261,11 +260,11 @@ TextureROMDef PADDLE_R_TX =
 	false,
 };
 
-BgmapSpriteROMDef PADDLE_R_SPRITE =
+ObjectSpriteROMDef PADDLE_R_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapAnimatedSprite),
+		__TYPE(ObjectAnimatedSprite),
 
 		// texture definition
 		(TextureDefinition*)&PADDLE_R_TX,
@@ -279,10 +278,7 @@ BgmapSpriteROMDef PADDLE_R_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_BGMAP,
-
-	// pointer to affine/hbias manipulation function
-	NULL,
+	__WORLD_OBJECT,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_RON,
@@ -290,40 +286,234 @@ BgmapSpriteROMDef PADDLE_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMDef* const PADDLE_SPRITES[] =
+ObjectSpriteROMDef* const PADDLE_SPRITES[] =
 {
 	&PADDLE_L_SPRITE,
 	&PADDLE_R_SPRITE,
 	NULL
 };
 
-AnimatedEntityROMDef PADDLE_AE =
+
+ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 {
+	// wall collider
 	{
-		// class allocator
-		__TYPE(AnimatedEntity),
-		//__TYPE(Paddle),
+		// shape
+		__TYPE(Ball),
 
-		// sprites
-		(SpriteROMDef**)PADDLE_SPRITES,
+		// size (x, y, z)
+		{16, 16, 16},
 
-		// collision shapes
-		(ShapeDefinition*)NULL,
+		// displacement (x, y, z, p)
+		{0, 0, 0, 0},
 
-		// size
-		// if 0, width and height will be inferred from the first sprite's texture's size
+		// rotation (x, y, z)
 		{0, 0, 0},
 
-		// gameworld's character's type
-		0,
+		// scale (x, y, z)
+		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
 
-		// physical specification
-		(PhysicalSpecification*)NULL,
+		// if true this shape checks for collisions against other shapes
+		true,
+
+		// layers in which I live
+		kPlayFieldLayer | kPlayFieldPaddleHelperLayer,
+
+		// layers to ignore when checking for collisions
+		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldLeftFloorLayer | kPlayFieldRightFloorLayer),
 	},
 
-	// pointer to the animation definition for the item
-	(AnimationDescription*)&PADDLE_ANIM,
+	// ball collider
+	{
+		// shape
+		__TYPE(Box),
 
-	// initial animation
-	"Ejected",
+		// size (x, y, z)
+		{32, 32, 8},
+
+		// displacement (x, y, z, p)
+		{0, 0, 0, 0},
+
+		// rotation (x, y, z)
+		{0, 38, 0},
+
+		// scale (x, y, z)
+		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+		// if true this shape checks for collisions against other shapes
+		false,
+
+		// layers in which I live
+		kPlayFieldLayer | kPlayFieldPaddleLayer,
+
+		// layers to ignore when checking for collisions
+		kAllLayers,
+	},
+
+	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
+};
+
+ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
+{
+	// wall collider
+	{
+		// shape
+		__TYPE(Ball),
+
+		// size (x, y, z)
+		{16, 16, 16},
+
+		// displacement (x, y, z, p)
+		{0, 0, 0, 0},
+
+		// rotation (x, y, z)
+		{0, 0, 0},
+
+		// scale (x, y, z)
+		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+		// if true this shape checks for collisions against other shapes
+		true,
+
+		// layers in which I live
+		kPlayFieldLayer | kPlayFieldPaddleHelperLayer,
+
+		// layers to ignore when checking for collisions
+		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldLeftFloorLayer | kPlayFieldRightFloorLayer),
+	},
+
+	// ball collider
+	{
+		// shape
+		__TYPE(Box),
+
+		// size (x, y, z)
+		{32, 32, 8},
+
+		// displacement (x, y, z, p)
+		{0, 0, 0, 0},
+
+		// rotation (x, y, z)
+		{0, -38, 0},
+
+		// scale (x, y, z)
+		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+		// if true this shape checks for collisions against other shapes
+		false,
+
+		// layers in which I live
+		kPlayFieldLayer | kPlayFieldPaddleLayer,
+
+		// layers to ignore when checking for collisions
+		kAllLayers,
+	},
+
+	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
+};
+
+
+PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
+{
+	// mass
+	__F_TO_FIX10_6(0.3f),
+
+	// friction
+	__F_TO_FIX10_6(0.0f),
+
+	// bounciness
+	__F_TO_FIX10_6(0.0f),
+
+	// maximum velocity
+	{0, 0, 0}
+};
+
+PaddleROMDef PADDLE_LEFT_AC =
+{
+	{
+		{
+			{
+				// class allocator
+				__TYPE(Paddle),
+
+				// sprites
+				(SpriteROMDef**)PADDLE_SPRITES,
+
+				// collision shapes
+				(ShapeDefinition*)PADDLE_LEFT_AC_SHAPES,
+
+				// size
+				// if 0, width and height will be inferred from the first sprite's texture's size
+				{0, 0, 0},
+
+				// gameworld's character's type
+				kPaddleType,
+
+				// physical specification
+				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
+			},
+
+			// pointer to the animation definition for the item
+			(AnimationDescription*)&PADDLE_ANIM,
+
+			// initial animation
+			"Ejected",
+		},
+
+		// true to create a body
+		true,
+
+		// axes subject to gravity
+		__Z_AXIS
+	},
+
+	// minimum velocity
+	{0, 0, 0},
+	// maximum velocity
+	{0, 0, 0},
+};
+
+PaddleROMDef PADDLE_RIGHT_AC =
+{
+	{
+		{
+			{
+				// class allocator
+				__TYPE(Paddle),
+
+				// sprites
+				(SpriteROMDef**)PADDLE_SPRITES,
+
+				// collision shapes
+				(ShapeDefinition*)PADDLE_RIGHT_AC_SHAPES,
+
+				// size
+				// if 0, width and height will be inferred from the first sprite's texture's size
+				{0, 0, 0},
+
+				// gameworld's character's type
+				kPaddleType,
+
+				// physical specification
+				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
+			},
+
+			// pointer to the animation definition for the item
+			(AnimationDescription*)&PADDLE_ANIM,
+
+			// initial animation
+			"Ejected",
+		},
+
+		// true to create a body
+		true,
+
+		// axes subject to gravity
+		__Z_AXIS
+	},
+
+	// minimum velocity
+	{0, 0, 0},
+	// maximum velocity
+	{0, 0, 0},
 };

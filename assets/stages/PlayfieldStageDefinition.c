@@ -35,7 +35,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition PONG_BALL_AC;
-extern EntityDefinition PADDLE_AC;
+extern EntityDefinition PADDLE_LEFT_AC;
+extern EntityDefinition PADDLE_RIGHT_AC;
 extern EntityDefinition PLAYFIELD_IM;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
@@ -52,30 +53,44 @@ extern u16 GAME_BGM_1[][2];
 
 const CollisionExtraInfo horizontalWallCollision =
 {
-	{48 * 8, 	2 * 8, 		48 * 8},
+	{48 * 8, 	4 * 8, 		48 * 8},
 	kPlayFieldWallsLayer
 };
 
 const CollisionExtraInfo verticalWallCollision =
 {
-	{2 * 8, 	28 * 8, 	48 * 8},
+	{4 * 8, 	28 * 8, 	48 * 8},
 	kPlayFieldWallsLayer
 };
 
 const CollisionExtraInfo ceilingCollision =
 {
-	{48 * 8, 	28 * 8, 	2 * 8},
+	{48 * 8, 	28 * 8, 	4 * 8},
 	kPlayFieldCeilingLayer
 };
 
-const CollisionExtraInfo floorCollision =
+const CollisionExtraInfo leftFloorCollision =
 {
-	{48 * 8, 	28 * 8, 	2 * 8},
-	kPlayFieldFloorLayer
+	{24 * 8, 	28 * 8, 	4 * 8},
+	kPlayFieldLeftFloorLayer
 };
 
-const Rotation leftPaddleRotation = {0, 8, 0};
-const Rotation rightPaddleRotation = {0, -8, 256};
+const CollisionExtraInfo rightFloorCollision =
+{
+	{24 * 8, 	28 * 8, 	4 * 8},
+	kPlayFieldRightFloorLayer
+};
+
+const CollisionExtraInfo splitterCollision =
+{
+	{4 * 8, 	28 * 8, 	48 * 8},
+	kPlayFieldSplitterLayer
+};
+
+const Rotation leftPaddleRotation = {0, 0, 0};
+const Rotation rightPaddleRotation = {0, 0, 256};
+
+
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -83,19 +98,21 @@ const Rotation rightPaddleRotation = {0, -8, 256};
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-//	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PADDLE_AC, 			{192-64, 112, 250, 0}, 	0, "PLAYER1", NULL, (void*)&leftPaddleRotation, false},
-	{&PADDLE_AC, 			{192+34, 112, 250, 0}, 	0, "PLAYER1", NULL, (void*)&rightPaddleRotation, false},
-	{&PONG_BALL_AC, 		{192-64, 112, 16, 0}, 	0, "PongBall", NULL, NULL, true},
-	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+	{&PLAYFIELD_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&PADDLE_LEFT_AC, 			{192-64-32, 112, 250, 0}, 	0, "LeftPd", NULL, (void*)&leftPaddleRotation, false},
+	{&PADDLE_RIGHT_AC, 			{192+64+32, 112, 250, 0}, 	0, "RightPd", NULL, (void*)&rightPaddleRotation, false},
+	{&PONG_BALL_AC, 		{192-(64+32)*1, 112, 16, 0}, 	0, "PongBall", NULL, NULL, true},
 
-	{&COLLISION_CL,			{192, 112, 256, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+	{&COLLISION_CL,			{192 - 192 / 2, 112, 256, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
+	{&COLLISION_CL,			{192 + 192 / 2, 112, 256, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
 	{&COLLISION_CL,			{192, 112,   0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
-	{&COLLISION_CL,			{  0, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
-	{&COLLISION_CL,			{384, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
-	{&COLLISION_CL,			{192,   0, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
-	{&COLLISION_CL,			{192, 224,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&COLLISION_CL,			{  0 + 32, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
+	{&COLLISION_CL,			{384 - 32, 112, 128, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
+	{&COLLISION_CL,			{192,  48, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
+	{&COLLISION_CL,			{192, 224 - 32, 128, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
+	{&COLLISION_CL,			{192, 112, 128, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
+//	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -209,7 +226,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		64,
 
 		// maximum number of rows to compute on each call to the affine functions
-		16,
+		32,
 
 		// colors config
 		{
@@ -263,11 +280,11 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		// obj segments sizes (must total 1024)
 		{
 			// __spt0
-			__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
+			0*__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
 			// __spt1
-			__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
+			0*__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
 			// __spt2
-			__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
+			0*__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
 			// __spt3
 			__AVAILABLE_CHAR_OBJECTS / __TOTAL_OBJECT_SEGMENTS,
 		},
@@ -277,19 +294,19 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		// since the vip renders obj worlds in reverse order (__spt3 to __spt0)
 		{
 			// __spt0
-			0,
+			257,
 			// __spt1
-			0,
+			257,
 			// __spt2
-			0,
+			257,
 			// __spt3
-			0,
+			257,
 		},
 
 		// optical configuration values
 		{
 			// maximum view distance's power into the horizon
-			__MAXIMUM_X_VIEW_DISTANCE*4, __MAXIMUM_X_VIEW_DISTANCE*4,
+			__MAXIMUM_X_VIEW_DISTANCE, __MAXIMUM_X_VIEW_DISTANCE,
 			// distance of the eyes to the screen
 			__DISTANCE_EYE_SCREEN,
 			// distance from left to right eye (depth sensation)
@@ -307,13 +324,13 @@ StageROMDef PLAYFIELD_STAGE_ST =
 	{
 		// gravity
 		{
-			__F_TO_FIX10_6(0),
-			__F_TO_FIX10_6(0),
-			__F_TO_FIX10_6(__GRAVITY)
+			__F_TO_FIX10_6(__GRAVITY_X),
+			__F_TO_FIX10_6(__GRAVITY_Y),
+			__F_TO_FIX10_6(__GRAVITY_Z)
 		},
 
 		// friction
-		__F_TO_FIX10_6(0.1f),
+		__F_TO_FIX10_6(0.0f),
 	},
 
 	// assets

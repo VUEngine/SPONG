@@ -105,10 +105,10 @@
 #define __DISTANCE_EYE_SCREEN					384
 
 // Maximum x view distance (depth) (power of two)
-#define __MAXIMUM_X_VIEW_DISTANCE				512
+#define __MAXIMUM_X_VIEW_DISTANCE				2048
 
 // Maximum y view distance (depth) (power of two)
-#define __MAXIMUM_Y_VIEW_DISTANCE				4096
+#define __MAXIMUM_Y_VIEW_DISTANCE				2048
 
 // Distance between eyes
 #define __BASE_FACTOR							32
@@ -120,10 +120,10 @@
 #define __VERTICAL_VIEW_POINT_CENTER			__SCREEN_HEIGHT / 2
 
 // Parallax values are divide by this factor to control their strength
-#define __PARALLAX_CORRECTION_FACTOR			4
+#define __PARALLAX_CORRECTION_FACTOR			2
 
 // Affects the strength of the scaling
-#define __SCALING_MODIFIER_FACTOR				1.0f
+#define __SCALING_MODIFIER_FACTOR				0.3f
 
 // minimum number of pixels that the camera can move
 #define __CAMERA_MINIMUM_DISPLACEMENT_PIXELS_POWER	1
@@ -309,17 +309,19 @@
 //												PHYSICS
 //---------------------------------------------------------------------------------------------------------
 
-#define __GRAVITY								(2 * 9.8f)
+#define __GRAVITY_X								(2 * 9.81f)
+#define __GRAVITY_Y								(2 * 9.81f)
+#define __GRAVITY_Z								(2 * 9.81f)
 
 // Number of bodies to check for gravity on each cycle
 #define __BODIES_TO_CHECK_FOR_GRAVITY			10
 
 // divisor to speed up physics simulations
 // bigger numbers equal faster computations
-#define __PHYSICS_TIME_ELAPSED_DIVISOR			2
+#define __PHYSICS_TIME_ELAPSED_DIVISOR			1
 
 // maximum bounciness coefficient allowed
-#define __MAXIMUM_BOUNCINESS_COEFFICIENT		1.2f
+#define __MAXIMUM_BOUNCINESS_COEFFICIENT		1
 
 
 //---------------------------------------------------------------------------------------------------------

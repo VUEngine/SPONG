@@ -142,10 +142,10 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 		true,
 
 		// layers in which I live
-		kPlayFieldLayer,
+		kPlayFieldLayer | kPlayFieldBallLayer,
 
 		// layers to ignore when checking for collisions
-		kNoLayer,
+		kPlayFieldSplitterLayer | kPlayFieldPaddleHelperLayer,
 	},
 
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
@@ -154,13 +154,17 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
-	__F_TO_FIX10_6(0.1f),
+	__F_TO_FIX10_6(1.0f),
 
 	// friction
-	__F_TO_FIX10_6(0),
+	__F_TO_FIX10_6(0.0f),
 
 	// bounciness
-	__F_TO_FIX10_6(1.02f),
+	__F_TO_FIX10_6(1.0f),
+
+	// maximum velocity
+	{__I_TO_FIX10_6(10), __I_TO_FIX10_6(10), __I_TO_FIX10_6(20)}
+//	{__I_TO_FIX10_6(7), __I_TO_FIX10_6(7), __I_TO_FIX10_6(12)}
 };
 
 PongBallROMDef PONG_BALL_AC =

@@ -28,6 +28,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Actor.h>
+#include <Shape.h>
 #include <macros.h>
 
 
@@ -42,7 +43,9 @@
 		Actor_SET_VTABLE(ClassName)																		\
 		__VIRTUAL_SET(ClassName, Paddle, ready);														\
 		__VIRTUAL_SET(ClassName, Paddle, handleMessage);												\
-		__VIRTUAL_SET(ClassName, Paddle, setExtraInfo);												\
+		__VIRTUAL_SET(ClassName, Paddle, setExtraInfo);													\
+		__VIRTUAL_SET(ClassName, Paddle, transform);													\
+		__VIRTUAL_SET(ClassName, Paddle, syncRotationWithBody);											\
 
 __CLASS(Paddle);
 
@@ -51,6 +54,7 @@ __CLASS(Paddle);
 		/* definition pointer */																		\
 		PaddleDefinition* paddleDefinition;																\
 		Rotation rotation;																				\
+		Shape paddleShape;																				\
 
 
 typedef struct PaddleDefinition
@@ -83,6 +87,11 @@ void Paddle_stopMovement(Paddle this);
 void Paddle_ready(Paddle this, bool recursive);
 bool Paddle_handleMessage(Paddle this, Telegram telegram);
 void Paddle_setExtraInfo(Paddle this, void* extraInfo);
-
+void Paddle_transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag);
+void Paddle_syncRotationWithBody(Paddle this);
+void Paddle_moveTowards(Paddle this, Direction direction);
+void Paddle_stopTowards(Paddle this, Direction direction);
+void Paddle_retract(Paddle this);
+void Paddle_eject(Paddle this);
 
 #endif

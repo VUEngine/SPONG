@@ -36,6 +36,9 @@
 #include <ParticleSystem.h>
 #include <ProgressManager.h>
 #include <KeyPadManager.h>
+#include <Player.h>
+#include <GameEvents.h>
+#include <debugUtilities.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -135,8 +138,36 @@ static void PongState_suspend(PongState this, void* owner)
 
 void PongState_processUserInput(PongState this, UserInput userInput)
 {
+
 	if(userInput.pressedKey & ~K_PWR)
 	{
+		if(userInput.pressedKey)
+		{
+			if(K_SEL & userInput.pressedKey)
+			{
+				// adjustment screen
+//				PlatformerLevelState_setModeToPaused(this);
+
+				// set next state of adjustment screen state to null so it can differentiate between
+				// being called the splash screen sequence or from within the game (a bit hacky...)
+//				SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, AdjustmentScreenState_getInstance()), NULL);
+
+				// pause game and switch to adjustment screen state
+//				Game_pause(Game_getInstance(), __SAFE_CAST(GameState, AdjustmentScreenState_getInstance()));
+
+				return;
+			}
+			else if(K_STA & userInput.pressedKey)
+			{
+				// pause game and switch to pause screen state
+//				Game_pause(Game_getInstance(), __SAFE_CAST(GameState, PauseScreenState_getInstance()));
+
+				return;
+			}
+		}
+
+	//	Object_fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+
 	/*
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -160,6 +191,9 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 		);
 	*/
 	}
+
+	Object_fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+
 }
 
 // handle event
@@ -169,10 +203,14 @@ static void PongState_onFadeInComplete(PongState this __attribute__ ((unused)), 
 
 	// enable user input
 	Game_enableKeypad(Game_getInstance());
+
+	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
 }
 
 // handle event
 static void PongState_onFadeOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "PongState::onFadeOutComplete: null this");
+
+	Player_gameIsOver(Player_getInstance(), __SAFE_CAST(GameState, this));
 }
