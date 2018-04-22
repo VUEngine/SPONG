@@ -199,7 +199,7 @@ BgmapSpriteROMDef PADDLE_LEFT_L_SPRITE =
 		// texture definition
 		(TextureDefinition*)&PADDLE_LEFT_L_TX,
 
-		// transparent
+		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
 
 		// displacement
@@ -272,7 +272,7 @@ BgmapSpriteROMDef PADDLE_LEFT_R_SPRITE =
 		// texture definition
 		(TextureDefinition*)&PADDLE_LEFT_R_TX,
 
-		// transparent
+		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
 
 		// displacement
