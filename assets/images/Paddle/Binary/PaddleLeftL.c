@@ -1,9 +1,9 @@
 
-//{{BLOCK(PaddleL)
+//{{BLOCK(PaddleLeftL)
 
 //======================================================================
 //
-//	PaddleL, 32x96@2, 
+//	PaddleLeftL, 32x96@2, 
 //	+ 49 tiles not compressed
 //	+ regular map (flat), not compressed, 4x12 
 //	Total size: 784 + 96 = 880
@@ -13,7 +13,7 @@
 //
 //======================================================================
 
-const unsigned int PaddleLTiles[196] __attribute__((aligned(4)))=
+const unsigned int PaddleLeftLTiles[196] __attribute__((aligned(4)))=
 {
 	0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF800000,0xFAE0AAE0,0xAEE0AEE0,
 	0x00000000,0xFFFF0000,0xFFFFAAAA,0xAAAAAAAA,0x00000000,0xFFFF0000,0xFFFFAAAA,0xAAAAAAAA,
@@ -45,7 +45,7 @@ const unsigned int PaddleLTiles[196] __attribute__((aligned(4)))=
 	0x019A019A,0x01AA01A5,0x00000055,0x00000000,
 };
 
-const unsigned short PaddleLMap[48] __attribute__((aligned(4)))=
+const unsigned short PaddleLeftLMap[48] __attribute__((aligned(4)))=
 {
 	0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,0x0008,
 	0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F,0x0010,
@@ -55,4 +55,4 @@ const unsigned short PaddleLMap[48] __attribute__((aligned(4)))=
 	0x0029,0x002A,0x002B,0x002C,0x002D,0x002E,0x002F,0x0030,
 };
 
-//}}BLOCK(PaddleL)
+//}}BLOCK(PaddleLeftL)

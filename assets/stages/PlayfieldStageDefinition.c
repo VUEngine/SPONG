@@ -41,12 +41,16 @@ extern EntityDefinition PLAYFIELD_IM;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
 
-extern CharSetDefinition PADDLE_L_CH;
-extern CharSetDefinition PADDLE_R_CH;
+extern CharSetDefinition PADDLE_LEFT_L_CH;
+extern CharSetDefinition PADDLE_LEFT_R_CH;
+extern CharSetDefinition PADDLE_RIGHT_L_CH;
+extern CharSetDefinition PADDLE_RIGHT_R_CH;
 extern CharSetDefinition PLAYFIELD_CH;
 
-extern TextureDefinition PADDLE_L_TX;
-extern TextureDefinition PADDLE_R_TX;
+extern TextureDefinition PADDLE_LEFT_L_TX;
+extern TextureDefinition PADDLE_LEFT_R_TX;
+extern TextureDefinition PADDLE_RIGHT_L_TX;
+extern TextureDefinition PADDLE_RIGHT_R_TX;
 extern TextureDefinition PLAYFIELD_TX;
 
 extern u16 GAME_BGM_1[][2];
@@ -136,8 +140,10 @@ FontROMDef* const PLAYFIELD_STAGE_ST_FONTS[] =
 
 CharSetROMDef* const PLAYFIELD_STAGE_ST_CHARSETS[] =
 {
-	&PADDLE_L_CH,
-	&PADDLE_R_CH,
+	&PADDLE_LEFT_L_CH,
+	&PADDLE_LEFT_R_CH,
+	&PADDLE_RIGHT_L_CH,
+	&PADDLE_RIGHT_R_CH,
 	&PLAYFIELD_CH,
 
 	NULL
@@ -145,8 +151,10 @@ CharSetROMDef* const PLAYFIELD_STAGE_ST_CHARSETS[] =
 
 TextureDefinition* const PLAYFIELD_STAGE_ST_TEXTURES[] =
 {
-	&PADDLE_L_TX,
-	&PADDLE_R_TX,
+	&PADDLE_LEFT_L_TX,
+	&PADDLE_LEFT_R_TX,
+	&PADDLE_RIGHT_L_TX,
+	&PADDLE_RIGHT_R_TX,
 	&PLAYFIELD_TX,
 
 	NULL

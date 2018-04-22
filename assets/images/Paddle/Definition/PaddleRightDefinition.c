@@ -35,10 +35,10 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PaddleLTiles[];
-extern BYTE PaddleLMap[];
-extern BYTE PaddleRTiles[];
-extern BYTE PaddleRMap[];
+extern BYTE PaddleRightLTiles[];
+extern BYTE PaddleRightLMap[];
+extern BYTE PaddleRightRTiles[];
+extern BYTE PaddleRightRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -47,106 +47,12 @@ extern BYTE PaddleRMap[];
 
 /* Animations */
 
-AnimationFunctionROMDef PADDLE_RETRACTED_ANIM =
-{
-	// number of frames of this animation function
-	1,
+extern AnimationDescription PADDLE_ANIM;
 
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"Retracted",
-};
-
-AnimationFunctionROMDef PADDLE_EJECTED_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"Ejected",
-};
-
-AnimationFunctionROMDef PADDLE_EJECT_ANIM =
-{
-	// number of frames of this animation function
-	2,
-
-	// frames to play in animation
-	{1, 2},
-
-	// number of cycles a frame of animation is displayed
-	4,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"Eject",
-};
-
-AnimationFunctionROMDef PADDLE_RETRACT_ANIM =
-{
-	// number of frames of this animation function
-	3,
-
-	// frames to play in animation
-	{2, 1, 0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"Retract",
-};
-
-// an animation definition
-AnimationDescriptionROMDef PADDLE_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&PADDLE_RETRACTED_ANIM,
-		(AnimationFunction*)&PADDLE_EJECTED_ANIM,
-		(AnimationFunction*)&PADDLE_EJECT_ANIM,
-		(AnimationFunction*)&PADDLE_RETRACT_ANIM,
-		NULL,
-	}
-};
 
 /* Left Sprite */
 
-CharSetROMDef PADDLE_L_CH =
+CharSetROMDef PADDLE_RIGHT_L_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -158,16 +64,16 @@ CharSetROMDef PADDLE_L_CH =
 	__ANIMATED_SINGLE,
 
 	// char definition
-	PaddleLTiles,
+	PaddleRightLTiles,
 };
 
-TextureROMDef PADDLE_L_TX =
+TextureROMDef PADDLE_RIGHT_L_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PADDLE_L_CH,
+	(CharSetDefinition*)&PADDLE_RIGHT_L_CH,
 
 	// bgmap definition
-	PaddleLMap,
+	PaddleRightLMap,
 
 	// cols (max 64)
 	4,
@@ -190,14 +96,14 @@ TextureROMDef PADDLE_L_TX =
 	false,
 };
 
-ObjectSpriteROMDef PADDLE_L_SPRITE =
+BgmapSpriteROMDef PADDLE_RIGHT_L_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(ObjectAnimatedSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&PADDLE_L_TX,
+		(TextureDefinition*)&PADDLE_RIGHT_L_TX,
 
 		// transparent
 		false,
@@ -208,7 +114,10 @@ ObjectSpriteROMDef PADDLE_L_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_OBJECT,
+	__WORLD_BGMAP,
+
+	// pointer to affine/hbias manipulation function
+	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_LON,
@@ -216,7 +125,7 @@ ObjectSpriteROMDef PADDLE_L_SPRITE =
 
 /* Right Sprite */
 
-CharSetROMDef PADDLE_R_CH =
+CharSetROMDef PADDLE_RIGHT_R_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -228,16 +137,16 @@ CharSetROMDef PADDLE_R_CH =
 	__ANIMATED_SINGLE,
 
 	// char definition
-	PaddleRTiles,
+	PaddleRightRTiles,
 };
 
-TextureROMDef PADDLE_R_TX =
+TextureROMDef PADDLE_RIGHT_R_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PADDLE_R_CH,
+	(CharSetDefinition*)&PADDLE_RIGHT_R_CH,
 
 	// bgmap definition
-	PaddleRMap,
+	PaddleRightRMap,
 
 	// cols (max 64)
 	4,
@@ -260,14 +169,14 @@ TextureROMDef PADDLE_R_TX =
 	false,
 };
 
-ObjectSpriteROMDef PADDLE_R_SPRITE =
+BgmapSpriteROMDef PADDLE_RIGHT_R_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(ObjectAnimatedSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&PADDLE_R_TX,
+		(TextureDefinition*)&PADDLE_RIGHT_R_TX,
 
 		// transparent
 		false,
@@ -278,7 +187,10 @@ ObjectSpriteROMDef PADDLE_R_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_OBJECT,
+	__WORLD_BGMAP,
+
+	// pointer to affine/hbias manipulation function
+	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_RON,
@@ -286,71 +198,11 @@ ObjectSpriteROMDef PADDLE_R_SPRITE =
 
 /* Entity */
 
-ObjectSpriteROMDef* const PADDLE_SPRITES[] =
+BgmapSpriteROMDef* const PADDLE_RIGHT_SPRITES[] =
 {
-	&PADDLE_L_SPRITE,
-	&PADDLE_R_SPRITE,
+	&PADDLE_RIGHT_L_SPRITE,
+	&PADDLE_RIGHT_R_SPRITE,
 	NULL
-};
-
-
-ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
-{
-	// wall collider
-	{
-		// shape
-		__TYPE(Ball),
-
-		// size (x, y, z)
-		{16, 16, 16},
-
-		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
-
-		// rotation (x, y, z)
-		{0, 0, 0},
-
-		// scale (x, y, z)
-		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
-
-		// if true this shape checks for collisions against other shapes
-		true,
-
-		// layers in which I live
-		kPlayFieldLayer | kPlayFieldPaddleHelperLayer,
-
-		// layers to ignore when checking for collisions
-		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldLeftFloorLayer | kPlayFieldRightFloorLayer),
-	},
-
-	// ball collider
-	{
-		// shape
-		__TYPE(Box),
-
-		// size (x, y, z)
-		{32, 32, 8},
-
-		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
-
-		// rotation (x, y, z)
-		{0, 38, 0},
-
-		// scale (x, y, z)
-		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
-
-		// if true this shape checks for collisions against other shapes
-		false,
-
-		// layers in which I live
-		kPlayFieldLayer | kPlayFieldPaddleLayer,
-
-		// layers to ignore when checking for collisions
-		kAllLayers,
-	},
-
-	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
 };
 
 ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
@@ -412,66 +264,7 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
 };
 
-
-PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
-{
-	// mass
-	__F_TO_FIX10_6(0.3f),
-
-	// friction
-	__F_TO_FIX10_6(0.0f),
-
-	// bounciness
-	__F_TO_FIX10_6(0.0f),
-
-	// maximum velocity
-	{0, 0, 0}
-};
-
-PaddleROMDef PADDLE_LEFT_AC =
-{
-	{
-		{
-			{
-				// class allocator
-				__TYPE(Paddle),
-
-				// sprites
-				(SpriteROMDef**)PADDLE_SPRITES,
-
-				// collision shapes
-				(ShapeDefinition*)PADDLE_LEFT_AC_SHAPES,
-
-				// size
-				// if 0, width and height will be inferred from the first sprite's texture's size
-				{0, 0, 0},
-
-				// gameworld's character's type
-				kPaddleType,
-
-				// physical specification
-				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
-			},
-
-			// pointer to the animation definition for the item
-			(AnimationDescription*)&PADDLE_ANIM,
-
-			// initial animation
-			"Ejected",
-		},
-
-		// true to create a body
-		true,
-
-		// axes subject to gravity
-		__Z_AXIS
-	},
-
-	// minimum velocity
-	{0, 0, 0},
-	// maximum velocity
-	{0, 0, 0},
-};
+extern PhysicalSpecification PADDLE_AC_PHYSICAL_PROPERTIES;
 
 PaddleROMDef PADDLE_RIGHT_AC =
 {
@@ -482,7 +275,7 @@ PaddleROMDef PADDLE_RIGHT_AC =
 				__TYPE(Paddle),
 
 				// sprites
-				(SpriteROMDef**)PADDLE_SPRITES,
+				(SpriteROMDef**)PADDLE_RIGHT_SPRITES,
 
 				// collision shapes
 				(ShapeDefinition*)PADDLE_RIGHT_AC_SHAPES,
