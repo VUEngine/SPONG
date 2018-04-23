@@ -35,6 +35,21 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//											CLASS'S MACROS
+//---------------------------------------------------------------------------------------------------------
+
+#define START_X_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 100))
+#define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 100))
+#define START_Z_FORCE	0
+
+#define MINIMUM_HORIZONTAL_SPEED						__I_TO_FIX10_6(5)
+#define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(15)
+#define FORCE_TO_APPLY_WHEN_VERTICAL_SPEED_IS_ZERO		__I_TO_FIX10_6(-60)
+#define FORCE_DECREASE_PER_CYCLE						__I_TO_FIX10_6(1)
+#define SPEED_X_MULTIPLIER								__I_TO_FIX10_6(3)
+#define SPEED_Y_MULTIPLIER								__I_TO_FIX10_6(2)
+
+//---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
@@ -59,6 +74,7 @@ void PongBall_constructor(PongBall this, PongBallDefinition* PongBallDefinition,
 
 	// save definition
 	this->PongBallDefinition = PongBallDefinition;
+	this->modifierForce = (Vector3D){0, 0, 0};
 }
 
 // class's constructor
@@ -85,26 +101,35 @@ void PongBall_update(PongBall this, u32 elapsedTime)
 {
 	__CALL_BASE_METHOD(Actor, update , this, elapsedTime);
 
-	//Shape_show(__SAFE_CAST(Shape, VirtualList_front(this->shapes)));
+	Velocity velocity = Body_getVelocity(this->body);
 	Rotation localRotation = this->transformation.localRotation;
-	localRotation.z += __FIX10_6_TO_I(Vector3D_squareLength(Body_getVelocity(this->body))) >> 4;
-	Entity_setLocalRotation(this, &localRotation);
-//	Body_print(this->body, 1, 1);
+
+	if(0 <= velocity.x)
+	{
+		localRotation.z += __FIX10_6_TO_I(Vector3D_squareLength(Body_getVelocity(this->body))) >> 4;
+	}
+	else
+	{
+		localRotation.z -= __FIX10_6_TO_I(Vector3D_squareLength(Body_getVelocity(this->body))) >> 4;
+	}
+
+	Entity_setLocalRotation(__SAFE_CAST(Entity, this), &localRotation);
+
 }
 
 // start moving
 void PongBall_startMovement(PongBall this)
 {
 	long seed = Utilities_randomSeed();
-/*
+
 	Force force =
 	{
-		__I_TO_FIX10_6(Utilities_random(seed, 10)),
-		__I_TO_FIX10_6(Utilities_random(seed, 10)),
-		0,
+		START_X_FORCE,
+		START_Y_FORCE,
+		START_Z_FORCE,
 	};
 
-	Actor_addForce(__SAFE_CAST(Actor, this), &force);*/
+	Actor_addForce(__SAFE_CAST(Actor, this), &force);
 }
 
 // move back to ejector
@@ -128,40 +153,24 @@ bool PongBall_handleMessage(PongBall this, Telegram telegram)
 
 bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation)
 {
-
 	ASSERT(this, "Hero::enterCollision: null this");
 	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
 
 	Shape collidingShape = collisionInformation->collidingShape;
 	SpatialObject collidingObject = Shape_getOwner(collidingShape);
 
-	SolutionVector solutionVector = collisionInformation->solutionVector;
-	Velocity velocity = Body_getVelocity(this->body);
-	Vector3D direction = Vector3D_normalize(velocity);
-
-	Force force =
-	{
-		0,
-		0,
-		__I_TO_FIX10_6(-100)
-//			0 >= collisionInformation->solutionVector.direction.z ? __FIX10_6_MULT(__I_TO_FIX10_6(-100), (__1I_FIX10_6 - __ABS(collisionInformation->solutionVector.direction.z))) : 0
-	};
-
-	bool addForce = false;
+	Velocity velocityModifier = (Vector3D){0, 0, 0};
 
 	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
 	{
 		case kPaddleType:
 
-			addForce = true;
-			force.y = this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x;
-			force.y += this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y;
-			force.y = __FIX10_6_MULT(force.y, __I_TO_FIX10_6(-100));
+			velocityModifier.x = __FIX10_6_MULT(this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x, SPEED_X_MULTIPLIER);
+			velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y, SPEED_Y_MULTIPLIER);
 			break;
 
 		case kWall:
 		{
-			addForce = true;
 			static int leftScore = 0;
 			static int rightScore = 0;
 
@@ -184,11 +193,54 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
 
-	if(addForce)
+	if(velocityModifier.x |velocityModifier.y)
 	{
+		Velocity velocity = Body_getVelocity(this->body);
 
-		Actor_addForce(__SAFE_CAST(Actor, this), &force);
+		if(velocity.z)
+		{
+			// make sure a minimum vertical speed
+			if(0 > velocity.z && __ABS(velocity.z) < MINIMUM_DEPTH_SPEED)
+			{
+				velocityModifier.z = -(MINIMUM_DEPTH_SPEED - __ABS(velocity.z));
+			}
+		}
+		else
+		{
+			// don't allow me to move flat
+				velocityModifier.z = -(MINIMUM_DEPTH_SPEED - __ABS(velocity.z));
+		}
 
+		if(velocity.x)
+		{
+			// make sure a minimum vertical speed
+			if(__ABS(velocity.x) < MINIMUM_HORIZONTAL_SPEED)
+			{
+				if(0 <= velocity.x)
+				{
+					velocityModifier.x = (MINIMUM_HORIZONTAL_SPEED);
+				}
+				else
+				{
+					velocityModifier.x = -(MINIMUM_HORIZONTAL_SPEED);
+				}
+			}
+		}
 	}
+
+	Body_modifyVelocity(this->body, &velocityModifier);
+
 	return collisionResult;
+}
+
+fix10_6 PongBall_getFrictionOnCollision(PongBall this __attribute__ ((unused)), SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)))
+{
+	ASSERT(this, "PongBall::getFrictionOnCollision: null this");
+
+	return 0;
+}
+
+fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this __attribute__ ((unused)))
+{
+	return 0;
 }

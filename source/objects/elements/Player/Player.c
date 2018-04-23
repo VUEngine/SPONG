@@ -271,7 +271,7 @@ static void Player_stopPaddles(Player this, s8 horizontalInput, s8 verticalInput
 	{
 		if(this->paddles[i])
 		{
-			Paddle_stopTowards(this->paddles[i], direction);
+			//Paddle_stopTowards(this->paddles[i], direction);
 		}
 	}
 }

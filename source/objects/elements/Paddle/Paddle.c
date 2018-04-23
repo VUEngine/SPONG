@@ -35,8 +35,8 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define HORIZONTAL_FORCE		60
-#define VERTICAL_FORCE			60
+#define HORIZONTAL_FORCE		80
+#define VERTICAL_FORCE			80
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -64,7 +64,6 @@ void Paddle_constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id,
 
 	// save definition
 	this->paddleDefinition = paddleDefinition;
-	this->rotation = (Rotation){0, 0, 0};
 	this->paddleShape = NULL;
 }
 
@@ -86,8 +85,6 @@ void Paddle_ready(Paddle this, bool recursive)
 	__CALL_BASE_METHOD(Actor, ready, this, recursive);
 
 	Paddle_stopMovement(this);
-
-	Entity_setLocalRotation(__SAFE_CAST(Entity, this), &this->rotation);
 
 	this->paddleShape = VirtualList_back(this->shapes);
 
@@ -121,8 +118,6 @@ bool Paddle_handleMessage(Paddle this, Telegram telegram)
 void Paddle_setExtraInfo(Paddle this, void* extraInfo)
 {
 	ASSERT(this, "Paddle::setExtraInfo: null this");
-
-	this->rotation = *((Rotation*)extraInfo);
 }
 
 

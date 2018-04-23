@@ -92,9 +92,6 @@ const CollisionExtraInfo splitterCollision =
 	kPlayFieldSplitterLayer
 };
 
-const Rotation leftPaddleRotation = {0, 0, 0};
-const Rotation rightPaddleRotation = {0, 0, 256};
-
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
@@ -102,20 +99,20 @@ const Rotation rightPaddleRotation = {0, 0, 256};
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-	{&PLAYFIELD_EN, 			{192,    120,     64, 0}, 	0, NULL, NULL, NULL, false},
+	{&PLAYFIELD_EN, 			{192,    120,     96+8, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&PADDLE_LEFT_AC, 			{192-32, 112,     48, 0}, 	0, "LeftPd", NULL, (void*)&leftPaddleRotation, false},
-	{&PADDLE_RIGHT_AC, 			{192+96, 112,     48, 0}, 	0, "RightPd", NULL, (void*)&rightPaddleRotation, false},
-	{&PONG_BALL_AC, 			{ 96,    112,    -80, 0}, 	0, "PongBall", NULL, NULL, true},
+	{&PADDLE_LEFT_AC, 			{192-96, 112,     96, 0}, 	0, "LeftPd", NULL, NULL, false},
+	{&PADDLE_RIGHT_AC, 			{192+96, 112,     96, 0}, 	0, "RightPd", NULL, NULL, false},
+	{&PONG_BALL_AC, 			{192,    112,     0, 0}, 	0, "PongBall", NULL, NULL, true},
 
-	{&COLLISION_CL,				{192-96, 112,     64, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
-	{&COLLISION_CL,				{192+96, 112,     64, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
-	{&COLLISION_CL,				{192,    112,      0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&COLLISION_CL,				{192-96, 112,     96+16, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
+	{&COLLISION_CL,				{192+96, 112,     96+16, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
+	{&COLLISION_CL,				{192,    112,      -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
 	{&COLLISION_CL,				{  0+12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
 	{&COLLISION_CL,				{384-12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
 	{&COLLISION_CL,				{192,    16+12,    0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
 	{&COLLISION_CL,				{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{&COLLISION_CL,				{192,    112,      0, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
+	{&COLLISION_CL,				{192,    112,     48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
 //	{&TRANSITION_LAYER_B_AG,	{192,    112,      0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 

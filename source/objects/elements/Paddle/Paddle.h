@@ -53,7 +53,6 @@ __CLASS(Paddle);
 		Actor_ATTRIBUTES																				\
 		/* definition pointer */																		\
 		PaddleDefinition* paddleDefinition;																\
-		Rotation rotation;																				\
 		Shape paddleShape;																				\
 
 

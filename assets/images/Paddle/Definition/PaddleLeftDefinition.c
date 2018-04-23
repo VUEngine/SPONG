@@ -311,7 +311,7 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		{16, 16, 16},
 
 		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
+		{0, 0, -8, 0},
 
 		// rotation (x, y, z)
 		{0, 0, 0},
@@ -335,13 +335,13 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		__TYPE(Box),
 
 		// size (x, y, z)
-		{32, 32, 8},
+		{48, 48, 8},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},
 
 		// rotation (x, y, z)
-		{0, 38, 0},
+		{0, 28, 0},
 
 		// scale (x, y, z)
 		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
@@ -362,13 +362,13 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
-	__F_TO_FIX10_6(0.3f),
+	__F_TO_FIX10_6(0.25f),
 
 	// friction
-	__F_TO_FIX10_6(0.0f),
+	__F_TO_FIX10_6(0.3f),
 
 	// bounciness
-	__F_TO_FIX10_6(0.0f),
+	__F_TO_FIX10_6(0.1f),
 
 	// maximum velocity
 	{0, 0, 0}

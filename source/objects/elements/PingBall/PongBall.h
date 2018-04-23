@@ -44,6 +44,8 @@
 		__VIRTUAL_SET(ClassName, PongBall, update);														\
 		__VIRTUAL_SET(ClassName, PongBall, handleMessage);												\
 		__VIRTUAL_SET(ClassName, PongBall, enterCollision);												\
+		__VIRTUAL_SET(ClassName, PongBall, getFrictionOnCollision);										\
+		__VIRTUAL_SET(ClassName, PongBall, getSurroundingFrictionCoefficient);							\
 
 __CLASS(PongBall);
 
@@ -51,6 +53,7 @@ __CLASS(PongBall);
 		Actor_ATTRIBUTES																				\
 		/* definition pointer */																		\
 		PongBallDefinition* PongBallDefinition;															\
+		Force modifierForce;																			\
 
 
 typedef struct PongBallDefinition
@@ -84,6 +87,8 @@ void PongBall_ready(PongBall this, bool recursive);
 void PongBall_update(PongBall this, u32 elapsedTime);
 bool PongBall_handleMessage(PongBall this, Telegram telegram);
 bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation);
+fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)));
+fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
 
 
 #endif

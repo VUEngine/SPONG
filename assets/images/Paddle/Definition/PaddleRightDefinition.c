@@ -216,7 +216,7 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 		{16, 16, 16},
 
 		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
+		{0, 0, -8, 0},
 
 		// rotation (x, y, z)
 		{0, 0, 0},
@@ -240,13 +240,13 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 		__TYPE(Box),
 
 		// size (x, y, z)
-		{32, 32, 8},
+		{48, 48, 8},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},
 
 		// rotation (x, y, z)
-		{0, -38, 0},
+		{0, -28, 0},
 
 		// scale (x, y, z)
 		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
