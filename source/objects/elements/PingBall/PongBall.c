@@ -29,6 +29,7 @@
 #include <Optics.h>
 #include <CollisionManager.h>
 #include <Utilities.h>
+#include <GameEvents.h>
 #include <MessageDispatcher.h>
 #include <debugUtilities.h>
 #include "PongBall.h"
@@ -38,8 +39,8 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define START_X_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 100))
-#define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 100))
+#define START_X_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150) - 50)
+#define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150) - 50)
 #define START_Z_FORCE	0
 
 #define MINIMUM_HORIZONTAL_SPEED						__I_TO_FIX10_6(5)
@@ -174,17 +175,21 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			static int leftScore = 0;
 			static int rightScore = 0;
 
-			u32 collidingShapeLayers = Shape_getLayers(collidingShape);
+			const Vector3D* collidingObjectPosition = __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject);
 
-			if(kPlayFieldLeftFloorLayer == collidingShapeLayers)
+			if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
 			{
 				rightScore++;
 				PRINT_INT(rightScore, 45, 0);
+
+				Object_fireEvent(this, kEventPongBallHitFloor);
 			}
-			else if(kPlayFieldRightFloorLayer == collidingShapeLayers)
+			else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
 			{
 				leftScore++;
 				PRINT_INT(leftScore, 1, 0);
+
+				Object_fireEvent(this, kEventPongBallHitFloor);
 			}
 		}
 
@@ -193,7 +198,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
 
-	if(velocityModifier.x |velocityModifier.y)
+	if(velocityModifier.x | velocityModifier.y)
 	{
 		Velocity velocity = Body_getVelocity(this->body);
 

@@ -40,6 +40,7 @@ extern EntityDefinition PADDLE_RIGHT_AC;
 extern EntityDefinition PLAYFIELD_EN;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
 extern EntityDefinition COLLISION_CL;
+extern EntityDefinition PONG_BALL_SHADOW_IM;
 
 extern CharSetDefinition PADDLE_LEFT_L_CH;
 extern CharSetDefinition PADDLE_LEFT_R_CH;
@@ -74,16 +75,10 @@ const CollisionExtraInfo ceilingCollision =
 	kPlayFieldCeilingLayer
 };
 
-const CollisionExtraInfo leftFloorCollision =
+const CollisionExtraInfo floorCollision =
 {
-	{24 * 8, 	28 * 8, 	4 * 8},
-	kPlayFieldLeftFloorLayer
-};
-
-const CollisionExtraInfo rightFloorCollision =
-{
-	{24 * 8, 	28 * 8, 	4 * 8},
-	kPlayFieldRightFloorLayer
+	{48 * 8, 	28 * 8, 	4 * 8},
+	kPlayFieldFloorLayer
 };
 
 const CollisionExtraInfo splitterCollision =
@@ -104,9 +99,9 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&PADDLE_LEFT_AC, 			{192-96, 112,     96, 0}, 	0, "LeftPd", NULL, NULL, false},
 	{&PADDLE_RIGHT_AC, 			{192+96, 112,     96, 0}, 	0, "RightPd", NULL, NULL, false},
 	{&PONG_BALL_AC, 			{192,    112,     0, 0}, 	0, "PongBall", NULL, NULL, true},
+	{&PONG_BALL_SHADOW_IM,		{192,    112,     96+8+1, 0}, 	0, "BallShwd", NULL, NULL, true},
 
-	{&COLLISION_CL,				{192-96, 112,     96+16, 0},	0, NULL, NULL, (void*)&leftFloorCollision, false}, // far border
-	{&COLLISION_CL,				{192+96, 112,     96+16, 0},	0, NULL, NULL, (void*)&rightFloorCollision, false}, // far border
+	{&COLLISION_CL,				{192, 112,     96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
 	{&COLLISION_CL,				{192,    112,      -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
 	{&COLLISION_CL,				{  0+12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
 	{&COLLISION_CL,				{384-12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border

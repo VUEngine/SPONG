@@ -308,10 +308,10 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		__TYPE(Ball),
 
 		// size (x, y, z)
-		{16, 16, 16},
+		{12, 12, 12},
 
 		// displacement (x, y, z, p)
-		{0, 0, -8, 0},
+		{0, 0, -6, 0},
 
 		// rotation (x, y, z)
 		{0, 0, 0},
@@ -326,7 +326,7 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		kPlayFieldLayer | kPlayFieldPaddleHelperLayer,
 
 		// layers to ignore when checking for collisions
-		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldLeftFloorLayer | kPlayFieldRightFloorLayer),
+		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldFloorLayer | kPlayFieldFloorLayer),
 	},
 
 	// ball collider
@@ -368,7 +368,7 @@ PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(0.3f),
 
 	// bounciness
-	__F_TO_FIX10_6(0.1f),
+	__F_TO_FIX10_6(0.3f),
 
 	// maximum velocity
 	{0, 0, 0}

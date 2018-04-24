@@ -47,8 +47,7 @@ enum CollisionLayers
     kSolidLayer		 					= 1 << (kNoLayer + 0), 	// hex 00000001
 	kPlayFieldLayer						= 1 << (kNoLayer + 1), 	// hex 00000002
 	kPlayFieldWallsLayer				= 1 << (kNoLayer + 2), 	// hex 00000004
-	kPlayFieldLeftFloorLayer			= 1 << (kNoLayer + 3), 	// hex 00000008
-	kPlayFieldRightFloorLayer			= 1 << (kNoLayer + 4), 	// hex 00000010
+	kPlayFieldFloorLayer				= 1 << (kNoLayer + 4), 	// hex 00000010
 	kPlayFieldCeilingLayer				= 1 << (kNoLayer + 5), 	// hex 00000020
 	kPlayFieldSplitterLayer				= 1 << (kNoLayer + 6), 	// hex 00000040
 	kPlayFieldBallLayer					= 1 << (kNoLayer + 7), 	// hex 00000080
@@ -57,5 +56,10 @@ enum CollisionLayers
     kAllLayers							= 0xFFFFFFFF,
 };
 
+enum PlatformerLevelStateMessageTypes
+{
+	kLevelSetUp = kLastEngineMessage + 1,
+	kFollowPongBall,
+};
 
 #endif
