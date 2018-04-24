@@ -49,7 +49,7 @@ AnimationFunctionROMDef PONG_BALL_PARTICLE_DEFAULT_ANIM =
 	4,
 
 	// frames to play in animation
-	{3, 2, 1, 0},
+	{0, 1, 2, 3},
 
 	// number of cycles a frame of animation is displayed
 	16,
@@ -79,11 +79,11 @@ CharSetROMDef PONG_BALL_PARTICLE_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	1,
+	5,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__NOT_ANIMATED,
+	__ANIMATED_MULTI,
 
 	// char definition
 	PongBallParticleTiles,
@@ -109,7 +109,7 @@ TextureROMDef PONG_BALL_PARTICLE_TX =
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
 	// __ANIMATED_MULTI: total number of frames
-	1,
+	5,
 
 	// palette number (0-3)
 	0,
