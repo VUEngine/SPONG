@@ -25,7 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Entity.h>
-#include <PongBallShadow.h>
+#include <PongBallLight.h>
 #include <macros.h>
 
 
@@ -33,15 +33,15 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BallTiles[];
-extern BYTE BallMap[];
+extern BYTE PongBallLightTiles[];
+extern BYTE PongBallLightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef PONG_BALL_SHADOW_CH =
+CharSetROMDef PONG_BALL_LIGHT_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -53,16 +53,16 @@ CharSetROMDef PONG_BALL_SHADOW_CH =
 	__NOT_ANIMATED,
 
 	// char definition
-	BallTiles,
+	PongBallLightTiles,
 };
 
-TextureROMDef PONG_BALL_SHADOW_TX =
+TextureROMDef PONG_BALL_LIGHT_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PONG_BALL_SHADOW_CH,
+	(CharSetDefinition*)&PONG_BALL_LIGHT_CH,
 
 	// bgmap definition
-	BallMap,
+	PongBallLightMap,
 
 	// cols (max 64)
 	3,
@@ -85,17 +85,17 @@ TextureROMDef PONG_BALL_SHADOW_TX =
 	false,
 };
 
-BgmapSpriteROMDef PONG_BALL_SHADOW_SPRITE =
+BgmapSpriteROMDef PONG_BALL_LIGHT_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&PONG_BALL_SHADOW_TX,
+		(TextureDefinition*)&PONG_BALL_LIGHT_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
-		__TRANSPARENCY_NONE,
+		__TRANSPARENCY_EVEN,
 
 		// displacement
 		{0, 0, 16, 0},
@@ -115,20 +115,20 @@ BgmapSpriteROMDef PONG_BALL_SHADOW_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMDef* const PONG_BALL_SHADOW_SPRITES[] =
+BgmapSpriteROMDef* const PONG_BALL_LIGHT_SPRITES[] =
 {
-	&PONG_BALL_SHADOW_SPRITE,
+	&PONG_BALL_LIGHT_SPRITE,
 	NULL
 };
 
-PongBallShadowROMDef PONG_BALL_SHADOW_IM =
+PongBallLightROMDef PONG_BALL_LIGHT_IM =
 {
 	{
 		// class allocator
-		__TYPE(PongBallShadow),
+		__TYPE(PongBallLight),
 
 		// sprites
-		(SpriteROMDef**)PONG_BALL_SHADOW_SPRITES,
+		(SpriteROMDef**)PONG_BALL_LIGHT_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,

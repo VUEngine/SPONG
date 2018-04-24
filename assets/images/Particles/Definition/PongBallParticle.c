@@ -35,14 +35,44 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BallParticleTiles[];
-extern BYTE BallParticleMap[];
+extern BYTE PongBallParticleTiles[];
+extern BYTE PongBallParticleMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
+AnimationFunctionROMDef PONG_BALL_PARTICLE_DEFAULT_ANIM =
+{
+	// number of frames of this animation function
+	4,
+
+	// frames to play in animation
+	{3, 2, 1, 0},
+
+	// number of cycles a frame of animation is displayed
+	16,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"Default",
+};
+
+// an animation definition
+AnimationDescriptionROMDef PONG_BALL_PARTICLE_ANIM =
+{
+	// animation functions
+	{
+		(AnimationFunction*)&PONG_BALL_PARTICLE_DEFAULT_ANIM,
+		NULL,
+	}
+};
 
 CharSetROMDef PONG_BALL_PARTICLE_CH =
 {
@@ -56,7 +86,7 @@ CharSetROMDef PONG_BALL_PARTICLE_CH =
 	__NOT_ANIMATED,
 
 	// char definition
-	BallParticleTiles,
+	PongBallParticleTiles,
 };
 
 TextureROMDef PONG_BALL_PARTICLE_TX =
@@ -65,7 +95,7 @@ TextureROMDef PONG_BALL_PARTICLE_TX =
 	(CharSetDefinition*)&PONG_BALL_PARTICLE_CH,
 
 	// bgmap definition
-	BallParticleMap,
+	PongBallParticleMap,
 
 	// cols (max 64)
 	1,
@@ -92,7 +122,7 @@ ObjectSpriteROMDef PONG_BALL_PARTICLE_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(ObjectSprite),
+		__TYPE(ObjectAnimatedSprite),
 
 		// texture definition
 		(TextureDefinition*)&PONG_BALL_PARTICLE_TX,
@@ -148,10 +178,10 @@ ParticleROMDef PONG_BALL_PARTICLE =
 	(void (*)(Particle))NULL,
 
 	// animation description (used only if sprite is animated)
-	(AnimationDescription*)NULL,
+	(AnimationDescription*)&PONG_BALL_PARTICLE_ANIM,
 
 	// name of animation to play
-	NULL
+	"Default"
 };
 
 ParticleSystemROMDef PONG_BALL_PARTICLES_PS =

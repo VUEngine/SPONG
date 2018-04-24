@@ -57,7 +57,7 @@ CharSetROMDef PADDLE_RIGHT_L_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	16,
+	24,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -79,7 +79,7 @@ TextureROMDef PADDLE_RIGHT_L_TX =
 	4,
 
 	// rows (max 64)
-	4,
+	6,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -130,7 +130,7 @@ CharSetROMDef PADDLE_RIGHT_R_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	16,
+	24,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -152,7 +152,7 @@ TextureROMDef PADDLE_RIGHT_R_TX =
 	4,
 
 	// rows (max 64)
-	4,
+	6,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -213,7 +213,7 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 		__TYPE(Ball),
 
 		// size (x, y, z)
-		{12, 12, 12},
+		{12, 28, 12},
 
 		// displacement (x, y, z, p)
 		{0, 0, -6, 0},
@@ -240,7 +240,7 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 		__TYPE(Box),
 
 		// size (x, y, z)
-		{32, 32, 16},
+		{32, 48, 16},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},
