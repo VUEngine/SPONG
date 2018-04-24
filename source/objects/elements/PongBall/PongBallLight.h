@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PONG_BALL_SHADOW_H_
-#define PONG_BALL_SHADOW_H_
+#ifndef PONG_BALL_LIGHT_H_
+#define PONG_BALL_LIGHT_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -36,34 +36,34 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-#define PongBallShadow_METHODS(ClassName)																\
+#define PongBallLight_METHODS(ClassName)																\
 		Entity_METHODS(ClassName)																		\
 
-#define PongBallShadow_SET_VTABLE(ClassName)															\
+#define PongBallLight_SET_VTABLE(ClassName)																\
 		Entity_SET_VTABLE(ClassName)																	\
-		__VIRTUAL_SET(ClassName, PongBallShadow, ready);												\
-		__VIRTUAL_SET(ClassName, PongBallShadow, update);												\
-		__VIRTUAL_SET(ClassName, PongBallShadow, handleMessage);										\
+		__VIRTUAL_SET(ClassName, PongBallLight, ready);													\
+		__VIRTUAL_SET(ClassName, PongBallLight, update);												\
+		__VIRTUAL_SET(ClassName, PongBallLight, handleMessage);											\
 
-__CLASS(PongBallShadow);
+__CLASS(PongBallLight);
 
-#define PongBallShadow_ATTRIBUTES																		\
+#define PongBallLight_ATTRIBUTES																		\
 		Entity_ATTRIBUTES																				\
 		/* definition pointer */																		\
-		PongBallShadowDefinition* PongBallShadowDefinition;												\
+		PongBallLightDefinition* PongBallLightDefinition;												\
 		PongBall pongBall;																				\
 		fix10_6 pongBallInitialZDistance;																\
 		bool followPongBall;																			\
 
 
-typedef struct PongBallShadowDefinition
+typedef struct PongBallLightDefinition
 {
 	// the base animated entity
 	EntityDefinition entityDefinition;
 
-} PongBallShadowDefinition;
+} PongBallLightDefinition;
 
-typedef const PongBallShadowDefinition PongBallShadowROMDef;
+typedef const PongBallLightDefinition PongBallLightROMDef;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -71,12 +71,12 @@ typedef const PongBallShadowDefinition PongBallShadowROMDef;
 //---------------------------------------------------------------------------------------------------------
 
 // allocator
-__CLASS_NEW_DECLARE(PongBallShadow, PongBallShadowDefinition* pongBallShadowDefinition, s16 id, s16 internalId, const char* const name);
+__CLASS_NEW_DECLARE(PongBallLight, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
 
-void PongBallShadow_constructor(PongBallShadow this, PongBallShadowDefinition* pongBallShadowDefinition, s16 id, s16 internalId, const char* const name);
-void PongBallShadow_destructor(PongBallShadow this);
-void PongBallShadow_ready(PongBallShadow this, bool recursive);
-void PongBallShadow_update(PongBallShadow this, u32 elapsedTime);
-bool PongBallShadow_handleMessage(PongBallShadow this, Telegram telegram);
+void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
+void PongBallLight_destructor(PongBallLight this);
+void PongBallLight_ready(PongBallLight this, bool recursive);
+void PongBallLight_update(PongBallLight this, u32 elapsedTime);
+bool PongBallLight_handleMessage(PongBallLight this, Telegram telegram);
 
 #endif

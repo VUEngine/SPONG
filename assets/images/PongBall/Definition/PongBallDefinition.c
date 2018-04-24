@@ -34,8 +34,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BallTiles[];
-extern BYTE BallMap[];
+extern BYTE PongBallTiles[];
+extern BYTE PongBallMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ CharSetROMDef PONG_BALL_CH =
 	__NOT_ANIMATED,
 
 	// char definition
-	BallTiles,
+	PongBallTiles,
 };
 
 TextureROMDef PONG_BALL_TX =
@@ -63,7 +63,7 @@ TextureROMDef PONG_BALL_TX =
 	(CharSetDefinition*)&PONG_BALL_CH,
 
 	// bgmap definition
-	BallMap,
+	PongBallMap,
 
 	// cols (max 64)
 	3,

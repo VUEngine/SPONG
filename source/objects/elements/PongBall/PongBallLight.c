@@ -32,7 +32,7 @@
 #include <GameEvents.h>
 #include <MessageDispatcher.h>
 #include <debugUtilities.h>
-#include "PongBallShadow.h"
+#include "PongBallLight.h"
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -46,15 +46,15 @@
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(PongBallShadow, Entity);
+__CLASS_DEFINITION(PongBallLight, Entity);
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void PongBallShadow_onPongBallHitFloor(PongBallShadow this, Object eventFirer __attribute__ ((unused)));
-static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object eventFirer __attribute__ ((unused)));
+static void PongBallLight_onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)));
+static void PongBallLight_onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)));
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -62,16 +62,16 @@ static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object even
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(PongBallShadow, PongBallShadowDefinition* pongBallShadowDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(PongBallShadow, pongBallShadowDefinition, id, internalId, name);
+__CLASS_NEW_DEFINITION(PongBallLight, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
+__CLASS_NEW_END(PongBallLight, PongBallLightDefinition, id, internalId, name);
 
 // class's constructor
-void PongBallShadow_constructor(PongBallShadow this, PongBallShadowDefinition* pongBallShadowDefinition, s16 id, s16 internalId, const char* const name)
+void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "PongBallShadow::constructor: null this");
+	ASSERT(this, "PongBallLight::constructor: null this");
 
 	// construct base
-	__CONSTRUCT_BASE(Entity, (EntityDefinition*)&pongBallShadowDefinition->entityDefinition, id, internalId, name);
+	__CONSTRUCT_BASE(Entity, (EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
 
 	// save definition
 	this->pongBall = NULL;
@@ -80,12 +80,12 @@ void PongBallShadow_constructor(PongBallShadow this, PongBallShadowDefinition* p
 }
 
 // class's constructor
-void PongBallShadow_destructor(PongBallShadow this)
+void PongBallLight_destructor(PongBallLight this)
 {
-	ASSERT(this, "PongBallShadow::destructor: null this");
+	ASSERT(this, "PongBallLight::destructor: null this");
 
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
@@ -93,22 +93,22 @@ void PongBallShadow_destructor(PongBallShadow this)
 	__DESTROY_BASE;
 }
 
-void PongBallShadow_ready(PongBallShadow this, bool recursive)
+void PongBallLight_ready(PongBallLight this, bool recursive)
 {
-	ASSERT(this, "PongBallShadow::ready: null this");
+	ASSERT(this, "PongBallLight::ready: null this");
 
 	// call base
 	__CALL_BASE_METHOD(Entity, ready, this, recursive);
 
 	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PONG_BALL_NAME, true));
-	NM_ASSERT(this->pongBall, "PongBallShadow::ready: null pongBall");
+	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z - __VIRTUAL_CALL(SpatialObject, getPosition, this->pongBall)->z;
 	this->followPongBall = true;
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
-void PongBallShadow_update(PongBallShadow this, u32 elapsedTime)
+void PongBallLight_update(PongBallLight this, u32 elapsedTime)
 {
 	__CALL_BASE_METHOD(Entity, update , this, elapsedTime);
 
@@ -129,13 +129,13 @@ void PongBallShadow_update(PongBallShadow this, u32 elapsedTime)
 	}
 }
 
-static void PongBallShadow_onPongBallHitFloor(PongBallShadow this, Object eventFirer __attribute__ ((unused)))
+static void PongBallLight_onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
 	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
 }
 
-static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object eventFirer __attribute__ ((unused)))
+static void PongBallLight_onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
 	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
@@ -150,7 +150,7 @@ static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object even
 	*/
 }
 
-bool PongBallShadow_handleMessage(PongBallShadow this, Telegram telegram)
+bool PongBallLight_handleMessage(PongBallLight this, Telegram telegram)
 {
 	// process message
 	switch(Telegram_getMessage(telegram))
