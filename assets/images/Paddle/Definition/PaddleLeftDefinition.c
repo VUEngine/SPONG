@@ -362,10 +362,10 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 PhysicalSpecificationROMDef PADDLE_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
-	__F_TO_FIX10_6(0.25f),
+	__F_TO_FIX10_6(0.6f),
 
 	// friction
-	__F_TO_FIX10_6(0.3f),
+	__F_TO_FIX10_6(0.4f),
 
 	// bounciness
 	__F_TO_FIX10_6(5.0f),
@@ -413,8 +413,10 @@ PaddleROMDef PADDLE_LEFT_AC =
 		__Z_AXIS
 	},
 
-	// minimum velocity
-	{0, 0, 0},
-	// maximum velocity
-	{0, 0, 0},
+	// force
+	{
+		__I_TO_FIX10_6(70),
+		__I_TO_FIX10_6(70),
+		0
+	}
 };

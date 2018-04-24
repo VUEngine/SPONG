@@ -305,8 +305,10 @@ PaddleROMDef PADDLE_RIGHT_AC =
 		__Z_AXIS
 	},
 
-	// minimum velocity
-	{0, 0, 0},
-	// maximum velocity
-	{0, 0, 0},
+	// force
+	{
+		__I_TO_FIX10_6(70),
+		__I_TO_FIX10_6(70),
+		0
+	}
 };

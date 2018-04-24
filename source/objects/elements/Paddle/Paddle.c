@@ -137,8 +137,8 @@ void Paddle_moveTowards(Paddle this, Direction direction)
 {
 	Force force =
 	{
-		__I_TO_FIX10_6(HORIZONTAL_FORCE * direction.x),
-		__I_TO_FIX10_6(VERTICAL_FORCE * direction.y),
+		__FIX10_6_MULT(this->paddleDefinition->force.x, __I_TO_FIX10_6(direction.x)),
+		__FIX10_6_MULT(this->paddleDefinition->force.y, __I_TO_FIX10_6(direction.y)),
 		0
 	};
 

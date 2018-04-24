@@ -62,11 +62,8 @@ typedef struct PaddleDefinition
 	// the base animated entity
 	ActorDefinition actorDefinition;
 
-	// minimum velocity when moving
-	Velocity minimumVelocity;
-
-	// maximum velocity when moving
-	Velocity maximumVelocity;
+	// force to apply
+	Force force;
 
 } PaddleDefinition;
 

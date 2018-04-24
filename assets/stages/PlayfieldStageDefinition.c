@@ -337,8 +337,8 @@ StageROMDef PLAYFIELD_STAGE_ST =
 	{
 		// gravity
 		{
-			__F_TO_FIX10_6(__GRAVITY_X),
-			__F_TO_FIX10_6(__GRAVITY_Y),
+			__F_TO_FIX10_6(0),
+			__F_TO_FIX10_6(0),
 			__F_TO_FIX10_6(__GRAVITY_Z)
 		},
 

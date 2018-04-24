@@ -348,6 +348,7 @@ static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute
 
 	this->totalLeftScore += this->scoreMultiplier * this->leftScore;
 	this->totalRightScore += this->scoreMultiplier * this->rightScore;
+	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
 	this->scoreMultiplier = 1;
 	this->leftScore = 0;
 	this->rightScore = 0;
@@ -371,11 +372,8 @@ static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribu
 			break;
 	}
 
-	if(0 >= --this->scoreMultiplierThreshold)
-	{
-		this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
-		this->scoreMultiplier += 2;
-	}
+	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+	this->scoreMultiplier += 2;
 
 	Player_printScore(this);
 }
