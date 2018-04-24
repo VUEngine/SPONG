@@ -59,7 +59,7 @@ __CLASS(Player);
 		u32 totalScore;																					\
 		int scoreMultiplierThreshold;																	\
 		u32 scoreMultiplier;																			\
-
+		bool ballIsRolling;																				\
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE

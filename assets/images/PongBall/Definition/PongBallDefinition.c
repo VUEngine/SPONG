@@ -130,7 +130,7 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 		{16, 16, 16},
 
 		// displacement (x, y, z, p)
-		{0, 0, 4, 0},
+		{0, 0, 0, 0},
 
 		// rotation (x, y, z)
 		{0, 0, 0},
@@ -208,5 +208,8 @@ PongBallROMDef PONG_BALL_AC =
 	// minimum velocity
 	{0, 0, 0},
 	// maximum velocity
-	{0, 0, 0},
+	{__I_TO_FIX10_6(8), __I_TO_FIX10_6(6), __I_TO_FIX10_6(13)},
+
+	// maximum velocity
+	{__I_TO_FIX10_6(14), __I_TO_FIX10_6(14), __I_TO_FIX10_6(0)}
 };

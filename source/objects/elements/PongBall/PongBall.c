@@ -48,7 +48,7 @@
 #define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(8)
 #define FORCE_TO_APPLY_WHEN_VERTICAL_SPEED_IS_ZERO		__I_TO_FIX10_6(-60)
 #define FORCE_DECREASE_PER_CYCLE						__I_TO_FIX10_6(1)
-#define SPEED_X_MULTIPLIER								__I_TO_FIX10_6(3)
+#define SPEED_X_MULTIPLIER								__I_TO_FIX10_6(2)
 #define SPEED_Y_MULTIPLIER								__I_TO_FIX10_6(2)
 
 //---------------------------------------------------------------------------------------------------------
@@ -63,21 +63,22 @@ __CLASS_DEFINITION(PongBall, Actor);
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(PongBall, PongBallDefinition* PongBallDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(PongBall, PongBallDefinition, id, internalId, name);
+__CLASS_NEW_DEFINITION(PongBall, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
+__CLASS_NEW_END(PongBall, pongBallDefinition, id, internalId, name);
 
 // class's constructor
-void PongBall_constructor(PongBall this, PongBallDefinition* PongBallDefinition, s16 id, s16 internalId, const char* const name)
+void PongBall_constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
 {
 	ASSERT(this, "PongBall::constructor: null this");
 
 	// construct base
-	__CONSTRUCT_BASE(Actor, (ActorDefinition*)&PongBallDefinition->actorDefinition, id, internalId, name);
+	__CONSTRUCT_BASE(Actor, (ActorDefinition*)&pongBallDefinition->actorDefinition, id, internalId, name);
 
 	// save definition
-	this->PongBallDefinition = PongBallDefinition;
+	this->pongBallDefinition = pongBallDefinition;
 	this->modifierForce = (Vector3D){0, 0, 0};
 	this->paddleEnum = kNoPaddle;
+	this->rolling = false;
 }
 
 // class's constructor
@@ -168,6 +169,8 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	Velocity velocityModifier = (Vector3D){0, 0, 0};
 
+	bool hitFloor = false;
+
 	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
 	{
 		case kPaddleType:
@@ -188,6 +191,9 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 				{
 					velocityModifier.y = __FIX10_6_DIV(__F_TO_FIX10_6(Utilities_random(Utilities_randomSeed(), 10) - 5), __I_TO_FIX10_6(100));
 				}
+
+				this->rolling = false;
+				Body_setMaximumVelocity(this->body, this->pongBallDefinition->maximumVelocity);
 
 				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitPaddle);
 			}
@@ -218,14 +224,23 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			break;
 
 		case kWall:
-/*
-			velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.y), SPEED_Y_MULTIPLIER);
 
-			if(0 > collisionInformation->solutionVector.direction.y)
+			if(this->rolling)
 			{
-				velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(-1), velocityModifier.y);
+				velocityModifier.x = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.x), SPEED_Y_MULTIPLIER);
+
+				if(0 > collisionInformation->solutionVector.direction.x)
+				{
+					velocityModifier.x = -velocityModifier.x;
+				}
+
+				velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.y), SPEED_Y_MULTIPLIER);
+
+				if(0 > collisionInformation->solutionVector.direction.y)
+				{
+					velocityModifier.y = -velocityModifier.y;
+				}
 			}
-			*/
 			break;
 	}
 
@@ -233,7 +248,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	Velocity velocity = Body_getVelocity(this->body);
 
-	if(velocityModifier.x | velocityModifier.y)
+	if(!this->rolling && (velocityModifier.x | velocityModifier.y))
 	{
 		if(velocity.z)
 		{
@@ -248,6 +263,10 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			// don't allow me to move flat
 				velocityModifier.z = -MINIMUM_DEPTH_SPEED;
 		}
+	}
+	else if(this->rolling)
+	{
+		velocityModifier.z = -Body_getVelocity(this->body).z;
 	}
 
 	if(velocityModifier.x)
@@ -310,4 +329,18 @@ fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this __attribute__ (
 int PongBall_getPaddleEnum(PongBall this)
 {
 	return this->paddleEnum;
+}
+
+void PongBall_startRolling(PongBall this)
+{
+	this->rolling = true;
+
+	Body_setMaximumVelocity(this->body, this->pongBallDefinition->bonusVelocity);
+
+	Velocity velocity = Body_getVelocity(this->body);
+
+	velocity.x += 0 < velocity.x ? __ABS(this->pongBallDefinition->bonusVelocity.x) : 0 > velocity.x ? -__ABS(this->pongBallDefinition->bonusVelocity.x) : this->transformation.globalPosition.x > (__SCREEN_WIDTH_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
+	velocity.y += 0 < velocity.y ? __ABS(this->pongBallDefinition->bonusVelocity.y) : 0 > velocity.y ? -__ABS(this->pongBallDefinition->bonusVelocity.y) : this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
+	velocity.z = -velocity.z;
+	Body_modifyVelocity(this->body, &velocity);
 }

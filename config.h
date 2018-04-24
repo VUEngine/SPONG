@@ -311,7 +311,7 @@
 
 #define __GRAVITY_X								(2 * 9.81f)
 #define __GRAVITY_Y								(2 * 9.81f)
-#define __GRAVITY_Z								(2 * 9.81f)
+#define __GRAVITY_Z								(2 * 8.81f)
 
 // Number of bodies to check for gravity on each cycle
 #define __BODIES_TO_CHECK_FOR_GRAVITY			10

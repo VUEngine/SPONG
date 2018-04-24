@@ -35,7 +35,9 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define SCORE_MULTIPLIER_THRESHOLD		5
+#define SCORE_MULTIPLIER_THRESHOLD			10
+#define BONUS_INCREMENT_DELAY				100
+#define SCORE_MULTIPLIER_TO_ENABLE_BONUS	10
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -86,6 +88,7 @@ static void __attribute__ ((noinline)) Player_constructor(Player this)
 	this->totalScore = 0;
 	this->scoreMultiplier = 1;
 	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+	this->ballIsRolling = false;
 }
 
 void Player_destructor(Player this)
@@ -103,6 +106,18 @@ void Player_destructor(Player this)
 bool Player_handleMessage(Player this __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
 {
 	ASSERT(this, "Player::handleMessage: null this");
+
+	switch(Telegram_getMessage(telegram))
+	{
+		case kAddBonusScore:
+
+			this->leftScore += 1;
+			this->rightScore += 1;
+			Player_printScore(this);
+
+			MessageDispatcher_dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
+			break;
+	}
 
 	return false;
 }
@@ -331,30 +346,39 @@ static void Player_ejectPaddles(Player this)
 
 static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)))
 {
-	switch(PongBall_getPaddleEnum(this->pongBall))
+	if(this->scoreMultiplier > SCORE_MULTIPLIER_TO_ENABLE_BONUS)
 	{
-		case kLeftPaddle:
-
-			this->totalLeftScore += this->scoreMultiplier * this->leftScore;
-			this->totalRightScore += this->rightScore;
-			break;
-
-		case kRightPaddle:
-
-			this->totalLeftScore += this->leftScore;
-			this->totalRightScore += this->scoreMultiplier * this->rightScore;
-			break;
+		PongBall_startRolling(this->pongBall);
+		this->ballIsRolling = true;
+		MessageDispatcher_dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
 	}
+	else
+	{
+		switch(PongBall_getPaddleEnum(this->pongBall))
+		{
+			case kLeftPaddle:
 
-	this->totalLeftScore += this->scoreMultiplier * this->leftScore;
-	this->totalRightScore += this->scoreMultiplier * this->rightScore;
-	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
-	this->scoreMultiplier = 1;
-	this->leftScore = 0;
-	this->rightScore = 0;
-	this->totalScore = this->totalLeftScore + this->totalRightScore;
+				this->totalLeftScore += this->scoreMultiplier * this->leftScore;
+				this->totalRightScore += this->rightScore;
+				break;
 
-	Player_printScore(this);
+			case kRightPaddle:
+
+				this->totalLeftScore += this->leftScore;
+				this->totalRightScore += this->scoreMultiplier * this->rightScore;
+				break;
+		}
+
+		this->totalLeftScore += this->scoreMultiplier * this->leftScore;
+		this->totalRightScore += this->scoreMultiplier * this->rightScore;
+		this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+		this->scoreMultiplier = 1;
+		this->leftScore = 0;
+		this->rightScore = 0;
+		this->totalScore = this->totalLeftScore + this->totalRightScore;
+
+		Player_printScore(this);
+	}
 }
 
 static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)))
@@ -380,6 +404,16 @@ static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribu
 
 static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)))
 {
+	if(this->ballIsRolling)
+	{
+		this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+		this->scoreMultiplier = 1;
+
+		this->ballIsRolling = false;
+
+		MessageDispatcher_discardDelayedMessagesFromSender(MessageDispatcher_getInstance(), __SAFE_CAST(Object, this), kAddBonusScore);
+	}
+
 	switch(PongBall_getPaddleEnum(this->pongBall))
 	{
 		case kLeftPaddle:

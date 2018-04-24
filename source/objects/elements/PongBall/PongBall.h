@@ -53,9 +53,10 @@ __CLASS(PongBall);
 #define PongBall_ATTRIBUTES																				\
 		Actor_ATTRIBUTES																				\
 		/* definition pointer */																		\
-		PongBallDefinition* PongBallDefinition;															\
+		PongBallDefinition* pongBallDefinition;															\
 		Force modifierForce;																			\
 		int paddleEnum;																					\
+		bool rolling;																					\
 
 
 typedef struct PongBallDefinition
@@ -69,6 +70,9 @@ typedef struct PongBallDefinition
 	// maximum velocity when moving
 	Velocity maximumVelocity;
 
+	// maximum velocity when moving
+	Velocity bonusVelocity;
+
 } PongBallDefinition;
 
 typedef const PongBallDefinition PongBallROMDef;
@@ -79,9 +83,9 @@ typedef const PongBallDefinition PongBallROMDef;
 //---------------------------------------------------------------------------------------------------------
 
 // allocator
-__CLASS_NEW_DECLARE(PongBall, PongBallDefinition* PongBallDefinition, s16 id, s16 internalId, const char* const name);
+__CLASS_NEW_DECLARE(PongBall, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
 
-void PongBall_constructor(PongBall this, PongBallDefinition* PongBallDefinition, s16 id, s16 internalId, const char* const name);
+void PongBall_constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
 void PongBall_destructor(PongBall this);
 void PongBall_startMovement(PongBall this);
 void PongBall_stopMovement(PongBall this);
@@ -92,6 +96,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)));
 fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
 int PongBall_getPaddleEnum(PongBall this);
+void PongBall_startRolling(PongBall this);
 
 
 #endif
