@@ -43,7 +43,8 @@
 #define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150))
 #define START_Z_FORCE	0
 
-#define MINIMUM_HORIZONTAL_SPEED						__I_TO_FIX10_6(5)
+#define MINIMUM_HORIZONTAL_SPEED						__F_TO_FIX10_6(4.5f)
+#define MINIMUM_VERTICAL_SPEED							__F_TO_FIX10_6(0.5f)
 #define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(8)
 #define FORCE_TO_APPLY_WHEN_VERTICAL_SPEED_IS_ZERO		__I_TO_FIX10_6(-60)
 #define FORCE_DECREASE_PER_CYCLE						__I_TO_FIX10_6(1)
@@ -231,9 +232,12 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			// don't allow me to move flat
 				velocityModifier.z = -MINIMUM_DEPTH_SPEED;
 		}
+	}
 
-		if(velocity.x)
+		//if(velocity.x)
 		{
+				Velocity velocity = Body_getVelocity(this->body);
+
 			// make sure a minimum vertical speed
 			if(__ABS(velocity.x) < MINIMUM_HORIZONTAL_SPEED)
 			{
@@ -246,8 +250,19 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 					velocityModifier.x = -(MINIMUM_HORIZONTAL_SPEED);
 				}
 			}
+			// make sure a minimum vertical speed
+			if(__ABS(velocity.y) < MINIMUM_VERTICAL_SPEED)
+			{
+				if(0 <= velocity.y)
+				{
+					velocityModifier.y = (MINIMUM_VERTICAL_SPEED);
+				}
+				else
+				{
+					velocityModifier.y = -(MINIMUM_VERTICAL_SPEED);
+				}
+			}
 		}
-	}
 
 	Body_modifyVelocity(this->body, &velocityModifier);
 
