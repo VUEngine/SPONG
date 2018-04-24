@@ -28,6 +28,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Actor.h>
+#include <Paddle.h>
 #include <macros.h>
 
 
@@ -54,6 +55,7 @@ __CLASS(PongBall);
 		/* definition pointer */																		\
 		PongBallDefinition* PongBallDefinition;															\
 		Force modifierForce;																			\
+		int paddleEnum;																					\
 
 
 typedef struct PongBallDefinition
@@ -89,6 +91,7 @@ bool PongBall_handleMessage(PongBall this, Telegram telegram);
 bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation);
 fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)));
 fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
+int PongBall_getPaddleEnum(PongBall this);
 
 
 #endif

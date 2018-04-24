@@ -64,4 +64,8 @@ enum PlatformerLevelStateMessageTypes
 	kFollowPongBall,
 };
 
+#define PONG_BALL_NAME			"PongBall"
+#define PADDLE_LEFT_NAME		"LeftPd"
+#define PADDLE_RIGHT_NAME		"RightPd"
+
 #endif

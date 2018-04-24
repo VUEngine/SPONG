@@ -44,7 +44,7 @@
 #define START_Z_FORCE	0
 
 #define MINIMUM_HORIZONTAL_SPEED						__F_TO_FIX10_6(4.5f)
-#define MINIMUM_VERTICAL_SPEED							__F_TO_FIX10_6(0.5f)
+#define MINIMUM_VERTICAL_SPEED							__F_TO_FIX10_6(1.0f)
 #define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(8)
 #define FORCE_TO_APPLY_WHEN_VERTICAL_SPEED_IS_ZERO		__I_TO_FIX10_6(-60)
 #define FORCE_DECREASE_PER_CYCLE						__I_TO_FIX10_6(1)
@@ -77,6 +77,7 @@ void PongBall_constructor(PongBall this, PongBallDefinition* PongBallDefinition,
 	// save definition
 	this->PongBallDefinition = PongBallDefinition;
 	this->modifierForce = (Vector3D){0, 0, 0};
+	this->paddleEnum = kNoPaddle;
 }
 
 // class's constructor
@@ -116,22 +117,26 @@ void PongBall_update(PongBall this, u32 elapsedTime)
 	}
 
 	Entity_setLocalRotation(__SAFE_CAST(Entity, this), &localRotation);
-
 }
 
 // start moving
 void PongBall_startMovement(PongBall this)
 {
-	long seed = Utilities_randomSeed();
+	const char* paddleName = PADDLE_LEFT_NAME;
 
-	Force force =
+	if(50 < Utilities_random(Utilities_randomSeed(), 100))
 	{
-		START_X_FORCE,
-		START_Y_FORCE,
-		START_Z_FORCE,
-	};
+		paddleName = PADDLE_RIGHT_NAME;
+	}
 
-	Actor_addForce(__SAFE_CAST(Actor, this), &force);
+	Entity paddle = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)paddleName, true));
+	NM_ASSERT(paddle, "PongBall::startMovement: paddle not found");
+
+	Vector3D localPosition = this->transformation.localPosition;
+	const Vector3D* paddlePosition = __VIRTUAL_CALL(Container, getPosition, paddle);
+	localPosition.x = paddlePosition->x;
+	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities_random(Utilities_randomSeed(), 10) / 100.0f);
+	Entity_setLocalPosition(__SAFE_CAST(Entity, this), &localPosition);
 }
 
 // move back to ejector
@@ -166,36 +171,46 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
 	{
 		case kPaddleType:
+			{
+				if(this->transformation.globalPosition.x < (__SCREEN_WIDTH_METERS >> 1))
+				{
+					this->paddleEnum = kLeftPaddle;
+				}
+				else if(this->transformation.globalPosition.x > (__SCREEN_WIDTH_METERS >> 1))
+				{
+					this->paddleEnum = kRightPaddle;
+				}
 
-			velocityModifier.x = __FIX10_6_MULT(this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x, SPEED_X_MULTIPLIER);
-			velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y, SPEED_Y_MULTIPLIER);
+				velocityModifier.x = __FIX10_6_MULT(this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x, SPEED_X_MULTIPLIER);
+				velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y, SPEED_Y_MULTIPLIER);
+
+				if(!velocityModifier.y)
+				{
+					velocityModifier.y = __FIX10_6_DIV(__F_TO_FIX10_6(Utilities_random(Utilities_randomSeed(), 10) - 5), __I_TO_FIX10_6(100));
+				}
+
+				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitPaddle);
+			}
+
 			break;
 
 		case kCeiling:
-		{
-			Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitCeiling);
-			break;
-		}
+			{
+				PRINT_TIME(10,10);
+				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitCeiling);
+				break;
+			}
 
 		case kFloor:
 			{
-				static int leftScore = 0;
-				static int rightScore = 0;
-
 				const Vector3D* collidingObjectPosition = __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject);
 
 				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
 				{
-					rightScore++;
-					PRINT_INT(rightScore, 45, 0);
-
 					Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
 				}
 				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
 				{
-					leftScore++;
-					PRINT_INT(leftScore, 1, 0);
-
 					Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
 				}
 			}
@@ -203,22 +218,23 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			break;
 
 		case kWall:
-
+/*
 			velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.y), SPEED_Y_MULTIPLIER);
 
 			if(0 > collisionInformation->solutionVector.direction.y)
 			{
 				velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(-1), velocityModifier.y);
 			}
+			*/
 			break;
 	}
 
 	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
 
+	Velocity velocity = Body_getVelocity(this->body);
+
 	if(velocityModifier.x | velocityModifier.y)
 	{
-		Velocity velocity = Body_getVelocity(this->body);
-
 		if(velocity.z)
 		{
 			// make sure a minimum vertical speed
@@ -234,35 +250,45 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 		}
 	}
 
-		//if(velocity.x)
+	if(velocityModifier.x)
+	{		// make sure a minimum vertical speed
+		if(__ABS(velocity.x) < MINIMUM_HORIZONTAL_SPEED)
 		{
-				Velocity velocity = Body_getVelocity(this->body);
-
-			// make sure a minimum vertical speed
-			if(__ABS(velocity.x) < MINIMUM_HORIZONTAL_SPEED)
+			if(0 <= velocity.x)
 			{
-				if(0 <= velocity.x)
-				{
-					velocityModifier.x = (MINIMUM_HORIZONTAL_SPEED);
-				}
-				else
-				{
-					velocityModifier.x = -(MINIMUM_HORIZONTAL_SPEED);
-				}
+				velocityModifier.x = MINIMUM_HORIZONTAL_SPEED;
 			}
-			// make sure a minimum vertical speed
-			if(__ABS(velocity.y) < MINIMUM_VERTICAL_SPEED)
+			else
 			{
-				if(0 <= velocity.y)
-				{
-					velocityModifier.y = (MINIMUM_VERTICAL_SPEED);
-				}
-				else
-				{
-					velocityModifier.y = -(MINIMUM_VERTICAL_SPEED);
-				}
+				velocityModifier.x = -MINIMUM_HORIZONTAL_SPEED;
 			}
 		}
+	}
+
+
+	if(velocityModifier.y)
+	{
+		if(__ABS(velocity.y) < MINIMUM_VERTICAL_SPEED)
+		{
+			if(0 < velocity.y)
+			{
+				velocityModifier.y = MINIMUM_VERTICAL_SPEED;
+			}
+			else if(0 > velocity.y)
+			{
+				velocityModifier.y = -MINIMUM_VERTICAL_SPEED;
+			}
+			else if(this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1))
+			{
+
+				velocityModifier.y = -MINIMUM_VERTICAL_SPEED;
+			}
+			else
+			{
+				velocityModifier.y = MINIMUM_VERTICAL_SPEED;
+			}
+		}
+	}
 
 	Body_modifyVelocity(this->body, &velocityModifier);
 
@@ -279,4 +305,9 @@ fix10_6 PongBall_getFrictionOnCollision(PongBall this __attribute__ ((unused)), 
 fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this __attribute__ ((unused)))
 {
 	return 0;
+}
+
+int PongBall_getPaddleEnum(PongBall this)
+{
+	return this->paddleEnum;
 }

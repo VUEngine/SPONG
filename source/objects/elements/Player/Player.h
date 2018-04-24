@@ -29,6 +29,7 @@
 
 #include <Object.h>
 #include <GameState.h>
+#include <PongBall.h>
 #include <Paddle.h>
 #include <macros.h>
 
@@ -49,7 +50,15 @@ __CLASS(Player);
 #define Player_ATTRIBUTES																				\
 		Object_ATTRIBUTES																				\
 		/* definition pointer */																		\
+		PongBall pongBall;																				\
 		Paddle paddles[2];																				\
+		u32 leftScore;																					\
+		u32 rightScore;																					\
+		u32 totalLeftScore;																				\
+		u32 totalRightScore;																			\
+		u32 totalScore;																					\
+		int scoreMultiplierThreshold;																	\
+		u32 scoreMultiplier;																			\
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -61,5 +70,7 @@ void Player_destructor(Player this);
 bool Player_handleMessage(Player this, Telegram telegram);
 void Player_getReady(Player this, GameState gameState);
 void Player_gameIsOver(Player this, GameState gameState);
+void Player_printScore(Player this);
+
 
 #endif

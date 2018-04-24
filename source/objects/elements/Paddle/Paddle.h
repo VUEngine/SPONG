@@ -73,6 +73,14 @@ typedef struct PaddleDefinition
 typedef const PaddleDefinition PaddleROMDef;
 
 
+enum PlayerPaddles
+{
+	kLeftPaddle = 0,
+	kRightPaddle,
+	kNoPaddle
+};
+
+
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------

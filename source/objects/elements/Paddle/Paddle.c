@@ -115,7 +115,7 @@ bool Paddle_handleMessage(Paddle this, Telegram telegram)
 	return Actor_handleMessage(__SAFE_CAST(Actor, this), telegram);
 }
 
-void Paddle_setExtraInfo(Paddle this, void* extraInfo)
+void Paddle_setExtraInfo(Paddle this __attribute__ ((unused)), void* extraInfo __attribute__ ((unused)))
 {
 	ASSERT(this, "Paddle::setExtraInfo: null this");
 }
@@ -170,7 +170,7 @@ void Paddle_eject(Paddle this)
 	Shape_setActive(this->paddleShape, true);
 }
 
-bool Paddle_mustBounce(Paddle this)
+bool Paddle_mustBounce(Paddle this __attribute__ ((unused)))
 {
 	ASSERT(this, "Paddle::mustBounce: null this");
 

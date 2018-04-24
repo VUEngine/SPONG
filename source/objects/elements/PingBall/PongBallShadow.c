@@ -100,7 +100,7 @@ void PongBallShadow_ready(PongBallShadow this, bool recursive)
 	// call base
 	__CALL_BASE_METHOD(Entity, ready, this, recursive);
 
-	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "PongBall", true));
+	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PONG_BALL_NAME, true));
 	NM_ASSERT(this->pongBall, "PongBallShadow::ready: null pongBall");
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z - __VIRTUAL_CALL(SpatialObject, getPosition, this->pongBall)->z;
 	this->followPongBall = true;

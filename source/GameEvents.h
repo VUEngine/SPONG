@@ -41,6 +41,7 @@ enum GameEvents
 	kEventUserInput,
 	kEventPongBallHitCeiling,
 	kEventPongBallHitFloor,
+	kEventPongBallHitPaddle,
 };
 
 
