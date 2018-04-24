@@ -40,7 +40,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #define Z_SCALING_COMPENSATION				__I_TO_FIX10_6(3)
-#define WAIT_AFTER_PONG_BALL_HIT_FLOOR		150
+#define WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING		150
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
@@ -54,6 +54,7 @@ __CLASS_DEFINITION(PongBallShadow, Entity);
 //---------------------------------------------------------------------------------------------------------
 
 static void PongBallShadow_onPongBallHitFloor(PongBallShadow this, Object eventFirer __attribute__ ((unused)));
+static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object eventFirer __attribute__ ((unused)));
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -84,6 +85,7 @@ void PongBallShadow_destructor(PongBallShadow this)
 	ASSERT(this, "PongBallShadow::destructor: null this");
 
 	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
@@ -103,6 +105,7 @@ void PongBallShadow_ready(PongBallShadow this, bool recursive)
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z - __VIRTUAL_CALL(SpatialObject, getPosition, this->pongBall)->z;
 	this->followPongBall = true;
 	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallShadow_onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
 void PongBallShadow_update(PongBallShadow this, u32 elapsedTime)
@@ -121,9 +124,7 @@ void PongBallShadow_update(PongBallShadow this, u32 elapsedTime)
 		__VIRTUAL_CALL(Entity, setLocalPosition, this, &localPosition);
 
 		Scale localScale = this->transformation.localScale;
-
 		localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __FIX10_6_DIV(this->pongBallInitialZDistance, this->transformation.globalPosition.z - (pongBallPosition->z - Z_SCALING_COMPENSATION))));
-
 		Container_setLocalScale(__SAFE_CAST(Container, this), &localScale);
 	}
 }
@@ -131,7 +132,22 @@ void PongBallShadow_update(PongBallShadow this, u32 elapsedTime)
 static void PongBallShadow_onPongBallHitFloor(PongBallShadow this, Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+}
+
+static void PongBallShadow_onPongBallHitCeiling(PongBallShadow this, Object eventFirer __attribute__ ((unused)))
+{
+	this->followPongBall = false;
+	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+/*
+	PixelVector displacement = Sprite_getDisplacement(VirtualList_front(this->sprites));
+	displacement.parallax = -5;
+	Sprite_setDisplacement(VirtualList_front(this->sprites), displacement);
+
+	Scale localScale = this->transformation.localScale;
+	localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __I_TO_FIX10_6(2)));
+	Container_setLocalScale(__SAFE_CAST(Container, this), &localScale);
+	*/
 }
 
 bool PongBallShadow_handleMessage(PongBallShadow this, Telegram telegram)
@@ -140,8 +156,13 @@ bool PongBallShadow_handleMessage(PongBallShadow this, Telegram telegram)
 	switch(Telegram_getMessage(telegram))
 	{
 		case kFollowPongBall:
+			{
+				PixelVector displacement = Sprite_getDisplacement(VirtualList_front(this->sprites));
+				displacement.parallax = 0;
+				Sprite_setDisplacement(VirtualList_front(this->sprites), displacement);
 
-			this->followPongBall = true;
+				this->followPongBall = true;
+			}
 
 			return true;
 			break;

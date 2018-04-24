@@ -24,55 +24,57 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
-#include <Ball.h>
-#include <PongBall.h>
+#include <libgccvb.h>
+#include <SolidParticle.h>
+#include <ParticleSystem.h>
+#include <ObjectAnimatedSprite.h>
+#include <AnimatedEntity.h>
 #include <macros.h>
-
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BallTiles[];
-extern BYTE BallMap[];
+extern BYTE BallParticleTiles[];
+extern BYTE BallParticleMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef PONG_BALL_CH =
+
+CharSetROMDef PONG_BALL_PARTICLE_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	4,
+	1,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__NOT_ANIMATED,
 
 	// char definition
-	BallTiles,
+	BallParticleTiles,
 };
 
-TextureROMDef PONG_BALL_TX =
+TextureROMDef PONG_BALL_PARTICLE_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&PONG_BALL_CH,
+	(CharSetDefinition*)&PONG_BALL_PARTICLE_CH,
 
 	// bgmap definition
-	BallMap,
+	BallParticleMap,
 
 	// cols (max 64)
-	3,
+	1,
 
 	// rows (max 64)
-	3,
+	1,
 
 	// padding for affine/hbias transformations (cols, rows)
-	{12, 12},
+	{0, 0},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
@@ -86,14 +88,14 @@ TextureROMDef PONG_BALL_TX =
 	false,
 };
 
-BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
+ObjectSpriteROMDef PONG_BALL_PARTICLE_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapSprite),
+		__TYPE(ObjectSprite),
 
 		// texture definition
-		(TextureDefinition*)&PONG_BALL_TX,
+		(TextureDefinition*)&PONG_BALL_PARTICLE_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -104,110 +106,112 @@ BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_AFFINE,
-
-	// pointer to affine/hbias manipulation function
-	NULL,
+	__WORLD_OBJECT,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const PONG_BALL_AC_SPRITES[] =
+//---------------------------------------------------------------------------------------------------------
+//											OBJECT PONG_BALL_PARTICLE
+//---------------------------------------------------------------------------------------------------------
+
+
+ObjectSpriteROMDef* const PONG_BALL_PARTICLE_SPRITES[] =
 {
-	&PONG_BALL_AC_SPRITE,
+	&PONG_BALL_PARTICLE_SPRITE,
 	NULL
 };
 
-ShapeROMDef PONG_BALL_AC_SHAPES[] =
+// particle's definition
+ParticleROMDef PONG_BALL_PARTICLE =
 {
-	// ball
+	// allocator
+	__TYPE(Particle),
+
+	// particle's minimum life span in milliseconds
+	100,
+
+	// particle's maximum life span in milliseconds
+	1000,
+
+	// particle's minimum mass
+	__F_TO_FIX10_6(0.1f),
+
+	// particle's maximum mass
+	__F_TO_FIX10_6(0.1f),
+
+	// axis subject to gravity (bitwise or of __X_AXIS, __Y_AXIS, __Z_AXIS, or false to disable)
+	__Z_AXIS,
+
+	// function pointer to control particle's behavior
+	(void (*)(Particle))NULL,
+
+	// animation description (used only if sprite is animated)
+	(AnimationDescription*)NULL,
+
+	// name of animation to play
+	NULL
+};
+
+ParticleSystemROMDef PONG_BALL_PARTICLES_PS =
+{
 	{
-		// shape
-		__TYPE(Ball),
+		// class allocator
+		__TYPE(ParticleSystem),
 
-		// size (x, y, z)
-		{16, 16, 16},
+		// sprites
+		(SpriteROMDef**)NULL,
 
-		// displacement (x, y, z, p)
-		{0, 0, 4, 0},
+		// collision shapes
+		(ShapeDefinition*)NULL,
 
-		// rotation (x, y, z)
+		// size
+		// if 0, width and height will be inferred from the first sprite's texture's size
 		{0, 0, 0},
 
-		// scale (x, y, z)
-		{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+		// gameworld's character's type
+		kNoType,
 
-		// if true this shape checks for collisions against other shapes
-		true,
-
-		// layers in which I live
-		kPlayFieldLayer | kPlayFieldBallLayer,
-
-		// layers to ignore when checking for collisions
-		kPlayFieldBallLayer | kPlayFieldSplitterLayer | kPlayFieldPaddleHelperLayer,
+		// physical specification
+		(PhysicalSpecification*)NULL,
 	},
 
-	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
-};
+	// reuse expired particles?
+	true,
 
-PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
-{
-	// mass
-	__F_TO_FIX10_6(0.6f),
+	// minimum generation delay in milliseconds
+	20,
 
-	// friction
-	__F_TO_FIX10_6(0.0f),
+	// maximum generation delay in milliseconds
+	50,
 
-	// bounciness
-	__F_TO_FIX10_6(1.0f),
+	// maximum total particles
+	20,
 
-	// maximum velocity
-	{__I_TO_FIX10_6(12), __I_TO_FIX10_6(12), __I_TO_FIX10_6(12)}
-//	{__I_TO_FIX10_6(7), __I_TO_FIX10_6(7), __I_TO_FIX10_6(12)}
-};
+	// array of textures
+	(const ObjectSpriteDefinition**)PONG_BALL_PARTICLE_SPRITES,
 
-PongBallROMDef PONG_BALL_AC =
-{
-	{
-		{
-			{
-				// class allocator
-				__TYPE(PongBall),
+	// auto start
+	true,
 
-				// sprites
-				(SpriteROMDef**)PONG_BALL_AC_SPRITES,
+	// particle definition
+	(ParticleDefinition*)&PONG_BALL_PARTICLE,
 
-				// collision shapes
-				(ShapeDefinition*)PONG_BALL_AC_SHAPES,
+	// minimum relative spawn position (x, y, z)
+	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(-0.5f), __F_TO_FIX10_6(0)},
 
-				// size
-				// if 0, width and height will be inferred from the first sprite's texture's size
-				{0, 0, 0},
+	// maximum relative spawn position (x, y, z)
+	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(0.5f), __F_TO_FIX10_6(0)},
 
-				// gameworld's character's type
-				kPongBallType,
+	// minimum force to apply (x, y, z)
+	// (use int values in the definition to avoid overflow)
+	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(-12), 0},
 
-				// physical specification
-				(PhysicalSpecification*)&PONG_BALL_AC_PHYSICAL_PROPERTIES,
-			},
+	// maximum force to apply (x, y, z)
+	// (use int values in the definition to avoid overflow)
+	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(12), 0},
 
-			// pointer to the animation definition for the character
-			(AnimationDescription*)NULL,
-
-			// initial animation
-			NULL,
-		},
-
-		// true to create a body
-		true,
-
-		// axes subject to gravity
-		__Z_AXIS
-	},
-
-	// minimum velocity
-	{0, 0, 0},
-	// maximum velocity
-	{0, 0, 0},
+	// movement type (__UNIFORM_MOVEMENT or __ACCELERATED_MOVEMENT)
+	__ACCELERATED_MOVEMENT
 };

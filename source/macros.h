@@ -39,6 +39,8 @@ enum InGameTypes
 	kPongBallType,
 	kPaddleType,
 	kWall,
+	kFloor,
+	kCeiling
 };
 
 // entity collision layers

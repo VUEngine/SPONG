@@ -49,7 +49,7 @@ PhysicalSpecificationROMDef COLLISION_CL_PHYSICAL_PROPERTIES =
 	{0, 0, 0}
 };
 
-CollisionROMDef COLLISION_CL =
+CollisionROMDef COLLISION_WALL_CL =
 {
 	// class allocator
 	__TYPE(Collision),
@@ -66,6 +66,50 @@ CollisionROMDef COLLISION_CL =
 
 	// gameworld's character's type
 	kWall,
+
+	// physical specification
+	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
+};
+
+CollisionROMDef COLLISION_FLOOR_CL =
+{
+	// class allocator
+	__TYPE(Collision),
+
+	// sprites
+	(SpriteROMDef**)NULL,
+
+	// collision shapes
+	(ShapeDefinition*)NULL,
+
+	// pixelSize
+	// if 0, width and height will be inferred from the first sprite's texture's size
+	{100, 100, 16},
+
+	// gameworld's character's type
+	kFloor,
+
+	// physical specification
+	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
+};
+
+CollisionROMDef COLLISION_CEILING_CL =
+{
+	// class allocator
+	__TYPE(Collision),
+
+	// sprites
+	(SpriteROMDef**)NULL,
+
+	// collision shapes
+	(ShapeDefinition*)NULL,
+
+	// pixelSize
+	// if 0, width and height will be inferred from the first sprite's texture's size
+	{100, 100, 16},
+
+	// gameworld's character's type
+	kCeiling,
 
 	// physical specification
 	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,

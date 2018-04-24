@@ -150,7 +150,7 @@ void Paddle_stopTowards(Paddle this, Direction direction)
 	u16 axis = __NO_AXIS;
 	axis |= direction.x ? __X_AXIS : 0;
 	axis |= direction.y ? __Y_AXIS : 0;
-	Actor_stopMovement(this, axis);
+	Actor_stopMovement(__SAFE_CAST(Actor, this), axis);
 }
 
 void Paddle_retract(Paddle this)

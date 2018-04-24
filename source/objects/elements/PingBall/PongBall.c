@@ -39,8 +39,8 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define START_X_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150) - 50)
-#define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150) - 50)
+#define START_X_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150))
+#define START_Y_FORCE 	__I_TO_FIX10_6(Utilities_random(seed, 150))
 #define START_Z_FORCE	0
 
 #define MINIMUM_HORIZONTAL_SPEED						__I_TO_FIX10_6(5)
@@ -170,7 +170,13 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y, SPEED_Y_MULTIPLIER);
 			break;
 
-		case kWall:
+		case kCeiling:
+		{
+			Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitCeiling);
+			break;
+		}
+
+		case kFloor:
 		{
 			static int leftScore = 0;
 			static int rightScore = 0;
@@ -182,14 +188,14 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 				rightScore++;
 				PRINT_INT(rightScore, 45, 0);
 
-				Object_fireEvent(this, kEventPongBallHitFloor);
+				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
 			}
 			else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
 			{
 				leftScore++;
 				PRINT_INT(leftScore, 1, 0);
 
-				Object_fireEvent(this, kEventPongBallHitFloor);
+				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
 			}
 		}
 
