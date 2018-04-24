@@ -169,3 +169,10 @@ void Paddle_eject(Paddle this)
 
 	Shape_setActive(this->paddleShape, true);
 }
+
+bool Paddle_mustBounce(Paddle this)
+{
+	ASSERT(this, "Paddle::mustBounce: null this");
+
+	return false;
+}

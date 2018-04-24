@@ -46,6 +46,7 @@
 		__VIRTUAL_SET(ClassName, Paddle, setExtraInfo);													\
 		__VIRTUAL_SET(ClassName, Paddle, transform);													\
 		__VIRTUAL_SET(ClassName, Paddle, syncRotationWithBody);											\
+		__VIRTUAL_SET(ClassName, Paddle, mustBounce);													\
 
 __CLASS(Paddle);
 
@@ -92,5 +93,6 @@ void Paddle_moveTowards(Paddle this, Direction direction);
 void Paddle_stopTowards(Paddle this, Direction direction);
 void Paddle_retract(Paddle this);
 void Paddle_eject(Paddle this);
+bool Paddle_mustBounce(Paddle this);
 
 #endif

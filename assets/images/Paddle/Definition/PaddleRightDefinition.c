@@ -240,7 +240,7 @@ ShapeROMDef PADDLE_RIGHT_AC_SHAPES[] =
 		__TYPE(Box),
 
 		// size (x, y, z)
-		{48, 48, 8},
+		{32, 32, 16},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},

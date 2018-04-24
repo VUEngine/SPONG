@@ -142,7 +142,7 @@ ParticleROMDef PONG_BALL_PARTICLE =
 	__F_TO_FIX10_6(0.1f),
 
 	// axis subject to gravity (bitwise or of __X_AXIS, __Y_AXIS, __Z_AXIS, or false to disable)
-	__Z_AXIS,
+	__NO_AXIS,
 
 	// function pointer to control particle's behavior
 	(void (*)(Particle))NULL,

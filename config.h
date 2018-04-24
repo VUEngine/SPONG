@@ -321,7 +321,7 @@
 #define __PHYSICS_TIME_ELAPSED_DIVISOR			1
 
 // maximum bounciness coefficient allowed
-#define __MAXIMUM_BOUNCINESS_COEFFICIENT		1
+#define __MAXIMUM_BOUNCINESS_COEFFICIENT		5.5f
 
 
 #define __FRICTION_FORCE_FACTOR_POWER			4

@@ -113,7 +113,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&PONG_BALL_SHADOW_IM,		{192,    112,     96+8+1, 0}, 	0, "BallShwd", NULL, NULL, true},
 
 	{&COLLISION_FLOOR_CL,		{192, 112,     96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
-	{&COLLISION_CEILING_CL,		{192,    112,      -0, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&COLLISION_CEILING_CL,		{192,    112,      -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
 	{&COLLISION_WALL_CL,		{ 0+12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
 	{&COLLISION_WALL_CL,		{384-12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
 	{&COLLISION_WALL_CL,		{192,    16+12,    0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border

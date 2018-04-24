@@ -44,7 +44,7 @@
 #define START_Z_FORCE	0
 
 #define MINIMUM_HORIZONTAL_SPEED						__I_TO_FIX10_6(5)
-#define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(15)
+#define MINIMUM_DEPTH_SPEED								__I_TO_FIX10_6(8)
 #define FORCE_TO_APPLY_WHEN_VERTICAL_SPEED_IS_ZERO		__I_TO_FIX10_6(-60)
 #define FORCE_DECREASE_PER_CYCLE						__I_TO_FIX10_6(1)
 #define SPEED_X_MULTIPLIER								__I_TO_FIX10_6(3)
@@ -177,29 +177,39 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 		}
 
 		case kFloor:
-		{
-			static int leftScore = 0;
-			static int rightScore = 0;
-
-			const Vector3D* collidingObjectPosition = __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject);
-
-			if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
 			{
-				rightScore++;
-				PRINT_INT(rightScore, 45, 0);
+				static int leftScore = 0;
+				static int rightScore = 0;
 
-				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+				const Vector3D* collidingObjectPosition = __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject);
+
+				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
+				{
+					rightScore++;
+					PRINT_INT(rightScore, 45, 0);
+
+					Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+				}
+				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
+				{
+					leftScore++;
+					PRINT_INT(leftScore, 1, 0);
+
+					Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+				}
 			}
-			else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
+
+			break;
+
+		case kWall:
+
+			velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.y), SPEED_Y_MULTIPLIER);
+
+			if(0 > collisionInformation->solutionVector.direction.y)
 			{
-				leftScore++;
-				PRINT_INT(leftScore, 1, 0);
-
-				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+				velocityModifier.y = __FIX10_6_MULT(__I_TO_FIX10_6(-1), velocityModifier.y);
 			}
-		}
-
-		break;
+			break;
 	}
 
 	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
@@ -213,13 +223,13 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			// make sure a minimum vertical speed
 			if(0 > velocity.z && __ABS(velocity.z) < MINIMUM_DEPTH_SPEED)
 			{
-				velocityModifier.z = -(MINIMUM_DEPTH_SPEED - __ABS(velocity.z));
+				velocityModifier.z = -MINIMUM_DEPTH_SPEED;
 			}
 		}
 		else
 		{
 			// don't allow me to move flat
-				velocityModifier.z = -(MINIMUM_DEPTH_SPEED - __ABS(velocity.z));
+				velocityModifier.z = -MINIMUM_DEPTH_SPEED;
 		}
 
 		if(velocity.x)

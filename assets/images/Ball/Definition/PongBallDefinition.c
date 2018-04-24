@@ -154,7 +154,7 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
-	__F_TO_FIX10_6(0.6f),
+	__F_TO_FIX10_6(0.4f),
 
 	// friction
 	__F_TO_FIX10_6(0.0f),
@@ -163,8 +163,7 @@ PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(1.0f),
 
 	// maximum velocity
-	{__I_TO_FIX10_6(12), __I_TO_FIX10_6(12), __I_TO_FIX10_6(12)}
-//	{__I_TO_FIX10_6(7), __I_TO_FIX10_6(7), __I_TO_FIX10_6(12)}
+	{__I_TO_FIX10_6(9), __I_TO_FIX10_6(8), __I_TO_FIX10_6(13)}
 };
 
 PongBallROMDef PONG_BALL_AC =
