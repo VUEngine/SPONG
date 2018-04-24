@@ -311,7 +311,7 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		{12, 28, 12},
 
 		// displacement (x, y, z, p)
-		{0, 0, -6, 0},
+		{0, 0, -14, 0},
 
 		// rotation (x, y, z)
 		{0, 0, 0},
@@ -338,7 +338,7 @@ ShapeROMDef PADDLE_LEFT_AC_SHAPES[] =
 		{32, 48, 16},
 
 		// displacement (x, y, z, p)
-		{0, 0, 0, 0},
+		{8, 0, 0, 0},
 
 		// rotation (x, y, z)
 		{0, 28, 0},
