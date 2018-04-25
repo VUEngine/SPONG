@@ -202,7 +202,6 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 		case kCeiling:
 			{
-				PRINT_TIME(10,10);
 				Object_fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitCeiling);
 				break;
 			}
@@ -239,6 +238,17 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 				if(0 > collisionInformation->solutionVector.direction.y)
 				{
 					velocityModifier.y = -velocityModifier.y;
+				}
+			}
+			else if(!collisionInformation->solutionVector.direction.y)
+			{
+				if(this->transformation.globalPosition.y < __SCREEN_HEIGHT_METERS / 2)
+				{
+					velocityModifier.y = MINIMUM_VERTICAL_SPEED;
+				}
+				else
+				{
+					velocityModifier.y = -MINIMUM_VERTICAL_SPEED;
 				}
 			}
 			break;

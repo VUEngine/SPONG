@@ -35,9 +35,9 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define SCORE_MULTIPLIER_THRESHOLD			10
+#define SCORE_MULTIPLIER_THRESHOLD			5
 #define BONUS_INCREMENT_DELAY				100
-#define SCORE_MULTIPLIER_TO_ENABLE_BONUS	10
+#define SCORE_MULTIPLIER_TO_ENABLE_BONUS	5
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -63,6 +63,7 @@ static void Player_ejectPaddles(Player this);
 static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)));
 static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)));
 static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)));
+static void Player_totalizeScore(Player this);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -210,7 +211,7 @@ static void Player_onKeyReleased(Player this __attribute__ ((unused)), const Use
 	{
 		Player_ejectPaddles(this);
 	}
-
+/*
 	s8 horizontalInput = 0;
 	s8 verticalInput = 0;
 
@@ -237,6 +238,7 @@ static void Player_onKeyReleased(Player this __attribute__ ((unused)), const Use
 	{
 		Player_stopPaddles(this, horizontalInput, verticalInput);
 	}
+*/
 }
 
 static void Player_onKeyHold(Player this __attribute__ ((unused)), const UserInput* userInput)
@@ -254,20 +256,20 @@ static void Player_onKeyHold(Player this __attribute__ ((unused)), const UserInp
 	s8 verticalInput = 0;
 
 	// check direction
-	if(K_LL & userInput->holdKey)
+	if((K_LL) & userInput->holdKey)
 	{
 		horizontalInput = -1;
 	}
-	else if(K_LR & userInput->holdKey)
+	else if((K_LR) & userInput->holdKey)
 	{
 		horizontalInput = 1;
 	}
 
-	if(K_LU & userInput->holdKey)
+	if((K_RU) & userInput->holdKey)
 	{
 		verticalInput = -1;
 	}
-	else if(K_LD & userInput->holdKey)
+	else if((K_RD) & userInput->holdKey)
 	{
 		verticalInput = 1;
 	}
@@ -346,7 +348,7 @@ static void Player_ejectPaddles(Player this)
 
 static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)))
 {
-	if(this->scoreMultiplier > SCORE_MULTIPLIER_TO_ENABLE_BONUS)
+	if(this->scoreMultiplier >= SCORE_MULTIPLIER_TO_ENABLE_BONUS)
 	{
 		PongBall_startRolling(this->pongBall);
 		this->ballIsRolling = true;
@@ -369,16 +371,21 @@ static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute
 				break;
 		}
 
-		this->totalLeftScore += this->scoreMultiplier * this->leftScore;
-		this->totalRightScore += this->scoreMultiplier * this->rightScore;
-		this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
-		this->scoreMultiplier = 1;
-		this->leftScore = 0;
-		this->rightScore = 0;
-		this->totalScore = this->totalLeftScore + this->totalRightScore;
-
-		Player_printScore(this);
+		Player_totalizeScore(this);
 	}
+}
+
+static void Player_totalizeScore(Player this)
+{
+	this->totalLeftScore += this->scoreMultiplier * this->leftScore;
+	this->totalRightScore += this->scoreMultiplier * this->rightScore;
+	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+	this->scoreMultiplier = 1;
+	this->leftScore = 0;
+	this->rightScore = 0;
+	this->totalScore = this->totalLeftScore + this->totalRightScore;
+
+	Player_printScore(this);
 }
 
 static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)))
@@ -411,29 +418,46 @@ static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribut
 
 		this->ballIsRolling = false;
 
+		switch(PongBall_getPaddleEnum(this->pongBall))
+		{
+			case kLeftPaddle:
+
+				this->leftScore = 0;
+				break;
+
+			case kRightPaddle:
+
+				this->rightScore = 0;
+				break;
+		}
+
+		Player_totalizeScore(this);
+
 		MessageDispatcher_discardDelayedMessagesFromSender(MessageDispatcher_getInstance(), __SAFE_CAST(Object, this), kAddBonusScore);
 	}
-
-	switch(PongBall_getPaddleEnum(this->pongBall))
+	else
 	{
-		case kLeftPaddle:
+		switch(PongBall_getPaddleEnum(this->pongBall))
+		{
+			case kLeftPaddle:
 
-			this->leftScore++;
-			break;
+				this->leftScore++;
+				break;
 
-		case kRightPaddle:
+			case kRightPaddle:
 
-			this->rightScore++;
-			break;
+				this->rightScore++;
+				break;
+		}
+
+		if(0 >= --this->scoreMultiplierThreshold)
+		{
+			this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
+			this->scoreMultiplier++;
+		}
+
+		Player_printScore(this);
 	}
-
-	if(0 >= --this->scoreMultiplierThreshold)
-	{
-		this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
-		this->scoreMultiplier++;
-	}
-
-	Player_printScore(this);
 }
 
 void Player_printScore(Player this)
@@ -445,7 +469,7 @@ void Player_printScore(Player this)
 
 	PRINT_TEXT("Total:      ", 35, 0);
 	PRINT_INT(this->totalRightScore, 35 + 9, 0);
-	PRINT_TEXT("Current: ", 35, 1);
+	PRINT_TEXT("Current:    ", 35, 1);
 	PRINT_INT(this->rightScore, 35 + 9, 1);
 
 	PRINT_TEXT("TOTAL:     ", 20, 0);
