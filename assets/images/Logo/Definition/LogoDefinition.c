@@ -25,7 +25,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Entity.h>
-#include <BgmapSprite.h>
 #include <macros.h>
 
 
@@ -33,42 +32,45 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE TitleLogoTiles[];
-extern BYTE TitleLogoMap[];
+extern BYTE LogoTiles[];
+extern BYTE LogoLMap[];
+extern BYTE LogoRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef TITLE_LOGO_CH =
+CharSetROMDef LOGO_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	52,
+	98,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__NOT_ANIMATED,
 
 	// char definition
-	TitleLogoTiles,
+	LogoTiles,
 };
 
-TextureROMDef TITLE_LOGO_TX =
+/* Left */
+
+TextureROMDef LOGO_L_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&TITLE_LOGO_CH,
+	(CharSetDefinition*)&LOGO_CH,
 
 	// bgmap definition
-	TitleLogoMap,
+	LogoLMap,
 
 	// cols (max 64)
-	17,
+	23,
 
 	// rows (max 64)
-	5,
+	7,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -85,14 +87,14 @@ TextureROMDef TITLE_LOGO_TX =
 	false,
 };
 
-BgmapSpriteROMDef TITLE_LOGO_SPRITE =
+BgmapSpriteROMDef LOGO_L_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture definition
-		(TextureDefinition*)&TITLE_LOGO_TX,
+		(TextureDefinition*)&LOGO_L_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -109,25 +111,86 @@ BgmapSpriteROMDef TITLE_LOGO_SPRITE =
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
-	__WORLD_ON,
+	__WORLD_LON,
 };
 
-BgmapSpriteROMDef* const TITLE_LOGO_SPRITES[] =
+/* Right */
+
+TextureROMDef LOGO_R_TX =
 {
-	&TITLE_LOGO_SPRITE,
+	// charset definition
+	(CharSetDefinition*)&LOGO_CH,
+
+	// bgmap definition
+	LogoRMap,
+
+	// cols (max 64)
+	23,
+
+	// rows (max 64)
+	7,
+
+	// padding for affine/hbias transformations (cols, rows)
+	{0, 0},
+
+	// number of frames, depending on charset's allocation type:
+	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
+	// __ANIMATED_MULTI: total number of frames
+	1,
+
+	// palette number (0-3)
+	0,
+
+	// recyclable
+	false,
+};
+
+BgmapSpriteROMDef LOGO_R_SPRITE =
+{
+	{
+		// sprite's type
+		__TYPE(BgmapSprite),
+
+		// texture definition
+		(TextureDefinition*)&LOGO_R_TX,
+
+		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
+		__TRANSPARENCY_NONE,
+
+		// displacement
+		{0, 0, 0, 0},
+	},
+
+	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
+	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
+	__WORLD_BGMAP,
+
+	// pointer to affine/hbias manipulation function
+	NULL,
+
+	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
+	__WORLD_RON,
+};
+
+/* Entity */
+
+BgmapSpriteROMDef* const LOGO_SPRITES[] =
+{
+	&LOGO_L_SPRITE,
+	&LOGO_R_SPRITE,
 	NULL
 };
 
-EntityROMDef TITLE_LOGO_IM =
+EntityROMDef LOGO_EN =
 {
 	// class allocator
 	__TYPE(Entity),
 
 	// sprites
-	(SpriteROMDef**)TITLE_LOGO_SPRITES,
+	(SpriteROMDef**)LOGO_SPRITES,
 
 	// collision shapes
-	NULL,
+	(ShapeDefinition*)NULL,
 
 	// size
 	// if 0, width and height will be inferred from the first sprite's texture's size
@@ -137,5 +200,5 @@ EntityROMDef TITLE_LOGO_IM =
 	kNoType,
 
 	// physical specification
-	NULL,
+	(PhysicalSpecification*)NULL,
 };

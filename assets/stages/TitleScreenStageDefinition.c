@@ -33,14 +33,11 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern EntityDefinition COPYRIGHT_EN;
 extern EntityDefinition HEXAGON_BACKGROUND_AG;
 extern EntityDefinition PRESS_START_BUTTON_AG;
-extern EntityDefinition TITLE_LOGO_IM;
+extern EntityDefinition LOGO_EN;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
-
-extern CharSetDefinition TITLE_LOGO_CH;
-
-extern TextureDefinition TITLE_LOGO_TX;
 
 extern u16 TITLE_BGM[][2];
 
@@ -52,8 +49,9 @@ extern u16 TITLE_BGM[][2];
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
 	{&HEXAGON_BACKGROUND_AG,	{192, 112, 0, 1},   0, NULL, NULL, NULL, false},
-	{&TITLE_LOGO_IM, 			{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PRESS_START_BUTTON_AG, 	{192, 200, 0, 0}, 	0, "PrssStrt", NULL, NULL, false},
+	{&LOGO_EN, 					{192,  88, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&PRESS_START_BUTTON_AG, 	{192, 168, 0, 0}, 	0, "PrssStrt", NULL, NULL, false},
+	{&COPYRIGHT_EN, 			{192, 212, 0, 0}, 	0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1},  0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -78,15 +76,11 @@ FontROMDef* const TITLE_SCREEN_STAGE_ST_FONTS[] =
 
 CharSetROMDef* const TITLE_SCREEN_STAGE_ST_CHARSETS[] =
 {
-	&TITLE_LOGO_CH,
-
 	NULL
 };
 
 TextureDefinition* const TITLE_SCREEN_STAGE_ST_TEXTURES[] =
 {
-	&TITLE_LOGO_TX,
-
 	NULL
 };
 
