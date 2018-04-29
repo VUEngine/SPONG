@@ -243,5 +243,5 @@ AnimatedEntityROMDef PRECAUTION_TEXT_IM =
 	(AnimationDescription*)&PRECAUTION_TEXT_ANIM,
 
 	// initial animation
-	"English"
+	"0"
 };

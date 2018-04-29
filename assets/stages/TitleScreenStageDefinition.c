@@ -35,6 +35,12 @@
 
 extern EntityDefinition COPYRIGHT_EN;
 extern EntityDefinition HEXAGON_BACKGROUND_AG;
+extern EntityDefinition MAIN_MENU_CHALLENGE_MODE_AE;
+extern EntityDefinition MAIN_MENU_CURSOR_AE;
+extern EntityDefinition MAIN_MENU_HIGHSCORES_AE;
+extern EntityDefinition MAIN_MENU_MARATHON_MODE_AE;
+extern EntityDefinition MAIN_MENU_OPTIONS_AE;
+extern EntityDefinition MAIN_MENU_VERSUS_MODE_AE;
 extern EntityDefinition PRESS_START_BUTTON_AG;
 extern EntityDefinition LOGO_EN;
 extern EntityDefinition TRANSITION_LAYER_B_AG;
@@ -48,11 +54,17 @@ extern u16 TITLE_BGM[][2];
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&HEXAGON_BACKGROUND_AG,	{192, 112, 0, 1},   0, NULL, NULL, NULL, false},
-	{&LOGO_EN, 					{192,  88, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&PRESS_START_BUTTON_AG, 	{192, 168, 0, 0}, 	0, "PrssStrt", NULL, NULL, false},
-	{&COPYRIGHT_EN, 			{192, 212, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&TRANSITION_LAYER_B_AG,	{192, 112, 0, -1},  0, "TRNSLYR", NULL, NULL, false},
+	{&HEXAGON_BACKGROUND_AG,		{192, 112, 0, 1},   0, NULL, NULL, NULL, false},
+	{&LOGO_EN, 						{192,  88, 0, 0}, 	0, NULL, NULL, NULL, false},
+	//{&MAIN_MENU_CURSOR_AE, 			{192, 132, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
+	//{&MAIN_MENU_MARATHON_MODE_AE, 	{192, 132, 0, 0}, 	0, "MMMrthon", NULL, NULL, false},
+	//{&MAIN_MENU_CHALLENGE_MODE_AE, 	{192, 144, 0, 0}, 	0, "MMChllng", NULL, NULL, false},
+	//{&MAIN_MENU_VERSUS_MODE_AE,		{192, 156, 0, 0}, 	0, "MMVersus", NULL, NULL, false},
+	//{&MAIN_MENU_HIGHSCORES_AE, 		{192, 168, 0, 0}, 	0, "MMScores", NULL, NULL, false},
+	//{&MAIN_MENU_OPTIONS_AE, 		{192, 180, 0, 0}, 	0, "MMOption", NULL, NULL, false},
+	{&PRESS_START_BUTTON_AG, 		{192, 168, 0, 0}, 	0, "PrssStrt", NULL, NULL, false},
+	{&COPYRIGHT_EN, 				{188, 212, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AG,		{192, 112, 0, -1},  0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
