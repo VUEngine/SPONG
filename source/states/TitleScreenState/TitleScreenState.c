@@ -108,10 +108,6 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// translate entities
-	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
-	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this->entityPressStart), language);
-
 	// fade in screen
 	Camera_startEffect(Camera_getInstance(),
 		kFadeTo, // effect type

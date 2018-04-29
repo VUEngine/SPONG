@@ -26,7 +26,7 @@
 
 #include <BgmapAnimatedSprite.h>
 #include <macros.h>
-#include <AnimatedEntity.h>
+#include <LocalizedEntity.h>
 #include <Actor.h>
 
 
@@ -216,11 +216,11 @@ BgmapSpriteROMDef* const MAIN_MENU_VERSUS_MODE_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef MAIN_MENU_VERSUS_MODE_AE =
+LocalizedEntityROMDef MAIN_MENU_VERSUS_MODE_LE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(LocalizedEntity),
 
 		// sprites
 		(SpriteROMDef**)MAIN_MENU_VERSUS_MODE_SPRITES,

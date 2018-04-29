@@ -19,57 +19,49 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef COLLISION_H_
-#define COLLISION_H_
+#ifndef LOCALIZED_ENTITY_H_
+#define LOCALIZED_ENTITY_H_
 
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
-#include <macros.h>
+#include <AnimatedEntity.h>
+#include <Body.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-#define Collision_METHODS(ClassName)																	\
-		Entity_METHODS(ClassName)																		\
+// declare the virtual methods
+#define LocalizedEntity_METHODS(ClassName)																\
+		AnimatedEntity_METHODS(ClassName)																\
 
-#define Collision_SET_VTABLE(ClassName)																	\
-		Entity_SET_VTABLE(ClassName)																	\
-		__VIRTUAL_SET(ClassName, Collision, setExtraInfo);												\
-		__VIRTUAL_SET(ClassName, Collision, initialTransform);											\
+#define LocalizedEntity_SET_VTABLE(ClassName)															\
+		AnimatedEntity_SET_VTABLE(ClassName)															\
+		__VIRTUAL_SET(ClassName, LocalizedEntity, ready);												\
 
-__CLASS(Collision);
+#define LocalizedEntity_ATTRIBUTES																		\
+		AnimatedEntity_ATTRIBUTES																		\
 
-#define Collision_ATTRIBUTES																			\
-		Entity_ATTRIBUTES																				\
-		u32 shapeLayers;																				\
-
-typedef const EntityDefinition CollisionDefinition;
-typedef const CollisionDefinition CollisionROMDef;
+__CLASS(LocalizedEntity);
 
 
-typedef struct CollisionExtraInfo
-{
-	PixelSize size;
-	u32 shapeLayers;
+typedef const AnimatedEntityDefinition LocalizedEntityDefinition;
+typedef const LocalizedEntityDefinition LocalizedEntityROMDef;
 
-} CollisionExtraInfo;
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_NEW_DECLARE(Collision, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name);
+__CLASS_NEW_DECLARE(LocalizedEntity, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
 
-void Collision_constructor(Collision this, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name);
-void Collision_destructor(Collision this);
-void Collision_setExtraInfo(Collision this, void* extraInfo);
-void Collision_initialTransform(Collision this, Transformation* environmentTransform, u32 recursive);
+void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
+void LocalizedEntity_destructor(LocalizedEntity this);
+void LocalizedEntity_ready(LocalizedEntity this, bool recursive);
 
 
 #endif

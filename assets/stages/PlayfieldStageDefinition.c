@@ -38,7 +38,7 @@ extern EntityDefinition PONG_BALL_AC;
 extern EntityDefinition PADDLE_LEFT_AC;
 extern EntityDefinition PADDLE_RIGHT_AC;
 extern EntityDefinition PLAYFIELD_EN;
-extern EntityDefinition TRANSITION_LAYER_B_AG;
+extern EntityDefinition TRANSITION_LAYER_B_AE;
 extern EntityDefinition COLLISION_WALL_CL;
 extern EntityDefinition COLLISION_CEILING_CL;
 extern EntityDefinition COLLISION_FLOOR_CL;
@@ -120,7 +120,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&COLLISION_WALL_CL,		{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
 	{&COLLISION_WALL_CL,		{192,    112,     48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
-	{&TRANSITION_LAYER_B_AG,	{192,    112,      0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,	{192,    112,      0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

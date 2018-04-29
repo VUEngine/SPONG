@@ -235,7 +235,7 @@ BgmapSpriteROMDef* const HEXAGON_BACKGROUND_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef HEXAGON_BACKGROUND_AG =
+AnimatedEntityROMDef HEXAGON_BACKGROUND_AE =
 {
 	{
 		// class allocator

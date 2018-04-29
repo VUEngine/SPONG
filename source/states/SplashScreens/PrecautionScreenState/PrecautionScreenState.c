@@ -126,10 +126,4 @@ void PrecautionScreenState_enter(PrecautionScreenState this, void* owner)
 
 	// call base
 	__CALL_BASE_METHOD(SplashScreenState, enter, this, owner);
-
-	// translate entities
-	Entity entityPrecautionText = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "Text", true));
-	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
-	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, entityPrecautionText), language);
-
 }

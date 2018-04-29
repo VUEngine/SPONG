@@ -26,7 +26,9 @@
 
 #include <Game.h>
 #include <KeyPadManager.h>
+#include <MessageDispatcher.h>
 #include <GameEvents.h>
+#include <PongState.h>
 #include <debugUtilities.h>
 #include "Player.h"
 

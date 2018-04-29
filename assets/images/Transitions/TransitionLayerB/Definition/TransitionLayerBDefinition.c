@@ -173,7 +173,7 @@ BgmapSpriteROMDef* const TRANSITION_LAYER_B_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef TRANSITION_LAYER_B_AG =
+AnimatedEntityROMDef TRANSITION_LAYER_B_AE =
 {
 	{
 		// class allocator

@@ -19,57 +19,61 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef COLLISION_H_
-#define COLLISION_H_
-
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
-#include <macros.h>
+#include <LocalizedEntity.h>
+#include <Game.h>
+#include <I18n.h>
+#include <Utilities.h>
+#include "LocalizedEntity.h"
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
+//											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-#define Collision_METHODS(ClassName)																	\
-		Entity_METHODS(ClassName)																		\
-
-#define Collision_SET_VTABLE(ClassName)																	\
-		Entity_SET_VTABLE(ClassName)																	\
-		__VIRTUAL_SET(ClassName, Collision, setExtraInfo);												\
-		__VIRTUAL_SET(ClassName, Collision, initialTransform);											\
-
-__CLASS(Collision);
-
-#define Collision_ATTRIBUTES																			\
-		Entity_ATTRIBUTES																				\
-		u32 shapeLayers;																				\
-
-typedef const EntityDefinition CollisionDefinition;
-typedef const CollisionDefinition CollisionROMDef;
+__CLASS_DEFINITION(LocalizedEntity, AnimatedEntity);
 
 
-typedef struct CollisionExtraInfo
+//---------------------------------------------------------------------------------------------------------
+//												CLASS'S METHODS
+//---------------------------------------------------------------------------------------------------------
+
+// always call these two macros next to each other
+__CLASS_NEW_DEFINITION(LocalizedEntity, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
+__CLASS_NEW_END(LocalizedEntity, localizedEntityDefinition, id, internalId, name);
+
+// class's constructor
+void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
-	PixelSize size;
-	u32 shapeLayers;
+	ASSERT(this, "LocalizedEntity::constructor: null this");
 
-} CollisionExtraInfo;
+	// construct base object
+	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
+}
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+// class's destructor
+void LocalizedEntity_destructor(LocalizedEntity this)
+{
+	ASSERT(this, "LocalizedEntity::destructor: null this");
 
-__CLASS_NEW_DECLARE(Collision, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name);
+	// destroy the super object
+	// must always be called at the end of the destructor
+	__DESTROY_BASE;
+}
 
-void Collision_constructor(Collision this, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name);
-void Collision_destructor(Collision this);
-void Collision_setExtraInfo(Collision this, void* extraInfo);
-void Collision_initialTransform(Collision this, Transformation* environmentTransform, u32 recursive);
+void LocalizedEntity_ready(LocalizedEntity this, bool recursive)
+{
+	ASSERT(this, "LocalizedEntity::ready: null this");
 
+	// call base
+	__CALL_BASE_METHOD(AnimatedEntity, ready, this, recursive);
 
-#endif
+	// translate entity
+	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
+	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this), language);
+
+}

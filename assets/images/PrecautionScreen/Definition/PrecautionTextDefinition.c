@@ -24,10 +24,9 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
+#include <LocalizedEntity.h>
 #include <BgmapAnimatedSprite.h>
 #include <macros.h>
-#include <AnimatedEntity.h>
-#include <Actor.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -216,11 +215,11 @@ BgmapSpriteROMDef* const PRECAUTION_TEXT_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef PRECAUTION_TEXT_IM =
+LocalizedEntityROMDef PRECAUTION_TEXT_LE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(LocalizedEntity),
 
 		// sprites
 		(SpriteROMDef**)PRECAUTION_TEXT_SPRITES,
@@ -243,5 +242,5 @@ AnimatedEntityROMDef PRECAUTION_TEXT_IM =
 	(AnimationDescription*)&PRECAUTION_TEXT_ANIM,
 
 	// initial animation
-	"0"
+	"0",
 };

@@ -24,7 +24,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <AnimatedEntity.h>
+#include <LocalizedEntity.h>
 #include <BgmapAnimatedSprite.h>
 
 
@@ -236,11 +236,11 @@ BgmapSpriteROMDef* const PRESS_START_BUTTON_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef PRESS_START_BUTTON_AG =
+LocalizedEntityROMDef PRESS_START_BUTTON_LE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(LocalizedEntity),
 
 		// sprites
 		(SpriteROMDef**)PRESS_START_BUTTON_SPRITES,

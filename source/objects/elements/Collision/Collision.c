@@ -52,14 +52,14 @@ __CLASS_DEFINITION(Collision, Entity);
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(Collision, EntityDefinition* inGameEntityDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(Collision, inGameEntityDefinition, id, internalId, name);
+__CLASS_NEW_DEFINITION(Collision, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
+__CLASS_NEW_END(Collision, entityDefinition, id, internalId, name);
 
 // class's constructor
-void Collision_constructor(Collision this, EntityDefinition* inGameEntityDefinition, s16 id, s16 internalId, const char* const name)
+void Collision_constructor(Collision this, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	__CONSTRUCT_BASE(Entity, inGameEntityDefinition, id, internalId, name);
+	__CONSTRUCT_BASE(Entity, entityDefinition, id, internalId, name);
 
 	this->shapeLayers = kSolidLayer;
  }
