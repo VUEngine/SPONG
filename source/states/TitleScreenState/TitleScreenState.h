@@ -51,6 +51,8 @@ __CLASS(TitleScreenState);
 
 #define TitleScreenState_ATTRIBUTES								 										\
 		GameState_ATTRIBUTES																			\
+		/* image entity references */																	\
+		Entity entityPressStart;																		\
 
 
 //---------------------------------------------------------------------------------------------------------

@@ -58,7 +58,7 @@ AnimationFunctionROMDef PRESS_START_BUTTON_EN_ANIM =
 	NULL,
 
 	// function's name
-	"English",
+	"0",
 };
 
 AnimationFunctionROMDef PRESS_START_BUTTON_DE_ANIM =
@@ -79,7 +79,7 @@ AnimationFunctionROMDef PRESS_START_BUTTON_DE_ANIM =
 	NULL,
 
 	// function's name
-	"Deutsch",
+	"1",
 };
 
 AnimationFunctionROMDef PRESS_START_BUTTON_ES_ANIM =
@@ -100,7 +100,7 @@ AnimationFunctionROMDef PRESS_START_BUTTON_ES_ANIM =
 	NULL,
 
 	// function's name
-	"Espanol",
+	"2",
 };
 
 AnimationFunctionROMDef PRESS_START_BUTTON_FR_ANIM =
@@ -121,7 +121,28 @@ AnimationFunctionROMDef PRESS_START_BUTTON_FR_ANIM =
 	NULL,
 
 	// function's name
-	"Francaise",
+	"3",
+};
+
+AnimationFunctionROMDef PRESS_START_BUTTON_TRANSPARENT_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{12},
+
+	// number of cycles a frame of animation is displayed
+	4,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"Transparent",
 };
 
 // an animation definition
@@ -133,6 +154,7 @@ AnimationDescriptionROMDef PRESS_START_BUTTON_ANIM =
 		(AnimationFunction*)&PRESS_START_BUTTON_DE_ANIM,
 		(AnimationFunction*)&PRESS_START_BUTTON_ES_ANIM,
 		(AnimationFunction*)&PRESS_START_BUTTON_FR_ANIM,
+		(AnimationFunction*)&PRESS_START_BUTTON_TRANSPARENT_ANIM,
 		NULL,
 	}
 };
@@ -241,5 +263,5 @@ AnimatedEntityROMDef PRESS_START_BUTTON_AG =
 	(AnimationDescription*)&PRESS_START_BUTTON_ANIM,
 
 	// initial animation
-	"English",
+	"Transparent",
 };

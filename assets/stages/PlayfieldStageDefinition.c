@@ -227,7 +227,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		// particle removal delay cycles
 		0,
 		// deferred
-		false
+		false,
 	},
 
 	// rendering

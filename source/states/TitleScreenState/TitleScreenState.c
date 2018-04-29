@@ -37,6 +37,7 @@
 #include <ProgressManager.h>
 #include <KeyPadManager.h>
 #include <AnimatedEntity.h>
+#include <Utilities.h>
 #include <PongState.h>
 
 
@@ -77,6 +78,9 @@ __SINGLETON(TitleScreenState);
 static void __attribute__ ((noinline)) TitleScreenState_constructor(TitleScreenState this)
 {
 	__CONSTRUCT_BASE(GameState);
+
+	// init members
+	this->entityPressStart = NULL;
 }
 
 // class's destructor
@@ -98,8 +102,15 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&TITLE_SCREEN_STAGE_ST, NULL, true);
 
+	// get entity references
+	this->entityPressStart = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "PrssStrt", true));
+
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
+
+	// translate entities
+	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
+	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this->entityPressStart), language);
 
 	// fade in screen
 	Camera_startEffect(Camera_getInstance(),

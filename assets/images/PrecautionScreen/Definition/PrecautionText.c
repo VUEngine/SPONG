@@ -42,7 +42,7 @@ extern BYTE PrecautionTextMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMDef PRECAUTION_TEXT_ENGLISH_ANIM =
+AnimationFunctionROMDef PRECAUTION_TEXT_EN_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -60,7 +60,70 @@ AnimationFunctionROMDef PRECAUTION_TEXT_ENGLISH_ANIM =
 	NULL,
 
 	// function's name
-	"English",
+	"0",
+};
+
+AnimationFunctionROMDef PRECAUTION_TEXT_DE_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{1},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"1",
+};
+
+AnimationFunctionROMDef PRECAUTION_TEXT_ES_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{2},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"2",
+};
+
+AnimationFunctionROMDef PRECAUTION_TEXT_FR_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{3},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"3",
 };
 
 // an animation definition
@@ -68,7 +131,10 @@ AnimationDescriptionROMDef PRECAUTION_TEXT_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&PRECAUTION_TEXT_ENGLISH_ANIM,
+		(AnimationFunction*)&PRECAUTION_TEXT_EN_ANIM,
+		(AnimationFunction*)&PRECAUTION_TEXT_DE_ANIM,
+		(AnimationFunction*)&PRECAUTION_TEXT_ES_ANIM,
+		(AnimationFunction*)&PRECAUTION_TEXT_FR_ANIM,
 		NULL,
 	}
 };
