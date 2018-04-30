@@ -45,10 +45,10 @@ extern BYTE CursorMap[];
 AnimationFunctionROMDef MAIN_MENU_CURSOR_DEFAULT_ANIM =
 {
 	// number of frames of this animation function
-	8,
+	6,
 
 	// frames to play in animation
-	{0, 0, 1, 2, 3, 3, 2, 1},
+	{0, 0, 1, 2, /*3, 3,*/ 2, 1},
 
 	// number of cycles a frame of animation is displayed
 	4,
@@ -130,7 +130,7 @@ BgmapSpriteROMDef MAIN_MENU_CURSOR_SPRITE =
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, 0, 2},
+		{0, 0, 0, 0},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)

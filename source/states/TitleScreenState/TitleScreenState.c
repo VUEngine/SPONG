@@ -58,6 +58,9 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner);
 static void TitleScreenState_exit(TitleScreenState this, void* owner);
 static void TitleScreenState_resume(TitleScreenState this, void* owner);
 static void TitleScreenState_suspend(TitleScreenState this, void* owner);
+void TitleScreenState_processUserInputModePressStart(TitleScreenState this, UserInput userInput);
+void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, UserInput userInput);
+void TitleScreenState_updateCursorPosition(TitleScreenState this);
 static void TitleScreenState_onFadeInComplete(TitleScreenState this, Object eventFirer);
 static void TitleScreenState_onFadeOutComplete(TitleScreenState this, Object eventFirer);
 
@@ -81,6 +84,10 @@ static void __attribute__ ((noinline)) TitleScreenState_constructor(TitleScreenS
 
 	// init members
 	this->entityPressStart = NULL;
+	this->entityMainMenu = NULL;
+	this->entityCursor = NULL;
+	this->mode = kTitleScreenModeShowPressStart;
+	this->option = 0;
 }
 
 // class's destructor
@@ -93,6 +100,9 @@ static void TitleScreenState_destructor(TitleScreenState this)
 // state's enter
 static void TitleScreenState_enter(TitleScreenState this, void* owner)
 {
+	// reset mode
+	this->mode = kTitleScreenModeShowPressStart;
+
 	// call base
 	__CALL_BASE_METHOD(GameState, enter, this, owner);
 
@@ -104,6 +114,12 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 
 	// get entity references
 	this->entityPressStart = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "PrssStrt", true));
+	this->entityMainMenu = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "MainMenu", true));
+	this->entityCursor = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "MMCursor", true));
+
+	// initial entity states
+	Entity_hide(__SAFE_CAST(Entity, this->entityMainMenu));
+	TitleScreenState_updateCursorPosition(this);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
@@ -142,9 +158,36 @@ static void TitleScreenState_suspend(TitleScreenState this, void* owner)
 	__CALL_BASE_METHOD(GameState, suspend, this, owner);
 }
 
-void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInput)
+void TitleScreenState_updateCursorPosition(TitleScreenState this)
 {
-	if(userInput.pressedKey & ~K_PWR)
+	s8 projectionCorrection = (this->option < 2) ? 1 : 0;
+	Vector3D position =
+	{
+		0,
+		__PIXELS_TO_METERS((this->option * 12) - 24 + projectionCorrection),
+		__PIXELS_TO_METERS((this->option * -12) + 32),
+	};
+	Entity_setLocalPosition(this->entityCursor, &position);
+}
+
+void TitleScreenState_processUserInputModePressStart(TitleScreenState this, UserInput userInput)
+{
+	if(K_STA & userInput.pressedKey)
+	{
+		// remove blinking "press start button"
+		Entity_hide(this->entityPressStart);
+
+		// show options
+		Entity_show(this->entityMainMenu);
+
+		// set mode to showing options
+		this->mode = kTitleScreenModeShowOptions;
+	}
+}
+
+void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, UserInput userInput)
+{
+	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey))
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -166,6 +209,33 @@ void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInpu
 			(void (*)(Object, Object))TitleScreenState_onFadeOutComplete, // callback function
 			__SAFE_CAST(Object, this) // callback scope
 		);
+	}
+	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
+	{
+		this->option = (this->option > 0) ? this->option - 1 : kTitleScreenOptionOptions;
+		TitleScreenState_updateCursorPosition(this);
+	}
+	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
+	{
+		this->option = (this->option < kTitleScreenOptionOptions) ? this->option + 1 : 0;
+		TitleScreenState_updateCursorPosition(this);
+	}
+}
+
+void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInput)
+{
+	switch(this->mode)
+	{
+		case kTitleScreenModeShowPressStart:
+		{
+			TitleScreenState_processUserInputModePressStart(this, userInput);
+			break;
+		}
+		case kTitleScreenModeShowOptions:
+		{
+			TitleScreenState_processUserInputModeShowOptions(this, userInput);
+			break;
+		}
 	}
 }
 

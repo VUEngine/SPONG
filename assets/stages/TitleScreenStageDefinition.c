@@ -49,22 +49,56 @@ extern u16 TITLE_BGM[][2];
 
 
 //---------------------------------------------------------------------------------------------------------
+//												ASSETS
+//---------------------------------------------------------------------------------------------------------
+
+EntityROMDef MAIN_MENU_CONTAINER =
+{
+	// class allocator
+	__TYPE(Entity),
+
+	// sprites
+	NULL,
+
+	// collision shapes
+	NULL,
+
+	// size
+	// if 0, width and height will be inferred from the first sprite's texture's size
+	{0, 0, 0},
+
+	// gameworld's character's type
+	kNoType,
+
+	// physical specification
+	NULL,
+};
+
+PositionedEntityROMDef MAIN_MENU_CHILDREN[] =
+{
+	{&MAIN_MENU_CURSOR_AE, 			{0,   0, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
+	{&MAIN_MENU_MARATHON_MODE_LE, 	{0, -24, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MAIN_MENU_CHALLENGE_MODE_LE, 	{0, -12, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MAIN_MENU_VERSUS_MODE_LE,		{0,   0, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MAIN_MENU_HIGHSCORES_LE, 		{0,  12, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MAIN_MENU_OPTIONS_LE, 		{0,  24, 0, 0}, 	0, NULL, NULL, NULL, false},
+
+	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
+};
+
+
+//---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&HEXAGON_BACKGROUND_AE,		{192, 112, 0, 1},   0, NULL, NULL, NULL, false},
-	{&LOGO_EN, 						{192,  88, 0, 0}, 	0, NULL, NULL, NULL, false},
-	//{&MAIN_MENU_CURSOR_AE, 			{192, 132, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
-	//{&MAIN_MENU_MARATHON_MODE_LE, 	{192, 132, 0, 0}, 	0, "MMMrthon", NULL, NULL, false},
-	//{&MAIN_MENU_CHALLENGE_MODE_LE, 	{192, 144, 0, 0}, 	0, "MMChllng", NULL, NULL, false},
-	//{&MAIN_MENU_VERSUS_MODE_LE,		{192, 156, 0, 0}, 	0, "MMVersus", NULL, NULL, false},
-	//{&MAIN_MENU_HIGHSCORES_LE, 		{192, 168, 0, 0}, 	0, "MMScores", NULL, NULL, false},
-	//{&MAIN_MENU_OPTIONS_LE, 		{192, 180, 0, 0}, 	0, "MMOption", NULL, NULL, false},
-	{&PRESS_START_BUTTON_LE, 		{192, 168, 0, 0}, 	0, "PrssStrt", NULL, NULL, false},
-	{&COPYRIGHT_EN, 				{188, 212, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&TRANSITION_LAYER_B_AE,		{192, 112, 0, -1},  0, "TRNSLYR", NULL, NULL, false},
+	{&HEXAGON_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&LOGO_EN, 						{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&MAIN_MENU_CONTAINER, 			{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
+	{&PRESS_START_BUTTON_LE, 		{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
+	{&COPYRIGHT_EN, 				{188, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,		{192, 112,  0, -1},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

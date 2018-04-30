@@ -31,6 +31,26 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//												DECLARATIONS
+//---------------------------------------------------------------------------------------------------------
+
+enum TitleScreenModes
+{
+	kTitleScreenModeShowPressStart,
+	kTitleScreenModeShowOptions,
+};
+
+enum TitleScreenOptions
+{
+	kTitleScreenOptionMarathonMode,
+	kTitleScreenOptionChallengeMode,
+	kTitleScreenOptionVersusMode,
+	kTitleScreenOptionHighscores,
+	kTitleScreenOptionOptions,
+};
+
+
+//---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
@@ -51,8 +71,14 @@ __CLASS(TitleScreenState);
 
 #define TitleScreenState_ATTRIBUTES								 										\
 		GameState_ATTRIBUTES																			\
-		/* image entity references */																	\
+		/* entity references */																			\
+		Entity entityMainMenu;																			\
+		Entity entityCursor;																			\
 		Entity entityPressStart;																		\
+		/* current state of the main menu */															\
+		u8 mode;																						\
+		/* currently selected option of the main menu */												\
+		u8 option;																						\
 
 
 //---------------------------------------------------------------------------------------------------------
