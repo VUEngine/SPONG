@@ -43,7 +43,8 @@ extern BYTE HexagonBackgroundRightMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-// a function which defines the frames to play
+/* Animation */
+
 AnimationFunctionROMDef HEXAGON_BACKGROUND_DEFAULT_ANIM =
 {
 	// number of frames of this animation function
@@ -67,7 +68,6 @@ AnimationFunctionROMDef HEXAGON_BACKGROUND_DEFAULT_ANIM =
 	"Default",
 };
 
-// an animation definition
 AnimationDescriptionROMDef HEXAGON_BACKGROUND_ANIM =
 {
 	// animation functions

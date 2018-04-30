@@ -34,7 +34,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition COPYRIGHT_EN;
-extern EntityDefinition HEXAGON_BACKGROUND_AE;
+extern EntityDefinition RHOMBUS_BACKGROUND_AE;
 extern EntityDefinition MAIN_MENU_CHALLENGE_MODE_LE;
 extern EntityDefinition MAIN_MENU_CURSOR_AE;
 extern EntityDefinition MAIN_MENU_HIGHSCORES_LE;
@@ -93,7 +93,7 @@ PositionedEntityROMDef MAIN_MENU_CHILDREN[] =
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&HEXAGON_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&RHOMBUS_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
 	{&LOGO_EN, 						{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
 	{&MAIN_MENU_CONTAINER, 			{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
 	{&PRESS_START_BUTTON_LE, 		{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
