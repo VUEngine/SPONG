@@ -1,7 +1,7 @@
 /* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
  * A universal game engine for the Nintendo Virtual Boy
  *
- * Copyright (C) 2007, 2018 by Jorge Eremiev<jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction, including
@@ -24,8 +24,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <libgccvb.h>
-#include <AnimatedEntity.h>
+#include <LocalizedEntity.h>
 #include <BgmapAnimatedSprite.h>
 
 
@@ -33,27 +32,24 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE TransitionLayerBTiles[];
-extern BYTE TransitionLayerBMap[];
+extern BYTE LanguageNameTiles[];
+extern BYTE LanguageNameMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-// a function which defines the frames to play
-AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_IN_ANIM =
+AnimationFunctionROMDef LANGUAGE_NAME_EN_ANIM =
 {
 	// number of frames of this animation function
-	18,
-	//9,
+	1,
 
 	// frames to play in animation
-	{17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
-	//{16, 14, 12, 10, 8, 6, 4, 2, 0},
+	{0},
 
 	// number of cycles a frame of animation is displayed
-	1,
+	4,
 
 	// whether to play it in loop or not
 	false,
@@ -62,22 +58,19 @@ AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_IN_ANIM =
 	NULL,
 
 	// function's name
-	"FadeIn",
+	"0",
 };
 
-// a function which defines the frames to play
-AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_OUT_ANIM =
+AnimationFunctionROMDef LANGUAGE_NAME_DE_ANIM =
 {
 	// number of frames of this animation function
-	18,
-	//10,
+	1,
 
 	// frames to play in animation
-	{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17},
-	//{0, 2, 4, 6, 8, 10, 12, 14, 16, 17},
+	{1},
 
 	// number of cycles a frame of animation is displayed
-	1,
+	4,
 
 	// whether to play it in loop or not
 	false,
@@ -86,72 +79,116 @@ AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_OUT_ANIM =
 	NULL,
 
 	// function's name
-	"FadeOut",
+	"1",
+};
+
+AnimationFunctionROMDef LANGUAGE_NAME_ES_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{2},
+
+	// number of cycles a frame of animation is displayed
+	4,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"2",
+};
+
+AnimationFunctionROMDef LANGUAGE_NAME_FR_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{3},
+
+	// number of cycles a frame of animation is displayed
+	4,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"3",
 };
 
 // an animation definition
-AnimationDescriptionROMDef TRANSITION_LAYER_B_ANIM =
+AnimationDescriptionROMDef LANGUAGE_NAME_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_IN_ANIM,
-		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_OUT_ANIM,
+		(AnimationFunction*)&LANGUAGE_NAME_EN_ANIM,
+		(AnimationFunction*)&LANGUAGE_NAME_DE_ANIM,
+		(AnimationFunction*)&LANGUAGE_NAME_ES_ANIM,
+		(AnimationFunction*)&LANGUAGE_NAME_FR_ANIM,
 		NULL,
 	}
 };
 
-CharSetROMDef TRANSITION_LAYER_B_CH =
+CharSetROMDef LANGUAGE_NAME_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	4,
+	8,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__ANIMATED_SINGLE_OPTIMIZED,
+	__ANIMATED_SINGLE,
 
 	// char definition
-	TransitionLayerBTiles,
+	LanguageNameTiles,
 };
 
-TextureROMDef TRANSITION_LAYER_B_TX =
+TextureROMDef LANGUAGE_NAME_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&TRANSITION_LAYER_B_CH,
+	(CharSetDefinition*)&LANGUAGE_NAME_CH,
 
 	// bgmap definition
-	TransitionLayerBMap,
+	LanguageNameMap,
 
 	// cols (max 64)
-	48,
+	8,
 
 	// rows (max 64)
-	28,
+	1,
 
-	// padding for affine transformations
+	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
 	// __ANIMATED_MULTI: total number of frames
-	__ANIMATED_SINGLE_OPTIMIZED,
+	1,
 
 	// palette number (0-3)
-	1,
+	0,
 
 	// recyclable
 	false,
 };
 
-BgmapSpriteROMDef TRANSITION_LAYER_B_SPRITE =
+BgmapSpriteROMDef LANGUAGE_NAME_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&TRANSITION_LAYER_B_TX,
+		(TextureDefinition*)&LANGUAGE_NAME_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -164,27 +201,27 @@ BgmapSpriteROMDef TRANSITION_LAYER_B_SPRITE =
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
 	__WORLD_BGMAP,
 
-	// pointer to affine / hbias manipulation function
+	// pointer to affine/hbias manipulation function
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const TRANSITION_LAYER_B_SPRITES[] =
+BgmapSpriteROMDef* const LANGUAGE_NAME_SPRITES[] =
 {
-	&TRANSITION_LAYER_B_SPRITE,
+	&LANGUAGE_NAME_SPRITE,
 	NULL
 };
 
-AnimatedEntityROMDef TRANSITION_LAYER_B_AE =
+LocalizedEntityROMDef LANGUAGE_NAME_LE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(LocalizedEntity),
 
 		// sprites
-		(SpriteROMDef**)TRANSITION_LAYER_B_SPRITES,
+		(SpriteROMDef**)LANGUAGE_NAME_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -201,8 +238,8 @@ AnimatedEntityROMDef TRANSITION_LAYER_B_AE =
 	},
 
 	// pointer to the animation definition for the item
-	(AnimationDescription*)&TRANSITION_LAYER_B_ANIM,
+	(AnimationDescription*)&LANGUAGE_NAME_ANIM,
 
 	// initial animation
-	"FadeIn",
+	"0",
 };

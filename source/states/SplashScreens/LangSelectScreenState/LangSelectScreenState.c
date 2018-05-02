@@ -25,6 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Game.h>
+#include <AnimatedEntity.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -134,32 +135,15 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 	Vector3D position = {__PIXELS_TO_METERS(120 + this->language * 48), __PIXELS_TO_METERS(96), 0};
 	Entity_setLocalPosition(cursorEntity, &position);
 
-	/*
-	// print header
-	const char* strLanguageSelectTitle = I18n_getText(I18n_getInstance(), STR_LANGUAGE);
-	FontSize strLanguageSelectTitleSize = Printing_getTextSize(Printing_getInstance(), strLanguageSelectTitle, NULL);
-	Printing_text(Printing_getInstance(), "                                                ", 0, 8, NULL);
-	Printing_text(
-		Printing_getInstance(),
-		Utilities_toUppercase(strLanguageSelectTitle),
-		(__SCREEN_WIDTH_IN_CHARS - strLanguageSelectTitleSize.x) >> 1,
-		8,
-		NULL
-	);
-	*/
+	// move cursor entity
+	AnimatedEntity LangNameEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(
+		__SAFE_CAST(Container, Game_getStage(Game_getInstance())),
+		"LangName",
+		false
+	));
 
-	// print current language
-	/*
-	const char* strActiveLanguageName = (char*)I18n_getActiveLanguageName(I18n_getInstance());
-	FontSize strActiveLanguageNameSize = Printing_getTextSize(Printing_getInstance(), strActiveLanguageName, NULL);
-	Printing_text(Printing_getInstance(), "                                                ", 0, 15, NULL);
-	Printing_text(
-		Printing_getInstance(),
-		Utilities_toUppercase(strActiveLanguageName),
-		(__SCREEN_WIDTH_IN_CHARS - strActiveLanguageNameSize.x) >> 1,
-		15,
-		NULL
-	);
-	*/
+	// change language name
+	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
+	AnimatedEntity_playAnimation(LangNameEntity, language);
 }
 
