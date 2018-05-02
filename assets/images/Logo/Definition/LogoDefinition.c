@@ -24,15 +24,16 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
-#include <macros.h>
+#include <AnimatedEntity.h>
+#include <BgmapAnimatedSprite.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE LogoTiles[];
+extern BYTE LogoLTiles[];
+extern BYTE LogoRTiles[];
 extern BYTE LogoLMap[];
 extern BYTE LogoRMap[];
 
@@ -41,27 +42,63 @@ extern BYTE LogoRMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef LOGO_CH =
+/* Animation */
+
+AnimationFunctionROMDef LOGO_DEFAULT_ANIM =
 {
-	// number of chars, depending on allocation type:
-	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
-	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	98,
+	// number of frames of this animation function
+	64,
 
-	// allocation type
-	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__NOT_ANIMATED,
+	// frames to play in animation
+	{
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	},
 
-	// char definition
-	LogoTiles,
+	// number of cycles a frame of animation is displayed
+	4,
+
+	// whether to play it in loop or not
+	true,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"Default",
+};
+
+// an animation definition
+AnimationDescriptionROMDef LOGO_ANIM =
+{
+	// animation functions
+	{
+		(AnimationFunction*)&LOGO_DEFAULT_ANIM,
+		NULL,
+	}
 };
 
 /* Left */
 
+CharSetROMDef LOGO_L_CH =
+{
+	// number of chars, depending on allocation type:
+	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
+	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
+	161,
+
+	// allocation type
+	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
+	__ANIMATED_SINGLE,
+
+	// char definition
+	LogoLTiles,
+};
+
 TextureROMDef LOGO_L_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&LOGO_CH,
+	(CharSetDefinition*)&LOGO_L_CH,
 
 	// bgmap definition
 	LogoLMap,
@@ -91,7 +128,7 @@ BgmapSpriteROMDef LOGO_L_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
 		(TextureDefinition*)&LOGO_L_TX,
@@ -116,10 +153,25 @@ BgmapSpriteROMDef LOGO_L_SPRITE =
 
 /* Right */
 
+CharSetROMDef LOGO_R_CH =
+{
+	// number of chars, depending on allocation type:
+	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
+	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
+	161,
+
+	// allocation type
+	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
+	__ANIMATED_SINGLE,
+
+	// char definition
+	LogoRTiles,
+};
+
 TextureROMDef LOGO_R_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&LOGO_CH,
+	(CharSetDefinition*)&LOGO_R_CH,
 
 	// bgmap definition
 	LogoRMap,
@@ -149,7 +201,7 @@ BgmapSpriteROMDef LOGO_R_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
 		(TextureDefinition*)&LOGO_R_TX,
@@ -181,24 +233,33 @@ BgmapSpriteROMDef* const LOGO_SPRITES[] =
 	NULL
 };
 
-EntityROMDef LOGO_EN =
+AnimatedEntityROMDef LOGO_AE =
 {
-	// class allocator
-	__TYPE(Entity),
+	{
+		// class allocator
+		__TYPE(AnimatedEntity),
 
-	// sprites
-	(SpriteROMDef**)LOGO_SPRITES,
+		// sprites
+		(SpriteROMDef**)LOGO_SPRITES,
 
-	// collision shapes
-	(ShapeDefinition*)NULL,
+		// collision shapes
+		(ShapeDefinition*)NULL,
 
-	// size
-	// if 0, width and height will be inferred from the first sprite's texture's size
-	{0, 0, 0},
+		// size
+		// if 0, width and height will be inferred from the first sprite's texture's size
+		{0, 0, 0},
 
-	// gameworld's character's type
-	kNoType,
+		// gameworld's character's type
+		0,
 
-	// physical specification
-	(PhysicalSpecification*)NULL,
+		// physical specification
+		(PhysicalSpecification*)NULL,
+	},
+
+	// pointer to the animation definition for the item
+	(AnimationDescription*)&LOGO_ANIM,
+
+	// initial animation
+	"Default",
 };
+
