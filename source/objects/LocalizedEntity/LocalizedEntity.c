@@ -70,7 +70,7 @@ void LocalizedEntity_ready(LocalizedEntity this, bool recursive)
 	ASSERT(this, "LocalizedEntity::ready: null this");
 
 	// call base
-	__CALL_BASE_METHOD(AnimatedEntity, ready, this, recursive);
+	Base_ready(this, recursive);
 
 	// translate entity
 	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);

@@ -96,14 +96,14 @@ void PongBall_ready(PongBall this, bool recursive)
 	ASSERT(this, "PongBall::ready: null this");
 
 	// call base
-	__CALL_BASE_METHOD(Actor, ready, this, recursive);
+	Base_ready(this, recursive);
 
 	PongBall_startMovement(this);
 }
 
 void PongBall_update(PongBall this, u32 elapsedTime)
 {
-	__CALL_BASE_METHOD(Actor, update , this, elapsedTime);
+	Base_update(this, elapsedTime);
 
 	Velocity velocity = Body_getVelocity(this->body);
 	Rotation localRotation = this->transformation.localRotation;
@@ -134,7 +134,7 @@ void PongBall_startMovement(PongBall this)
 	NM_ASSERT(paddle, "PongBall::startMovement: paddle not found");
 
 	Vector3D localPosition = this->transformation.localPosition;
-	const Vector3D* paddlePosition = __VIRTUAL_CALL(Container, getPosition, paddle);
+	const Vector3D* paddlePosition =  Entity_getPosition(paddle);
 	localPosition.x = paddlePosition->x;
 	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities_random(Utilities_randomSeed(), 10) / 100.0f);
 	Entity_setLocalPosition(__SAFE_CAST(Entity, this), &localPosition);
@@ -156,7 +156,7 @@ bool PongBall_handleMessage(PongBall this, Telegram telegram)
 	{
 	}
 
-	return Actor_handleMessage(__SAFE_CAST(Actor, this), telegram);
+	return Base_handleMessage(this, telegram);
 }
 
 bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation)
@@ -171,7 +171,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 	bool hitFloor = false;
 
-	switch(__VIRTUAL_CALL(SpatialObject, getInGameType, collidingObject))
+	switch( SpatialObject_getInGameType(collidingObject))
 	{
 		case kPaddleType:
 			{
@@ -184,8 +184,8 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 					this->paddleEnum = kRightPaddle;
 				}
 
-				velocityModifier.x = __FIX10_6_MULT(this->transformation.globalPosition.x - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->x, SPEED_X_MULTIPLIER);
-				velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y - __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject)->y, SPEED_Y_MULTIPLIER);
+				velocityModifier.x = __FIX10_6_MULT(this->transformation.globalPosition.x -  SpatialObject_getPosition(collidingObject)->x, SPEED_X_MULTIPLIER);
+				velocityModifier.y = __FIX10_6_MULT(this->transformation.globalPosition.y -  SpatialObject_getPosition(collidingObject)->y, SPEED_Y_MULTIPLIER);
 
 				if(!velocityModifier.y)
 				{
@@ -208,7 +208,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 
 		case kFloor:
 			{
-				const Vector3D* collidingObjectPosition = __VIRTUAL_CALL(SpatialObject, getPosition, collidingObject);
+				const Vector3D* collidingObjectPosition =  SpatialObject_getPosition(collidingObject);
 
 				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
 				{
@@ -254,7 +254,7 @@ bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisio
 			break;
 	}
 
-	bool collisionResult = Actor_enterCollision(__SAFE_CAST(Actor, this), collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
+	bool collisionResult = Base_enterCollision(this, collisionInformation);// && (__ABS(collisionInformation->solutionVector.direction.y) > __ABS(collisionInformation->solutionVector.direction.x));
 
 	Velocity velocity = Body_getVelocity(this->body);
 

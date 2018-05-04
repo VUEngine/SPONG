@@ -91,7 +91,7 @@ static void PongState_destructor(PongState this)
 static void PongState_enter(PongState this, void* owner)
 {
 	// call base
-	__CALL_BASE_METHOD(GameState, enter, this, owner);
+	Base_enter(this, owner);
 
 	// disable user input
 	Game_disableKeypad(Game_getInstance());
@@ -117,13 +117,13 @@ static void PongState_enter(PongState this, void* owner)
 static void PongState_exit(PongState this, void* owner)
 {
 	// call base
-	__CALL_BASE_METHOD(GameState, exit, this, owner);
+	Base_exit(this, owner);
 }
 
 // state's resume
 static void PongState_resume(PongState this, void* owner)
 {
-	__CALL_BASE_METHOD(GameState, resume, this, owner);
+	Base_resume(this, owner);
 
 	Camera_startEffect(Camera_getInstance(), kFadeIn, __FADE_DELAY);
 }
@@ -133,7 +133,7 @@ static void PongState_suspend(PongState this, void* owner)
 {
 	Camera_startEffect(Camera_getInstance(), kFadeOut, __FADE_DELAY);
 
-	__CALL_BASE_METHOD(GameState, suspend, this, owner);
+	Base_suspend(this, owner);
 }
 
 void PongState_processUserInput(PongState this, UserInput userInput)

@@ -98,11 +98,11 @@ void PongBallLight_ready(PongBallLight this, bool recursive)
 	ASSERT(this, "PongBallLight::ready: null this");
 
 	// call base
-	__CALL_BASE_METHOD(Entity, ready, this, recursive);
+	Base_ready(this, recursive);
 
 	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PONG_BALL_NAME, true));
 	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
-	this->pongBallInitialZDistance = this->transformation.globalPosition.z - __VIRTUAL_CALL(SpatialObject, getPosition, this->pongBall)->z;
+	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject_getPosition(this->pongBall)->z;
 	this->followPongBall = true;
 	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
 	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
@@ -110,18 +110,18 @@ void PongBallLight_ready(PongBallLight this, bool recursive)
 
 void PongBallLight_update(PongBallLight this, u32 elapsedTime)
 {
-	__CALL_BASE_METHOD(Entity, update , this, elapsedTime);
+	Base_update(this, elapsedTime);
 
 	if(this->followPongBall)
 	{
-		const Vector3D* pongBallPosition = __VIRTUAL_CALL(SpatialObject, getPosition, this->pongBall);
+		const Vector3D* pongBallPosition =  SpatialObject_getPosition(this->pongBall);
 
 		Vector3D localPosition = this->transformation.localPosition;
 
 		localPosition.x  = pongBallPosition->x;
 		localPosition.y  = pongBallPosition->y;
 
-		__VIRTUAL_CALL(Entity, setLocalPosition, this, &localPosition);
+		 Entity_setLocalPosition(this, &localPosition);
 
 		Scale localScale = this->transformation.localScale;
 		localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __FIX10_6_DIV(this->pongBallInitialZDistance, this->transformation.globalPosition.z - (pongBallPosition->z - Z_SCALING_COMPENSATION))));

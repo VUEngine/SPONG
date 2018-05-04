@@ -82,7 +82,7 @@ void Paddle_ready(Paddle this, bool recursive)
 	ASSERT(this, "Paddle::ready: null this");
 
 	// call base
-	__CALL_BASE_METHOD(Actor, ready, this, recursive);
+	Base_ready(this, recursive);
 
 	Paddle_stopMovement(this);
 
@@ -112,7 +112,7 @@ bool Paddle_handleMessage(Paddle this, Telegram telegram)
 	{
 	}
 
-	return Actor_handleMessage(__SAFE_CAST(Actor, this), telegram);
+	return Base_handleMessage(this, telegram);
 }
 
 void Paddle_setExtraInfo(Paddle this __attribute__ ((unused)), void* extraInfo __attribute__ ((unused)))
@@ -123,7 +123,7 @@ void Paddle_setExtraInfo(Paddle this __attribute__ ((unused)), void* extraInfo _
 
 void Paddle_transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag)
 {
-	__CALL_BASE_METHOD(Actor, transform, this, environmentTransform, invalidateTransformationFlag);
+	Base_transform(this, environmentTransform, invalidateTransformationFlag);
 
 //	Shape_show(VirtualList_back(this->shapes));
 }
