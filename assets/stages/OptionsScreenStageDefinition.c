@@ -34,6 +34,11 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern EntityDefinition CIRCLE_BACKGROUND_AE;
+extern EntityDefinition OPTIONS_AUTOMATIC_PAUSE_LE;
+extern EntityDefinition OPTIONS_CHECKBOX_LE;
+extern EntityDefinition OPTIONS_HEADER_LE;
+extern EntityDefinition OPTIONS_LANGUAGE_LE;
+extern EntityDefinition LANGUAGE_NAME_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 
@@ -43,7 +48,12 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&CIRCLE_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&CIRCLE_BACKGROUND_AE,			{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&OPTIONS_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&OPTIONS_AUTOMATIC_PAUSE_LE,	{132, 100,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&OPTIONS_CHECKBOX_LE,			{213, 100,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&OPTIONS_LANGUAGE_LE,			{168, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&LANGUAGE_NAME_LE,				{240, 112,  0,  0},   	0, "LangName", NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0, -1},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},

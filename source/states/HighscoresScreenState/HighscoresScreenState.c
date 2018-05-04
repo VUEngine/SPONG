@@ -111,6 +111,19 @@ static void HighscoresScreenState_enter(HighscoresScreenState this, void* owner)
 		(void (*)(Object, Object))HighscoresScreenState_onFadeInComplete, // callback function
 		__SAFE_CAST(Object, this) // callback scope
 	);
+
+ 	/**/
+	Printing_text(Printing_getInstance(), " 1   1,000,000   JORGE   ", 12,  1+13, NULL);
+	Printing_text(Printing_getInstance(), " 2     500,000   CHRIS   ", 12,  2+13, NULL);
+	Printing_text(Printing_getInstance(), " 3     100,000   SOMEONE ", 12,  3+13, NULL);
+	Printing_text(Printing_getInstance(), " 4           -   -       ", 12,  4+13, NULL);
+	Printing_text(Printing_getInstance(), " 5           -   -       ", 12,  5+13, NULL);
+	Printing_text(Printing_getInstance(), " 6           -   -       ", 12,  6+13, NULL);
+	Printing_text(Printing_getInstance(), " 7           -   -       ", 12,  7+13, NULL);
+	Printing_text(Printing_getInstance(), " 8           -   -       ", 12,  8+13, NULL);
+	Printing_text(Printing_getInstance(), " 9           -   -       ", 12,  9+13, NULL);
+	Printing_text(Printing_getInstance(), "10           -   -       ", 12, 10+13, NULL);
+	/**/
 }
 
 // state's exit

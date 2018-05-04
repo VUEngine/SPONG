@@ -127,6 +127,13 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 		(void (*)(Object, Object))OptionsScreenState_onFadeInComplete, // callback function
 		__SAFE_CAST(Object, this) // callback scope
 	);
+
+	/*/
+	Printing_text(Printing_getInstance(), "TEST", 0, 0, NULL);
+	Printing_text(Printing_getInstance(), "TEST", 0, 1, NULL);
+	Printing_text(Printing_getInstance(), "TEST", 0, 2, NULL);
+	Printing_text(Printing_getInstance(), "TEST", 0, 3, NULL);
+	/**/
 }
 
 // state's exit
