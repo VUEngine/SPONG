@@ -132,8 +132,8 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 		"Cursor",
 		false
 	));
-	Vector3D position = {__PIXELS_TO_METERS(120 + this->language * 48), __PIXELS_TO_METERS(96), 0};
-	Entity_setLocalPosition(cursorEntity, &position);
+	Vector3D cursorPosition = {__PIXELS_TO_METERS(120 + this->language * 48), __PIXELS_TO_METERS(96), 0};
+	Entity_setLocalPosition(cursorEntity, &cursorPosition);
 
 	// move cursor entity
 	AnimatedEntity LangNameEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(
@@ -145,5 +145,14 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 	// change language name
 	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
 	AnimatedEntity_playAnimation(LangNameEntity, language);
+
+	// change language name position
+	Vector3D languageNamePosition =
+	{
+		__PIXELS_TO_METERS(132 + (this->language * 48)),
+		__PIXELS_TO_METERS(124),
+		0,
+	};
+	Entity_setLocalPosition(__SAFE_CAST(Entity, LangNameEntity), &languageNamePosition);
 }
 

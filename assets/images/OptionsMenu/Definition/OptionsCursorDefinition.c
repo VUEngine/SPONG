@@ -34,92 +34,70 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CheckboxTiles[];
-extern BYTE CheckboxMap[];
+extern BYTE OptionsCursorTiles[];
+extern BYTE OptionsCursorMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMDef OPTIONS_CHECKBOX_ON_ANIM =
+AnimationFunctionROMDef OPTIONS_CURSOR_DEFAULT_ANIM =
 {
 	// number of frames of this animation function
-	1,
+	6,
 
 	// frames to play in animation
-	{0},
+	{0, 0, 1, 2, /*3, 3,*/ 2, 1},
 
 	// number of cycles a frame of animation is displayed
-	1,
+	4,
 
 	// whether to play it in loop or not
-	false,
+	true,
 
 	// method to call on function completion
 	NULL,
 
 	// function's name
-	"0",
-};
-
-AnimationFunctionROMDef OPTIONS_CHECKBOX_OFF_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
+	"Default",
 };
 
 // an animation definition
-AnimationDescriptionROMDef OPTIONS_CHECKBOX_ANIM =
+AnimationDescriptionROMDef OPTIONS_CURSOR_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&OPTIONS_CHECKBOX_ON_ANIM,
-		(AnimationFunction*)&OPTIONS_CHECKBOX_OFF_ANIM,
+		(AnimationFunction*)&OPTIONS_CURSOR_DEFAULT_ANIM,
 		NULL,
 	}
 };
 
-CharSetROMDef OPTIONS_CHECKBOX_CH =
+CharSetROMDef OPTIONS_CURSOR_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	8,
+	10,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__ANIMATED_SINGLE,
 
 	// char definition
-	CheckboxTiles,
+	OptionsCursorTiles,
 };
 
-TextureROMDef OPTIONS_CHECKBOX_TX =
+TextureROMDef OPTIONS_CURSOR_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&OPTIONS_CHECKBOX_CH,
+	(CharSetDefinition*)&OPTIONS_CURSOR_CH,
 
 	// bgmap definition
-	CheckboxMap,
+	OptionsCursorMap,
 
 	// cols (max 64)
-	1,
+	10,
 
 	// rows (max 64)
 	1,
@@ -139,14 +117,14 @@ TextureROMDef OPTIONS_CHECKBOX_TX =
 	false,
 };
 
-BgmapSpriteROMDef OPTIONS_CHECKBOX_SPRITE =
+BgmapSpriteROMDef OPTIONS_CURSOR_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&OPTIONS_CHECKBOX_TX,
+		(TextureDefinition*)&OPTIONS_CURSOR_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -166,20 +144,20 @@ BgmapSpriteROMDef OPTIONS_CHECKBOX_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const OPTIONS_CHECKBOX_SPRITES[] =
+BgmapSpriteROMDef* const OPTIONS_CURSOR_SPRITES[] =
 {
-	&OPTIONS_CHECKBOX_SPRITE,
+	&OPTIONS_CURSOR_SPRITE,
 	NULL
 };
 
-AnimatedEntityROMDef OPTIONS_CHECKBOX_LE =
+AnimatedEntityROMDef OPTIONS_CURSOR_AE =
 {
 	{
 		// class allocator
 		__TYPE(AnimatedEntity),
 
 		// sprites
-		(SpriteROMDef**)OPTIONS_CHECKBOX_SPRITES,
+		(SpriteROMDef**)OPTIONS_CURSOR_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -196,8 +174,8 @@ AnimatedEntityROMDef OPTIONS_CHECKBOX_LE =
 	},
 
 	// pointer to the animation definition for the character
-	(AnimationDescription*)&OPTIONS_CHECKBOX_ANIM,
+	(AnimationDescription*)&OPTIONS_CURSOR_ANIM,
 
 	// initial animation
-	"0"
+	"Default"
 };

@@ -110,10 +110,10 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
 
 	// get entity references
-	//this->entityCursor = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "MMCursor", true));
+	this->entityCursor = __SAFE_CAST(Entity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "Cursor", true));
 
 	// initial entity states
-	//OptionsScreenState_updateCursorPosition(this);
+	OptionsScreenState_updateCursorPosition(this);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
@@ -161,12 +161,11 @@ static void OptionsScreenState_suspend(OptionsScreenState this, void* owner)
 
 void OptionsScreenState_updateCursorPosition(OptionsScreenState this)
 {
-	s8 projectionCorrection = (this->option < 2) ? 1 : 0;
 	Vector3D position =
 	{
+		__PIXELS_TO_METERS(234),
+		__PIXELS_TO_METERS(100 + (this->option * 12)),
 		0,
-		__PIXELS_TO_METERS((this->option * 12) - 24 + projectionCorrection),
-		__PIXELS_TO_METERS((this->option * -12) + 32),
 	};
 	Entity_setLocalPosition(this->entityCursor, &position);
 }
@@ -198,12 +197,12 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 	}
 	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
 	{
-		this->option = (this->option > 0) ? this->option - 1 : kOptionScreenOption3;
+		this->option = (this->option > 0) ? this->option - 1 : kOptionScreenOptionAutomaticPause;
 		OptionsScreenState_updateCursorPosition(this);
 	}
 	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
 	{
-		this->option = (this->option < kOptionScreenOption3) ? this->option + 1 : 0;
+		this->option = (this->option < kOptionScreenOptionAutomaticPause) ? this->option + 1 : 0;
 		OptionsScreenState_updateCursorPosition(this);
 	}
 }
@@ -234,10 +233,14 @@ static void OptionsScreenState_onFadeOutComplete(OptionsScreenState this __attri
 {
 	ASSERT(this, "OptionsScreenState::onFadeOutComplete: null this");
 
+	/*
 	switch(this->option)
 	{
-		case kOptionScreenOption1:
+		case kOptionScreenOptionLanguage:
+	*/
 			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
+	/*
 			break;
 	}
+	*/
 }

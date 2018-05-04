@@ -41,9 +41,8 @@ enum OptionsScreenModes
 
 enum OptionsScreenOptions
 {
-	kOptionScreenOption1,
-	kOptionScreenOption2,
-	kOptionScreenOption3,
+	kOptionScreenOptionLanguage,
+	kOptionScreenOptionAutomaticPause,
 };
 
 
