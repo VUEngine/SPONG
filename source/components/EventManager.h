@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PROGRESS_MANAGER_H_
-#define PROGRESS_MANAGER_H_
+#ifndef EVENT_MANAGER_H_
+#define EVENT_MANAGER_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -35,61 +35,27 @@
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define ProgressManager_METHODS(ClassName)																\
+#define EventManager_METHODS(ClassName)																	\
 		Object_METHODS(ClassName)																		\
 
 // declare the virtual methods which are redefined
-#define ProgressManager_SET_VTABLE(ClassName)															\
+#define EventManager_SET_VTABLE(ClassName)																\
 		Object_SET_VTABLE(ClassName)																	\
 
-// declare class
-__CLASS(ProgressManager);
+// declare a EventManager
+__CLASS(EventManager);
 
-// declare class attributes
-#define ProgressManager_ATTRIBUTES																		\
+#define EventManager_ATTRIBUTES																			\
 		Object_ATTRIBUTES																				\
-		/* flag that tells if sram is available on the current cartridge */								\
-		bool sramAvailable;																				\
-
-
-//---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
-//---------------------------------------------------------------------------------------------------------
-
-#define SAVE_STAMP			"VUEngine"
-#define SAVE_STAMP_LENGTH	8
-
-// this struct is never instantiated, its sole purpose is to determine offsets of its members.
-// therefore it acts as kind of like a map of sram content.
-typedef struct SaveData
-{
-	// flag to know if there is data saved
-	u8 saveStamp[SAVE_STAMP_LENGTH];
-
-	// checksum over sram content to prevent save data manipulation
-	u32 checksum;
-
-	// active language id
-	u8 languageId;
-
-	// auto pause status (0: on, 1: off)
-	u8 autoPauseStatus;
-
-} SaveData;
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-ProgressManager ProgressManager_getInstance();
+EventManager EventManager_getInstance();
 
-void ProgressManager_destructor(ProgressManager this);
-bool ProgressManager_getAutomaticPauseStatus(ProgressManager this);
-u8   ProgressManager_getLanguage(ProgressManager this);
-void ProgressManager_initialize(ProgressManager this);
-void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus);
-void ProgressManager_setLanguage(ProgressManager this, u8 languageId);
+void EventManager_destructor(EventManager this);
 
 
 #endif

@@ -39,6 +39,9 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
+#include <EventManager.h>
+#include <AutoPauseScreenState.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -58,7 +61,10 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner);
 static void OptionsScreenState_exit(OptionsScreenState this, void* owner);
 static void OptionsScreenState_resume(OptionsScreenState this, void* owner);
 static void OptionsScreenState_suspend(OptionsScreenState this, void* owner);
+void OptionsScreenState_switchLanguage(OptionsScreenState this, bool forward);
+void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this);
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput);
+void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this);
 void OptionsScreenState_updateCursorPosition(OptionsScreenState this);
 static void OptionsScreenState_onFadeInComplete(OptionsScreenState this, Object eventFirer);
 static void OptionsScreenState_onFadeOutComplete(OptionsScreenState this, Object eventFirer);
@@ -114,6 +120,7 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 
 	// initial entity states
 	OptionsScreenState_updateCursorPosition(this);
+	OptionsScreenState_updateAutomaticPauseCheckBox(this);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
@@ -127,13 +134,6 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 		(void (*)(Object, Object))OptionsScreenState_onFadeInComplete, // callback function
 		__SAFE_CAST(Object, this) // callback scope
 	);
-
-	/*/
-	Printing_text(Printing_getInstance(), "TEST", 0, 0, NULL);
-	Printing_text(Printing_getInstance(), "TEST", 0, 1, NULL);
-	Printing_text(Printing_getInstance(), "TEST", 0, 2, NULL);
-	Printing_text(Printing_getInstance(), "TEST", 0, 3, NULL);
-	/**/
 }
 
 // state's exit
@@ -170,9 +170,50 @@ void OptionsScreenState_updateCursorPosition(OptionsScreenState this)
 	Entity_setLocalPosition(this->entityCursor, &position);
 }
 
+void OptionsScreenState_switchLanguage(OptionsScreenState this __attribute__ ((unused)), bool forward)
+{
+	int numLangs = sizeof(I18n_getLanguages(I18n_getInstance()));
+	int language = I18n_getActiveLanguage(I18n_getInstance());
+	language = forward
+		? (language < (numLangs - 1)) ? language + 1 : 0
+		: (language > 0) ? language - 1 : numLangs - 1;
+	I18n_setActiveLanguage(I18n_getInstance(), language);
+	ProgressManager_setLanguage(ProgressManager_getInstance(), language);
+
+	// fire event to re-translate all entities
+	Object_fireEvent(__SAFE_CAST(Object, EventManager_getInstance()), kEventLanguageChanged);
+}
+
+void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this __attribute__ ((unused)))
+{
+	bool autoPauseEnabled = (Game_getAutomaticPauseState(Game_getInstance()) != NULL);
+	AnimatedEntity autoPauseCheckBoxEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "APChckBx", true));
+	if(autoPauseCheckBoxEntity)
+	{
+		AnimatedEntity_playAnimation(autoPauseCheckBoxEntity, Utilities_itoa(autoPauseEnabled, 10, 1));
+	}
+}
+
+void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this)
+{
+	// (un)set auto pause state
+	bool autoPauseEnabled = (Game_getAutomaticPauseState(Game_getInstance()) != NULL);
+	autoPauseEnabled = !autoPauseEnabled;
+	Game_setAutomaticPauseState(Game_getInstance(), autoPauseEnabled
+		? __SAFE_CAST(GameState, AutoPauseScreenState_getInstance())
+		: NULL
+	);
+
+	// write state to sram
+	ProgressManager_setAutomaticPauseStatus(ProgressManager_getInstance(), autoPauseEnabled);
+
+	// update visual representation
+	OptionsScreenState_updateAutomaticPauseCheckBox(this);
+}
+
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput)
 {
-	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey))
+	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey) || (K_B & userInput.pressedKey) || (K_SEL & userInput.pressedKey))
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -205,6 +246,19 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 		this->option = (this->option < kOptionScreenOptionAutomaticPause) ? this->option + 1 : 0;
 		OptionsScreenState_updateCursorPosition(this);
 	}
+	else if((K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey) || (K_LL & userInput.pressedKey) || (K_RL & userInput.pressedKey))
+	{
+		switch(this->option)
+		{
+			case kOptionScreenOptionLanguage:
+				OptionsScreenState_switchLanguage(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
+				break;
+
+			case kOptionScreenOptionAutomaticPause:
+				OptionsScreenState_toggleAutomaticPause(this);
+				break;
+		}
+	}
 }
 
 void OptionsScreenState_processUserInput(OptionsScreenState this, UserInput userInput)
@@ -233,14 +287,5 @@ static void OptionsScreenState_onFadeOutComplete(OptionsScreenState this __attri
 {
 	ASSERT(this, "OptionsScreenState::onFadeOutComplete: null this");
 
-	/*
-	switch(this->option)
-	{
-		case kOptionScreenOptionLanguage:
-	*/
-			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
-	/*
-			break;
-	}
-	*/
+	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 }

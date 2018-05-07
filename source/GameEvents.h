@@ -38,6 +38,7 @@ enum GameEvents
 {
 	kSomeGameEvent = kLastEngineEvent + 1,
 
+	kEventLanguageChanged,
 	kEventUserInput,
 	kEventPongBallHitCeiling,
 	kEventPongBallHitFloor,

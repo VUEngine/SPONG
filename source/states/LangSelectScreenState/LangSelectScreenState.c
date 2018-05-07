@@ -35,6 +35,8 @@
 #include <KeyPadManager.h>
 #include <Utilities.h>
 #include <ProgressManager.h>
+#include <GameEvents.h>
+#include <EventManager.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,7 +44,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern StageROMDef LANG_SELECT_SCREEN_STAGE_ST;
-extern LangROMDef* __LANGUAGES[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,6 +53,7 @@ extern LangROMDef* __LANGUAGES[];
 static void LangSelectScreenState_destructor(LangSelectScreenState this);
 static void LangSelectScreenState_constructor(LangSelectScreenState this);
 static void LangSelectScreenState_processInput(LangSelectScreenState this, u32 pressedKey);
+void LangSelectScreenState_changeLanguage(LangSelectScreenState this, bool forward);
 static void LangSelectScreenState_print(LangSelectScreenState this);
 
 
@@ -97,10 +99,10 @@ void LangSelectScreenState_enter(LangSelectScreenState this, void* owner)
 	LangSelectScreenState_print(this);
 }
 
-void LangSelectScreenState_changeLanguage(LangSelectScreenState this, bool increase)
+void LangSelectScreenState_changeLanguage(LangSelectScreenState this, bool forward)
 {
-	int numLangs = sizeof(*__LANGUAGES);
-	this->language = increase
+	int numLangs = sizeof(I18n_getLanguages(I18n_getInstance()));
+	this->language = forward
 		? (this->language < (numLangs - 1)) ? this->language + 1 : 0
 		: (this->language > 0) ? this->language - 1 : numLangs - 1;
 	I18n_setActiveLanguage(I18n_getInstance(), this->language);
@@ -143,8 +145,7 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 	));
 
 	// change language name
-	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
-	AnimatedEntity_playAnimation(LangNameEntity, language);
+	Object_fireEvent(__SAFE_CAST(Object, EventManager_getInstance()), kEventLanguageChanged);
 
 	// change language name position
 	Vector3D languageNamePosition =

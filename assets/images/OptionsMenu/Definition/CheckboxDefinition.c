@@ -42,7 +42,7 @@ extern BYTE CheckboxMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMDef OPTIONS_CHECKBOX_ON_ANIM =
+AnimationFunctionROMDef OPTIONS_CHECKBOX_OFF_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -63,7 +63,7 @@ AnimationFunctionROMDef OPTIONS_CHECKBOX_ON_ANIM =
 	"0",
 };
 
-AnimationFunctionROMDef OPTIONS_CHECKBOX_OFF_ANIM =
+AnimationFunctionROMDef OPTIONS_CHECKBOX_ON_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -100,7 +100,7 @@ CharSetROMDef OPTIONS_CHECKBOX_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	8,
+	1,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -172,7 +172,7 @@ BgmapSpriteROMDef* const OPTIONS_CHECKBOX_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef OPTIONS_CHECKBOX_LE =
+AnimatedEntityROMDef OPTIONS_CHECKBOX_AE =
 {
 	{
 		// class allocator

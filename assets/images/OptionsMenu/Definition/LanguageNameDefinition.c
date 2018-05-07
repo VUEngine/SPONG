@@ -142,7 +142,7 @@ CharSetROMDef LANGUAGE_NAME_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	8,
+	16,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -164,7 +164,7 @@ TextureROMDef LANGUAGE_NAME_TX =
 	8,
 
 	// rows (max 64)
-	1,
+	2,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
