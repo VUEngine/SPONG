@@ -41,6 +41,7 @@
 #include <TitleScreenState.h>
 #include <EventManager.h>
 #include <AutoPauseScreenState.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -63,6 +64,7 @@ static void OptionsScreenState_resume(OptionsScreenState this, void* owner);
 static void OptionsScreenState_suspend(OptionsScreenState this, void* owner);
 void OptionsScreenState_switchLanguage(OptionsScreenState this, bool forward);
 void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this);
+void OptionsScreenState_switchBrightness(OptionsScreenState this, bool forward);
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput);
 void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this);
 void OptionsScreenState_updateCursorPosition(OptionsScreenState this);
@@ -131,7 +133,7 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -192,6 +194,23 @@ void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this __a
 	}
 }
 
+void OptionsScreenState_switchBrightness(OptionsScreenState this __attribute__ ((unused)), bool forward)
+{
+	u8 brightnessFactor = BrightnessManager_getBrightnessFactor(BrightnessManager_getInstance());
+	brightnessFactor = forward
+    		? (brightnessFactor < 4) ? brightnessFactor + 1 : 4
+    		: (brightnessFactor > 0) ? brightnessFactor - 1 : 0;
+	BrightnessManager_setBrightnessFactor(BrightnessManager_getInstance(), brightnessFactor);
+	//ProgressManager_setBrightnessFactor(ProgressManager_getInstance(), brightnessFactor);
+
+	AnimatedEntity brightnessMeterEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "BrgthnMt", true));
+	if(brightnessMeterEntity)
+	{
+		char* charBrightness = Utilities_itoa(brightnessFactor, 10, 1);
+		AnimatedEntity_playAnimation(brightnessMeterEntity, charBrightness);
+	}
+}
+
 void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this)
 {
 	// (un)set auto pause state
@@ -225,12 +244,12 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 	}
 	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
 	{
-		this->option = (this->option > 0) ? this->option - 1 : kOptionScreenOptionAutomaticPause;
+		this->option = (this->option > 0) ? this->option - 1 : kOptionScreenOptionBrightness;
 		OptionsScreenState_updateCursorPosition(this);
 	}
 	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
 	{
-		this->option = (this->option < kOptionScreenOptionAutomaticPause) ? this->option + 1 : 0;
+		this->option = (this->option < kOptionScreenOptionBrightness) ? this->option + 1 : 0;
 		OptionsScreenState_updateCursorPosition(this);
 	}
 	else if((K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey) || (K_LL & userInput.pressedKey) || (K_RL & userInput.pressedKey))
@@ -243,6 +262,10 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 
 			case kOptionScreenOptionAutomaticPause:
 				OptionsScreenState_toggleAutomaticPause(this);
+				break;
+
+			case kOptionScreenOptionBrightness:
+				OptionsScreenState_switchBrightness(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
 				break;
 		}
 	}
@@ -264,6 +287,9 @@ void OptionsScreenState_processUserInput(OptionsScreenState this, UserInput user
 static void OptionsScreenState_onTransitionOutComplete(OptionsScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "OptionsScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 }

@@ -33,8 +33,10 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern EntityDefinition BRIGHTNESS_METER_AE;
 extern EntityDefinition CIRCLE_BACKGROUND_AE;
 extern EntityDefinition OPTIONS_AUTOMATIC_PAUSE_LE;
+extern EntityDefinition OPTIONS_BRIGHTNESS_LE;
 extern EntityDefinition OPTIONS_CHECKBOX_AE;
 extern EntityDefinition OPTIONS_CURSOR_AE;
 extern EntityDefinition OPTIONS_HEADER_LE;
@@ -58,6 +60,8 @@ PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 	{&OPTIONS_CURSOR_AE,			{234, 100,  0,  0},   	0, "Cursor", NULL, NULL, false},
 	{&OPTIONS_AUTOMATIC_PAUSE_LE,	{116, 112,  0,  0},   	0, NULL, NULL, NULL, false},
 	{&OPTIONS_CHECKBOX_AE,			{204, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
+	{&OPTIONS_BRIGHTNESS_LE,		{144, 124,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&BRIGHTNESS_METER_AE,			{232, 124,  0,  0},   	0, "BrgthnMt", NULL, NULL, false},
 
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
@@ -177,7 +181,7 @@ StageROMDef OPTIONS_SCREEN_STAGE_ST =
 			// brightness values on the respective regions of the screen. maximum brightness is 128.
 			{
 				// dark red
-				8,
+				__BRIGHTNESS_DARK_RED,
 				// medium red
 				__BRIGHTNESS_MEDIUM_RED,
 				// bright red

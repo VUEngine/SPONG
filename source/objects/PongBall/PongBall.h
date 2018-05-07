@@ -93,7 +93,7 @@ void PongBall_ready(PongBall this, bool recursive);
 void PongBall_update(PongBall this, u32 elapsedTime);
 bool PongBall_handleMessage(PongBall this, Telegram telegram);
 bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation);
-fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)));
+fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
 fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
 int PongBall_getPaddleEnum(PongBall this);
 void PongBall_startRolling(PongBall this);

@@ -30,6 +30,7 @@
 #include <SplashScreenState.h>
 #include <KeypadManager.h>
 #include <AnimatedEntity.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -97,7 +98,7 @@ void SplashScreenState_enter(SplashScreenState this, void* owner)
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -189,6 +190,9 @@ void SplashScreenState_loadNextState(SplashScreenState this)
 static void SplashScreenState_onTransitionOutComplete(SplashScreenState this, Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "SplashScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	// change to next stage
 	Game_changeState(Game_getInstance(), this->nextState);

@@ -41,6 +41,7 @@
 #include <PongState.h>
 #include <HighscoresScreenState.h>
 #include <OptionsScreenState.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -133,7 +134,7 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -239,6 +240,9 @@ void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInpu
 static void TitleScreenState_onTransitionOutComplete(TitleScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "TitleScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	switch(this->option)
 	{

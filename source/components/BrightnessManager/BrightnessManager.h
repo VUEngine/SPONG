@@ -19,32 +19,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef OPTIONS_SCREEN_STATE_H_
-#define OPTIONS_SCREEN_STATE_H_
+#ifndef BRIGHTNESS_MANAGER_H_
+#define BRIGHTNESS_MANAGER_H_
 
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
-
-
-//---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
-//---------------------------------------------------------------------------------------------------------
-
-enum OptionsScreenModes
-{
-	kOptionsScreenModeShowOptions,
-};
-
-enum OptionsScreenOptions
-{
-	kOptionScreenOptionLanguage,
-	kOptionScreenOptionAutomaticPause,
-	kOptionScreenOptionBrightness,
-};
+#include <Object.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,36 +35,33 @@ enum OptionsScreenOptions
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define OptionsScreenState_METHODS(ClassName)															\
- 		GameState_METHODS(ClassName)											 						\
+#define BrightnessManager_METHODS(ClassName)															\
+		Object_METHODS(ClassName)																		\
 
 // declare the virtual methods which are redefined
-#define OptionsScreenState_SET_VTABLE(ClassName)														\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, exit);												\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, resume);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, suspend);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, processUserInput);									\
+#define BrightnessManager_SET_VTABLE(ClassName)															\
+		Object_SET_VTABLE(ClassName)																	\
 
-__CLASS(OptionsScreenState);
+// declare a BrightnessManager
+__CLASS(BrightnessManager);
 
-#define OptionsScreenState_ATTRIBUTES								 									\
-		GameState_ATTRIBUTES																			\
-		/* entity references */																			\
-		Entity entityCursor;																			\
-		/* current state of the menu */																	\
-		u8 mode;																						\
-		/* currently selected option of the menu */														\
-		u8 option;																						\
+#define BrightnessManager_ATTRIBUTES																	\
+		Object_ATTRIBUTES																				\
+		u8 brightnessFactor;																			\
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-OptionsScreenState OptionsScreenState_getInstance(void);
-void OptionsScreenState_processUserInput(OptionsScreenState this, UserInput userInput);
+BrightnessManager BrightnessManager_getInstance();
+
+void BrightnessManager_destructor(BrightnessManager this);
+
+void BrightnessManager_showScreen(BrightnessManager this);
+void BrightnessManager_hideScreen(BrightnessManager this);
+void BrightnessManager_setBrightnessFactor(BrightnessManager this, u8 brightnessFactor);
+u8 BrightnessManager_getBrightnessFactor(BrightnessManager this);
 
 
 #endif

@@ -34,6 +34,7 @@
 #include <KeypadManager.h>
 #include <Languages.h>
 #include <Utilities.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -99,7 +100,7 @@ static void AutoPauseScreenState_enter(AutoPauseScreenState this, void* owner __
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -125,6 +126,9 @@ void AutoPauseScreenState_processUserInput(AutoPauseScreenState this, UserInput 
 static void AutoPauseScreenState_onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "AutoPauseScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	// re-enable user input
 	Game_enableKeypad(Game_getInstance());

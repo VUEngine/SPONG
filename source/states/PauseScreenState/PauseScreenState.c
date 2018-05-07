@@ -36,6 +36,7 @@
 #include <KeyPadManager.h>
 #include <Utilities.h>
 #include <AnimatedEntity.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -155,7 +156,7 @@ static void PauseScreenState_enter(PauseScreenState this, void* owner __attribut
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 
 	this->mode = kPauseScreenModeShowOptions;
 }
@@ -253,6 +254,9 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 static void PauseScreenState_onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "PauseScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	// re-enable user input
 	Game_enableKeypad(Game_getInstance());

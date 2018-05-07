@@ -39,6 +39,7 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
+#include <BrightnessManager.h>
 #include <GameEvents.h>
 
 
@@ -109,7 +110,7 @@ static void HighscoresScreenState_enter(HighscoresScreenState this, void* owner)
 	Game_enableKeypad(Game_getInstance());
 
 	// show screen
-	Camera_startEffect(Camera_getInstance(), kShow);
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 
 
  	/**/
@@ -166,6 +167,9 @@ void HighscoresScreenState_processUserInput(HighscoresScreenState this, UserInpu
 static void HighscoresScreenState_onTransitionOutComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "HighscoresScreenState::onTransitionOutComplete: null this");
+
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 }
