@@ -34,6 +34,7 @@
 #include <KeypadManager.h>
 #include <Languages.h>
 #include <Utilities.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -51,8 +52,7 @@ static void AutoPauseScreenState_destructor(AutoPauseScreenState this);
 static void AutoPauseScreenState_constructor(AutoPauseScreenState this);
 static void AutoPauseScreenState_enter(AutoPauseScreenState this, void* owner);
 static void AutoPauseScreenState_exit(AutoPauseScreenState this, void* owner);
-static void AutoPauseScreenState_onFadeOutComplete(AutoPauseScreenState this, Object eventFirer);
-static void AutoPauseScreenState_onFadeInComplete(AutoPauseScreenState this, Object eventFirer);
+static void AutoPauseScreenState_onTransitionOutComplete(AutoPauseScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -71,11 +71,17 @@ __SINGLETON_DYNAMIC(AutoPauseScreenState);
 static void __attribute__ ((noinline)) AutoPauseScreenState_constructor(AutoPauseScreenState this)
 {
 	__CONSTRUCT_BASE(GameState);
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void AutoPauseScreenState_destructor(AutoPauseScreenState this)
 {
+	// remove event listeners
+    Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy base
 	__SINGLETON_DESTROY;
 }
@@ -86,21 +92,14 @@ static void AutoPauseScreenState_enter(AutoPauseScreenState this, void* owner __
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
-
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))AutoPauseScreenState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	Camera_startEffect(Camera_getInstance(), kShow);
 }
 
 // state's exit
@@ -119,33 +118,13 @@ void AutoPauseScreenState_processUserInput(AutoPauseScreenState this, UserInput 
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
-
-		// fade out screen
-		Brightness brightness = (Brightness){0, 0, 0};
-		Camera_startEffect(Camera_getInstance(),
-			kFadeTo, // effect type
-			0, // initial delay (in ms)
-			&brightness, // target brightness
-			__FADE_DELAY, // delay between fading steps (in ms)
-			(void (*)(Object, Object))AutoPauseScreenState_onFadeOutComplete, // callback function
-			__SAFE_CAST(Object, this) // callback scope
-		);
 	}
 }
 
 // handle event
-static void AutoPauseScreenState_onFadeInComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void AutoPauseScreenState_onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "AutoPauseScreenState::onFadeOutComplete: null this");
-
-	// re-enable user input
-	Game_enableKeypad(Game_getInstance());
-}
-
-// handle event
-static void AutoPauseScreenState_onFadeOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "AutoPauseScreenState::onFadeOutComplete: null this");
+	ASSERT(this, "AutoPauseScreenState::onTransitionOutComplete: null this");
 
 	// re-enable user input
 	Game_enableKeypad(Game_getInstance());

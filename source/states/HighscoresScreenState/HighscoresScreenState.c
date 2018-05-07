@@ -39,6 +39,7 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -58,8 +59,7 @@ static void HighscoresScreenState_enter(HighscoresScreenState this, void* owner)
 static void HighscoresScreenState_exit(HighscoresScreenState this, void* owner);
 static void HighscoresScreenState_resume(HighscoresScreenState this, void* owner);
 static void HighscoresScreenState_suspend(HighscoresScreenState this, void* owner);
-static void HighscoresScreenState_onFadeInComplete(HighscoresScreenState this, Object eventFirer);
-static void HighscoresScreenState_onFadeOutComplete(HighscoresScreenState this, Object eventFirer);
+static void HighscoresScreenState_onTransitionOutComplete(HighscoresScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -78,11 +78,17 @@ __SINGLETON(HighscoresScreenState);
 static void __attribute__ ((noinline)) HighscoresScreenState_constructor(HighscoresScreenState this)
 {
 	__CONSTRUCT_BASE(GameState);
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)HighscoresScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void HighscoresScreenState_destructor(HighscoresScreenState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)HighscoresScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy base
 	__SINGLETON_DESTROY;
 }
@@ -93,24 +99,18 @@ static void HighscoresScreenState_enter(HighscoresScreenState this, void* owner)
 	// call base
 	__CALL_BASE_METHOD(GameState, enter, this, owner);
 
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
-
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&HIGHSCORES_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))HighscoresScreenState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	Camera_startEffect(Camera_getInstance(), kShow);
+
 
  	/**/
 	Printing_text(Printing_getInstance(), " 1   1,000,000   JORGE   ", 12,  1+13, NULL);
@@ -160,32 +160,12 @@ void HighscoresScreenState_processUserInput(HighscoresScreenState this, UserInpu
 	{
 		AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 	}
-
-	// fade out screen
-	Brightness brightness = (Brightness){0, 0, 0};
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		500, // initial delay (in ms)
-		&brightness, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))HighscoresScreenState_onFadeOutComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
 }
 
 // handle event
-static void HighscoresScreenState_onFadeInComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void HighscoresScreenState_onTransitionOutComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "HighscoresScreenState::onFadeInComplete: null this");
-
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-}
-
-// handle event
-static void HighscoresScreenState_onFadeOutComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "HighscoresScreenState::onFadeOutComplete: null this");
+	ASSERT(this, "HighscoresScreenState::onTransitionOutComplete: null this");
 
 	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 }

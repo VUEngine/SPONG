@@ -19,32 +19,49 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef GAME_EVENTS_H_
-#define GAME_EVENTS_H_
+#ifndef TRANSITION_ENTITY_H_
+#define TRANSITION_ENTITY_H_
 
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Events.h>
+#include <AnimatedEntity.h>
+#include <Body.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											 DEFINITIONS
+//											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-enum GameEvents
-{
-	kSomeGameEvent = kLastEngineEvent + 1,
+// declare the virtual methods
+#define TransitionEntity_METHODS(ClassName)																\
+		AnimatedEntity_METHODS(ClassName)																\
 
-	kEventTransitionOutComplete,
-	kEventLanguageChanged,
-	kEventUserInput,
-	kEventPongBallHitCeiling,
-	kEventPongBallHitFloor,
-	kEventPongBallHitPaddle,
-};
+#define TransitionEntity_SET_VTABLE(ClassName)															\
+		AnimatedEntity_SET_VTABLE(ClassName)															\
+
+#define TransitionEntity_ATTRIBUTES																		\
+		AnimatedEntity_ATTRIBUTES																		\
+
+__CLASS(TransitionEntity);
+
+
+typedef const AnimatedEntityDefinition TransitionEntityDefinition;
+typedef const TransitionEntityDefinition TransitionEntityROMDef;
+
+
+//---------------------------------------------------------------------------------------------------------
+//										PUBLIC INTERFACE
+//---------------------------------------------------------------------------------------------------------
+
+__CLASS_NEW_DECLARE(TransitionEntity, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
+
+void TransitionEntity_constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
+void TransitionEntity_destructor(TransitionEntity this);
+
+void TransitionEntity_onTransitionComplete(TransitionEntity this, Object eventFirer);
 
 
 #endif

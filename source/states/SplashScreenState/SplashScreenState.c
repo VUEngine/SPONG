@@ -30,14 +30,14 @@
 #include <SplashScreenState.h>
 #include <KeypadManager.h>
 #include <AnimatedEntity.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void SplashScreenState_onFadeInComplete(SplashScreenState this, Object eventFirer);
-static void SplashScreenState_onFadeOutComplete(SplashScreenState this, Object eventFirer);
+static void SplashScreenState_onTransitionOutComplete(SplashScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -58,11 +58,17 @@ void SplashScreenState_constructor(SplashScreenState this)
 	__CONSTRUCT_BASE(GameState);
 
 	this->stageDefinition = NULL;
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)SplashScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void SplashScreenState_destructor(SplashScreenState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)SplashScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy the super object
 	// must always be called at the end of the destructor
 	__DESTROY_BASE;
@@ -87,7 +93,11 @@ void SplashScreenState_enter(SplashScreenState this, void* owner)
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	Game_disableKeypad(Game_getInstance());
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	Camera_startEffect(Camera_getInstance(), kShow);
 }
 
 // state's exit
@@ -143,25 +153,8 @@ void SplashScreenState_processUserInput(SplashScreenState this, UserInput userIn
 }
 
 // state's handle message
-bool SplashScreenState_processMessage(SplashScreenState this, void* owner __attribute__ ((unused)), Telegram telegram)
+bool SplashScreenState_processMessage(SplashScreenState this, void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
 {
-	switch(Telegram_getMessage(telegram))
-	{
-		case kScreenStarted:
-
-			// start fade in effect
-			Camera_startEffect(Camera_getInstance(),
-				kFadeTo, // effect type
-				0, // initial delay (in ms)
-				NULL, // target brightness
-				__FADE_DELAY, // delay between fading steps (in ms)
-				(void (*)(Object, Object))SplashScreenState_onFadeInComplete, // callback function
-				__SAFE_CAST(Object, this) // callback scope
-			);
-
-			break;
-	}
-
 	return false;
 }
 
@@ -190,32 +183,12 @@ void SplashScreenState_loadNextState(SplashScreenState this)
 	{
 		AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 	}
-
-	// start fade out effect
-	Brightness brightness = (Brightness){0, 0, 0};
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		500, // initial delay (in ms)
-		&brightness, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))SplashScreenState_onFadeOutComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
 }
 
 // handle event
-static void SplashScreenState_onFadeInComplete(SplashScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void SplashScreenState_onTransitionOutComplete(SplashScreenState this, Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "SplashScreenState::onFadeInComplete: null this");
-
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-}
-
-// handle event
-static void SplashScreenState_onFadeOutComplete(SplashScreenState this, Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "SplashScreenState::onFadeOutComplete: null this");
+	ASSERT(this, "SplashScreenState::onTransitionOutComplete: null this");
 
 	// change to next stage
 	Game_changeState(Game_getInstance(), this->nextState);

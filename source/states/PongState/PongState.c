@@ -39,6 +39,7 @@
 #include <Player.h>
 #include <GameEvents.h>
 #include <debugUtilities.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -58,8 +59,7 @@ static void PongState_enter(PongState this, void* owner);
 static void PongState_exit(PongState this, void* owner);
 static void PongState_resume(PongState this, void* owner);
 static void PongState_suspend(PongState this, void* owner);
-static void PongState_onFadeInComplete(PongState this, Object eventFirer);
-static void PongState_onFadeOutComplete(PongState this, Object eventFirer);
+static void PongState_onTransitionOutComplete(PongState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -93,24 +93,19 @@ static void PongState_enter(PongState this, void* owner)
 	// call base
 	__CALL_BASE_METHOD(GameState, enter, this, owner);
 
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
-
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))PongState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
+
+	// show screen
+	Camera_startEffect(Camera_getInstance(), kShow);
 }
 
 // state's exit
@@ -178,17 +173,6 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 		{
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
-
-		// fade out screen
-		Brightness brightness = (Brightness){0, 0, 0};
-		Camera_startEffect(Camera_getInstance(),
-			kFadeTo, // effect type
-			500, // initial delay (in ms)
-			&brightness, // target brightness
-			__FADE_DELAY, // delay between fading steps (in ms)
-			(void (*)(Object, Object))PongState_onFadeOutComplete, // callback function
-			__SAFE_CAST(Object, this) // callback scope
-		);
 	*/
 	}
 
@@ -197,20 +181,9 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 }
 
 // handle event
-static void PongState_onFadeInComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void PongState_onTransitionOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "PongState::onFadeInComplete: null this");
-
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-
-	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
-}
-
-// handle event
-static void PongState_onFadeOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "PongState::onFadeOutComplete: null this");
+	ASSERT(this, "PongState::onTransitionOutComplete: null this");
 
 	Player_gameIsOver(Player_getInstance(), __SAFE_CAST(GameState, this));
 }

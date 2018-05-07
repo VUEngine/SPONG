@@ -29,22 +29,21 @@
 #include <Utilities.h>
 #include <GameEvents.h>
 #include <EventManager.h>
-#include "LocalizedEntity.h"
+#include "TransitionEntity.h"
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(LocalizedEntity, AnimatedEntity);
+__CLASS_DEFINITION(TransitionEntity, AnimatedEntity);
 
 
 //---------------------------------------------------------------------------------------------------------
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-void LocalizedEntity_localize(LocalizedEntity this);
-static void LocalizedEntity_onLanguageChanged(LocalizedEntity this, Object eventFirer);
+void TransitionEntity_localize(TransitionEntity this);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,58 +51,30 @@ static void LocalizedEntity_onLanguageChanged(LocalizedEntity this, Object event
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(LocalizedEntity, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(LocalizedEntity, localizedEntityDefinition, id, internalId, name);
+__CLASS_NEW_DEFINITION(TransitionEntity, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
+__CLASS_NEW_END(TransitionEntity, TransitionEntityDefinition, id, internalId, name);
 
 // class's constructor
-void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
+void TransitionEntity_constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "LocalizedEntity::constructor: null this");
+	ASSERT(this, "TransitionEntity::constructor: null this");
 
 	// construct base object
-	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
-
-	// add event listeners
-	Object eventManager = __SAFE_CAST(Object, EventManager_getInstance());
-	Object_addEventListener(eventManager, __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
 }
 
 // class's destructor
-void LocalizedEntity_destructor(LocalizedEntity this)
+void TransitionEntity_destructor(TransitionEntity this)
 {
-	ASSERT(this, "LocalizedEntity::destructor: null this");
-
-	// remove event listeners
-	Object eventManager = __SAFE_CAST(Object, EventManager_getInstance());
-	Object_removeEventListener(eventManager, __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	ASSERT(this, "TransitionEntity::destructor: null this");
 
 	// destroy the super object
 	// must always be called at the end of the destructor
 	__DESTROY_BASE;
 }
 
-void LocalizedEntity_ready(LocalizedEntity this, bool recursive)
-{
-	ASSERT(this, "LocalizedEntity::ready: null this");
-
-	// call base
-	__CALL_BASE_METHOD(AnimatedEntity, ready, this, recursive);
-
-	// translate entity
-	LocalizedEntity_localize(this);
-}
-
-void LocalizedEntity_localize(LocalizedEntity this)
-{
-	ASSERT(this, "LocalizedEntity::localize: null this");
-
-	char* language = Utilities_itoa(I18n_getActiveLanguage(I18n_getInstance()), 10, 1);
-	AnimatedEntity_playAnimation(__SAFE_CAST(AnimatedEntity, this), language);
-}
-
 // handle event
-static void LocalizedEntity_onLanguageChanged(LocalizedEntity this, Object eventFirer __attribute__ ((unused)))
+void TransitionEntity_onTransitionComplete(TransitionEntity this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	// translate entity
-	LocalizedEntity_localize(this);
+	Object_fireEvent(__SAFE_CAST(Object, Game_getCurrentState(Game_getInstance())), kEventTransitionOutComplete);
 }

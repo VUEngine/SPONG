@@ -66,8 +66,7 @@ void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this);
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput);
 void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this);
 void OptionsScreenState_updateCursorPosition(OptionsScreenState this);
-static void OptionsScreenState_onFadeInComplete(OptionsScreenState this, Object eventFirer);
-static void OptionsScreenState_onFadeOutComplete(OptionsScreenState this, Object eventFirer);
+static void OptionsScreenState_onTransitionOutComplete(OptionsScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -91,11 +90,17 @@ static void __attribute__ ((noinline)) OptionsScreenState_constructor(OptionsScr
 	this->entityCursor = NULL;
 	this->mode = kOptionsScreenModeShowOptions;
 	this->option = 0;
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void OptionsScreenState_destructor(OptionsScreenState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy base
 	__SINGLETON_DESTROY;
 }
@@ -108,9 +113,6 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 
 	// call base
 	__CALL_BASE_METHOD(GameState, enter, this, owner);
-
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
 
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
@@ -125,15 +127,11 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))OptionsScreenState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	Camera_startEffect(Camera_getInstance(), kShow);
 }
 
 // state's exit
@@ -224,17 +222,6 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 		{
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
-
-		// fade out screen
-		Brightness brightness = (Brightness){0, 0, 0};
-		Camera_startEffect(Camera_getInstance(),
-			kFadeTo, // effect type
-			500, // initial delay (in ms)
-			&brightness, // target brightness
-			__FADE_DELAY, // delay between fading steps (in ms)
-			(void (*)(Object, Object))OptionsScreenState_onFadeOutComplete, // callback function
-			__SAFE_CAST(Object, this) // callback scope
-		);
 	}
 	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
 	{
@@ -274,18 +261,9 @@ void OptionsScreenState_processUserInput(OptionsScreenState this, UserInput user
 }
 
 // handle event
-static void OptionsScreenState_onFadeInComplete(OptionsScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void OptionsScreenState_onTransitionOutComplete(OptionsScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "OptionsScreenState::onFadeInComplete: null this");
-
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-}
-
-// handle event
-static void OptionsScreenState_onFadeOutComplete(OptionsScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "OptionsScreenState::onFadeOutComplete: null this");
+	ASSERT(this, "OptionsScreenState::onTransitionOutComplete: null this");
 
 	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
 }
