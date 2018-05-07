@@ -60,7 +60,7 @@ static void BrightnessManager_constructor(BrightnessManager this)
 	__CONSTRUCT_BASE(Object);
 
 	// init members
-	this->brightnessFactor = 2;
+	this->brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
 }
 
 // class's destructor
@@ -78,9 +78,9 @@ void BrightnessManager_showScreen(BrightnessManager this)
 
 	Brightness defaultBrightness = CameraEffectManager_getDefaultBrightness(CameraEffectManager_getInstance());
 
-	int darkRed = (0 > (darkRed = defaultBrightness.darkRed + ((this->brightnessFactor - 2) * 8))) ? 0 : darkRed;
-	int mediumRed = (0 > (mediumRed = defaultBrightness.mediumRed + ((this->brightnessFactor - 2) * 16))) ? 0 : mediumRed;
-	int brightRed = (0 > (brightRed = (defaultBrightness.brightRed - defaultBrightness.darkRed - defaultBrightness.mediumRed) + ((this->brightnessFactor - 2) * 32))) ? 0 : brightRed;
+	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + ((this->brightnessFactor - 2) * 8)))) ? 4 : darkRed;
+	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + ((this->brightnessFactor - 2) * 16)))) ? 8 : mediumRed;
+	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + ((this->brightnessFactor - 2) * 32)))) ? 16 : brightRed;
 
 	__SET_BRIGHT(darkRed, mediumRed, brightRed);
 }

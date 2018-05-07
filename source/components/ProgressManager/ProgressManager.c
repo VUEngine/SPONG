@@ -35,6 +35,7 @@
 #include <SRAMManager.h>
 #include <Utilities.h>
 #include <AutoPauseScreenState.h>
+#include <BrightnessManager.h>
 #include <macros.h>
 
 
@@ -159,6 +160,8 @@ void ProgressManager_initialize(ProgressManager this)
 			// if no previous save could be verified, completely erase sram to start clean
 			SRAMManager_clear(SRAMManager_getInstance(), 0, (int)sizeof(SaveData));
 
+			ProgressManager_setBrightnessFactor(this, DEFAULT_BRIGHTNESS_FACTOR);
+
 			// write checksum
 			ProgressManager_writeChecksum(this);
 		}
@@ -171,6 +174,9 @@ void ProgressManager_initialize(ProgressManager this)
 			? __SAFE_CAST(GameState, AutoPauseScreenState_getInstance())
 			: NULL
 		);
+
+		// load and set brightness factor
+		BrightnessManager_setBrightnessFactor(BrightnessManager_getInstance(), ProgressManager_getBrightnessFactor(this));
 	}
 }
 
@@ -226,6 +232,33 @@ void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 autoPauseS
 
 		// write auto pause status
 		SRAMManager_save(SRAMManager_getInstance(), (BYTE*)&autoPauseStatus, offsetof(struct SaveData, autoPauseStatus), sizeof(autoPauseStatus));
+
+		// write checksum
+		ProgressManager_writeChecksum(this);
+	}
+}
+
+u8 ProgressManager_getBrightnessFactor(ProgressManager this)
+{
+	ASSERT(this, "ProgressManager::getBrightnessFactor: null this");
+
+	u8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
+	if(this->sramAvailable)
+	{
+		SRAMManager_read(SRAMManager_getInstance(), (BYTE*)&brightnessFactor, offsetof(struct SaveData, brightnessFactor), sizeof(brightnessFactor));
+	}
+
+	return brightnessFactor;
+}
+
+void ProgressManager_setBrightnessFactor(ProgressManager this, u8 brightnessFactor)
+{
+	ASSERT(this, "ProgressManager::setBrightnessFactor: null this");
+
+	if(this->sramAvailable)
+	{
+		// write auto brightness factor
+		SRAMManager_save(SRAMManager_getInstance(), (BYTE*)&brightnessFactor, offsetof(struct SaveData, brightnessFactor), sizeof(brightnessFactor));
 
 		// write checksum
 		ProgressManager_writeChecksum(this);

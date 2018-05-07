@@ -75,6 +75,9 @@ typedef struct SaveData
 	// auto pause status (0: on, 1: off)
 	u8 autoPauseStatus;
 
+	// brightness factor
+	u8 brightnessFactor;
+
 } SaveData;
 
 
@@ -86,9 +89,11 @@ ProgressManager ProgressManager_getInstance();
 
 void ProgressManager_destructor(ProgressManager this);
 bool ProgressManager_getAutomaticPauseStatus(ProgressManager this);
+u8   ProgressManager_getBrightnessFactor(ProgressManager this);
 u8   ProgressManager_getLanguage(ProgressManager this);
 void ProgressManager_initialize(ProgressManager this);
 void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus);
+void ProgressManager_setBrightnessFactor(ProgressManager this, u8 brightnessFactor);
 void ProgressManager_setLanguage(ProgressManager this, u8 languageId);
 
 

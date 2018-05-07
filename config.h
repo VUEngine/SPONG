@@ -363,7 +363,7 @@
  * for a nice progression, each shade should be about twice as big as the previous one
  * _BRIGHT_RED must be larger than _DARK_RED + _MEDIUM_RED
  */
-#define __BRIGHTNESS_DARK_RED					32
+#define __BRIGHTNESS_DARK_RED					16
 #define __BRIGHTNESS_MEDIUM_RED					64
 #define __BRIGHTNESS_BRIGHT_RED					128
 

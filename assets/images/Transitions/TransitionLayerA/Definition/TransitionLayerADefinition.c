@@ -153,7 +153,7 @@ BgmapSpriteROMDef TRANSITION_LAYER_A_SPRITE =
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, -64, 3},
+		{0, 0, -64, 0},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)

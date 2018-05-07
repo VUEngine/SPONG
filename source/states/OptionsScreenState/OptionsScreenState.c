@@ -67,6 +67,7 @@ void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this);
 void OptionsScreenState_switchBrightness(OptionsScreenState this, bool forward);
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput);
 void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this);
+void OptionsScreenState_updateBrightnessMeter(OptionsScreenState this);
 void OptionsScreenState_updateCursorPosition(OptionsScreenState this);
 static void OptionsScreenState_onTransitionOutComplete(OptionsScreenState this, Object eventFirer);
 
@@ -125,6 +126,7 @@ static void OptionsScreenState_enter(OptionsScreenState this, void* owner)
 	// initial entity states
 	OptionsScreenState_updateCursorPosition(this);
 	OptionsScreenState_updateAutomaticPauseCheckBox(this);
+	OptionsScreenState_updateBrightnessMeter(this);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
@@ -172,6 +174,7 @@ void OptionsScreenState_updateCursorPosition(OptionsScreenState this)
 
 void OptionsScreenState_switchLanguage(OptionsScreenState this __attribute__ ((unused)), bool forward)
 {
+	// update language
 	int numLangs = sizeof(I18n_getLanguages(I18n_getInstance()));
 	int language = I18n_getActiveLanguage(I18n_getInstance());
 	language = forward
@@ -194,21 +197,29 @@ void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this __a
 	}
 }
 
-void OptionsScreenState_switchBrightness(OptionsScreenState this __attribute__ ((unused)), bool forward)
+void OptionsScreenState_updateBrightnessMeter(OptionsScreenState this __attribute__ ((unused)))
 {
 	u8 brightnessFactor = BrightnessManager_getBrightnessFactor(BrightnessManager_getInstance());
-	brightnessFactor = forward
-    		? (brightnessFactor < 4) ? brightnessFactor + 1 : 4
-    		: (brightnessFactor > 0) ? brightnessFactor - 1 : 0;
-	BrightnessManager_setBrightnessFactor(BrightnessManager_getInstance(), brightnessFactor);
-	//ProgressManager_setBrightnessFactor(ProgressManager_getInstance(), brightnessFactor);
-
 	AnimatedEntity brightnessMeterEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "BrgthnMt", true));
 	if(brightnessMeterEntity)
 	{
 		char* charBrightness = Utilities_itoa(brightnessFactor, 10, 1);
 		AnimatedEntity_playAnimation(brightnessMeterEntity, charBrightness);
 	}
+}
+
+void OptionsScreenState_switchBrightness(OptionsScreenState this __attribute__ ((unused)), bool forward)
+{
+	// change brightness factor
+	u8 brightnessFactor = BrightnessManager_getBrightnessFactor(BrightnessManager_getInstance());
+	brightnessFactor = forward
+    		? (brightnessFactor < 4) ? brightnessFactor + 1 : 4
+    		: (brightnessFactor > 0) ? brightnessFactor - 1 : 0;
+	BrightnessManager_setBrightnessFactor(BrightnessManager_getInstance(), brightnessFactor);
+	ProgressManager_setBrightnessFactor(ProgressManager_getInstance(), brightnessFactor);
+
+	// update visual representation
+	OptionsScreenState_updateBrightnessMeter(this);
 }
 
 void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this)
