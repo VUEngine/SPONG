@@ -42,7 +42,7 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef EMPTY_STAGE_ST_ENTITIES[] =
 {
-	{&TRANSITION_LAYER_B_AE,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,	{192, 112, 0, 0}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

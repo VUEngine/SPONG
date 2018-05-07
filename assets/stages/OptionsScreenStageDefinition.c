@@ -49,7 +49,7 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&CIRCLE_BACKGROUND_AE,			{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&CIRCLE_BACKGROUND_AE,			{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
 
 	{&OPTIONS_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
 
@@ -59,7 +59,7 @@ PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 	{&OPTIONS_AUTOMATIC_PAUSE_LE,	{116, 112,  0,  0},   	0, NULL, NULL, NULL, false},
 	{&OPTIONS_CHECKBOX_AE,			{204, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,		{192, 112,  0, -1},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

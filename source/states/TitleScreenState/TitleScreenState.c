@@ -162,14 +162,20 @@ static void TitleScreenState_suspend(TitleScreenState this, void* owner)
 
 void TitleScreenState_updateCursorPosition(TitleScreenState this)
 {
-	s8 projectionCorrection = (this->option < 2) ? 1 : 0;
+	// change position
 	Vector3D position =
 	{
 		0,
-		__PIXELS_TO_METERS((this->option * 12) - 24 + projectionCorrection),
-		__PIXELS_TO_METERS((this->option * -12) + 32),
+		__PIXELS_TO_METERS((this->option * 12) - 24),
+		0,
 	};
 	Entity_setLocalPosition(this->entityCursor, &position);
+
+	// change parallax
+	VirtualList cursorSprites = Entity_getSprites(this->entityCursor);
+	PixelVector displacement = Sprite_getDisplacement(VirtualList_front(cursorSprites));
+	displacement.parallax = - (this->option - 2);
+	Sprite_setDisplacement(VirtualList_front(cursorSprites), displacement);
 }
 
 void TitleScreenState_processUserInputModePressStart(TitleScreenState this, UserInput userInput)

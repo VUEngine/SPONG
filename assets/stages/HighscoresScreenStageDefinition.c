@@ -45,10 +45,10 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&HEXAGON_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
+	{&HEXAGON_BACKGROUND_AE,		{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
 	{&HIGHSCORES_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
 	{&MAIN_MENU_MARATHON_MODE_LE,	{192, 96,   0,  0},   	0, NULL, NULL, NULL, false},
-	{&TRANSITION_LAYER_B_AE,		{192, 112,  0, -1},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
