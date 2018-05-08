@@ -150,7 +150,7 @@ static void HighscoresScreenState_suspend(HighscoresScreenState this, void* owne
 	__CALL_BASE_METHOD(GameState, suspend, this, owner);
 }
 
-void HighscoresScreenState_processUserInput(HighscoresScreenState this, UserInput userInput)
+void HighscoresScreenState_processUserInput(HighscoresScreenState this __attribute__ ((unused)), UserInput userInput __attribute__ ((unused)))
 {
 	// disable user input
 	Game_disableKeypad(Game_getInstance());

@@ -1,7 +1,7 @@
-VUEngine Pong
-=============
+Spong
+=====
 
-A simple Pong game that demonstrates multiplayer capabillities of the VUEngine 5.2.
+A simple Pong-like game that demonstrates multiplayer capabillities of VUEngine 5.3.
 
 
 LICENSE
@@ -31,7 +31,7 @@ want as long as you include the original copyright and license notice in any cop
 COMPILING ON WIN32
 ------------------
 
-This game as well as the VUEngine come bundled with VBDE (http://vbde.planetvb.com). 
+This game as well as the VUEngine comes bundled with VBDE (http://vbde.planetvb.com). 
 Compile by starting the VBDE build system.
 
 

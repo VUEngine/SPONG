@@ -113,7 +113,7 @@ static void AutoPauseScreenState_exit(AutoPauseScreenState this __attribute__ ((
 	__DELETE(this);
 }
 
-void AutoPauseScreenState_processUserInput(AutoPauseScreenState this, UserInput userInput)
+void AutoPauseScreenState_processUserInput(AutoPauseScreenState this __attribute__ ((unused)), UserInput userInput)
 {
 	if(K_STA & userInput.pressedKey)
 	{

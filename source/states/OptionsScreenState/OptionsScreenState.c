@@ -240,7 +240,7 @@ void OptionsScreenState_toggleAutomaticPause(OptionsScreenState this)
 
 void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput)
 {
-	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey) || (K_B & userInput.pressedKey) || (K_SEL & userInput.pressedKey))
+	if((K_A | K_B | K_STA | K_SEL) & userInput.pressedKey)
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -252,22 +252,22 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
 	}
-	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
+	else if((K_LU | K_RU) & userInput.pressedKey)
 	{
 		this->option = (this->option > 0) ? this->option - 1 : kOptionScreenOptionBrightness;
 		OptionsScreenState_updateCursorPosition(this);
 	}
-	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
+	else if((K_LD | K_RD) & userInput.pressedKey)
 	{
 		this->option = (this->option < kOptionScreenOptionBrightness) ? this->option + 1 : 0;
 		OptionsScreenState_updateCursorPosition(this);
 	}
-	else if((K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey) || (K_LL & userInput.pressedKey) || (K_RL & userInput.pressedKey))
+	else if((K_LR | K_RR | K_LL | K_RL) & userInput.pressedKey)
 	{
 		switch(this->option)
 		{
 			case kOptionScreenOptionLanguage:
-				OptionsScreenState_switchLanguage(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
+				OptionsScreenState_switchLanguage(this, (K_LR | K_RR) & userInput.pressedKey);
 				break;
 
 			case kOptionScreenOptionAutomaticPause:
@@ -275,7 +275,7 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 				break;
 
 			case kOptionScreenOptionBrightness:
-				OptionsScreenState_switchBrightness(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
+				OptionsScreenState_switchBrightness(this, (K_LR | K_RR) & userInput.pressedKey);
 				break;
 		}
 	}

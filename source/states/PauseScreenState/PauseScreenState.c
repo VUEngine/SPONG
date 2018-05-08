@@ -170,7 +170,7 @@ static void PauseScreenState_exit(PauseScreenState this, void* owner __attribute
 
 void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInput)
 {
-	if((K_STA & userInput.pressedKey) || (K_A & userInput.pressedKey))
+	if((K_STA | K_A) & userInput.pressedKey)
 	{
 		if(this->mode == kPauseScreenModeShowOptions)
 		{

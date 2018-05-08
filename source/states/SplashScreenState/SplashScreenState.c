@@ -154,7 +154,7 @@ void SplashScreenState_processUserInput(SplashScreenState this, UserInput userIn
 }
 
 // state's handle message
-bool SplashScreenState_processMessage(SplashScreenState this, void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
+bool SplashScreenState_processMessage(SplashScreenState this __attribute__ ((unused)), void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
 {
 	return false;
 }
@@ -173,7 +173,7 @@ void SplashScreenState_setNextState(SplashScreenState this, GameState nextState)
 	this->nextState = nextState;
 }
 
-void SplashScreenState_loadNextState(SplashScreenState this)
+void SplashScreenState_loadNextState(SplashScreenState this __attribute__ ((unused)))
 {
 	// disable user input
 	Game_disableKeypad(Game_getInstance());

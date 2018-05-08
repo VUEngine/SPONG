@@ -195,7 +195,7 @@ void TitleScreenState_processUserInputModePressStart(TitleScreenState this, User
 
 void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, UserInput userInput)
 {
-	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey))
+	if((K_A | K_STA) & userInput.pressedKey)
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -207,12 +207,12 @@ void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, Use
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
 	}
-	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
+	else if((K_LU | K_RU) & userInput.pressedKey)
 	{
 		this->option = (this->option > 0) ? this->option - 1 : kTitleScreenOptionOptions;
 		TitleScreenState_updateCursorPosition(this);
 	}
-	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
+	else if((K_LD | K_RD) & userInput.pressedKey)
 	{
 		this->option = (this->option < kTitleScreenOptionOptions) ? this->option + 1 : 0;
 		TitleScreenState_updateCursorPosition(this);
