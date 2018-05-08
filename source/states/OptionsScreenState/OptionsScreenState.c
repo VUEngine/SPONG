@@ -39,7 +39,6 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
-#include <EventManager.h>
 #include <AutoPauseScreenState.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
@@ -184,7 +183,7 @@ void OptionsScreenState_switchLanguage(OptionsScreenState this __attribute__ ((u
 	ProgressManager_setLanguage(ProgressManager_getInstance(), language);
 
 	// fire event to re-translate all entities
-	Object_fireEvent(__SAFE_CAST(Object, EventManager_getInstance()), kEventLanguageChanged);
+	Object_fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
 }
 
 void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this __attribute__ ((unused)))
@@ -200,7 +199,7 @@ void OptionsScreenState_updateAutomaticPauseCheckBox(OptionsScreenState this __a
 void OptionsScreenState_updateBrightnessMeter(OptionsScreenState this __attribute__ ((unused)))
 {
 	u8 brightnessFactor = BrightnessManager_getBrightnessFactor(BrightnessManager_getInstance());
-	AnimatedEntity brightnessMeterEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "BrgthnMt", true));
+	AnimatedEntity brightnessMeterEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "BrghtnMt", true));
 	if(brightnessMeterEntity)
 	{
 		char* charBrightness = Utilities_itoa(brightnessFactor, 10, 1);

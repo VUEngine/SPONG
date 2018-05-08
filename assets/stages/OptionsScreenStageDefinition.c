@@ -59,9 +59,9 @@ PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 	{&LANGUAGE_NAME_LE,				{232, 100,  0,  0},   	0, NULL, NULL, NULL, false},
 	{&OPTIONS_CURSOR_AE,			{234, 100,  0,  0},   	0, "Cursor", NULL, NULL, false},
 	{&OPTIONS_AUTOMATIC_PAUSE_LE,	{116, 112,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&OPTIONS_CHECKBOX_AE,			{204, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
+	{&OPTIONS_CHECKBOX_AE,			{208, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
 	{&OPTIONS_BRIGHTNESS_LE,		{144, 124,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&BRIGHTNESS_METER_AE,			{232, 124,  0,  0},   	0, "BrgthnMt", NULL, NULL, false},
+	{&BRIGHTNESS_METER_AE,			{232, 124,  0,  0},   	0, "BrghtnMt", NULL, NULL, false},
 
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 

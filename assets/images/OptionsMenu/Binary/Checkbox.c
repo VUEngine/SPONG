@@ -3,25 +3,26 @@
 
 //======================================================================
 //
-//	Checkbox, 8x16@2, 
-//	+ 3 tiles not compressed
-//	+ regular map (flat), not compressed, 1x2 
-//	Total size: 48 + 4 = 52
+//	Checkbox, 16x16@2, 
+//	+ 5 tiles not compressed
+//	+ regular map (flat), not compressed, 2x2 
+//	Total size: 80 + 8 = 88
 //
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.6
 //	( http://www.coranac.com/projects/#grit )
 //
 //======================================================================
 
-const unsigned int CheckboxTiles[12] __attribute__((aligned(4)))=
+const unsigned int CheckboxTiles[20] __attribute__((aligned(4)))=
 {
-	0x00000000,0x00000000,0x00000000,0x00000000,0x2AAA0000,0x20022002,0x20022002,0x2AAA2002,
-	0xFCAA3000,0x0FCC3F02,0x20FC23FF,0x2A8A2032,
+	0x00000000,0x00000000,0x00000000,0x00000000,0xFFFC0000,0x00030003,0x00030003,0xFFFC0003,
+	0x000F0000,0x00300030,0x00300030,0x000F0030,0x3FFC0000,0xF033C003,0x3FF3FCFC,0xF33C0FC3,
+	0x003F000C,0x0033000F,0x00300030,0x000F0030,
 };
 
-const unsigned short CheckboxMap[2] __attribute__((aligned(4)))=
+const unsigned short CheckboxMap[4] __attribute__((aligned(4)))=
 {
-	0x0001,0x0002,
+	0x0001,0x0002,0x0003,0x0004,
 };
 
 //}}BLOCK(Checkbox)

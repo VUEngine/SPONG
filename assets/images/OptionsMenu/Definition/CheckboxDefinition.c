@@ -100,7 +100,7 @@ CharSetROMDef OPTIONS_CHECKBOX_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	1,
+	2,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -119,7 +119,7 @@ TextureROMDef OPTIONS_CHECKBOX_TX =
 	CheckboxMap,
 
 	// cols (max 64)
-	1,
+	2,
 
 	// rows (max 64)
 	1,

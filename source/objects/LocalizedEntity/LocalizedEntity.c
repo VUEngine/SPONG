@@ -28,7 +28,6 @@
 #include <I18n.h>
 #include <Utilities.h>
 #include <GameEvents.h>
-#include <EventManager.h>
 #include "LocalizedEntity.h"
 
 
@@ -64,8 +63,7 @@ void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefi
 	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
 
 	// add event listeners
-	Object eventManager = __SAFE_CAST(Object, EventManager_getInstance());
-	Object_addEventListener(eventManager, __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object_addEventListener(__SAFE_CAST(Object, Game_getCurrentState(Game_getInstance())), __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 }
 
 // class's destructor
@@ -74,8 +72,7 @@ void LocalizedEntity_destructor(LocalizedEntity this)
 	ASSERT(this, "LocalizedEntity::destructor: null this");
 
 	// remove event listeners
-	Object eventManager = __SAFE_CAST(Object, EventManager_getInstance());
-	Object_removeEventListener(eventManager, __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object_removeEventListener(__SAFE_CAST(Object, Game_getCurrentState(Game_getInstance())), __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 
 	// destroy the super object
 	// must always be called at the end of the destructor

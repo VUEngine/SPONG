@@ -36,7 +36,6 @@
 #include <Utilities.h>
 #include <ProgressManager.h>
 #include <GameEvents.h>
-#include <EventManager.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -145,7 +144,7 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 	));
 
 	// change language name
-	Object_fireEvent(__SAFE_CAST(Object, EventManager_getInstance()), kEventLanguageChanged);
+	Object_fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
 
 	// change language name position
 	Vector3D languageNamePosition =

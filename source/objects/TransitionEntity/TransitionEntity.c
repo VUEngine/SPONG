@@ -28,7 +28,6 @@
 #include <I18n.h>
 #include <Utilities.h>
 #include <GameEvents.h>
-#include <EventManager.h>
 #include "TransitionEntity.h"
 
 
