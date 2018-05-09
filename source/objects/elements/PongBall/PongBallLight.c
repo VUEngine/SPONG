@@ -71,7 +71,7 @@ void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* Pong
 	ASSERT(this, "PongBallLight::constructor: null this");
 
 	// construct base
-	__CONSTRUCT_BASE(Entity, (EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
+	Base_constructor(this, (EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
 
 	// save definition
 	this->pongBall = NULL;
@@ -90,7 +90,7 @@ void PongBallLight_destructor(PongBallLight this)
 
 	// delete the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base_destructor();
 }
 
 void PongBallLight_ready(PongBallLight this, bool recursive)

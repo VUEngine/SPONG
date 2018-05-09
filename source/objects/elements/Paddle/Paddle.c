@@ -60,7 +60,7 @@ void Paddle_constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id,
 	ASSERT(this, "Paddle::constructor: null this");
 
 	// construct base
-	__CONSTRUCT_BASE(Actor, (ActorDefinition*)&paddleDefinition->actorDefinition, id, internalId, name);
+	Base_constructor(this, (ActorDefinition*)&paddleDefinition->actorDefinition, id, internalId, name);
 
 	// save definition
 	this->paddleDefinition = paddleDefinition;
@@ -74,7 +74,7 @@ void Paddle_destructor(Paddle this)
 
 	// delete the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base_destructor();
 }
 
 void Paddle_ready(Paddle this, bool recursive)

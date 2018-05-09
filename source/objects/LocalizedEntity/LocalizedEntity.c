@@ -52,7 +52,7 @@ void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefi
 	ASSERT(this, "LocalizedEntity::constructor: null this");
 
 	// construct base object
-	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
+	Base_constructor(this, (AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
 }
 
 // class's destructor
@@ -62,7 +62,7 @@ void LocalizedEntity_destructor(LocalizedEntity this)
 
 	// destroy the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base_destructor();
 }
 
 void LocalizedEntity_ready(LocalizedEntity this, bool recursive)

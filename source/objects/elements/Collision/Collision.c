@@ -59,7 +59,7 @@ __CLASS_NEW_END(Collision, entityDefinition, id, internalId, name);
 void Collision_constructor(Collision this, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	__CONSTRUCT_BASE(Entity, entityDefinition, id, internalId, name);
+	Base_constructor(this, entityDefinition, id, internalId, name);
 
 	this->shapeLayers = kSolidLayer;
  }
@@ -69,7 +69,7 @@ void Collision_destructor(Collision this)
 {
 	// delete the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base_destructor();
 }
 
 // set extra info

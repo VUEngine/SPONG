@@ -72,7 +72,7 @@ void PongBall_constructor(PongBall this, PongBallDefinition* pongBallDefinition,
 	ASSERT(this, "PongBall::constructor: null this");
 
 	// construct base
-	__CONSTRUCT_BASE(Actor, (ActorDefinition*)&pongBallDefinition->actorDefinition, id, internalId, name);
+	Base_constructor(this, (ActorDefinition*)&pongBallDefinition->actorDefinition, id, internalId, name);
 
 	// save definition
 	this->pongBallDefinition = pongBallDefinition;
@@ -88,7 +88,7 @@ void PongBall_destructor(PongBall this)
 
 	// delete the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base_destructor();
 }
 
 void PongBall_ready(PongBall this, bool recursive)
