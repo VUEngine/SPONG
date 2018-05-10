@@ -39,6 +39,8 @@
 #include <Player.h>
 #include <GameEvents.h>
 #include <debugUtilities.h>
+#include <BrightnessManager.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -58,8 +60,7 @@ static void PongState_enter(PongState this, void* owner);
 static void PongState_exit(PongState this, void* owner);
 static void PongState_resume(PongState this, void* owner);
 static void PongState_suspend(PongState this, void* owner);
-static void PongState_onFadeInComplete(PongState this, Object eventFirer);
-static void PongState_onFadeOutComplete(PongState this, Object eventFirer);
+static void PongState_onTransitionOutComplete(PongState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -78,11 +79,17 @@ __SINGLETON(PongState);
 static void __attribute__ ((noinline)) PongState_constructor(PongState this)
 {
 	__CONSTRUCT_BASE(GameState);
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void PongState_destructor(PongState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy base
 	__SINGLETON_DESTROY;
 }
@@ -93,24 +100,19 @@ static void PongState_enter(PongState this, void* owner)
 	// call base
 	Base_enter(this, owner);
 
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
-
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))PongState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
+
+	// show screen
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -178,17 +180,6 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 		{
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
-
-		// fade out screen
-		Brightness brightness = (Brightness){0, 0, 0};
-		Camera_startEffect(Camera_getInstance(),
-			kFadeTo, // effect type
-			500, // initial delay (in ms)
-			&brightness, // target brightness
-			__FADE_DELAY, // delay between fading steps (in ms)
-			(void (*)(Object, Object))PongState_onFadeOutComplete, // callback function
-			__SAFE_CAST(Object, this) // callback scope
-		);
 	*/
 	}
 
@@ -197,20 +188,12 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 }
 
 // handle event
-static void PongState_onFadeInComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void PongState_onTransitionOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "PongState::onFadeInComplete: null this");
+	ASSERT(this, "PongState::onTransitionOutComplete: null this");
 
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-
-	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
-}
-
-// handle event
-static void PongState_onFadeOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "PongState::onFadeOutComplete: null this");
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	Player_gameIsOver(Player_getInstance(), __SAFE_CAST(GameState, this));
 }

@@ -42,7 +42,7 @@ extern EntityDefinition MAIN_MENU_MARATHON_MODE_LE;
 extern EntityDefinition MAIN_MENU_OPTIONS_LE;
 extern EntityDefinition MAIN_MENU_VERSUS_MODE_LE;
 extern EntityDefinition PRESS_START_BUTTON_LE;
-extern EntityDefinition LOGO_EN;
+extern EntityDefinition LOGO_AE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 extern u16 TITLE_BGM[][2];
@@ -93,12 +93,12 @@ PositionedEntityROMDef MAIN_MENU_CHILDREN[] =
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&RHOMBUS_BACKGROUND_AE,		{192, 112, 32,  1},   	0, NULL, NULL, NULL, false},
-	{&LOGO_EN, 						{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&RHOMBUS_BACKGROUND_AE,		{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&LOGO_AE, 						{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
 	{&MAIN_MENU_CONTAINER, 			{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
 	{&PRESS_START_BUTTON_LE, 		{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
 	{&COPYRIGHT_EN, 				{188, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
-	{&TRANSITION_LAYER_B_AE,		{192, 112,  0, -1},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -216,7 +216,7 @@ StageROMDef TITLE_SCREEN_STAGE_ST =
 			// brightness values on the respective regions of the screen. maximum brightness is 128.
 			{
 				// dark red
-				8,
+				__BRIGHTNESS_DARK_RED,
 				// medium red
 				__BRIGHTNESS_MEDIUM_RED,
 				// bright red

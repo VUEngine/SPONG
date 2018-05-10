@@ -167,7 +167,7 @@
 #define __MAX_ANIMATION_FUNCTION_NAME_LENGTH	16
 
 // Maximum number of frames per animation function
-#define __MAX_FRAMES_PER_ANIMATION_FUNCTION		24
+#define __MAX_FRAMES_PER_ANIMATION_FUNCTION		64
 
 // Maximum number of animation functions per description
 #define __MAX_ANIMATION_FUNCTIONS				8
@@ -363,7 +363,7 @@
  * for a nice progression, each shade should be about twice as big as the previous one
  * _BRIGHT_RED must be larger than _DARK_RED + _MEDIUM_RED
  */
-#define __BRIGHTNESS_DARK_RED					32
+#define __BRIGHTNESS_DARK_RED					16
 #define __BRIGHTNESS_MEDIUM_RED					64
 #define __BRIGHTNESS_BRIGHT_RED					128
 

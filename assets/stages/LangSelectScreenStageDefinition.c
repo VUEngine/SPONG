@@ -38,6 +38,7 @@ extern EntityDefinition FLAG_FRANCE_IM;
 extern EntityDefinition FLAG_GERMANY_IM;
 extern EntityDefinition FLAG_SPAIN_IM;
 extern EntityDefinition FLAG_UNITED_KINGDOM_IM;
+extern EntityDefinition LANGUAGE_NAME_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 
@@ -47,12 +48,13 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&FLAG_UNITED_KINGDOM_IM, {120, 96, 0, 0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_GERMANY_IM, {168, 96, 0, 0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_SPAIN_IM, {216, 96, 0, 0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_FRANCE_IM, {264, 96, 0, 0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_CURSOR_IM, {120, 96, 0, 0}, 0, "Cursor", NULL, NULL, false},
-	{&TRANSITION_LAYER_B_AE,	{192, 112, 0, -1}, 0, "TRNSLYR", NULL, NULL, false},
+	{&FLAG_UNITED_KINGDOM_IM, 	{120,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FLAG_GERMANY_IM, 			{168,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FLAG_SPAIN_IM, 			{216,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FLAG_FRANCE_IM, 			{264,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FLAG_CURSOR_IM, 			{120,  96, 0,  0}, 0, "Cursor", NULL, NULL, false},
+	{&LANGUAGE_NAME_LE,			{192, 124, 0,  0}, 0, "LangName", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -161,7 +163,7 @@ StageROMDef LANG_SELECT_SCREEN_STAGE_ST =
 			// brightness values on the respective regions of the screen. maximum brightness is 128.
 			{
 				// dark red
-				8,
+				__BRIGHTNESS_DARK_RED,
 				// medium red
 				__BRIGHTNESS_MEDIUM_RED,
 				// bright red

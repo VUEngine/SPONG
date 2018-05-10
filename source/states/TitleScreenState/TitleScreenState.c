@@ -39,6 +39,10 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <PongState.h>
+#include <HighscoresScreenState.h>
+#include <OptionsScreenState.h>
+#include <BrightnessManager.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -61,8 +65,7 @@ static void TitleScreenState_suspend(TitleScreenState this, void* owner);
 void TitleScreenState_processUserInputModePressStart(TitleScreenState this, UserInput userInput);
 void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, UserInput userInput);
 void TitleScreenState_updateCursorPosition(TitleScreenState this);
-static void TitleScreenState_onFadeInComplete(TitleScreenState this, Object eventFirer);
-static void TitleScreenState_onFadeOutComplete(TitleScreenState this, Object eventFirer);
+static void TitleScreenState_onTransitionOutComplete(TitleScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -88,11 +91,17 @@ static void __attribute__ ((noinline)) TitleScreenState_constructor(TitleScreenS
 	this->entityCursor = NULL;
 	this->mode = kTitleScreenModeShowPressStart;
 	this->option = 0;
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)TitleScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void TitleScreenState_destructor(TitleScreenState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)TitleScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	// destroy base
 	__SINGLETON_DESTROY;
 }
@@ -105,9 +114,6 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 
 	// call base
 	Base_enter(this, owner);
-
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
 
 	// load stage
 	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&TITLE_SCREEN_STAGE_ST, NULL, true);
@@ -124,15 +130,11 @@ static void TitleScreenState_enter(TitleScreenState this, void* owner)
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))TitleScreenState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 }
 
 // state's exit
@@ -160,14 +162,20 @@ static void TitleScreenState_suspend(TitleScreenState this, void* owner)
 
 void TitleScreenState_updateCursorPosition(TitleScreenState this)
 {
-	s8 projectionCorrection = (this->option < 2) ? 1 : 0;
+	// change position
 	Vector3D position =
 	{
 		0,
-		__PIXELS_TO_METERS((this->option * 12) - 24 + projectionCorrection),
-		__PIXELS_TO_METERS((this->option * -12) + 32),
+		__PIXELS_TO_METERS((this->option * 12) - 24),
+		0,
 	};
 	Entity_setLocalPosition(this->entityCursor, &position);
+
+	// change parallax
+	VirtualList cursorSprites = Entity_getSprites(this->entityCursor);
+	PixelVector displacement = Sprite_getDisplacement(VirtualList_front(cursorSprites));
+	displacement.parallax = - (this->option - 2);
+	Sprite_setDisplacement(VirtualList_front(cursorSprites), displacement);
 }
 
 void TitleScreenState_processUserInputModePressStart(TitleScreenState this, UserInput userInput)
@@ -187,7 +195,7 @@ void TitleScreenState_processUserInputModePressStart(TitleScreenState this, User
 
 void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, UserInput userInput)
 {
-	if((K_A & userInput.pressedKey) || (K_STA & userInput.pressedKey))
+	if((K_A | K_STA) & userInput.pressedKey)
 	{
 		// disable user input
 		Game_disableKeypad(Game_getInstance());
@@ -198,24 +206,13 @@ void TitleScreenState_processUserInputModeShowOptions(TitleScreenState this, Use
 		{
 			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 		}
-
-		// fade out screen
-		Brightness brightness = (Brightness){0, 0, 0};
-		Camera_startEffect(Camera_getInstance(),
-			kFadeTo, // effect type
-			500, // initial delay (in ms)
-			&brightness, // target brightness
-			__FADE_DELAY, // delay between fading steps (in ms)
-			(void (*)(Object, Object))TitleScreenState_onFadeOutComplete, // callback function
-			__SAFE_CAST(Object, this) // callback scope
-		);
 	}
-	else if((K_LU & userInput.pressedKey) || (K_RU & userInput.pressedKey))
+	else if((K_LU | K_RU) & userInput.pressedKey)
 	{
 		this->option = (this->option > 0) ? this->option - 1 : kTitleScreenOptionOptions;
 		TitleScreenState_updateCursorPosition(this);
 	}
-	else if((K_LD & userInput.pressedKey) || (K_RD & userInput.pressedKey))
+	else if((K_LD | K_RD) & userInput.pressedKey)
 	{
 		this->option = (this->option < kTitleScreenOptionOptions) ? this->option + 1 : 0;
 		TitleScreenState_updateCursorPosition(this);
@@ -240,18 +237,27 @@ void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInpu
 }
 
 // handle event
-static void TitleScreenState_onFadeInComplete(TitleScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void TitleScreenState_onTransitionOutComplete(TitleScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "TitleScreenState::onFadeInComplete: null this");
+	ASSERT(this, "TitleScreenState::onTransitionOutComplete: null this");
 
-	// enable user input
-	Game_enableKeypad(Game_getInstance());
-}
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
-// handle event
-static void TitleScreenState_onFadeOutComplete(TitleScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "TitleScreenState::onFadeOutComplete: null this");
+	switch(this->option)
+	{
+		case kTitleScreenOptionMarathonMode:
+		case kTitleScreenOptionChallengeMode:
+		case kTitleScreenOptionVersusMode:
+			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, PongState_getInstance()));
+			break;
 
-	Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, PongState_getInstance()));
+		case kTitleScreenOptionHighscores:
+			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, HighscoresScreenState_getInstance()));
+			break;
+
+		case kTitleScreenOptionOptions:
+			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, OptionsScreenState_getInstance()));
+			break;
+	}
 }

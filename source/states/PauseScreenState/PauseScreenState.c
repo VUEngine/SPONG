@@ -36,6 +36,8 @@
 #include <KeyPadManager.h>
 #include <Utilities.h>
 #include <AnimatedEntity.h>
+#include <BrightnessManager.h>
+#include <GameEvents.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -53,8 +55,7 @@ static void PauseScreenState_destructor(PauseScreenState this);
 static void PauseScreenState_constructor(PauseScreenState this);
 static void PauseScreenState_enter(PauseScreenState this, void* owner);
 static void PauseScreenState_exit(PauseScreenState this, void* owner);
-static void PauseScreenState_onFadeInComplete(PauseScreenState this, Object eventFirer);
-static void PauseScreenState_onFadeOutComplete(PauseScreenState this, Object eventFirer);
+static void PauseScreenState_onTransitionOutComplete(PauseScreenState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -77,11 +78,17 @@ static void __attribute__ ((noinline)) PauseScreenState_constructor(PauseScreenS
 	// init members
 	this->mode = kPauseScreenModeShowOptions;
 	this->optionsSelector = __NEW(OptionsSelector, 1, 3, NULL);
+
+	// add event listeners
+	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 static void PauseScreenState_destructor(PauseScreenState this)
 {
+	// remove event listeners
+	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+
 	__DELETE(this->optionsSelector);
 
 	// destroy base
@@ -142,21 +149,14 @@ static void PauseScreenState_enter(PauseScreenState this, void* owner __attribut
 		17
 	);
 
-	// disable user input
-	Game_disableKeypad(Game_getInstance());
-
 	// start clocks to start animations
 	GameState_startClocks(__SAFE_CAST(GameState, this));
 
-	// fade in screen
-	Camera_startEffect(Camera_getInstance(),
-		kFadeTo, // effect type
-		0, // initial delay (in ms)
-		NULL, // target brightness
-		__FADE_DELAY, // delay between fading steps (in ms)
-		(void (*)(Object, Object))PauseScreenState_onFadeInComplete, // callback function
-		__SAFE_CAST(Object, this) // callback scope
-	);
+	// enable user input
+	Game_enableKeypad(Game_getInstance());
+
+	// show screen
+	BrightnessManager_showScreen(BrightnessManager_getInstance());
 
 	this->mode = kPauseScreenModeShowOptions;
 }
@@ -170,7 +170,7 @@ static void PauseScreenState_exit(PauseScreenState this, void* owner __attribute
 
 void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInput)
 {
-	if((K_STA & userInput.pressedKey) || (K_A & userInput.pressedKey))
+	if((K_STA | K_A) & userInput.pressedKey)
 	{
 		if(this->mode == kPauseScreenModeShowOptions)
 		{
@@ -190,17 +190,6 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 					{
 						AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 					}
-
-					// fade out screen
-					Brightness brightness = (Brightness){0, 0, 0};
-					Camera_startEffect(Camera_getInstance(),
-						kFadeTo, // effect type
-						500, // initial delay (in ms)
-						&brightness, // target brightness
-						__FADE_DELAY, // delay between fading steps (in ms)
-						(void (*)(Object, Object))PauseScreenState_onFadeOutComplete, // callback function
-						__SAFE_CAST(Object, this) // callback scope
-					);
 
 					break;
 
@@ -240,17 +229,6 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 			{
 				AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
 			}
-
-			// fade out screen
-			Brightness brightness = (Brightness){0, 0, 0};
-			Camera_startEffect(Camera_getInstance(),
-				kFadeTo, // effect type
-				500, // initial delay (in ms)
-				&brightness, // target brightness
-				__FADE_DELAY, // delay between fading steps (in ms)
-				(void (*)(Object, Object))PauseScreenState_onFadeOutComplete, // callback function
-				__SAFE_CAST(Object, this) // callback scope
-			);
 		}
 	}
 	else if((this->mode == kPauseScreenModeShowConfirmQuit) && (userInput.pressedKey & K_B))
@@ -273,17 +251,12 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 }
 
 // handle event
-static void PauseScreenState_onFadeInComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void PauseScreenState_onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "PauseScreenState::onFadeInComplete: null this");
+	ASSERT(this, "PauseScreenState::onTransitionOutComplete: null this");
 
-	Game_enableKeypad(Game_getInstance());
-}
-
-// handle event
-static void PauseScreenState_onFadeOutComplete(PauseScreenState this, Object eventFirer __attribute__ ((unused)))
-{
-	ASSERT(this, "PauseScreenState::onFadeOutComplete: null this");
+	// hide screen
+	BrightnessManager_hideScreen(BrightnessManager_getInstance());
 
 	// re-enable user input
 	Game_enableKeypad(Game_getInstance());

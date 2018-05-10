@@ -25,7 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <libgccvb.h>
-#include <AnimatedEntity.h>
+#include <TransitionEntity.h>
 #include <BgmapAnimatedSprite.h>
 
 
@@ -79,7 +79,7 @@ AnimationFunctionROMDef TRANSITION_LAYER_A_FADE_OUT_ANIM =
 	false,
 
 	// method to call on function completion
-	NULL,
+	(EventListener)&TransitionEntity_onTransitionComplete,
 
 	// function's name
 	"FadeOut",
@@ -153,7 +153,7 @@ BgmapSpriteROMDef TRANSITION_LAYER_A_SPRITE =
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, 0, 0},
+		{0, 0, -64, 0},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
@@ -173,11 +173,11 @@ BgmapSpriteROMDef* const TRANSITION_LAYER_A_SPRITES[] =
 	NULL
 };
 
-AnimatedEntityROMDef TRANSITION_LAYER_A_AE =
+TransitionEntityROMDef TRANSITION_LAYER_A_AE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(TransitionEntity),
 
 		// sprites
 		(SpriteROMDef**)TRANSITION_LAYER_A_SPRITES,

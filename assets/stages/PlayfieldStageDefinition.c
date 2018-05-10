@@ -120,7 +120,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&COLLISION_WALL_CL,		{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
 	{&COLLISION_WALL_CL,		{192,    112,     48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
-	{&TRANSITION_LAYER_B_AE,	{192,    112,      0, -1}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,	{192,    112,      0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -251,7 +251,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 			// brightness values on the respective regions of the screen. maximum brightness is 128.
 			{
 				// dark red
-				8,
+				__BRIGHTNESS_DARK_RED,
 				// medium red
 				__BRIGHTNESS_MEDIUM_RED,
 				// bright red
