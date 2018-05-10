@@ -47,6 +47,7 @@
 		__VIRTUAL_SET(ClassName, PongBall, enterCollision);												\
 		__VIRTUAL_SET(ClassName, PongBall, getFrictionOnCollision);										\
 		__VIRTUAL_SET(ClassName, PongBall, getSurroundingFrictionCoefficient);							\
+		__VIRTUAL_SET(ClassName, PongBall, syncRotationWithBody);										\
 
 __CLASS(PongBall);
 
@@ -97,6 +98,7 @@ fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingOb
 fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
 int PongBall_getPaddleEnum(PongBall this);
 void PongBall_startRolling(PongBall this);
+void PongBall_syncRotationWithBody(PongBall this);
 
 
 #endif

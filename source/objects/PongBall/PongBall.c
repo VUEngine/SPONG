@@ -117,7 +117,7 @@ void PongBall_update(PongBall this, u32 elapsedTime)
 		localRotation.z -= __FIX10_6_TO_I(Vector3D_squareLength(Body_getVelocity(this->body))) >> 4;
 	}
 
-	Entity_setLocalRotation(__SAFE_CAST(Entity, this), &localRotation);
+	//Entity_setLocalRotation(__SAFE_CAST(Entity, this), &localRotation);
 }
 
 // start moving
@@ -353,4 +353,9 @@ void PongBall_startRolling(PongBall this)
 	velocity.y += 0 < velocity.y ? __ABS(this->pongBallDefinition->bonusVelocity.y) : 0 > velocity.y ? -__ABS(this->pongBallDefinition->bonusVelocity.y) : this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
 	velocity.z = -velocity.z;
 	Body_modifyVelocity(this->body, &velocity);
+}
+
+void PongBall_syncRotationWithBody(PongBall this __attribute__ ((unused)))
+{
+
 }

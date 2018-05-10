@@ -3,27 +3,24 @@
 
 //======================================================================
 //
-//	PongBall, 24x24@2, 
-//	+ 5 tiles (t|f reduced) not compressed
-//	+ regular map (flat), not compressed, 3x3 
-//	Total size: 80 + 20 = 100
+//	PongBall, 8x104@2, 
+//	+ 13 tiles not compressed
+//	Total size: 208 = 208
 //
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.6
 //	( http://www.coranac.com/projects/#grit )
 //
 //======================================================================
 
-const unsigned int PongBallTiles[20] __attribute__((aligned(4)))=
+const unsigned int PongBallTiles[52] __attribute__((aligned(4)))=
 {
-	0x00000000,0x00000000,0x00000000,0x00000000,0xA0000000,0xAA00A800,0xABA0AE80,0xAAA8AAA8,
-	0xABEA2AA8,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAA8,0xAAAEAAAA,0xAAAAAAAE,0xAAA8AAAA,
-	0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,
-};
-
-const unsigned short PongBallMap[10] __attribute__((aligned(4)))=
-{
-	0x0001,0x0002,0x2001,0x0003,0x0004,0x2003,0x1001,0x3002,
-	0x3001,0x0000,
+	0x00000000,0x00000000,0x00000000,0x00000000,0xA0000000,0xAA00A800,0xAAA0AA80,0xAAA8AAA8,
+	0xAFFA2FF8,0xABFEAFFA,0xABFEABFE,0xABFEABFE,0x000A0000,0x00AA002A,0x0EAA03AA,0x3AAA3AAA,
+	0xAAAAAAA8,0xFFFFFFFF,0xFFFFFFFF,0xAAA8AAAA,0xABFEABFE,0xFFFFFFFF,0xFFFFFFFF,0xABFEABFE,
+	0xEAAA3AAA,0xFFFFFFFF,0xFFFFFFFF,0x3AAAEAAA,0xA0000000,0xAA00A800,0xAAA0AA80,0xEAA8EAA8,
+	0xEBFE3FF8,0xAAFFABFE,0xAAFFAAFF,0xAABFAABF,0x000F0000,0x00FA003A,0x0FAA03EA,0x3EAA3EAA,
+	0xEAAAEAA8,0xFFFFFFFF,0xFFFFFFFF,0xEAA8EAAA,0xAABFAABF,0xFFFFFFFF,0xFFFFFFFF,0xAABFAABF,
+	0xFEAA3EAA,0xFFFFFFFF,0xFFFFFFFF,0x3EAAFEAA,
 };
 
 //}}BLOCK(PongBall)

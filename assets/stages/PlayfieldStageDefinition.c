@@ -34,7 +34,7 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition PONG_BALL_AC;
+extern EntityDefinition PONG_BALL_PB;
 extern EntityDefinition PADDLE_LEFT_AC;
 extern EntityDefinition PADDLE_RIGHT_AC;
 extern EntityDefinition PLAYFIELD_EN;
@@ -109,7 +109,7 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 
 	{&PADDLE_LEFT_AC, 			{192-96, 112,     96, 0}, 	0, PADDLE_LEFT_NAME, NULL, NULL, false},
 	{&PADDLE_RIGHT_AC, 			{192+96, 112,     96, 0}, 	0, PADDLE_RIGHT_NAME, NULL, NULL, false},
-	{&PONG_BALL_AC, 			{192,    112,     0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PONG_BALL_CHILDREN, NULL, false},
+	{&PONG_BALL_PB, 			{192,    112,     0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PONG_BALL_CHILDREN, NULL, false},
 	{&PONG_BALL_LIGHT_IM,		{192,    112,     96+8+1, 0}, 	0, NULL, NULL, NULL, false},
 
 	{&COLLISION_FLOOR_CL,		{192, 112,     96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
