@@ -267,7 +267,7 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 		switch(this->option)
 		{
 			case kOptionScreenOptionLanguage:
-				OptionsScreenState_switchLanguage(this, (K_LR | K_RR) & userInput.pressedKey);
+				OptionsScreenState_switchLanguage(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
 				break;
 
 			case kOptionScreenOptionAutomaticPause:
@@ -275,7 +275,7 @@ void OptionsScreenState_processUserInputModeShowOptions(OptionsScreenState this,
 				break;
 
 			case kOptionScreenOptionBrightness:
-				OptionsScreenState_switchBrightness(this, (K_LR | K_RR) & userInput.pressedKey);
+				OptionsScreenState_switchBrightness(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
 				break;
 		}
 	}
