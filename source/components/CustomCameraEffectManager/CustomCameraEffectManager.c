@@ -74,7 +74,7 @@ void __attribute__ ((noinline)) CustomCameraEffectManager::constructor(CustomCam
 	ASSERT(this, "CustomCameraEffectManager::constructor: null this");
 
 	// construct base object
-	CameraEffectManager::constructor();
+	Base::constructor();
 
 	this->lastShakeOffset.x = 0;
 	this->lastShakeOffset.y = 0;
