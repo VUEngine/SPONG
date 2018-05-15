@@ -46,15 +46,15 @@
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(PongBallLight, Entity);
+
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void PongBallLight_onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)));
-static void PongBallLight_onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)));
+static void PongBallLight::onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)));
+static void PongBallLight::onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)));
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -62,16 +62,16 @@ static void PongBallLight_onPongBallHitCeiling(PongBallLight this, Object eventF
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(PongBallLight, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(PongBallLight, PongBallLightDefinition, id, internalId, name);
+
+
 
 // class's constructor
-void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
+void PongBallLight::constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
 {
 	ASSERT(this, "PongBallLight::constructor: null this");
 
 	// construct base
-	Base_constructor(this, (EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
+	Base::constructor((EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
 
 	// save definition
 	this->pongBall = NULL;
@@ -80,86 +80,86 @@ void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* Pong
 }
 
 // class's constructor
-void PongBallLight_destructor(PongBallLight this)
+void PongBallLight::destructor(PongBallLight this)
 {
 	ASSERT(this, "PongBallLight::destructor: null this");
 
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
 	// must always be called at the end of the destructor
-	Base_destructor();
+	Base::destructor();
 }
 
-void PongBallLight_ready(PongBallLight this, bool recursive)
+void PongBallLight::ready(PongBallLight this, bool recursive)
 {
 	ASSERT(this, "PongBallLight::ready: null this");
 
 	// call base
-	Base_ready(this, recursive);
+	Base::ready(this, recursive);
 
-	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PONG_BALL_NAME, true));
+	this->pongBall = __SAFE_CAST(PongBall, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
 	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
-	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject_getPosition(this->pongBall)->z;
+	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject::getPosition(this->pongBall)->z;
 	this->followPongBall = true;
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
-void PongBallLight_update(PongBallLight this, u32 elapsedTime)
+void PongBallLight::update(PongBallLight this, u32 elapsedTime)
 {
-	Base_update(this, elapsedTime);
+	Base::update(this, elapsedTime);
 
 	if(this->followPongBall)
 	{
-		const Vector3D* pongBallPosition =  SpatialObject_getPosition(this->pongBall);
+		const Vector3D* pongBallPosition =  SpatialObject::getPosition(this->pongBall);
 
 		Vector3D localPosition = this->transformation.localPosition;
 
 		localPosition.x  = pongBallPosition->x;
 		localPosition.y  = pongBallPosition->y;
 
-		 Entity_setLocalPosition(this, &localPosition);
+		 Entity::setLocalPosition(this, &localPosition);
 
 		Scale localScale = this->transformation.localScale;
 		localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __FIX10_6_DIV(this->pongBallInitialZDistance, this->transformation.globalPosition.z - (pongBallPosition->z - Z_SCALING_COMPENSATION))));
-		Container_setLocalScale(__SAFE_CAST(Container, this), &localScale);
+		Container::setLocalScale(__SAFE_CAST(Container, this), &localScale);
 	}
 }
 
-static void PongBallLight_onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)))
+static void PongBallLight::onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
 }
 
-static void PongBallLight_onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)))
+static void PongBallLight::onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher_dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
 /*
-	PixelVector displacement = Sprite_getDisplacement(VirtualList_front(this->sprites));
+	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
 	displacement.parallax = -5;
-	Sprite_setDisplacement(VirtualList_front(this->sprites), displacement);
+	Sprite::setDisplacement(VirtualList::front(this->sprites), displacement);
 
 	Scale localScale = this->transformation.localScale;
 	localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __I_TO_FIX10_6(2)));
-	Container_setLocalScale(__SAFE_CAST(Container, this), &localScale);
+	Container::setLocalScale(__SAFE_CAST(Container, this), &localScale);
 	*/
 }
 
-bool PongBallLight_handleMessage(PongBallLight this, Telegram telegram)
+bool PongBallLight::handleMessage(PongBallLight this, Telegram telegram)
 {
 	// process message
-	switch(Telegram_getMessage(telegram))
+	switch(Telegram::getMessage(telegram))
 	{
 		case kFollowPongBall:
 			{
-				PixelVector displacement = Sprite_getDisplacement(VirtualList_front(this->sprites));
+				PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
 				displacement.parallax = 0;
-				Sprite_setDisplacement(VirtualList_front(this->sprites), displacement);
+				Sprite::setDisplacement(VirtualList::front(this->sprites), displacement);
 
 				this->followPongBall = true;
 			}

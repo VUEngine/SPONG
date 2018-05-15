@@ -35,14 +35,14 @@
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(TransitionEntity, AnimatedEntity);
+
 
 
 //---------------------------------------------------------------------------------------------------------
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-void TransitionEntity_localize(TransitionEntity this);
+void TransitionEntity::localize(TransitionEntity this);
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -50,30 +50,30 @@ void TransitionEntity_localize(TransitionEntity this);
 //---------------------------------------------------------------------------------------------------------
 
 // always call these two macros next to each other
-__CLASS_NEW_DEFINITION(TransitionEntity, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
-__CLASS_NEW_END(TransitionEntity, TransitionEntityDefinition, id, internalId, name);
+
+
 
 // class's constructor
-void TransitionEntity_constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
+void TransitionEntity::constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	ASSERT(this, "TransitionEntity::constructor: null this");
 
 	// construct base object
-	__CONSTRUCT_BASE(AnimatedEntity, (AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
+	Base::constructor((AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
 }
 
 // class's destructor
-void TransitionEntity_destructor(TransitionEntity this)
+void TransitionEntity::destructor(TransitionEntity this)
 {
 	ASSERT(this, "TransitionEntity::destructor: null this");
 
 	// destroy the super object
 	// must always be called at the end of the destructor
-	__DESTROY_BASE;
+	Base::destructor();
 }
 
 // handle event
-void TransitionEntity_onTransitionComplete(TransitionEntity this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onTransitionComplete(TransitionEntity this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
-	Object_fireEvent(__SAFE_CAST(Object, Game_getCurrentState(Game_getInstance())), kEventTransitionOutComplete);
+	Object::fireEvent(__SAFE_CAST(Object, Game::getCurrentState(Game::getInstance())), kEventTransitionOutComplete);
 }

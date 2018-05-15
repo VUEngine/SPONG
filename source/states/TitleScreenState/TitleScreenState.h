@@ -55,38 +55,35 @@ enum TitleScreenOptions
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define TitleScreenState_METHODS(ClassName)																\
- 		GameState_METHODS(ClassName)											 						\
 
-// declare the virtual methods which are redefined
-#define TitleScreenState_SET_VTABLE(ClassName)															\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, TitleScreenState, enter);												\
-		__VIRTUAL_SET(ClassName, TitleScreenState, exit);												\
-		__VIRTUAL_SET(ClassName, TitleScreenState, resume);												\
-		__VIRTUAL_SET(ClassName, TitleScreenState, suspend);											\
-		__VIRTUAL_SET(ClassName, TitleScreenState, processUserInput);									\
-
-__CLASS(TitleScreenState);
-
-#define TitleScreenState_ATTRIBUTES								 										\
-		GameState_ATTRIBUTES																			\
-		/* entity references */																			\
-		Entity entityMainMenu;																			\
-		Entity entityCursor;																			\
-		Entity entityPressStart;																		\
-		/* current state of the main menu */															\
-		u8 mode;																						\
-		/* currently selected option of the main menu */												\
-		u8 option;																						\
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-TitleScreenState TitleScreenState_getInstance(void);
-void TitleScreenState_processUserInput(TitleScreenState this, UserInput userInput);
+
+
+
+singleton class TitleScreenState : GameState
+{
+	/* entity references */
+	Entity entityMainMenu;
+	Entity entityCursor;
+	Entity entityPressStart;
+	/* current state of the main menu */
+	u8 mode;
+	/* currently selected option of the main menu */
+	u8 option;
+
+	static TitleScreenState getInstance();
+
+	override void enter(TitleScreenState this, void* owner);
+	override void exit(TitleScreenState this, void* owner);
+	override void resume(TitleScreenState this, void* owner);
+	override void suspend(TitleScreenState this, void* owner);
+	override void processUserInput(TitleScreenState this, UserInput userInput);
+}
 
 
 #endif

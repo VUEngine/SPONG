@@ -54,21 +54,17 @@ extern StageROMDef PLAYFIELD_STAGE_ST;
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void PongState_destructor(PongState this);
-static void PongState_constructor(PongState this);
-static void PongState_enter(PongState this, void* owner);
-static void PongState_exit(PongState this, void* owner);
-static void PongState_resume(PongState this, void* owner);
-static void PongState_suspend(PongState this, void* owner);
-static void PongState_onTransitionOutComplete(PongState this, Object eventFirer);
+
+void PongState::constructor(PongState this);
+static void PongState::onTransitionOutComplete(PongState this, Object eventFirer);
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(PongState, GameState);
-__SINGLETON(PongState);
+
+
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -76,69 +72,69 @@ __SINGLETON(PongState);
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-static void __attribute__ ((noinline)) PongState_constructor(PongState this)
+void __attribute__ ((noinline)) PongState::constructor(PongState this)
 {
-	__CONSTRUCT_BASE(GameState);
+	Base::constructor();
 
 	// add event listeners
-	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-static void PongState_destructor(PongState this)
+void PongState::destructor(PongState this)
 {
 	// remove event listeners
-	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	__SINGLETON_DESTROY;
 }
 
 // state's enter
-static void PongState_enter(PongState this, void* owner)
+void PongState::enter(PongState this, void* owner)
 {
 	// call base
-	Base_enter(this, owner);
+	Base::enter(this, owner);
 
 	// load stage
-	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
+	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState_startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(__SAFE_CAST(GameState, this));
 
 	// enable user input
-	Game_enableKeypad(Game_getInstance());
+	Game::enableKeypad(Game::getInstance());
 
-	Player_getReady(Player_getInstance(), __SAFE_CAST(GameState, this));
+	Player::getReady(Player::getInstance(), __SAFE_CAST(GameState, this));
 
 	// show screen
-	BrightnessManager_showScreen(BrightnessManager_getInstance());
+	BrightnessManager::showScreen(BrightnessManager::getInstance());
 }
 
 // state's exit
-static void PongState_exit(PongState this, void* owner)
+void PongState::exit(PongState this, void* owner)
 {
 	// call base
-	Base_exit(this, owner);
+	Base::exit(this, owner);
 }
 
 // state's resume
-static void PongState_resume(PongState this, void* owner)
+void PongState::resume(PongState this, void* owner)
 {
-	Base_resume(this, owner);
+	Base::resume(this, owner);
 
-	Camera_startEffect(Camera_getInstance(), kFadeIn, __FADE_DELAY);
+	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
 }
 
 // state's suspend
-static void PongState_suspend(PongState this, void* owner)
+void PongState::suspend(PongState this, void* owner)
 {
-	Camera_startEffect(Camera_getInstance(), kFadeOut, __FADE_DELAY);
+	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
-	Base_suspend(this, owner);
+	Base::suspend(this, owner);
 }
 
-void PongState_processUserInput(PongState this, UserInput userInput)
+void PongState::processUserInput(PongState this, UserInput userInput)
 {
 
 	if(userInput.pressedKey & ~K_PWR)
@@ -148,52 +144,52 @@ void PongState_processUserInput(PongState this, UserInput userInput)
 			if(K_SEL & userInput.pressedKey)
 			{
 				// adjustment screen
-//				PlatformerLevelState_setModeToPaused(this);
+//				PlatformerLevelState::setModeToPaused(this);
 
 				// set next state of adjustment screen state to null so it can differentiate between
 				// being called the splash screen sequence or from within the game (a bit hacky...)
-//				SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, AdjustmentScreenState_getInstance()), NULL);
+//				SplashScreenState::setNextState(__SAFE_CAST(SplashScreenState, AdjustmentScreenState::getInstance()), NULL);
 
 				// pause game and switch to adjustment screen state
-//				Game_pause(Game_getInstance(), __SAFE_CAST(GameState, AdjustmentScreenState_getInstance()));
+//				Game::pause(Game::getInstance(), __SAFE_CAST(GameState, AdjustmentScreenState::getInstance()));
 
 				return;
 			}
 			else if(K_STA & userInput.pressedKey)
 			{
 				// pause game and switch to pause screen state
-//				Game_pause(Game_getInstance(), __SAFE_CAST(GameState, PauseScreenState_getInstance()));
+//				Game::pause(Game::getInstance(), __SAFE_CAST(GameState, PauseScreenState::getInstance()));
 
 				return;
 			}
 		}
 
-	//	Object_fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+	//	Object::fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
 
 	/*
 		// disable user input
-		Game_disableKeypad(Game_getInstance());
+		Game::disableKeypad(Game::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
-			AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
 		}
 	*/
 	}
 
-	Object_fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+	Object::fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
 
 }
 
 // handle event
-static void PongState_onTransitionOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void PongState::onTransitionOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "PongState::onTransitionOutComplete: null this");
 
 	// hide screen
-	BrightnessManager_hideScreen(BrightnessManager_getInstance());
+	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
-	Player_gameIsOver(Player_getInstance(), __SAFE_CAST(GameState, this));
+	Player::gameIsOver(Player::getInstance(), __SAFE_CAST(GameState, this));
 }

@@ -36,26 +36,6 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-#define Paddle_METHODS(ClassName)																		\
-		Actor_METHODS(ClassName)																		\
-
-#define Paddle_SET_VTABLE(ClassName)																	\
-		Actor_SET_VTABLE(ClassName)																		\
-		__VIRTUAL_SET(ClassName, Paddle, ready);														\
-		__VIRTUAL_SET(ClassName, Paddle, handleMessage);												\
-		__VIRTUAL_SET(ClassName, Paddle, setExtraInfo);													\
-		__VIRTUAL_SET(ClassName, Paddle, transform);													\
-		__VIRTUAL_SET(ClassName, Paddle, syncRotationWithBody);											\
-		__VIRTUAL_SET(ClassName, Paddle, mustBounce);													\
-
-__CLASS(Paddle);
-
-#define Paddle_ATTRIBUTES																				\
-		Actor_ATTRIBUTES																				\
-		/* definition pointer */																		\
-		PaddleDefinition* paddleDefinition;																\
-		Shape paddleShape;																				\
-
 
 typedef struct PaddleDefinition
 {
@@ -78,26 +58,26 @@ enum PlayerPaddles
 };
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+class Paddle : Actor
+{
+	/* definition pointer */
+	PaddleDefinition* paddleDefinition;
+	Shape paddleShape;
 
-// allocator
-__CLASS_NEW_DECLARE(Paddle, PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
+	void startMovement(Paddle this);
+	void stopMovement(Paddle this);
+	void moveTowards(Paddle this, Direction direction);
+	void stopTowards(Paddle this, Direction direction);
+	void retract(Paddle this);
+	void eject(Paddle this);
+	override void ready(Paddle this, bool recursive);
+	override bool handleMessage(Paddle this, Telegram telegram);
+	override void setExtraInfo(Paddle this, void* extraInfo);
+	override void transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag);
+	override void syncRotationWithBody(Paddle this);
+	override bool mustBounce(Paddle this);
+}
 
-void Paddle_constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
-void Paddle_destructor(Paddle this);
-void Paddle_startMovement(Paddle this);
-void Paddle_stopMovement(Paddle this);
-void Paddle_ready(Paddle this, bool recursive);
-bool Paddle_handleMessage(Paddle this, Telegram telegram);
-void Paddle_setExtraInfo(Paddle this, void* extraInfo);
-void Paddle_transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag);
-void Paddle_syncRotationWithBody(Paddle this);
-void Paddle_moveTowards(Paddle this, Direction direction);
-void Paddle_stopTowards(Paddle this, Direction direction);
-void Paddle_retract(Paddle this);
-void Paddle_eject(Paddle this);
-bool Paddle_mustBounce(Paddle this);
 
 #endif

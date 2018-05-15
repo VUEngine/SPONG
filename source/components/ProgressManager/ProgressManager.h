@@ -34,22 +34,6 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define ProgressManager_METHODS(ClassName)																\
-		Object_METHODS(ClassName)																		\
-
-// declare the virtual methods which are redefined
-#define ProgressManager_SET_VTABLE(ClassName)															\
-		Object_SET_VTABLE(ClassName)																	\
-
-// declare class
-__CLASS(ProgressManager);
-
-// declare class attributes
-#define ProgressManager_ATTRIBUTES																		\
-		Object_ATTRIBUTES																				\
-		/* flag that tells if sram is available on the current cartridge */								\
-		bool sramAvailable;																				\
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -81,20 +65,21 @@ typedef struct SaveData
 } SaveData;
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+singleton class ProgressManager : Object
+{
+	/* flag that tells if sram is available on the current cartridge */
+	bool sramAvailable;
 
-ProgressManager ProgressManager_getInstance();
-
-void ProgressManager_destructor(ProgressManager this);
-bool ProgressManager_getAutomaticPauseStatus(ProgressManager this);
-u8   ProgressManager_getBrightnessFactor(ProgressManager this);
-u8   ProgressManager_getLanguage(ProgressManager this);
-void ProgressManager_initialize(ProgressManager this);
-void ProgressManager_setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus);
-void ProgressManager_setBrightnessFactor(ProgressManager this, u8 brightnessFactor);
-void ProgressManager_setLanguage(ProgressManager this, u8 languageId);
+	// declare class
+	static ProgressManager getInstance();
+	bool getAutomaticPauseStatus(ProgressManager this);
+	u8   getBrightnessFactor(ProgressManager this);
+	u8   getLanguage(ProgressManager this);
+	void initialize(ProgressManager this);
+	void setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus);
+	void setBrightnessFactor(ProgressManager this, u8 brightnessFactor);
+	void setLanguage(ProgressManager this, u8 languageId);
+}
 
 
 #endif

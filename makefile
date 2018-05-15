@@ -124,15 +124,16 @@ VUENGINE_HOME = $(VBDE)libs/vuengine
 
 # Which directories contain source files
 DIRS = $(shell find source assets -type d -print)
-HEADER_DIRS = $(shell find $(VUENGINE_HOME)/source source -type d -print)
+HEADER_DIRS = $(shell find ./source -type d -print)
+HEADER_DIRS := $(HEADER_DIRS) $(shell find ./assets -type d -print)
 
 # Which libraries are linked
 LIBS = vuengine
 
 # Obligatory headers
-CONFIG_FILE =       $(shell pwd)/config.h
+CONFIG_FILE =       $(shell pwd)/source/config.h
 ESSENTIAL_HEADERS = -include $(CONFIG_FILE) \
-					-include $(VUENGINE_HOME)/libvuengine.h
+					-include $(VUENGINE_HOME)/source/libvuengine.h
 
 # Common macros for all build types
 COMMON_MACROS = $(DATA_SECTION_ATTRIBUTES)
@@ -170,9 +171,7 @@ MACROS = $(COMMON_MACROS)
 endif
 
 # Add directories to the include and library paths
-VUENGINE_INCLUDE_PATHS = $(VUENGINE_HOME) $(shell find $(VUENGINE_HOME)/source -type d -print)
-GAME_INCLUDE_PATHS = $(shell find assets source -type d -print)
-GAME_INCLUDE_PATHS += .
+GAME_INCLUDE_PATHS = $(shell find $(WORKING_FOLDER)/source/  -type d -print)
 
 # linked engine's home
 VUENGINE_LIBRARY_PATH = $(BUILD_DIR)
@@ -190,11 +189,11 @@ ASSEMBLY_SOURCE = $(foreach DIR,$(DIRS),$(wildcard $(DIR)/*.s))
 HEADERS = $(foreach DIR,$(HEADER_DIRS),$(wildcard $(DIR)/*.h))
 
 # Makes a list of the header files that will have to be created.
-H_FILES = $(addprefix $(WORKING_FOLDER)/sources/, $(HEADERS:.h=.h))
+H_FILES = $(addprefix $(WORKING_FOLDER)/source/, $(HEADERS:.h=.h))
 
 # Makes a list of the object files that will have to be created.
 C_OBJECTS = $(addprefix $(STORE)/, $(C_SOURCE:.c=.o))
-C_INTERMEDIATE_SOURCES = $(addprefix $(WORKING_FOLDER)/sources/, $(C_SOURCE:.c=.c))
+C_INTERMEDIATE_SOURCES = $(addprefix $(WORKING_FOLDER)/source/, $(C_SOURCE:.c=.c))
 
 # Makes a list of the object files that will have to be created.
 ASSEMBLY_OBJECTS = $(addprefix $(STORE)/, $(ASSEMBLY_SOURCE:.s=.o))
@@ -213,6 +212,9 @@ SETUP_CLASSES_OBJECT = $(STORE)/$(SETUP_CLASSES)
 
 # Virtual methods preprocessor file
 VIRTUAL_METHODS_HELPER=$(WORKING_FOLDER)/preprocessor/$(HELPERS_PREFIX)VirtualMethods.txt
+
+# File that holds the classes hierarchy
+CLASSES_HIERARCHY_FILE=$(WORKING_FOLDER)/preprocessor/$(HELPERS_PREFIX)ClassesHierarchy.txt
 
 # Main target. The @ in front of a command prevents make from displaying it to the standard output.
 
@@ -233,7 +235,7 @@ printBuildingInfo:
 	@echo Build type: $(TYPE)
 	@echo Compiler: $(COMPILER_NAME) $(COMPILER_VERSION)
 	@echo Compiler\'s output: $(COMPILER_OUTPUT)
-#	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/cleanSyntax.sh $(GAME_HOME)/source
+#	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/cleanSyntax.sh $(VUENGINE_HOME) $(GAME_HOME)/source $(WORKING_FOLDER)/preprocessor
 
 printPostPreprocessorInfo:
 	@echo Done compiling in $(TYPE) mode with GCC $(COMPILER_VERSION)
@@ -270,38 +272,38 @@ $(VIRTUAL_METHODS_HELPER): $(H_FILES)
 
 $(SETUP_CLASSES_OBJECT).o: $(WORKING_FOLDER)/preprocessor/$(SETUP_CLASSES).c
 	@echo Compiling $<
-	@echo to $@
-	@$(GCC) $(foreach INC,$(VUENGINE_INCLUDE_PATHS) $(GAME_INCLUDE_PATHS),-I$(INC))\
+	@$(GCC) $(foreach INC,$(GAME_INCLUDE_PATHS),-I$(INC))\
         $(foreach MACRO,$(MACROS),-D$(MACRO)) $(C_PARAMS) -$(COMPILER_OUTPUT) $< -o $@
 
 $(WORKING_FOLDER)/preprocessor/$(SETUP_CLASSES).c: setupClasses
 
 $(FINAL_SETUP_CLASSES_OBJECT).o: $(WORKING_FOLDER)/preprocessor/$(FINAL_SETUP_CLASSES).c
 	@echo Compiling $<
-	@echo to $@
-	@$(GCC) $(foreach INC,$(VUENGINE_INCLUDE_PATHS) $(GAME_INCLUDE_PATHS),-I$(INC))\
+	@$(GCC) $(foreach INC,$(GAME_INCLUDE_PATHS),-I$(INC))\
         $(foreach MACRO,$(MACROS),-D$(MACRO)) $(C_PARAMS) -$(COMPILER_OUTPUT) $< -o $@
 
 $(FINAL_SETUP_CLASSES)/preprocessor/$(SETUP_CLASSES).c: setupClasses
 
 # Rule for creating object file and .d file, the sed magic is to add the object path at the start of the file
 # because the files gcc outputs assume it will be in the same dir as the source file.
-$(STORE)/%.o: $(WORKING_FOLDER)/sources/%.c
-	@$(GCC) -Wp,-MD,$(STORE)/$*.dd $(foreach INC,$(VUENGINE_INCLUDE_PATHS) $(GAME_INCLUDE_PATHS),-I$(INC))\
+$(STORE)/%.o: $(WORKING_FOLDER)/source/%.c
+	@$(GCC) -Wp,-MD,$(STORE)/$*.dd $(foreach INC,$(GAME_INCLUDE_PATHS),-I$(INC))\
         $(foreach MACRO,$(MACROS),-D$(MACRO)) $(C_PARAMS)  -$(COMPILER_OUTPUT) $< -o $@
 	@sed -e '1s/^\(.*\)$$/$(subst /,\/,$(dir $@))\1/' $(STORE)/$*.dd > $(STORE)/$*.d
 	@rm -f $(STORE)/$*.dd
 
-$(WORKING_FOLDER)/sources/%.c: %.c
+$(WORKING_FOLDER)/source/%.c: %.c
 	@echo Compiling $<
-	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processVirtualCalls.sh -i $< -o $@ -d -w $(WORKING_FOLDER)/preprocessor -p engine -p $(HELPERS_PREFIX)
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processVirtualCalls.sh -i $< -o $@ -d -w $(WORKING_FOLDER)/preprocessor -p engine -p $(HELPERS_PREFIX) -c $(CLASSES_HIERARCHY_FILE)
 
 $(STORE)/%.o: %.s
 	@echo Creating object file for $*
 	@$(AS) -o $@ $<
 
-$(WORKING_FOLDER)/sources/%.h: %.h
-	@cp $< $@
+$(WORKING_FOLDER)/source/%.h: %.h
+	@echo Analysing $<
+	@echo into $@
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processHeader.sh -i $< -o $@ -w $(WORKING_FOLDER)/preprocessor -c $(CLASSES_HIERARCHY_FILE)
 
 $(VUENGINE): deleteEngine
 	@echo Building VUEngine...
@@ -328,9 +330,9 @@ dirs:
 	@-if [ ! -e $(STORE) ]; then mkdir -p $(STORE); fi;
 	@-$(foreach DIR,$(DIRS), if [ ! -e $(STORE)/$(DIR) ]; \
          then mkdir -p $(STORE)/$(DIR); fi; )
-	@-if [ ! -e $(WORKING_FOLDER)/sources ]; then mkdir -p $(WORKING_FOLDER)/sources; fi;
-	@-$(foreach DIR,$(DIRS), if [ ! -e $(WORKING_FOLDER)/sources/$(DIR) ]; \
-         then mkdir -p $(WORKING_FOLDER)/sources/$(DIR); fi; )
+	@-if [ ! -e $(WORKING_FOLDER)/source ]; then mkdir -p $(WORKING_FOLDER)/source; fi;
+	@-$(foreach DIR,$(DIRS), if [ ! -e $(WORKING_FOLDER)/source/$(DIR) ]; \
+         then mkdir -p $(WORKING_FOLDER)/source/$(DIR); fi; )
 
 # Includes the .d files so it knows the exact dependencies for every source
 -include $(D_FILES)

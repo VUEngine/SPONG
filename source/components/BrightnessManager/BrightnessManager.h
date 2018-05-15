@@ -41,34 +41,18 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define BrightnessManager_METHODS(ClassName)															\
-		Object_METHODS(ClassName)																		\
+singleton class BrightnessManager : Object
+{
+	u8 brightnessFactor;
 
-// declare the virtual methods which are redefined
-#define BrightnessManager_SET_VTABLE(ClassName)															\
-		Object_SET_VTABLE(ClassName)																	\
+	// declare a BrightnessManager
+	static BrightnessManager getInstance();
 
-// declare a BrightnessManager
-__CLASS(BrightnessManager);
-
-#define BrightnessManager_ATTRIBUTES																	\
-		Object_ATTRIBUTES																				\
-		u8 brightnessFactor;																			\
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-BrightnessManager BrightnessManager_getInstance();
-
-void BrightnessManager_destructor(BrightnessManager this);
-
-void BrightnessManager_showScreen(BrightnessManager this);
-void BrightnessManager_hideScreen(BrightnessManager this);
-void BrightnessManager_setBrightnessFactor(BrightnessManager this, u8 brightnessFactor);
-u8 BrightnessManager_getBrightnessFactor(BrightnessManager this);
+	void showScreen(BrightnessManager this);
+	void hideScreen(BrightnessManager this);
+	void setBrightnessFactor(BrightnessManager this, u8 brightnessFactor);
+	u8 getBrightnessFactor(BrightnessManager this);
+}
 
 
 #endif

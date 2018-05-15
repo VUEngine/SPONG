@@ -36,28 +36,6 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-#define PongBall_METHODS(ClassName)																		\
-		Actor_METHODS(ClassName)																		\
-
-#define PongBall_SET_VTABLE(ClassName)																	\
-		Actor_SET_VTABLE(ClassName)																		\
-		__VIRTUAL_SET(ClassName, PongBall, ready);														\
-		__VIRTUAL_SET(ClassName, PongBall, update);														\
-		__VIRTUAL_SET(ClassName, PongBall, handleMessage);												\
-		__VIRTUAL_SET(ClassName, PongBall, enterCollision);												\
-		__VIRTUAL_SET(ClassName, PongBall, getFrictionOnCollision);										\
-		__VIRTUAL_SET(ClassName, PongBall, getSurroundingFrictionCoefficient);							\
-
-__CLASS(PongBall);
-
-#define PongBall_ATTRIBUTES																				\
-		Actor_ATTRIBUTES																				\
-		/* definition pointer */																		\
-		PongBallDefinition* pongBallDefinition;															\
-		Force modifierForce;																			\
-		int paddleEnum;																					\
-		bool rolling;																					\
-
 
 typedef struct PongBallDefinition
 {
@@ -78,25 +56,26 @@ typedef struct PongBallDefinition
 typedef const PongBallDefinition PongBallROMDef;
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+class PongBall : Actor
+{
+	/* definition pointer */
+	PongBallDefinition* pongBallDefinition;
+	Force modifierForce;
+	int paddleEnum;
+	bool rolling;
 
-// allocator
-__CLASS_NEW_DECLARE(PongBall, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
-
-void PongBall_constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
-void PongBall_destructor(PongBall this);
-void PongBall_startMovement(PongBall this);
-void PongBall_stopMovement(PongBall this);
-void PongBall_ready(PongBall this, bool recursive);
-void PongBall_update(PongBall this, u32 elapsedTime);
-bool PongBall_handleMessage(PongBall this, Telegram telegram);
-bool PongBall_enterCollision(PongBall this, const CollisionInformation* collisionInformation);
-fix10_6 PongBall_getFrictionOnCollision(PongBall this, SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
-fix10_6 PongBall_getSurroundingFrictionCoefficient(PongBall this);
-int PongBall_getPaddleEnum(PongBall this);
-void PongBall_startRolling(PongBall this);
+	void constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
+	void startMovement(PongBall this);
+	void stopMovement(PongBall this);
+	int getPaddleEnum(PongBall this);
+	void startRolling(PongBall this);
+	override void ready(PongBall this, bool recursive);
+	override void update(PongBall this, u32 elapsedTime);
+	override bool handleMessage(PongBall this, Telegram telegram);
+	override bool enterCollision(PongBall this, const CollisionInformation* collisionInformation);
+	override fix10_6 getFrictionOnCollision(PongBall this, SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
+	override fix10_6 getSurroundingFrictionCoefficient(PongBall this);
+}
 
 
 #endif

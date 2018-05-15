@@ -49,18 +49,16 @@ extern StageROMDef PAUSE_SCREEN_STAGE_ST;
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void AutoPauseScreenState_destructor(AutoPauseScreenState this);
-static void AutoPauseScreenState_constructor(AutoPauseScreenState this);
-static void AutoPauseScreenState_enter(AutoPauseScreenState this, void* owner);
-static void AutoPauseScreenState_exit(AutoPauseScreenState this, void* owner);
-static void AutoPauseScreenState_onTransitionOutComplete(AutoPauseScreenState this, Object eventFirer);
+
+void AutoPauseScreenState::constructor(AutoPauseScreenState this);
+static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)));
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(AutoPauseScreenState, GameState);
+
 __SINGLETON_DYNAMIC(AutoPauseScreenState);
 
 
@@ -69,70 +67,70 @@ __SINGLETON_DYNAMIC(AutoPauseScreenState);
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-static void __attribute__ ((noinline)) AutoPauseScreenState_constructor(AutoPauseScreenState this)
+void __attribute__ ((noinline)) AutoPauseScreenState::constructor(AutoPauseScreenState this)
 {
-	__CONSTRUCT_BASE(GameState);
+	Base::constructor();
 
 	// add event listeners
-	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-static void AutoPauseScreenState_destructor(AutoPauseScreenState this)
+void AutoPauseScreenState::destructor(AutoPauseScreenState this)
 {
 	// remove event listeners
-    Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+    Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	__SINGLETON_DESTROY;
 }
 
 // state's enter
-static void AutoPauseScreenState_enter(AutoPauseScreenState this, void* owner __attribute__ ((unused)))
+void AutoPauseScreenState::enter(AutoPauseScreenState this, void* owner __attribute__ ((unused)))
 {
 	// load stage
-	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState_startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(__SAFE_CAST(GameState, this));
 
 	// enable user input
-	Game_enableKeypad(Game_getInstance());
+	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager_showScreen(BrightnessManager_getInstance());
+	BrightnessManager::showScreen(BrightnessManager::getInstance());
 }
 
 // state's exit
-static void AutoPauseScreenState_exit(AutoPauseScreenState this __attribute__ ((unused)), void* owner __attribute__ ((unused)))
+void AutoPauseScreenState::exit(AutoPauseScreenState this __attribute__ ((unused)), void* owner __attribute__ ((unused)))
 {
 	// call base
-	__CALL_BASE_METHOD(GameState, exit, this, owner);
+	Base::exit(this, owner);
 
 	// destroy the state
 	__DELETE(this);
 }
 
-void AutoPauseScreenState_processUserInput(AutoPauseScreenState this __attribute__ ((unused)), UserInput userInput)
+void AutoPauseScreenState::processUserInput(AutoPauseScreenState this __attribute__ ((unused)), UserInput userInput)
 {
 	if(K_STA & userInput.pressedKey)
 	{
 		// disable user input
-		Game_disableKeypad(Game_getInstance());
+		Game::disableKeypad(Game::getInstance());
 	}
 }
 
 // handle event
-static void AutoPauseScreenState_onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "AutoPauseScreenState::onTransitionOutComplete: null this");
 
 	// hide screen
-	BrightnessManager_hideScreen(BrightnessManager_getInstance());
+	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
 	// re-enable user input
-	Game_enableKeypad(Game_getInstance());
+	Game::enableKeypad(Game::getInstance());
 
 	// resume game
-	Game_unpause(Game_getInstance(), __SAFE_CAST(GameState, this));
+	Game::unpause(Game::getInstance(), __SAFE_CAST(GameState, this));
 }

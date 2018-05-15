@@ -35,33 +35,15 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define LocalizedEntity_METHODS(ClassName)																\
-		AnimatedEntity_METHODS(ClassName)																\
-
-#define LocalizedEntity_SET_VTABLE(ClassName)															\
-		AnimatedEntity_SET_VTABLE(ClassName)															\
-		__VIRTUAL_SET(ClassName, LocalizedEntity, ready);												\
-
-#define LocalizedEntity_ATTRIBUTES																		\
-		AnimatedEntity_ATTRIBUTES																		\
-
-__CLASS(LocalizedEntity);
-
-
 typedef const AnimatedEntityDefinition LocalizedEntityDefinition;
 typedef const LocalizedEntityDefinition LocalizedEntityROMDef;
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-__CLASS_NEW_DECLARE(LocalizedEntity, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
-
-void LocalizedEntity_constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
-void LocalizedEntity_destructor(LocalizedEntity this);
-void LocalizedEntity_ready(LocalizedEntity this, bool recursive);
+class LocalizedEntity : AnimatedEntity
+{
+	void constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
+	override void ready(LocalizedEntity this, bool recursive);
+}
 
 
 #endif

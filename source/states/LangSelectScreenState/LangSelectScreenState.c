@@ -49,18 +49,16 @@ extern StageROMDef LANG_SELECT_SCREEN_STAGE_ST;
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void LangSelectScreenState_destructor(LangSelectScreenState this);
-static void LangSelectScreenState_constructor(LangSelectScreenState this);
-static void LangSelectScreenState_processInput(LangSelectScreenState this, u32 pressedKey);
-void LangSelectScreenState_changeLanguage(LangSelectScreenState this, bool forward);
-static void LangSelectScreenState_print(LangSelectScreenState this);
+
+void LangSelectScreenState::constructor(LangSelectScreenState this);
+void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forward);
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(LangSelectScreenState, SplashScreenState);
+
 __SINGLETON_DYNAMIC(LangSelectScreenState);
 
 
@@ -68,19 +66,19 @@ __SINGLETON_DYNAMIC(LangSelectScreenState);
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-static void __attribute__ ((noinline)) LangSelectScreenState_constructor(LangSelectScreenState this)
+void __attribute__ ((noinline)) LangSelectScreenState::constructor(LangSelectScreenState this)
 {
 	ASSERT(this, "LangSelectScreenState::constructor: null this");
 
-	__CONSTRUCT_BASE(SplashScreenState);
+	Base::constructor();
 
 	// init members
 	this->language = 0;
-	SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, TitleScreenState_getInstance()));
+	SplashScreenState::setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, TitleScreenState::getInstance()));
 	this->stageDefinition = (StageDefinition*)&LANG_SELECT_SCREEN_STAGE_ST;
 }
 
-static void LangSelectScreenState_destructor(LangSelectScreenState this)
+void LangSelectScreenState::destructor(LangSelectScreenState this)
 {
 	ASSERT(this, "LangSelectScreenState::destructor: null this");
 
@@ -89,62 +87,62 @@ static void LangSelectScreenState_destructor(LangSelectScreenState this)
 }
 
 // state's enter
-void LangSelectScreenState_enter(LangSelectScreenState this, void* owner)
+void LangSelectScreenState::enter(LangSelectScreenState this, void* owner)
 {
 	// call base
-	Base_enter(this, owner);
+	Base::enter(this, owner);
 
-	this->language = I18n_getActiveLanguage(I18n_getInstance());
-	LangSelectScreenState_print(this);
+	this->language = I18n::getActiveLanguage(I18n::getInstance());
+	LangSelectScreenState::print(this);
 }
 
-void LangSelectScreenState_changeLanguage(LangSelectScreenState this, bool forward)
+void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forward)
 {
-	int numLangs = sizeof(I18n_getLanguages(I18n_getInstance()));
+	int numLangs = sizeof(I18n::getLanguages(I18n::getInstance()));
 	this->language = forward
 		? (this->language < (numLangs - 1)) ? this->language + 1 : 0
 		: (this->language > 0) ? this->language - 1 : numLangs - 1;
-	I18n_setActiveLanguage(I18n_getInstance(), this->language);
-	ProgressManager_setLanguage(ProgressManager_getInstance(), this->language);
-	LangSelectScreenState_print(this);
+	I18n::setActiveLanguage(I18n::getInstance(), this->language);
+	ProgressManager::setLanguage(ProgressManager::getInstance(), this->language);
+	LangSelectScreenState::print(this);
 }
 
-void LangSelectScreenState_processInput(LangSelectScreenState this, u32 pressedKey)
+void LangSelectScreenState::processInput(LangSelectScreenState this, u32 pressedKey)
 {
 	if((pressedKey & K_LL) || (pressedKey & K_RL))
 	{
-		LangSelectScreenState_changeLanguage(this, false);
+		LangSelectScreenState::changeLanguage(this, false);
 	}
 	else if((pressedKey & K_LR) || (pressedKey & K_RR))
 	{
-		LangSelectScreenState_changeLanguage(this, true);
+		LangSelectScreenState::changeLanguage(this, true);
 	}
 	else if((pressedKey & K_A) || (pressedKey & K_STA))
 	{
-		SplashScreenState_loadNextState(__SAFE_CAST(SplashScreenState, this));
+		SplashScreenState::loadNextState(__SAFE_CAST(SplashScreenState, this));
 	}
 }
 
-static void LangSelectScreenState_print(LangSelectScreenState this __attribute__ ((unused)))
+void LangSelectScreenState::print(LangSelectScreenState this __attribute__ ((unused)))
 {
 	// move cursor entity
-	Entity cursorEntity = __SAFE_CAST(Entity, Container_getChildByName(
-		__SAFE_CAST(Container, Game_getStage(Game_getInstance())),
+	Entity cursorEntity = __SAFE_CAST(Entity, Container::getChildByName(
+		__SAFE_CAST(Container, Game::getStage(Game::getInstance())),
 		"Cursor",
 		false
 	));
 	Vector3D cursorPosition = {__PIXELS_TO_METERS(120 + this->language * 48), __PIXELS_TO_METERS(96), 0};
-	Entity_setLocalPosition(cursorEntity, &cursorPosition);
+	Entity::setLocalPosition(cursorEntity, &cursorPosition);
 
 	// move cursor entity
-	AnimatedEntity LangNameEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(
-		__SAFE_CAST(Container, Game_getStage(Game_getInstance())),
+	AnimatedEntity LangNameEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(
+		__SAFE_CAST(Container, Game::getStage(Game::getInstance())),
 		"LangName",
 		false
 	));
 
 	// change language name
-	Object_fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
+	Object::fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
 
 	// change language name position
 	Vector3D languageNamePosition =
@@ -153,6 +151,6 @@ static void LangSelectScreenState_print(LangSelectScreenState this __attribute__
 		__PIXELS_TO_METERS(124),
 		0,
 	};
-	Entity_setLocalPosition(__SAFE_CAST(Entity, LangNameEntity), &languageNamePosition);
+	Entity::setLocalPosition(__SAFE_CAST(Entity, LangNameEntity), &languageNamePosition);
 }
 

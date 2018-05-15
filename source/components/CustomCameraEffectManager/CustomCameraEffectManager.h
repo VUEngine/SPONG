@@ -50,41 +50,22 @@ enum CustomCameraFX
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define CustomCameraEffectManager_METHODS(ClassName)													\
-		CameraEffectManager_METHODS(ClassName)															\
+singleton class CustomCameraEffectManager : CameraEffectManager
+{
+	/* temporary variable to hold the focus entity during shaking fx */
+	Entity tempFocusEntity;
+	/* last offset set by shake function */
+	Vector3D lastShakeOffset;
+	/* time left in current shaking fx (in ms) */
+	int shakeTimeLeft;
 
-// declare the virtual methods which are redefined
-#define CustomCameraEffectManager_SET_VTABLE(ClassName)													\
-		CameraEffectManager_SET_VTABLE(ClassName)														\
-		__VIRTUAL_SET(ClassName, CustomCameraEffectManager, startEffect);								\
-		__VIRTUAL_SET(ClassName, CustomCameraEffectManager, stopEffect);								\
-		__VIRTUAL_SET(ClassName, CustomCameraEffectManager, handleMessage);								\
+	// declare a CustomCameraEffectManager
+	static CustomCameraEffectManager getInstance();
 
-#define CustomCameraEffectManager_ATTRIBUTES															\
-		/* super's attributes */																		\
-		CameraEffectManager_ATTRIBUTES																	\
-		/* temporary variable to hold the focus entity during shaking fx */								\
-		Entity tempFocusEntity;																			\
-		/* last offset set by shake function */															\
-		Vector3D lastShakeOffset;																		\
-		/* time left in current shaking fx (in ms) */													\
-		int shakeTimeLeft;																				\
-
-// declare a CustomCameraEffectManager
-__CLASS(CustomCameraEffectManager);
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-CustomCameraEffectManager CustomCameraEffectManager_getInstance();
-
-void CustomCameraEffectManager_destructor(CustomCameraEffectManager this);
-void CustomCameraEffectManager_startEffect(CustomCameraEffectManager this, int effect, va_list args);
-void CustomCameraEffectManager_stopEffect(CustomCameraEffectManager this, int effect);
-bool CustomCameraEffectManager_handleMessage(CustomCameraEffectManager this, Telegram telegram);
+	override void startEffect(CustomCameraEffectManager this, int effect, va_list args);
+	override void stopEffect(CustomCameraEffectManager this, int effect);
+	override bool handleMessage(CustomCameraEffectManager this, Telegram telegram);
+}
 
 
 #endif

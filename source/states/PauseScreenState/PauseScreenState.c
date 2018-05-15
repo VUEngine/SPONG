@@ -51,19 +51,17 @@ extern StageROMDef PAUSE_SCREEN_STAGE_ST;
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void PauseScreenState_destructor(PauseScreenState this);
-static void PauseScreenState_constructor(PauseScreenState this);
-static void PauseScreenState_enter(PauseScreenState this, void* owner);
-static void PauseScreenState_exit(PauseScreenState this, void* owner);
-static void PauseScreenState_onTransitionOutComplete(PauseScreenState this, Object eventFirer);
+
+void PauseScreenState::constructor(PauseScreenState this);
+static void PauseScreenState::onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)));
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(PauseScreenState, GameState);
-__SINGLETON(PauseScreenState);
+
+
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -71,23 +69,23 @@ __SINGLETON(PauseScreenState);
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-static void __attribute__ ((noinline)) PauseScreenState_constructor(PauseScreenState this)
+void __attribute__ ((noinline)) PauseScreenState::constructor(PauseScreenState this)
 {
-	__CONSTRUCT_BASE(GameState);
+	Base::constructor();
 
 	// init members
 	this->mode = kPauseScreenModeShowOptions;
 	this->optionsSelector = __NEW(OptionsSelector, 1, 3, NULL);
 
 	// add event listeners
-	Object_addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-static void PauseScreenState_destructor(PauseScreenState this)
+void PauseScreenState::destructor(PauseScreenState this)
 {
 	// remove event listeners
-	Object_removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	__DELETE(this->optionsSelector);
 
@@ -96,20 +94,20 @@ static void PauseScreenState_destructor(PauseScreenState this)
 }
 
 // state's enter
-static void PauseScreenState_enter(PauseScreenState this, void* owner __attribute__ ((unused)))
+void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((unused)))
 {
 	// call base
-	Base_enter(this, owner);
+	Base::enter(this, owner);
 
 	// load stage
-	GameState_loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// print pause text
-	const char* strPause = I18n_getText(I18n_getInstance(), STR_PAUSE);
-	FontSize strPauseSize = Printing_getTextSize(Printing_getInstance(), strPause, NULL);
-	Printing_text(
-		Printing_getInstance(),
-		Utilities_toUppercase(strPause),
+	const char* strPause = I18n::getText(I18n::getInstance(), STR_PAUSE);
+	FontSize strPauseSize = Printing::getTextSize(Printing::getInstance(), strPause, NULL);
+	Printing::text(
+		Printing::getInstance(),
+		Utilities::toUppercase(strPause),
 		(((__SCREEN_WIDTH_IN_CHARS) - strPauseSize.x) >> 1),
 		14,
 		NULL
@@ -124,57 +122,57 @@ static void PauseScreenState_enter(PauseScreenState this, void* owner __attribut
 	option->type = kString;
 	option->callback = NULL;
 	option->callbackScope = NULL;
-	VirtualList_pushBack(options, option);
+	VirtualList::pushBack(options, option);
 
 	option = __NEW_BASIC(Option);
-	option->value = (char*)I18n_getText(I18n_getInstance(), STR_OPTIONS);
+	option->value = (char*)I18n::getText(I18n::getInstance(), STR_OPTIONS);
 	option->type = kString;
 	option->callback = NULL;
 	option->callbackScope = NULL;
-	VirtualList_pushBack(options, option);
+	VirtualList::pushBack(options, option);
 
 	option = __NEW_BASIC(Option);
 	option->value = "...";
 	option->type = kString;
 	option->callback = NULL;
 	option->callbackScope = NULL;
-	VirtualList_pushBack(options, option);
+	VirtualList::pushBack(options, option);
 
-	OptionsSelector_setOptions(this->optionsSelector, options);
+	OptionsSelector::setOptions(this->optionsSelector, options);
 	__DELETE(options);
 
-	OptionsSelector_printOptions(
+	OptionsSelector::printOptions(
 		this->optionsSelector,
 		(((__SCREEN_WIDTH_IN_CHARS) - strPauseSize.x) >> 1) - 1,
 		17
 	);
 
 	// start clocks to start animations
-	GameState_startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(__SAFE_CAST(GameState, this));
 
 	// enable user input
-	Game_enableKeypad(Game_getInstance());
+	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager_showScreen(BrightnessManager_getInstance());
+	BrightnessManager::showScreen(BrightnessManager::getInstance());
 
 	this->mode = kPauseScreenModeShowOptions;
 }
 
 // state's exit
-static void PauseScreenState_exit(PauseScreenState this, void* owner __attribute__ ((unused)))
+void PauseScreenState::exit(PauseScreenState this, void* owner __attribute__ ((unused)))
 {
 	// call base
-	Base_exit(this, owner);
+	Base::exit(this, owner);
 }
 
-void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInput)
+void PauseScreenState::processUserInput(PauseScreenState this, UserInput userInput)
 {
 	if((K_STA | K_A) & userInput.pressedKey)
 	{
 		if(this->mode == kPauseScreenModeShowOptions)
 		{
-			int selectedOption = OptionsSelector_getSelectedOption(this->optionsSelector);
+			int selectedOption = OptionsSelector::getSelectedOption(this->optionsSelector);
 
 			switch(selectedOption)
 			{
@@ -182,13 +180,13 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 				case kPauseScreenOptionOptions:
 
 					// disable user input
-					Game_disableKeypad(Game_getInstance());
+					Game::disableKeypad(Game::getInstance());
 
 					// transition layer animation
-					AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+					AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
 					if(transitionLayerEntity)
 					{
-						AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+						AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
 					}
 
 					break;
@@ -196,21 +194,21 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 				case kPauseScreenOptionQuitLevel:
 				{
 					// print confirmation message
-					const char* strYes = I18n_getText(I18n_getInstance(), STR_YES);
-					FontSize strYesSize = Printing_getTextSize(Printing_getInstance(), strYes, NULL);
-					const char* strNo = I18n_getText(I18n_getInstance(), STR_NO);
-					const char* strAreYouSure = I18n_getText(I18n_getInstance(), STR_ARE_YOU_SURE);
-					const char* strPause = I18n_getText(I18n_getInstance(), STR_PAUSE);
-					FontSize strPauseSize = Printing_getTextSize(Printing_getInstance(), strPause, NULL);
+					const char* strYes = I18n::getText(I18n::getInstance(), STR_YES);
+					FontSize strYesSize = Printing::getTextSize(Printing::getInstance(), strYes, NULL);
+					const char* strNo = I18n::getText(I18n::getInstance(), STR_NO);
+					const char* strAreYouSure = I18n::getText(I18n::getInstance(), STR_ARE_YOU_SURE);
+					const char* strPause = I18n::getText(I18n::getInstance(), STR_PAUSE);
+					FontSize strPauseSize = Printing::getTextSize(Printing::getInstance(), strPause, NULL);
 
 					u8 strXPos = ((__SCREEN_WIDTH_IN_CHARS) - strPauseSize.x) >> 1;
 					u8 strNoXPos = strXPos + strYesSize.x + 2;
 
-					Printing_text(Printing_getInstance(), strAreYouSure, strXPos, 21, NULL);
-					Printing_text(Printing_getInstance(), __CHAR_A_BUTTON, strXPos, 22, NULL);
-					Printing_text(Printing_getInstance(), strYes, strXPos + 1, 22, NULL);
-					Printing_text(Printing_getInstance(), __CHAR_B_BUTTON, strNoXPos, 22, NULL);
-					Printing_text(Printing_getInstance(), strNo, strNoXPos + 1, 22, NULL);
+					Printing::text(Printing::getInstance(), strAreYouSure, strXPos, 21, NULL);
+					Printing::text(Printing::getInstance(), __CHAR_A_BUTTON, strXPos, 22, NULL);
+					Printing::text(Printing::getInstance(), strYes, strXPos + 1, 22, NULL);
+					Printing::text(Printing::getInstance(), __CHAR_B_BUTTON, strNoXPos, 22, NULL);
+					Printing::text(Printing::getInstance(), strNo, strNoXPos + 1, 22, NULL);
 
 					// set mode accordingly
 					this->mode = kPauseScreenModeShowConfirmQuit;
@@ -221,67 +219,67 @@ void PauseScreenState_processUserInput(PauseScreenState this, UserInput userInpu
 		else if(this->mode == kPauseScreenModeShowConfirmQuit)
 		{
 			// disable user input
-			Game_disableKeypad(Game_getInstance());
+			Game::disableKeypad(Game::getInstance());
 
 			// transition layer animation
-			AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), "TRNSLYR", true));
+			AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
 			if(transitionLayerEntity)
 			{
-				AnimatedEntity_playAnimation(transitionLayerEntity, "FadeOut");
+				AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
 			}
 		}
 	}
 	else if((this->mode == kPauseScreenModeShowConfirmQuit) && (userInput.pressedKey & K_B))
 	{
 		// remove confirmation message
-		Printing_text(Printing_getInstance(), "                                                ", 0, 21, NULL);
-		Printing_text(Printing_getInstance(), "                                                ", 0, 22, NULL);
+		Printing::text(Printing::getInstance(), "                                                ", 0, 21, NULL);
+		Printing::text(Printing::getInstance(), "                                                ", 0, 22, NULL);
 
 		// set mode back to main menu
 		this->mode = kPauseScreenModeShowOptions;
 	}
 	else if((this->mode == kPauseScreenModeShowOptions) && ((userInput.pressedKey & K_LU) || (userInput.pressedKey & K_RU)))
 	{
-		OptionsSelector_selectPrevious(this->optionsSelector);
+		OptionsSelector::selectPrevious(this->optionsSelector);
 	}
 	else if((this->mode == kPauseScreenModeShowOptions) && ((userInput.pressedKey & K_LD) || (userInput.pressedKey & K_RD)))
 	{
-		OptionsSelector_selectNext(this->optionsSelector);
+		OptionsSelector::selectNext(this->optionsSelector);
 	}
 }
 
 // handle event
-static void PauseScreenState_onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+static void PauseScreenState::onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "PauseScreenState::onTransitionOutComplete: null this");
 
 	// hide screen
-	BrightnessManager_hideScreen(BrightnessManager_getInstance());
+	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
 	// re-enable user input
-	Game_enableKeypad(Game_getInstance());
+	Game::enableKeypad(Game::getInstance());
 
 	// switch state according to selection
-	int selectedOption = OptionsSelector_getSelectedOption(this->optionsSelector);
+	int selectedOption = OptionsSelector::getSelectedOption(this->optionsSelector);
 	switch(selectedOption)
 	{
 		case kPauseScreenOptionContinue:
 
 			// resume game
-			Game_unpause(Game_getInstance(), __SAFE_CAST(GameState, this));
+			Game::unpause(Game::getInstance(), __SAFE_CAST(GameState, this));
 			break;
 /*
 		case kPauseScreenOptionOptions:
 
 			// switch to options state
-			OptionsScreenState_setNextState(OptionsScreenState_getInstance(), __SAFE_CAST(GameState, this));
-			Game_changeState(Game_getInstance(), __SAFE_CAST(GameState, OptionsScreenState_getInstance()));
+			OptionsScreenState::setNextState(OptionsScreenState::getInstance(), __SAFE_CAST(GameState, this));
+			Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, OptionsScreenState::getInstance()));
 			break;
 */
 		case kPauseScreenOptionQuitLevel:
 
 			// switch to overworld after deleting paused game state
-			//Game_cleanAndChangeState(Game_getInstance(), __SAFE_CAST(GameState, PlatformerLevelState_getInstance()));
+			//Game::cleanAndChangeState(Game::getInstance(), __SAFE_CAST(GameState, PlatformerLevelState::getInstance()));
 
 			break;
 	}

@@ -34,31 +34,16 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define PongState_METHODS(ClassName)																	\
- 		GameState_METHODS(ClassName)											 						\
+singleton class PongState : GameState
+{
+	static PongState getInstance();
 
-// declare the virtual methods which are redefined
-#define PongState_SET_VTABLE(ClassName)																	\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, PongState, enter);														\
-		__VIRTUAL_SET(ClassName, PongState, exit);														\
-		__VIRTUAL_SET(ClassName, PongState, resume);													\
-		__VIRTUAL_SET(ClassName, PongState, suspend);													\
-		__VIRTUAL_SET(ClassName, PongState, processUserInput);											\
-
-__CLASS(PongState);
-
-#define PongState_ATTRIBUTES								 											\
-		GameState_ATTRIBUTES																			\
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-PongState PongState_getInstance(void);
-void PongState_processUserInput(PongState this, UserInput userInput);
+	override void enter(PongState this, void* owner);
+	override void exit(PongState this, void* owner);
+	override void resume(PongState this, void* owner);
+	override void suspend(PongState this, void* owner);
+	override void processUserInput(PongState this, UserInput userInput);
+}
 
 
 #endif

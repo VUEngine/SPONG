@@ -52,36 +52,32 @@ enum OptionsScreenOptions
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define OptionsScreenState_METHODS(ClassName)															\
- 		GameState_METHODS(ClassName)											 						\
-
-// declare the virtual methods which are redefined
-#define OptionsScreenState_SET_VTABLE(ClassName)														\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, exit);												\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, resume);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, suspend);											\
-		__VIRTUAL_SET(ClassName, OptionsScreenState, processUserInput);									\
-
-__CLASS(OptionsScreenState);
-
-#define OptionsScreenState_ATTRIBUTES								 									\
-		GameState_ATTRIBUTES																			\
-		/* entity references */																			\
-		Entity entityCursor;																			\
-		/* current state of the menu */																	\
-		u8 mode;																						\
-		/* currently selected option of the menu */														\
-		u8 option;																						\
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-OptionsScreenState OptionsScreenState_getInstance(void);
-void OptionsScreenState_processUserInput(OptionsScreenState this, UserInput userInput);
+
+
+
+singleton class OptionsScreenState : GameState
+{
+	/* entity references */
+	Entity entityCursor;
+	/* current state of the menu */
+	u8 mode;
+	/* currently selected option of the menu */
+	u8 option;
+
+	static OptionsScreenState getInstance();
+
+	override void enter(OptionsScreenState this, void* owner);
+	override void exit(OptionsScreenState this, void* owner);
+	override void resume(OptionsScreenState this, void* owner);
+	override void suspend(OptionsScreenState this, void* owner);
+	override void processUserInput(OptionsScreenState this, UserInput userInput);
+}
 
 
 #endif

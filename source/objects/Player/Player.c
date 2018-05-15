@@ -46,39 +46,39 @@
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(Player, Object);
+
 
 
 //---------------------------------------------------------------------------------------------------------
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void Player_constructor(Player this);
-static void Player_onUserInput(Player this, Object eventFirer __attribute__ ((unused)));
-static void Player_onKeyPressed(Player this, const UserInput* userInput);
-static void Player_onKeyReleased(Player this, const UserInput* userInput);
-static void Player_onKeyHold(Player this, const UserInput* userInput);
-static void Player_movePaddles(Player this, s8 horizontalInput, s8 verticalInput);
-static void Player_stopPaddles(Player this, s8 horizontalInput, s8 verticalInput);
-static void Player_retractPaddles(Player this);
-static void Player_ejectPaddles(Player this);
-static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)));
-static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)));
-static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)));
-static void Player_totalizeScore(Player this);
+void Player::constructor(Player this);
+static void Player::onUserInput(Player this, Object eventFirer __attribute__ ((unused)));
+static void Player::onKeyPressed(Player this, const UserInput* userInput);
+static void Player::onKeyReleased(Player this, const UserInput* userInput);
+static void Player::onKeyHold(Player this, const UserInput* userInput);
+static void Player::movePaddles(Player this, s8 horizontalInput, s8 verticalInput);
+static void Player::stopPaddles(Player this, s8 horizontalInput, s8 verticalInput);
+static void Player::retractPaddles(Player this);
+static void Player::ejectPaddles(Player this);
+static void Player::onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)));
+static void Player::onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)));
+static void Player::onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)));
+static void Player::totalizeScore(Player this);
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-__SINGLETON(Player);
 
-static void __attribute__ ((noinline)) Player_constructor(Player this)
+
+void __attribute__ ((noinline)) Player::constructor(Player this)
 {
 	ASSERT(this, "Player::constructor: null this");
 
-	__CONSTRUCT_BASE(Object);
+	Base::constructor();
 
 	this->pongBall = NULL;
 	this->paddles[kLeftPaddle] = NULL;
@@ -94,7 +94,7 @@ static void __attribute__ ((noinline)) Player_constructor(Player this)
 	this->ballIsRolling = false;
 }
 
-void Player_destructor(Player this)
+void Player::destructor(Player this)
 {
 	ASSERT(this, "Player::destructor: null this");
 
@@ -106,19 +106,19 @@ void Player_destructor(Player this)
 	__SINGLETON_DESTROY;
 }
 
-bool Player_handleMessage(Player this __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
+bool Player::handleMessage(Player this __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
 {
 	ASSERT(this, "Player::handleMessage: null this");
 
-	switch(Telegram_getMessage(telegram))
+	switch(Telegram::getMessage(telegram))
 	{
 		case kAddBonusScore:
 
 			this->leftScore += 1;
 			this->rightScore += 1;
-			Player_printScore(this);
+			Player::printScore(this);
 
-			MessageDispatcher_dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
+			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
 			break;
 	}
 
@@ -126,64 +126,64 @@ bool Player_handleMessage(Player this __attribute__ ((unused)), Telegram telegra
 }
 
 
-void Player_getReady(Player this, GameState gameState)
+void Player::getReady(Player this, GameState gameState)
 {
 	ASSERT(this, "Player::getReady: null this");
 
-	this->pongBall = __SAFE_CAST(PongBall, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PONG_BALL_NAME, true));
-	this->paddles[kLeftPaddle] = __SAFE_CAST(Paddle, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PADDLE_LEFT_NAME, true));
-	this->paddles[kRightPaddle] = __SAFE_CAST(Paddle, Container_getChildByName(__SAFE_CAST(Container, Game_getStage(Game_getInstance())), (char*)PADDLE_RIGHT_NAME, true));
+	this->pongBall = __SAFE_CAST(PongBall, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
+	this->paddles[kLeftPaddle] = __SAFE_CAST(Paddle, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true));
+	this->paddles[kRightPaddle] = __SAFE_CAST(Paddle, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true));
 
 	ASSERT(this->paddles[kLeftPaddle], "Player::getReady: left paddle not found");
 	ASSERT(this->paddles[kRightPaddle], "Player::getReady: right paddle not found");
 
-	Object_addEventListener(__SAFE_CAST(Object, gameState), __SAFE_CAST(Object, this), (EventListener)Player_onUserInput, kEventUserInput);
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object_addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::addEventListener(__SAFE_CAST(Object, gameState), __SAFE_CAST(Object, this), (EventListener)Player_onUserInput, kEventUserInput);
+	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
 
-	Player_printScore(this);
-	KeypadManager_registerInput(KeypadManager_getInstance(), __KEY_PRESSED | __KEY_RELEASED | __KEY_HOLD);
+	Player::printScore(this);
+	KeypadManager::registerInput(KeypadManager::getInstance(), __KEY_PRESSED | __KEY_RELEASED | __KEY_HOLD);
 }
 
-void Player_gameIsOver(Player this, GameState gameState)
+void Player::gameIsOver(Player this, GameState gameState)
 {
 	ASSERT(this, "Player::gameIsOver: null this");
 
 	this->paddles[kLeftPaddle] = NULL;
 	this->paddles[kRightPaddle] = NULL;
 
-	Object_removeEventListener(__SAFE_CAST(Object, gameState), __SAFE_CAST(Object, this), (EventListener)Player_onUserInput, kEventUserInput);
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object_removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::removeEventListener(__SAFE_CAST(Object, gameState), __SAFE_CAST(Object, this), (EventListener)Player_onUserInput, kEventUserInput);
+	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
 }
 
 // process user input
-static void Player_onUserInput(Player this, Object eventFirer __attribute__ ((unused)))
+static void Player::onUserInput(Player this, Object eventFirer __attribute__ ((unused)))
 {
 	ASSERT(this, "Player::onUserInput: null this");
 	ASSERT(__SAFE_CAST(PongState, eventFirer), "Player::onUserInput: wrong event firer");
 
-	UserInput userInput = KeypadManager_getUserInput(KeypadManager_getInstance());
+	UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
 
 	if(userInput.pressedKey)
 	{
-		Player_onKeyPressed(this, &userInput);
+		Player::onKeyPressed(this, &userInput);
 	}
 
 	if(userInput.releasedKey)
 	{
-		Player_onKeyReleased(this, &userInput);
+		Player::onKeyReleased(this, &userInput);
 	}
 
 	if(userInput.holdKey)
 	{
-		Player_onKeyHold(this, &userInput);
+		Player::onKeyHold(this, &userInput);
 	}
 }
 
-static void Player_onKeyPressed(Player this __attribute__ ((unused)), const UserInput* userInput)
+static void Player::onKeyPressed(Player this __attribute__ ((unused)), const UserInput* userInput)
 {
 	if(K_B & userInput->pressedKey)
 	{
@@ -203,7 +203,7 @@ static void Player_onKeyPressed(Player this __attribute__ ((unused)), const User
 	}
 }
 
-static void Player_onKeyReleased(Player this __attribute__ ((unused)), const UserInput* userInput)
+static void Player::onKeyReleased(Player this __attribute__ ((unused)), const UserInput* userInput)
 {
 	if(K_B & userInput->releasedKey)
 	{
@@ -211,7 +211,7 @@ static void Player_onKeyReleased(Player this __attribute__ ((unused)), const Use
 
 	if(K_A & userInput->releasedKey)
 	{
-		Player_ejectPaddles(this);
+		Player::ejectPaddles(this);
 	}
 /*
 	s8 horizontalInput = 0;
@@ -238,12 +238,12 @@ static void Player_onKeyReleased(Player this __attribute__ ((unused)), const Use
 
 	if(horizontalInput || verticalInput)
 	{
-		Player_stopPaddles(this, horizontalInput, verticalInput);
+		Player::stopPaddles(this, horizontalInput, verticalInput);
 	}
 */
 }
 
-static void Player_onKeyHold(Player this __attribute__ ((unused)), const UserInput* userInput)
+static void Player::onKeyHold(Player this __attribute__ ((unused)), const UserInput* userInput)
 {
 	if(K_B & userInput->holdKey)
 	{
@@ -251,7 +251,7 @@ static void Player_onKeyHold(Player this __attribute__ ((unused)), const UserInp
 
 	if(K_A & userInput->holdKey)
 	{
-		Player_retractPaddles(this);
+		Player::retractPaddles(this);
 	}
 
 	s8 horizontalInput = 0;
@@ -278,11 +278,11 @@ static void Player_onKeyHold(Player this __attribute__ ((unused)), const UserInp
 
 	if(horizontalInput || verticalInput)
 	{
-		Player_movePaddles(this, horizontalInput, verticalInput);
+		Player::movePaddles(this, horizontalInput, verticalInput);
 	}
 }
 
-static void Player_movePaddles(Player this, s8 horizontalInput, s8 verticalInput)
+static void Player::movePaddles(Player this, s8 horizontalInput, s8 verticalInput)
 {
 	int i = 0;
 
@@ -297,12 +297,12 @@ static void Player_movePaddles(Player this, s8 horizontalInput, s8 verticalInput
 	{
 		if(this->paddles[i])
 		{
-			Paddle_moveTowards(this->paddles[i], direction);
+			Paddle::moveTowards(this->paddles[i], direction);
 		}
 	}
 }
 
-static void Player_stopPaddles(Player this, s8 horizontalInput, s8 verticalInput)
+static void Player::stopPaddles(Player this, s8 horizontalInput, s8 verticalInput)
 {
 	int i = 0;
 
@@ -317,12 +317,12 @@ static void Player_stopPaddles(Player this, s8 horizontalInput, s8 verticalInput
 	{
 		if(this->paddles[i])
 		{
-			//Paddle_stopTowards(this->paddles[i], direction);
+			//Paddle::stopTowards(this->paddles[i], direction);
 		}
 	}
 }
 
-static void Player_retractPaddles(Player this)
+static void Player::retractPaddles(Player this)
 {
 	int i = 0;
 
@@ -330,12 +330,12 @@ static void Player_retractPaddles(Player this)
 	{
 		if(this->paddles[i])
 		{
-			Paddle_retract(this->paddles[i]);
+			Paddle::retract(this->paddles[i]);
 		}
 	}
 }
 
-static void Player_ejectPaddles(Player this)
+static void Player::ejectPaddles(Player this)
 {
 	int i = 0;
 
@@ -343,22 +343,22 @@ static void Player_ejectPaddles(Player this)
 	{
 		if(this->paddles[i])
 		{
-			Paddle_eject(this->paddles[i]);
+			Paddle::eject(this->paddles[i]);
 		}
 	}
 }
 
-static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)))
+static void Player::onPongBallHitFloor(Player this, Object eventFirer __attribute__ ((unused)))
 {
 	if(this->scoreMultiplier >= SCORE_MULTIPLIER_TO_ENABLE_BONUS)
 	{
-		PongBall_startRolling(this->pongBall);
+		PongBall::startRolling(this->pongBall);
 		this->ballIsRolling = true;
-		MessageDispatcher_dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
+		MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kAddBonusScore, NULL);
 	}
 	else
 	{
-		switch(PongBall_getPaddleEnum(this->pongBall))
+		switch(PongBall::getPaddleEnum(this->pongBall))
 		{
 			case kLeftPaddle:
 
@@ -373,11 +373,11 @@ static void Player_onPongBallHitFloor(Player this, Object eventFirer __attribute
 				break;
 		}
 
-		Player_totalizeScore(this);
+		Player::totalizeScore(this);
 	}
 }
 
-static void Player_totalizeScore(Player this)
+static void Player::totalizeScore(Player this)
 {
 	this->totalLeftScore += this->scoreMultiplier * this->leftScore;
 	this->totalRightScore += this->scoreMultiplier * this->rightScore;
@@ -387,12 +387,12 @@ static void Player_totalizeScore(Player this)
 	this->rightScore = 0;
 	this->totalScore = this->totalLeftScore + this->totalRightScore;
 
-	Player_printScore(this);
+	Player::printScore(this);
 }
 
-static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)))
+static void Player::onPongBallHitCeiling(Player this, Object eventFirer __attribute__ ((unused)))
 {
-	switch(PongBall_getPaddleEnum(this->pongBall))
+	switch(PongBall::getPaddleEnum(this->pongBall))
 	{
 		case kLeftPaddle:
 
@@ -408,10 +408,10 @@ static void Player_onPongBallHitCeiling(Player this, Object eventFirer __attribu
 	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
 	this->scoreMultiplier += 2;
 
-	Player_printScore(this);
+	Player::printScore(this);
 }
 
-static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)))
+static void Player::onPongBallHitPaddle(Player this, Object eventFirer __attribute__ ((unused)))
 {
 	if(this->ballIsRolling)
 	{
@@ -420,7 +420,7 @@ static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribut
 
 		this->ballIsRolling = false;
 
-		switch(PongBall_getPaddleEnum(this->pongBall))
+		switch(PongBall::getPaddleEnum(this->pongBall))
 		{
 			case kLeftPaddle:
 
@@ -433,13 +433,13 @@ static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribut
 				break;
 		}
 
-		Player_totalizeScore(this);
+		Player::totalizeScore(this);
 
-		MessageDispatcher_discardDelayedMessagesFromSender(MessageDispatcher_getInstance(), __SAFE_CAST(Object, this), kAddBonusScore);
+		MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), __SAFE_CAST(Object, this), kAddBonusScore);
 	}
 	else
 	{
-		switch(PongBall_getPaddleEnum(this->pongBall))
+		switch(PongBall::getPaddleEnum(this->pongBall))
 		{
 			case kLeftPaddle:
 
@@ -458,11 +458,11 @@ static void Player_onPongBallHitPaddle(Player this, Object eventFirer __attribut
 			this->scoreMultiplier++;
 		}
 
-		Player_printScore(this);
+		Player::printScore(this);
 	}
 }
 
-void Player_printScore(Player this)
+void Player::printScore(Player this)
 {
 	PRINT_TEXT("Total:      ", 1, 0);
 	PRINT_INT(this->totalLeftScore, 10, 0);

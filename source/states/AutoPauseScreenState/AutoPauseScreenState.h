@@ -35,27 +35,21 @@
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define AutoPauseScreenState_METHODS(ClassName)															\
-		GameState_METHODS(ClassName)																	\
-
-// declare the virtual methods which are redefined
-#define AutoPauseScreenState_SET_VTABLE(ClassName)														\
-		GameState_SET_VTABLE(ClassName)																	\
-		__VIRTUAL_SET(ClassName, AutoPauseScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, AutoPauseScreenState, exit);											\
-		__VIRTUAL_SET(ClassName, AutoPauseScreenState, processUserInput);								\
-
-__CLASS(AutoPauseScreenState);
-
-#define AutoPauseScreenState_ATTRIBUTES																	\
-		/* inherits */																					\
-		GameState_ATTRIBUTES																			\
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-AutoPauseScreenState AutoPauseScreenState_getInstance(void);
-void AutoPauseScreenState_processUserInput(AutoPauseScreenState this, UserInput userInput);
+
+
+singleton class AutoPauseScreenState : GameState
+{
+	static AutoPauseScreenState getInstance();
+
+	override void enter(AutoPauseScreenState this, void* owner);
+	override void exit(AutoPauseScreenState this, void* owner);
+	override void processUserInput(AutoPauseScreenState this, UserInput userInput);
+}
+
 
 #endif

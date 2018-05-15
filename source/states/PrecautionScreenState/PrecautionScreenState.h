@@ -35,29 +35,23 @@
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define PrecautionScreenState_METHODS(ClassName)														\
-		SplashScreenState_METHODS(ClassName)															\
-
-// declare the virtual methods which are redefined
-#define PrecautionScreenState_SET_VTABLE(ClassName)														\
-		SplashScreenState_SET_VTABLE(ClassName)															\
-		__VIRTUAL_SET(ClassName, PrecautionScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, PrecautionScreenState, processMessage);								\
-
-
-__CLASS(PrecautionScreenState);
-
-#define PrecautionScreenState_ATTRIBUTES																\
-		SplashScreenState_ATTRIBUTES																	\
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-PrecautionScreenState PrecautionScreenState_getInstance(void);
 
-void PrecautionScreenState_enter(PrecautionScreenState this, void* owner);
+
+
+
+singleton class PrecautionScreenState : SplashScreenState
+{
+	static PrecautionScreenState getInstance();
+
+	override void enter(PrecautionScreenState this, void* owner);
+	override bool processMessage(PrecautionScreenState this, void* owner, Telegram telegram);
+}
 
 
 #endif

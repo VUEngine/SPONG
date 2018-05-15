@@ -35,30 +35,24 @@
 //---------------------------------------------------------------------------------------------------------
 
 // declare the virtual methods
-#define HighscoresScreenState_METHODS(ClassName)														\
- 		GameState_METHODS(ClassName)											 						\
-
-// declare the virtual methods which are redefined
-#define HighscoresScreenState_SET_VTABLE(ClassName)														\
-		GameState_SET_VTABLE(ClassName)								 									\
-		__VIRTUAL_SET(ClassName, HighscoresScreenState, enter);											\
-		__VIRTUAL_SET(ClassName, HighscoresScreenState, exit);											\
-		__VIRTUAL_SET(ClassName, HighscoresScreenState, resume);										\
-		__VIRTUAL_SET(ClassName, HighscoresScreenState, suspend);										\
-		__VIRTUAL_SET(ClassName, HighscoresScreenState, processUserInput);								\
-
-__CLASS(HighscoresScreenState);
-
-#define HighscoresScreenState_ATTRIBUTES								 								\
-		GameState_ATTRIBUTES																			\
 
 
 //---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-HighscoresScreenState HighscoresScreenState_getInstance(void);
-void HighscoresScreenState_processUserInput(HighscoresScreenState this, UserInput userInput);
+
+
+
+singleton class HighscoresScreenState : GameState
+{
+	static HighscoresScreenState getInstance();
+	override void enter(HighscoresScreenState this, void* owner);
+	override void exit(HighscoresScreenState this, void* owner);
+	override void resume(HighscoresScreenState this, void* owner);
+	override void suspend(HighscoresScreenState this, void* owner);
+	override void processUserInput(HighscoresScreenState this, UserInput userInput);
+}
 
 
 #endif

@@ -35,33 +35,16 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-#define TransitionEntity_METHODS(ClassName)																\
-		AnimatedEntity_METHODS(ClassName)																\
-
-#define TransitionEntity_SET_VTABLE(ClassName)															\
-		AnimatedEntity_SET_VTABLE(ClassName)															\
-
-#define TransitionEntity_ATTRIBUTES																		\
-		AnimatedEntity_ATTRIBUTES																		\
-
-__CLASS(TransitionEntity);
-
-
 typedef const AnimatedEntityDefinition TransitionEntityDefinition;
 typedef const TransitionEntityDefinition TransitionEntityROMDef;
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+class TransitionEntity : AnimatedEntity
+{
 
-__CLASS_NEW_DECLARE(TransitionEntity, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
-
-void TransitionEntity_constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
-void TransitionEntity_destructor(TransitionEntity this);
-
-void TransitionEntity_onTransitionComplete(TransitionEntity this, Object eventFirer);
+	void constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
+	void onTransitionComplete(TransitionEntity this, Object eventFirer);
+}
 
 
 #endif

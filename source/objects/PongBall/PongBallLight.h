@@ -36,24 +36,6 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-#define PongBallLight_METHODS(ClassName)																\
-		Entity_METHODS(ClassName)																		\
-
-#define PongBallLight_SET_VTABLE(ClassName)																\
-		Entity_SET_VTABLE(ClassName)																	\
-		__VIRTUAL_SET(ClassName, PongBallLight, ready);													\
-		__VIRTUAL_SET(ClassName, PongBallLight, update);												\
-		__VIRTUAL_SET(ClassName, PongBallLight, handleMessage);											\
-
-__CLASS(PongBallLight);
-
-#define PongBallLight_ATTRIBUTES																		\
-		Entity_ATTRIBUTES																				\
-		/* definition pointer */																		\
-		PongBallLightDefinition* PongBallLightDefinition;												\
-		PongBall pongBall;																				\
-		fix10_6 pongBallInitialZDistance;																\
-		bool followPongBall;																			\
 
 
 typedef struct PongBallLightDefinition
@@ -66,17 +48,19 @@ typedef struct PongBallLightDefinition
 typedef const PongBallLightDefinition PongBallLightROMDef;
 
 
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
+class PongBallLight : Entity
+{
+	/* definition pointer */
+	PongBallLightDefinition* PongBallLightDefinition;
+	PongBall pongBall;
+	fix10_6 pongBallInitialZDistance;
+	bool followPongBall;
 
-// allocator
-__CLASS_NEW_DECLARE(PongBallLight, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
+	override void ready(PongBallLight this, bool recursive);
+	override void update(PongBallLight this, u32 elapsedTime);
+	override bool handleMessage(PongBallLight this, Telegram telegram);
+}
 
-void PongBallLight_constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
-void PongBallLight_destructor(PongBallLight this);
-void PongBallLight_ready(PongBallLight this, bool recursive);
-void PongBallLight_update(PongBallLight this, u32 elapsedTime);
-bool PongBallLight_handleMessage(PongBallLight this, Telegram telegram);
 
 #endif

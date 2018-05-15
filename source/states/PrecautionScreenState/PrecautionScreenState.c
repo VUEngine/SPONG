@@ -51,16 +51,15 @@ extern const u16 COLLECT_SND[];
 //												PROTOTYPES
 //---------------------------------------------------------------------------------------------------------
 
-static void PrecautionScreenState_destructor(PrecautionScreenState this);
-static void PrecautionScreenState_constructor(PrecautionScreenState this);
-static bool PrecautionScreenState_processMessage(PrecautionScreenState this, void* owner __attribute__ ((unused)), Telegram telegram);
+
+void PrecautionScreenState::constructor(PrecautionScreenState this);
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-__CLASS_DEFINITION(PrecautionScreenState, SplashScreenState);
+
 __SINGLETON_DYNAMIC(PrecautionScreenState);
 
 
@@ -69,49 +68,49 @@ __SINGLETON_DYNAMIC(PrecautionScreenState);
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-static void __attribute__ ((noinline)) PrecautionScreenState_constructor(PrecautionScreenState this)
+void __attribute__ ((noinline)) PrecautionScreenState::constructor(PrecautionScreenState this)
 {
-	__CONSTRUCT_BASE(SplashScreenState);
+	Base::constructor();
 
-	SplashScreenState_setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, AdjustmentScreenState_getInstance()));
+	SplashScreenState::setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, AdjustmentScreenState::getInstance()));
 	this->stageDefinition = (StageDefinition*)&PRECAUTION_SCREEN_STAGE_ST;
 }
 
 // class's destructor
-static void PrecautionScreenState_destructor(PrecautionScreenState this)
+void PrecautionScreenState::destructor(PrecautionScreenState this)
 {
 	// destroy base
 	__SINGLETON_DESTROY;
 }
 
 // state's handle message
-static bool PrecautionScreenState_processMessage(PrecautionScreenState this, void* owner __attribute__ ((unused)), Telegram telegram)
+bool PrecautionScreenState::processMessage(PrecautionScreenState this, void* owner __attribute__ ((unused)), Telegram telegram)
 {
-	switch(Telegram_getMessage(telegram))
+	switch(Telegram::getMessage(telegram))
 	{
 		case kScreenStarted:
 			{
 				// play start-up sound
 				Vector3D position = {0, 0, 0};
-				SoundManager_playFxSound(SoundManager_getInstance(), COLLECT_SND, position);
+				SoundManager::playFxSound(SoundManager::getInstance(), COLLECT_SND, position);
 
 				// wait some seconds for the screen to stabilize, as defined by Nintendo in the official development manual
-				Game_wait(Game_getInstance(), 1500);
+				Game::wait(Game::getInstance(), 1500);
 
 				// show this screen for at least 2 seconds, as defined by Nintendo in the official development manual (Appendix 1)
-				MessageDispatcher_dispatchMessage(2000, __SAFE_CAST(Object, this), __SAFE_CAST(Object, Game_getInstance()), kScreenAllowUserInput, NULL);
+				MessageDispatcher::dispatchMessage(2000, __SAFE_CAST(Object, this), __SAFE_CAST(Object, Game::getInstance()), kScreenAllowUserInput, NULL);
 
 				// call base class' method
-				Base_processMessage(this, owner, telegram);
+				Base::processMessage(this, owner, telegram);
 
 				// make sure that keypad is not yet enabled
-				Game_disableKeypad(Game_getInstance());
+				Game::disableKeypad(Game::getInstance());
 			}
 			break;
 
 		case kScreenAllowUserInput:
 			{
-				Game_enableKeypad(Game_getInstance());
+				Game::enableKeypad(Game::getInstance());
 			}
 			break;
 	}
@@ -119,11 +118,11 @@ static bool PrecautionScreenState_processMessage(PrecautionScreenState this, voi
 	return false;
 }
 
-void PrecautionScreenState_enter(PrecautionScreenState this, void* owner)
+void PrecautionScreenState::enter(PrecautionScreenState this, void* owner)
 {
 	// init progress manager
-	ProgressManager_initialize(ProgressManager_getInstance());
+	ProgressManager::initialize(ProgressManager::getInstance());
 
 	// call base
-	Base_enter(this, owner);
+	Base::enter(this, owner);
 }
