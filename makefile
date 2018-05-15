@@ -241,7 +241,7 @@ printPostPreprocessorInfo:
 	@echo Done compiling in $(TYPE) mode with GCC $(COMPILER_VERSION)
 
 setupClasses:
-	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/setupClasses.sh -h $(GAME_HOME) -o $(SETUP_CLASSES).c -w $(WORKING_FOLDER)/preprocessor
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/setupClasses.sh -h $(WORKING_FOLDER)/source -o $(SETUP_CLASSES).c -w $(WORKING_FOLDER)/preprocessor
 	@echo Classes processing done
 
 dump: $(TARGET).elf
