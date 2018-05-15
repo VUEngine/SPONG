@@ -45,22 +45,13 @@ enum SplashScreensMessageTypes
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-
-
-class SplashScreenState : GameState
+abstract class SplashScreenState : GameState
 {
-	/* state to enter after this one */																
-	GameState nextState;																			
-	/* definition of screen's stage */																
-	StageDefinition* stageDefinition;																
-	
+	/* state to enter after this one */
+	GameState nextState;
+	/* definition of screen's stage */
+	StageDefinition* stageDefinition;
+
 	void constructor(SplashScreenState this);
 	void setNextState(SplashScreenState this, GameState nextState);
 	void loadNextState(SplashScreenState this);

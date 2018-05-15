@@ -42,11 +42,7 @@
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-
-
-
-
-singleton class LangSelectScreenState : SplashScreenState
+dynamic_singleton class LangSelectScreenState : SplashScreenState
 {
 	/* current active language */
 	u8 language;

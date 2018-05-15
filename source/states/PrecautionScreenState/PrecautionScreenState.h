@@ -34,18 +34,7 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-// declare the virtual methods
-
-
-//---------------------------------------------------------------------------------------------------------
-//										PUBLIC INTERFACE
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
-
-singleton class PrecautionScreenState : SplashScreenState
+dynamic_singleton class PrecautionScreenState : SplashScreenState
 {
 	static PrecautionScreenState getInstance();
 

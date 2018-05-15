@@ -40,9 +40,7 @@
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
-
-
-singleton class AutoPauseScreenState : GameState
+dynamic_singleton class AutoPauseScreenState : GameState
 {
 	static AutoPauseScreenState getInstance();
 
