@@ -59,7 +59,7 @@ void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forw
 //---------------------------------------------------------------------------------------------------------
 
 
-__SINGLETON_DYNAMIC(LangSelectScreenState);
+
 
 
 //---------------------------------------------------------------------------------------------------------

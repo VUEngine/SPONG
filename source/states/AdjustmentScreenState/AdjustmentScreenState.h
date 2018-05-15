@@ -41,7 +41,7 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class AdjustmentScreenState : SplashScreenState
+dynamic_singleton class AdjustmentScreenState : SplashScreenState
 {
 	static AdjustmentScreenState getInstance();
 	override void enter(AdjustmentScreenState this, void* owner);

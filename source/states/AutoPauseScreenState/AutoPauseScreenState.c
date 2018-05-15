@@ -59,7 +59,7 @@ static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState t
 //---------------------------------------------------------------------------------------------------------
 
 
-__SINGLETON_DYNAMIC(AutoPauseScreenState);
+
 
 
 //---------------------------------------------------------------------------------------------------------
