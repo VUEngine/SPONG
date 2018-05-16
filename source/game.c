@@ -35,7 +35,7 @@
 int main(void)
 {
 	// start the game
-	Game::start(Game::getInstance(), __SAFE_CAST(GameState, PongState::getInstance()));
+	Game::start(Game::getInstance(), __SAFE_CAST(GameState, PrecautionScreenState::getInstance()));
 
 	// end program
 	return true;

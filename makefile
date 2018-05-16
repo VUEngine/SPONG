@@ -16,6 +16,7 @@ BUILD_DIR = build
 
 # target's needed steps
 ALL_TARGET_PREREQUISITES = dirs $(TARGET).vb $(PAD) $(DUMP_TARGET)
+#ALL_TARGET_PREREQUISITES = portToNewSyntax dirs $(VUENGINE) $(C_OBJECTS) printPostPreprocessorInfo
 
 # compiler
 COMPILER_VERSION = 4.7
@@ -171,7 +172,7 @@ MACROS = $(COMMON_MACROS)
 endif
 
 # Add directories to the include and library paths
-GAME_INCLUDE_PATHS = $(shell find $(WORKING_FOLDER)/source/  -type d -print)
+GAME_INCLUDE_PATHS = $(shell find $(WORKING_FOLDER)/source/ -type d -print)
 
 # linked engine's home
 VUENGINE_LIBRARY_PATH = $(BUILD_DIR)
@@ -235,7 +236,9 @@ printBuildingInfo:
 	@echo Build type: $(TYPE)
 	@echo Compiler: $(COMPILER_NAME) $(COMPILER_VERSION)
 	@echo Compiler\'s output: $(COMPILER_OUTPUT)
-#	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/cleanSyntax.sh $(VUENGINE_HOME) $(GAME_HOME)/source $(WORKING_FOLDER)/preprocessor
+
+portToNewSyntax: dirs
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/cleanSyntax.sh $(VUENGINE_HOME) $(GAME_HOME)/source $(WORKING_FOLDER)/preprocessor
 
 printPostPreprocessorInfo:
 	@echo Done compiling in $(TYPE) mode with GCC $(COMPILER_VERSION)
