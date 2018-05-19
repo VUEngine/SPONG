@@ -51,34 +51,13 @@
 extern StageROMDef OPTIONS_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void OptionsScreenState::constructor(OptionsScreenState this);
-void OptionsScreenState::toggleAutomaticPause(OptionsScreenState this);
-void OptionsScreenState::switchBrightness(OptionsScreenState this, bool forward);
-void OptionsScreenState::updateAutomaticPauseCheckBox(OptionsScreenState this);
-void OptionsScreenState::updateBrightnessMeter(OptionsScreenState this);
-void OptionsScreenState::updateCursorPosition(OptionsScreenState this);
-static void OptionsScreenState::onTransitionOutComplete(OptionsScreenState this, Object eventFirer);
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) OptionsScreenState::constructor(OptionsScreenState this)
+void OptionsScreenState::constructor()
 {
 	Base::constructor();
 
@@ -88,21 +67,21 @@ void __attribute__ ((noinline)) OptionsScreenState::constructor(OptionsScreenSta
 	this->option = 0;
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void OptionsScreenState::destructor(OptionsScreenState this)
+void OptionsScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void OptionsScreenState::enter(OptionsScreenState this, void* owner)
+void OptionsScreenState::enter(void* owner)
 {
 	// reset mode
 	this->mode = kOptionsScreenModeShowOptions;
@@ -111,10 +90,10 @@ void OptionsScreenState::enter(OptionsScreenState this, void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
 
 	// get entity references
-	this->entityCursor = __SAFE_CAST(Entity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "Cursor", true));
+	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "Cursor", true));
 
 	// initial entity states
 	OptionsScreenState::updateCursorPosition(this);
@@ -122,7 +101,7 @@ void OptionsScreenState::enter(OptionsScreenState this, void* owner)
 	OptionsScreenState::updateBrightnessMeter(this);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -132,14 +111,14 @@ void OptionsScreenState::enter(OptionsScreenState this, void* owner)
 }
 
 // state's exit
-void OptionsScreenState::exit(OptionsScreenState this, void* owner)
+void OptionsScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 }
 
 // state's resume
-void OptionsScreenState::resume(OptionsScreenState this, void* owner)
+void OptionsScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -147,14 +126,14 @@ void OptionsScreenState::resume(OptionsScreenState this, void* owner)
 }
 
 // state's suspend
-void OptionsScreenState::suspend(OptionsScreenState this, void* owner)
+void OptionsScreenState::suspend(void* owner)
 {
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
 	Base::suspend(this, owner);
 }
 
-void OptionsScreenState::updateCursorPosition(OptionsScreenState this)
+void OptionsScreenState::updateCursorPosition()
 {
 	Vector3D position =
 	{
@@ -165,7 +144,7 @@ void OptionsScreenState::updateCursorPosition(OptionsScreenState this)
 	Entity::setLocalPosition(this->entityCursor, &position);
 }
 
-void OptionsScreenState::switchLanguage(OptionsScreenState this __attribute__ ((unused)), bool forward)
+void OptionsScreenState::switchLanguage(bool forward)
 {
 	// update language
 	int numLangs = sizeof(I18n::getLanguages(I18n::getInstance()));
@@ -177,23 +156,23 @@ void OptionsScreenState::switchLanguage(OptionsScreenState this __attribute__ ((
 	ProgressManager::setLanguage(ProgressManager::getInstance(), language);
 
 	// fire event to re-translate all entities
-	Object::fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
+	Object::fireEvent(Object::safeCast(this), kEventLanguageChanged);
 }
 
-void OptionsScreenState::updateAutomaticPauseCheckBox(OptionsScreenState this __attribute__ ((unused)))
+void OptionsScreenState::updateAutomaticPauseCheckBox()
 {
 	bool autoPauseEnabled = (Game::getAutomaticPauseState(Game::getInstance()) != NULL);
-	AnimatedEntity autoPauseCheckBoxEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "APChckBx", true));
+	AnimatedEntity autoPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "APChckBx", true));
 	if(autoPauseCheckBoxEntity)
 	{
 		AnimatedEntity::playAnimation(autoPauseCheckBoxEntity, Utilities::itoa(autoPauseEnabled, 10, 1));
 	}
 }
 
-void OptionsScreenState::updateBrightnessMeter(OptionsScreenState this __attribute__ ((unused)))
+void OptionsScreenState::updateBrightnessMeter()
 {
 	u8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
-	AnimatedEntity brightnessMeterEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "BrghtnMt", true));
+	AnimatedEntity brightnessMeterEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "BrghtnMt", true));
 	if(brightnessMeterEntity)
 	{
 		char* charBrightness = Utilities::itoa(brightnessFactor, 10, 1);
@@ -201,7 +180,7 @@ void OptionsScreenState::updateBrightnessMeter(OptionsScreenState this __attribu
 	}
 }
 
-void OptionsScreenState::switchBrightness(OptionsScreenState this __attribute__ ((unused)), bool forward)
+void OptionsScreenState::switchBrightness(bool forward)
 {
 	// change brightness factor
 	u8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
@@ -215,13 +194,13 @@ void OptionsScreenState::switchBrightness(OptionsScreenState this __attribute__ 
 	OptionsScreenState::updateBrightnessMeter(this);
 }
 
-void OptionsScreenState::toggleAutomaticPause(OptionsScreenState this)
+void OptionsScreenState::toggleAutomaticPause()
 {
 	// (un)set auto pause state
 	bool autoPauseEnabled = (Game::getAutomaticPauseState(Game::getInstance()) != NULL);
 	autoPauseEnabled = !autoPauseEnabled;
 	Game::setAutomaticPauseState(Game::getInstance(), autoPauseEnabled
-		? __SAFE_CAST(GameState, AutoPauseScreenState::getInstance())
+		? GameState::safeCast(AutoPauseScreenState::getInstance())
 		: NULL
 	);
 
@@ -232,7 +211,7 @@ void OptionsScreenState::toggleAutomaticPause(OptionsScreenState this)
 	OptionsScreenState::updateAutomaticPauseCheckBox(this);
 }
 
-void OptionsScreenState::processUserInputModeShowOptions(OptionsScreenState this, UserInput userInput)
+void OptionsScreenState::processUserInputModeShowOptions(UserInput userInput)
 {
 	if((K_A | K_B | K_STA | K_SEL) & userInput.pressedKey)
 	{
@@ -240,7 +219,7 @@ void OptionsScreenState::processUserInputModeShowOptions(OptionsScreenState this
 		Game::disableKeypad(Game::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -275,7 +254,7 @@ void OptionsScreenState::processUserInputModeShowOptions(OptionsScreenState this
 	}
 }
 
-void OptionsScreenState::processUserInput(OptionsScreenState this, UserInput userInput)
+void OptionsScreenState::processUserInput(UserInput userInput)
 {
 	switch(this->mode)
 	{
@@ -288,12 +267,10 @@ void OptionsScreenState::processUserInput(OptionsScreenState this, UserInput use
 }
 
 // handle event
-static void OptionsScreenState::onTransitionOutComplete(OptionsScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void OptionsScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "OptionsScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
-	Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, TitleScreenState::getInstance()));
+	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

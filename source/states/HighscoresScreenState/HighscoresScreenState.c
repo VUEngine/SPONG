@@ -50,57 +50,41 @@
 extern StageROMDef HIGHSCORES_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void HighscoresScreenState::constructor(HighscoresScreenState this);
-static void HighscoresScreenState::onTransitionOutComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)));
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) HighscoresScreenState::constructor(HighscoresScreenState this)
+void HighscoresScreenState::constructor()
 {
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void HighscoresScreenState::destructor(HighscoresScreenState this)
+void HighscoresScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void HighscoresScreenState::enter(HighscoresScreenState this, void* owner)
+void HighscoresScreenState::enter(void* owner)
 {
 	// call base
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&HIGHSCORES_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&HIGHSCORES_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -124,14 +108,14 @@ void HighscoresScreenState::enter(HighscoresScreenState this, void* owner)
 }
 
 // state's exit
-void HighscoresScreenState::exit(HighscoresScreenState this, void* owner)
+void HighscoresScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 }
 
 // state's resume
-void HighscoresScreenState::resume(HighscoresScreenState this, void* owner)
+void HighscoresScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -139,20 +123,20 @@ void HighscoresScreenState::resume(HighscoresScreenState this, void* owner)
 }
 
 // state's suspend
-void HighscoresScreenState::suspend(HighscoresScreenState this, void* owner)
+void HighscoresScreenState::suspend(void* owner)
 {
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
 	Base::suspend(this, owner);
 }
 
-void HighscoresScreenState::processUserInput(HighscoresScreenState this __attribute__ ((unused)), UserInput userInput __attribute__ ((unused)))
+void HighscoresScreenState::processUserInput(UserInput userInput __attribute__ ((unused)))
 {
 	// disable user input
 	Game::disableKeypad(Game::getInstance());
 
 	// transition layer animation
-	AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 	if(transitionLayerEntity)
 	{
 		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -160,12 +144,10 @@ void HighscoresScreenState::processUserInput(HighscoresScreenState this __attrib
 }
 
 // handle event
-static void HighscoresScreenState::onTransitionOutComplete(HighscoresScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void HighscoresScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "HighscoresScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
-	Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, TitleScreenState::getInstance()));
+	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

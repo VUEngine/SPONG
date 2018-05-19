@@ -66,13 +66,13 @@ singleton class ProgressManager : Object
 
 	// declare class
 	static ProgressManager getInstance();
-	bool getAutomaticPauseStatus(ProgressManager this);
-	u8   getBrightnessFactor(ProgressManager this);
-	u8   getLanguage(ProgressManager this);
-	void initialize(ProgressManager this);
-	void setAutomaticPauseStatus(ProgressManager this, u8 autoPauseStatus);
-	void setBrightnessFactor(ProgressManager this, u8 brightnessFactor);
-	void setLanguage(ProgressManager this, u8 languageId);
+	bool getAutomaticPauseStatus();
+	u8   getBrightnessFactor();
+	u8   getLanguage();
+	void initialize();
+	void setAutomaticPauseStatus(u8 autoPauseStatus);
+	void setBrightnessFactor(u8 brightnessFactor);
+	void setLanguage(u8 languageId);
 }
 
 

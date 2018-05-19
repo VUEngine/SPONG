@@ -52,32 +52,13 @@
 extern StageROMDef TITLE_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void TitleScreenState::constructor(TitleScreenState this);
-void TitleScreenState::processUserInputModePressStart(TitleScreenState this, UserInput userInput);
-void TitleScreenState::processUserInputModeShowOptions(TitleScreenState this, UserInput userInput);
-void TitleScreenState::updateCursorPosition(TitleScreenState this);
-static void TitleScreenState::onTransitionOutComplete(TitleScreenState this, Object eventFirer);
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) TitleScreenState::constructor(TitleScreenState this)
+void TitleScreenState::constructor()
 {
 	Base::constructor();
 
@@ -89,21 +70,21 @@ void __attribute__ ((noinline)) TitleScreenState::constructor(TitleScreenState t
 	this->option = 0;
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void TitleScreenState::destructor(TitleScreenState this)
+void TitleScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void TitleScreenState::enter(TitleScreenState this, void* owner)
+void TitleScreenState::enter(void* owner)
 {
 	// reset mode
 	this->mode = kTitleScreenModeShowPressStart;
@@ -112,19 +93,19 @@ void TitleScreenState::enter(TitleScreenState this, void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&TITLE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&TITLE_SCREEN_STAGE_ST, NULL, true);
 
 	// get entity references
-	this->entityPressStart = __SAFE_CAST(Entity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "PrssStrt", true));
-	this->entityMainMenu = __SAFE_CAST(Entity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "MainMenu", true));
-	this->entityCursor = __SAFE_CAST(Entity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "MMCursor", true));
+	this->entityPressStart = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "PrssStrt", true));
+	this->entityMainMenu = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "MainMenu", true));
+	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "MMCursor", true));
 
 	// initial entity states
-	Entity::hide(__SAFE_CAST(Entity, this->entityMainMenu));
+	Entity::hide(Entity::safeCast(this->entityMainMenu));
 	TitleScreenState::updateCursorPosition(this);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -134,14 +115,14 @@ void TitleScreenState::enter(TitleScreenState this, void* owner)
 }
 
 // state's exit
-void TitleScreenState::exit(TitleScreenState this, void* owner)
+void TitleScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 }
 
 // state's resume
-void TitleScreenState::resume(TitleScreenState this, void* owner)
+void TitleScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -149,14 +130,14 @@ void TitleScreenState::resume(TitleScreenState this, void* owner)
 }
 
 // state's suspend
-void TitleScreenState::suspend(TitleScreenState this, void* owner)
+void TitleScreenState::suspend(void* owner)
 {
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
 	Base::suspend(this, owner);
 }
 
-void TitleScreenState::updateCursorPosition(TitleScreenState this)
+void TitleScreenState::updateCursorPosition()
 {
 	// change position
 	Vector3D position =
@@ -174,7 +155,7 @@ void TitleScreenState::updateCursorPosition(TitleScreenState this)
 	Sprite::setDisplacement(VirtualList::front(cursorSprites), displacement);
 }
 
-void TitleScreenState::processUserInputModePressStart(TitleScreenState this, UserInput userInput)
+void TitleScreenState::processUserInputModePressStart(UserInput userInput)
 {
 	if(K_STA & userInput.pressedKey)
 	{
@@ -189,7 +170,7 @@ void TitleScreenState::processUserInputModePressStart(TitleScreenState this, Use
 	}
 }
 
-void TitleScreenState::processUserInputModeShowOptions(TitleScreenState this, UserInput userInput)
+void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 {
 	if((K_A | K_STA) & userInput.pressedKey)
 	{
@@ -197,7 +178,7 @@ void TitleScreenState::processUserInputModeShowOptions(TitleScreenState this, Us
 		Game::disableKeypad(Game::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -215,7 +196,7 @@ void TitleScreenState::processUserInputModeShowOptions(TitleScreenState this, Us
 	}
 }
 
-void TitleScreenState::processUserInput(TitleScreenState this, UserInput userInput)
+void TitleScreenState::processUserInput(UserInput userInput)
 {
 	switch(this->mode)
 	{
@@ -233,10 +214,8 @@ void TitleScreenState::processUserInput(TitleScreenState this, UserInput userInp
 }
 
 // handle event
-static void TitleScreenState::onTransitionOutComplete(TitleScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void TitleScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "TitleScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
@@ -245,15 +224,15 @@ static void TitleScreenState::onTransitionOutComplete(TitleScreenState this __at
 		case kTitleScreenOptionMarathonMode:
 		case kTitleScreenOptionChallengeMode:
 		case kTitleScreenOptionVersusMode:
-			Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, PongState::getInstance()));
+			Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
 			break;
 
 		case kTitleScreenOptionHighscores:
-			Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, HighscoresScreenState::getInstance()));
+			Game::changeState(Game::getInstance(), GameState::safeCast(HighscoresScreenState::getInstance()));
 			break;
 
 		case kTitleScreenOptionOptions:
-			Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, OptionsScreenState::getInstance()));
+			Game::changeState(Game::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
 			break;
 	}
 }

@@ -56,10 +56,10 @@ class PongBallLight : Entity
 	fix10_6 pongBallInitialZDistance;
 	bool followPongBall;
 
-	void constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
-	override void ready(PongBallLight this, bool recursive);
-	override void update(PongBallLight this, u32 elapsedTime);
-	override bool handleMessage(PongBallLight this, Telegram telegram);
+	void constructor(PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
+	override void ready(bool recursive);
+	override void update(u32 elapsedTime);
+	override bool handleMessage(Telegram telegram);
 }
 
 

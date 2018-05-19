@@ -69,9 +69,9 @@ singleton class PauseScreenState : GameState
 
 	static PauseScreenState getInstance();
 
-	override void enter(PauseScreenState this, void* owner);
-	override void exit(PauseScreenState this, void* owner);
-	override void processUserInput(PauseScreenState this, UserInput userInput);
+	override void enter(void* owner);
+	override void exit(void* owner);
+	override void processUserInput(UserInput userInput);
 }
 
 

@@ -47,60 +47,44 @@
 extern StageROMDef PAUSE_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void PauseScreenState::constructor(PauseScreenState this);
-static void PauseScreenState::onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)));
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) PauseScreenState::constructor(PauseScreenState this)
+void PauseScreenState::constructor()
 {
 	Base::constructor();
 
 	// init members
 	this->mode = kPauseScreenModeShowOptions;
-	this->optionsSelector = __NEW(OptionsSelector, 1, 3, NULL);
+	this->optionsSelector = new OptionsSelector(1, 3, NULL);
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void PauseScreenState::destructor(PauseScreenState this)
+void PauseScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
-	__DELETE(this->optionsSelector);
+	delete this->optionsSelector;
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((unused)))
+void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// print pause text
 	const char* strPause = I18n::getText(I18n::getInstance(), STR_PAUSE);
@@ -114,24 +98,24 @@ void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((
 	);
 
 	// show menu
-	VirtualList options = __NEW(VirtualList);
+	VirtualList options = new VirtualList();
 	Option* option = NULL;
 
-	option = __NEW_BASIC(Option);
+	option = new Option;
 	option->value = "...";
 	option->type = kString;
 	option->callback = NULL;
 	option->callbackScope = NULL;
 	VirtualList::pushBack(options, option);
 
-	option = __NEW_BASIC(Option);
+	option = new Option;
 	option->value = (char*)I18n::getText(I18n::getInstance(), STR_OPTIONS);
 	option->type = kString;
 	option->callback = NULL;
 	option->callbackScope = NULL;
 	VirtualList::pushBack(options, option);
 
-	option = __NEW_BASIC(Option);
+	option = new Option;
 	option->value = "...";
 	option->type = kString;
 	option->callback = NULL;
@@ -139,7 +123,7 @@ void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((
 	VirtualList::pushBack(options, option);
 
 	OptionsSelector::setOptions(this->optionsSelector, options);
-	__DELETE(options);
+	delete options;
 
 	OptionsSelector::printOptions(
 		this->optionsSelector,
@@ -148,7 +132,7 @@ void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((
 	);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -160,13 +144,13 @@ void PauseScreenState::enter(PauseScreenState this, void* owner __attribute__ ((
 }
 
 // state's exit
-void PauseScreenState::exit(PauseScreenState this, void* owner __attribute__ ((unused)))
+void PauseScreenState::exit(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::exit(this, owner);
 }
 
-void PauseScreenState::processUserInput(PauseScreenState this, UserInput userInput)
+void PauseScreenState::processUserInput(UserInput userInput)
 {
 	if((K_STA | K_A) & userInput.pressedKey)
 	{
@@ -183,7 +167,7 @@ void PauseScreenState::processUserInput(PauseScreenState this, UserInput userInp
 					Game::disableKeypad(Game::getInstance());
 
 					// transition layer animation
-					AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+					AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 					if(transitionLayerEntity)
 					{
 						AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -222,7 +206,7 @@ void PauseScreenState::processUserInput(PauseScreenState this, UserInput userInp
 			Game::disableKeypad(Game::getInstance());
 
 			// transition layer animation
-			AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+			AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 			if(transitionLayerEntity)
 			{
 				AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -249,10 +233,8 @@ void PauseScreenState::processUserInput(PauseScreenState this, UserInput userInp
 }
 
 // handle event
-static void PauseScreenState::onTransitionOutComplete(PauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void PauseScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "PauseScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
@@ -266,20 +248,20 @@ static void PauseScreenState::onTransitionOutComplete(PauseScreenState this __at
 		case kPauseScreenOptionContinue:
 
 			// resume game
-			Game::unpause(Game::getInstance(), __SAFE_CAST(GameState, this));
+			Game::unpause(Game::getInstance(), GameState::safeCast(this));
 			break;
 /*
 		case kPauseScreenOptionOptions:
 
 			// switch to options state
-			OptionsScreenState::setNextState(OptionsScreenState::getInstance(), __SAFE_CAST(GameState, this));
-			Game::changeState(Game::getInstance(), __SAFE_CAST(GameState, OptionsScreenState::getInstance()));
+			OptionsScreenState::setNextState(OptionsScreenState::getInstance(), GameState::safeCast(this));
+			Game::changeState(Game::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
 			break;
 */
 		case kPauseScreenOptionQuitLevel:
 
 			// switch to overworld after deleting paused game state
-			//Game::cleanAndChangeState(Game::getInstance(), __SAFE_CAST(GameState, PlatformerLevelState::getInstance()));
+			//Game::cleanAndChangeState(Game::getInstance(), GameState::safeCast(PlatformerLevelState::getInstance()));
 
 			break;
 	}

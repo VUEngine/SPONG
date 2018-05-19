@@ -48,9 +48,9 @@ dynamic_singleton class LangSelectScreenState : SplashScreenState
 	u8 language;
 
 	static LangSelectScreenState getInstance();
-	override void print(LangSelectScreenState this);
-	override void processInput(LangSelectScreenState this, u32 releasedKey);
-	override void enter(LangSelectScreenState this, void* owner);
+	override void print();
+	override void processInput(u32 releasedKey);
+	override void enter(void* owner);
 }
 
 

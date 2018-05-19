@@ -52,25 +52,12 @@
 #define SPEED_Y_MULTIPLIER								__I_TO_FIX10_6(2)
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
-//---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void PongBall::constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
+void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "PongBall::constructor: null this");
-
 	// construct base
 	Base::constructor((ActorDefinition*)&pongBallDefinition->actorDefinition, id, internalId, name);
 
@@ -82,26 +69,22 @@ void PongBall::constructor(PongBall this, PongBallDefinition* pongBallDefinition
 }
 
 // class's constructor
-void PongBall::destructor(PongBall this)
+void PongBall::destructor()
 {
-	ASSERT(this, "PongBall::destructor: null this");
-
 	// delete the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
 }
 
-void PongBall::ready(PongBall this, bool recursive)
+void PongBall::ready(bool recursive)
 {
-	ASSERT(this, "PongBall::ready: null this");
-
 	// call base
 	Base::ready(this, recursive);
 
 	PongBall::startMovement(this);
 }
 
-void PongBall::update(PongBall this, u32 elapsedTime)
+void PongBall::update(u32 elapsedTime)
 {
 	Base::update(this, elapsedTime);
 
@@ -117,11 +100,11 @@ void PongBall::update(PongBall this, u32 elapsedTime)
 		localRotation.z -= __FIX10_6_TO_I(Vector3D::squareLength(Body::getVelocity(this->body))) >> 4;
 	}
 
-	Entity::setLocalRotation(__SAFE_CAST(Entity, this), &localRotation);
+	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);
 }
 
 // start moving
-void PongBall::startMovement(PongBall this)
+void PongBall::startMovement()
 {
 	const char* paddleName = PADDLE_LEFT_NAME;
 
@@ -130,28 +113,26 @@ void PongBall::startMovement(PongBall this)
 		paddleName = PADDLE_RIGHT_NAME;
 	}
 
-	Entity paddle = __SAFE_CAST(Entity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)paddleName, true));
+	Entity paddle = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)paddleName, true));
 	NM_ASSERT(paddle, "PongBall::startMovement: paddle not found");
 
 	Vector3D localPosition = this->transformation.localPosition;
 	const Vector3D* paddlePosition =  Entity::getPosition(paddle);
 	localPosition.x = paddlePosition->x;
 	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) / 100.0f);
-	Entity::setLocalPosition(__SAFE_CAST(Entity, this), &localPosition);
+	Entity::setLocalPosition(Entity::safeCast(this), &localPosition);
 }
 
 // move back to ejector
-void PongBall::stopMovement(PongBall this)
+void PongBall::stopMovement()
 {
 	// stop movement
-	Actor::stopAllMovement(__SAFE_CAST(Actor, this));
+	Actor::stopAllMovement(Actor::safeCast(this));
 }
 
 // state's handle message
-bool PongBall::handleMessage(PongBall this, Telegram telegram)
+bool PongBall::handleMessage(Telegram telegram)
 {
-	ASSERT(this, "PongBall::handleMessage: null this");
-
 	switch(Telegram::getMessage(telegram))
 	{
 	}
@@ -159,10 +140,8 @@ bool PongBall::handleMessage(PongBall this, Telegram telegram)
 	return Base::handleMessage(this, telegram);
 }
 
-bool PongBall::enterCollision(PongBall this, const CollisionInformation* collisionInformation)
-{
-	ASSERT(this, "Hero::enterCollision: null this");
-	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
+bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
+{	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
 
 	Shape collidingShape = collisionInformation->collidingShape;
 	SpatialObject collidingObject = Shape::getOwner(collidingShape);
@@ -195,14 +174,14 @@ bool PongBall::enterCollision(PongBall this, const CollisionInformation* collisi
 				this->rolling = false;
 				Body::setMaximumVelocity(this->body, this->pongBallDefinition->maximumVelocity);
 
-				Object::fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitPaddle);
+				Object::fireEvent(Object::safeCast(this), kEventPongBallHitPaddle);
 			}
 
 			break;
 
 		case kCeiling:
 			{
-				Object::fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitCeiling);
+				Object::fireEvent(Object::safeCast(this), kEventPongBallHitCeiling);
 				break;
 			}
 
@@ -212,11 +191,11 @@ bool PongBall::enterCollision(PongBall this, const CollisionInformation* collisi
 
 				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
 				{
-					Object::fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
 				}
 				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
 				{
-					Object::fireEvent(__SAFE_CAST(Object, this), kEventPongBallHitFloor);
+					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
 				}
 			}
 
@@ -324,24 +303,22 @@ bool PongBall::enterCollision(PongBall this, const CollisionInformation* collisi
 	return collisionResult;
 }
 
-fix10_6 PongBall::getFrictionOnCollision(PongBall this __attribute__ ((unused)), SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)))
-{
-	ASSERT(this, "PongBall::getFrictionOnCollision: null this");
-
-	return 0;
-}
-
-fix10_6 PongBall::getSurroundingFrictionCoefficient(PongBall this __attribute__ ((unused)))
+fix10_6 PongBall::getFrictionOnCollision(SpatialObject collidingObject __attribute__ ((unused)), const Vector3D* collidingObjectNormal __attribute__ ((unused)))
 {
 	return 0;
 }
 
-int PongBall::getPaddleEnum(PongBall this)
+fix10_6 PongBall::getSurroundingFrictionCoefficient()
+{
+	return 0;
+}
+
+int PongBall::getPaddleEnum()
 {
 	return this->paddleEnum;
 }
 
-void PongBall::startRolling(PongBall this)
+void PongBall::startRolling()
 {
 	this->rolling = true;
 

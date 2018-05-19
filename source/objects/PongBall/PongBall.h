@@ -64,17 +64,17 @@ class PongBall : Actor
 	int paddleEnum;
 	bool rolling;
 
-	void constructor(PongBall this, PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
-	void startMovement(PongBall this);
-	void stopMovement(PongBall this);
-	int getPaddleEnum(PongBall this);
-	void startRolling(PongBall this);
-	override void ready(PongBall this, bool recursive);
-	override void update(PongBall this, u32 elapsedTime);
-	override bool handleMessage(PongBall this, Telegram telegram);
-	override bool enterCollision(PongBall this, const CollisionInformation* collisionInformation);
-	override fix10_6 getFrictionOnCollision(PongBall this, SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
-	override fix10_6 getSurroundingFrictionCoefficient(PongBall this);
+	void constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
+	void startMovement();
+	void stopMovement();
+	int getPaddleEnum();
+	void startRolling();
+	override void ready(bool recursive);
+	override void update(u32 elapsedTime);
+	override bool handleMessage(Telegram telegram);
+	override bool enterCollision(const CollisionInformation* collisionInformation);
+	override fix10_6 getFrictionOnCollision(SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
+	override fix10_6 getSurroundingFrictionCoefficient();
 }
 
 

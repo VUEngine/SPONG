@@ -40,18 +40,7 @@
 //											CLASS'S DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-
-__CLASS_FRIEND_DEFINITION(Camera);
-
-
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-void CustomCameraEffectManager::constructor(CustomCameraEffectManager this);
-static void CustomCameraEffectManager_FXShakeStart(CustomCameraEffectManager this, u16 duration);
-void CustomCameraEffectManager_FXShakeStop(CustomCameraEffectManager this);
-static void CustomCameraEffectManager::onScreenShake(CustomCameraEffectManager this);
+friend class Camera;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -69,10 +58,8 @@ static Camera _camera = NULL;
 
 
 // class's constructor
-void __attribute__ ((noinline)) CustomCameraEffectManager::constructor(CustomCameraEffectManager this)
+void CustomCameraEffectManager::constructor()
 {
-	ASSERT(this, "CustomCameraEffectManager::constructor: null this");
-
 	// construct base object
 	Base::constructor();
 
@@ -88,23 +75,19 @@ void __attribute__ ((noinline)) CustomCameraEffectManager::constructor(CustomCam
 }
 
 // class's destructor
-void CustomCameraEffectManager::destructor(CustomCameraEffectManager this)
+void CustomCameraEffectManager::destructor()
 {
-	ASSERT(this, "CustomCameraEffectManager::destructor: null this");
-
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
-void CustomCameraEffectManager::startEffect(CustomCameraEffectManager this, int effect, va_list args)
+void CustomCameraEffectManager::startEffect(int effect, va_list args)
 {
-	ASSERT(this, "CustomCameraEffectManager::startEffect: null this");
-
 	switch(effect)
 	{
 		case kShake:
 
-			CustomCameraEffectManager_FXShakeStart(this, va_arg(args, int));
+			CustomCameraEffectManager::fxShakeStart(this, va_arg(args, int));
 			break;
 
 		default:
@@ -114,15 +97,13 @@ void CustomCameraEffectManager::startEffect(CustomCameraEffectManager this, int 
 	}
 }
 
-void CustomCameraEffectManager::stopEffect(CustomCameraEffectManager this, int effect)
+void CustomCameraEffectManager::stopEffect(int effect)
 {
-	ASSERT(this, "CustomCameraEffectManager::stopEffect: null this");
-
 	switch(effect)
 	{
 		case kShake:
 
-			CustomCameraEffectManager_FXShakeStop(this);
+			CustomCameraEffectManager::fxShakeStop(this);
 			break;
 
 		default:
@@ -132,10 +113,8 @@ void CustomCameraEffectManager::stopEffect(CustomCameraEffectManager this, int e
 	}
 }
 
-bool CustomCameraEffectManager::handleMessage(CustomCameraEffectManager this, Telegram telegram)
+bool CustomCameraEffectManager::handleMessage(Telegram telegram)
 {
-	ASSERT(this, "CustomCameraEffectManager::handleMessage: null this");
-
 	switch(Telegram::getMessage(telegram))
 	{
 		case kShake:
@@ -148,35 +127,29 @@ bool CustomCameraEffectManager::handleMessage(CustomCameraEffectManager this, Te
 }
 
 // start shaking the screen
-static void CustomCameraEffectManager_FXShakeStart(CustomCameraEffectManager this, u16 duration)
+void CustomCameraEffectManager::fxShakeStart(u16 duration)
 {
-	ASSERT(this, "CustomCameraEffectManager::FXShakeStart: null this");
-
 	// set desired fx duration
 	this->shakeTimeLeft = duration;
 
 	this->lastShakeOffset.x = __PIXELS_TO_METERS(4);
 
 	// discard pending messages from previously started fx
-	MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), __SAFE_CAST(Object, this), kShake);
+	MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), Object::safeCast(this), kShake);
 
 	// instantly send message to self to start fx
-	MessageDispatcher::dispatchMessage(0, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kShake, NULL);
+	MessageDispatcher::dispatchMessage(0, Object::safeCast(this), Object::safeCast(this), kShake, NULL);
 }
 
 // stop shaking the _camera
-void CustomCameraEffectManager_FXShakeStop(CustomCameraEffectManager this)
+void CustomCameraEffectManager::fxShakeStop()
 {
-	ASSERT(this, "CustomCameraEffectManager::FXShakeStop: null this");
-
 	this->shakeTimeLeft = 0;
 }
 
 // shake the _camera
-static void CustomCameraEffectManager::onScreenShake(CustomCameraEffectManager this)
+void CustomCameraEffectManager::onScreenShake()
 {
-	ASSERT(this, "CustomCameraEffectManager::onScreenShake: null this");
-
 	// stop if no shaking time left
 	if(this->shakeTimeLeft == 0)
 	{
@@ -203,5 +176,5 @@ static void CustomCameraEffectManager::onScreenShake(CustomCameraEffectManager t
 	Camera::move(_camera, this->lastShakeOffset, false);
 
 	// send message for next screen movement
-	MessageDispatcher::dispatchMessage(nextShakeDelay, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kShake, NULL);
+	MessageDispatcher::dispatchMessage(nextShakeDelay, Object::safeCast(this), Object::safeCast(this), kShake, NULL);
 }

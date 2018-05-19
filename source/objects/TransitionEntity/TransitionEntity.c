@@ -36,44 +36,27 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-
-
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-void TransitionEntity::localize(TransitionEntity this);
-
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void TransitionEntity::constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
+void TransitionEntity::constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "TransitionEntity::constructor: null this");
-
 	// construct base object
 	Base::constructor((AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
 }
 
 // class's destructor
-void TransitionEntity::destructor(TransitionEntity this)
+void TransitionEntity::destructor()
 {
-	ASSERT(this, "TransitionEntity::destructor: null this");
-
 	// destroy the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
 }
 
 // handle event
-void TransitionEntity::onTransitionComplete(TransitionEntity this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onTransitionComplete(Object eventFirer __attribute__ ((unused)))
 {
-	Object::fireEvent(__SAFE_CAST(Object, Game::getCurrentState(Game::getInstance())), kEventTransitionOutComplete);
+	Object::fireEvent(Object::safeCast(Game::getCurrentState(Game::getInstance())), kEventTransitionOutComplete);
 }

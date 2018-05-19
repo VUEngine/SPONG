@@ -40,25 +40,12 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
-//---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void Paddle::constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name)
+void Paddle::constructor(PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "Paddle::constructor: null this");
-
 	// construct base
 	Base::constructor((ActorDefinition*)&paddleDefinition->actorDefinition, id, internalId, name);
 
@@ -68,19 +55,15 @@ void Paddle::constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id
 }
 
 // class's constructor
-void Paddle::destructor(Paddle this)
+void Paddle::destructor()
 {
-	ASSERT(this, "Paddle::destructor: null this");
-
 	// delete the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
 }
 
-void Paddle::ready(Paddle this, bool recursive)
+void Paddle::ready(bool recursive)
 {
-	ASSERT(this, "Paddle::ready: null this");
-
 	// call base
 	Base::ready(this, recursive);
 
@@ -92,22 +75,20 @@ void Paddle::ready(Paddle this, bool recursive)
 }
 
 // start moving
-void Paddle::startMovement(Paddle this __attribute__ ((unused)))
+void Paddle::startMovement()
 {
 }
 
 // move back to ejector
-void Paddle::stopMovement(Paddle this)
+void Paddle::stopMovement()
 {
 	// stop movement
-	Actor::stopAllMovement(__SAFE_CAST(Actor, this));
+	Actor::stopAllMovement(Actor::safeCast(this));
 }
 
 // state's handle message
-bool Paddle::handleMessage(Paddle this, Telegram telegram)
+bool Paddle::handleMessage(Telegram telegram)
 {
-	ASSERT(this, "Paddle::handleMessage: null this");
-
 	switch(Telegram::getMessage(telegram))
 	{
 	}
@@ -115,25 +96,23 @@ bool Paddle::handleMessage(Paddle this, Telegram telegram)
 	return Base::handleMessage(this, telegram);
 }
 
-void Paddle::setExtraInfo(Paddle this __attribute__ ((unused)), void* extraInfo __attribute__ ((unused)))
-{
-	ASSERT(this, "Paddle::setExtraInfo: null this");
-}
+void Paddle::setExtraInfo(void* extraInfo __attribute__ ((unused)))
+{}
 
 
-void Paddle::transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag)
+void Paddle::transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag)
 {
 	Base::transform(this, environmentTransform, invalidateTransformationFlag);
 
 //	Shape::show(VirtualList::back(this->shapes));
 }
 
-void Paddle::syncRotationWithBody(Paddle this __attribute__ ((unused)))
+void Paddle::syncRotationWithBody()
 {
 
 }
 
-void Paddle::moveTowards(Paddle this, Direction direction)
+void Paddle::moveTowards(Direction direction)
 {
 	Force force =
 	{
@@ -142,37 +121,35 @@ void Paddle::moveTowards(Paddle this, Direction direction)
 		0
 	};
 
-	Actor::addForce(__SAFE_CAST(Actor, this), &force);
+	Actor::addForce(Actor::safeCast(this), &force);
 }
 
-void Paddle::stopTowards(Paddle this, Direction direction)
+void Paddle::stopTowards(Direction direction)
 {
 	u16 axis = __NO_AXIS;
 	axis |= direction.x ? __X_AXIS : 0;
 	axis |= direction.y ? __Y_AXIS : 0;
-	Actor::stopMovement(__SAFE_CAST(Actor, this), axis);
+	Actor::stopMovement(Actor::safeCast(this), axis);
 }
 
-void Paddle::retract(Paddle this)
+void Paddle::retract()
 {
 	if(Shape::isActive(this->paddleShape))
 	{
-		AnimatedEntity::playAnimation(__SAFE_CAST(AnimatedEntity, this), "Retracted");
+		AnimatedEntity::playAnimation(AnimatedEntity::safeCast(this), "Retracted");
 
 		Shape::setActive(this->paddleShape, false);
 	}
 }
 
-void Paddle::eject(Paddle this)
+void Paddle::eject()
 {
-	AnimatedEntity::playAnimation(__SAFE_CAST(AnimatedEntity, this), "Ejected");
+	AnimatedEntity::playAnimation(AnimatedEntity::safeCast(this), "Ejected");
 
 	Shape::setActive(this->paddleShape, true);
 }
 
-bool Paddle::mustBounce(Paddle this __attribute__ ((unused)))
+bool Paddle::mustBounce()
 {
-	ASSERT(this, "Paddle::mustBounce: null this");
-
 	return false;
 }

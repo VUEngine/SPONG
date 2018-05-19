@@ -38,8 +38,8 @@ dynamic_singleton class PrecautionScreenState : SplashScreenState
 {
 	static PrecautionScreenState getInstance();
 
-	override void enter(PrecautionScreenState this, void* owner);
-	override bool processMessage(PrecautionScreenState this, void* owner, Telegram telegram);
+	override void enter(void* owner);
+	override bool processMessage(void* owner, Telegram telegram);
 }
 
 

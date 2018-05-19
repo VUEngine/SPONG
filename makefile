@@ -73,11 +73,11 @@ ifeq ($(PAD_ROM), 1)
 PAD = pad
 endif
 
-STORE_SUFIX =
+STORE_SUFFIX =
 PROLOG_FUNCTIONS_FLAG =
 ifeq ($(USE_PROLOG_FUNCTIONS), 1)
 PROLOG_FUNCTIONS_FLAG = -mprolog-function
-STORE_SUFIX = -pf
+STORE_SUFFIX = -pf
 endif
 
 FRAME_POINTER_USAGE_FLAG = -fomit-frame-pointer
@@ -142,7 +142,7 @@ COMMON_MACROS = $(DATA_SECTION_ATTRIBUTES)
 # The next blocks changes some variables depending on the build type
 ifeq ($(TYPE),debug)
 LD_PARAMS = -T$(LINKER_SCRIPT) -lm
-C_PARAMS = $(ESSENTIAL_HEADERS) $(PROLOG_FUNCTIONS_FLAG) $(FRAME_POINTER_USAGE_FLAG) $(PEDANTIC_WARNINGS_FLAG) $(OPTIMIZATION_OPTION) -std=gnu99 -mv810 -nodefaultlibs -Wall -Wextra
+C_PARAMS = $(ESSENTIAL_HEADERS) $(PROLOG_FUNCTIONS_FLAG) $(FRAME_POINTER_USAGE_FLAG) $(PEDANTIC_WARNINGS_FLAG) $(OPTIMIZATION_OPTION) -std=gnu99 -mv810 -nodefaultlibs -Wall -Wextra -finline-functions -Winline
 MACROS = __DEBUG __TOOLS $(COMMON_MACROS)
 endif
 
@@ -181,7 +181,7 @@ GAME_INCLUDE_PATHS =$(foreach DIR,$(INCLUDE_DIRS),./$(BUILD_DIR)/compiler/source
 VUENGINE_LIBRARY_PATH = $(BUILD_DIR)
 
 # Where to store object and dependency files.
-STORE = $(BUILD_DIR)/$(TYPE)$(STORE_SUFIX)
+STORE = $(BUILD_DIR)/$(TYPE)$(STORE_SUFFIX)
 
 # Makefs a list of the source (.cpp) files.
 C_SOURCE = $(foreach DIR,$(DIRS),$(wildcard $(DIR)/*.c))
@@ -274,7 +274,7 @@ $(TARGET).elf: $(VUENGINE) $(VIRTUAL_METHODS_HELPER) $(C_OBJECTS) $(C_INTERMEDIA
 
 $(VIRTUAL_METHODS_HELPER): $(H_FILES)
 	@echo "Preparing virtual methods in game"
-	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/prepareVirtualMethods.sh -w $(WORKING_FOLDER)/preprocessor -h $(WORKING_FOLDER)/source -p $(HELPERS_PREFIX) -d
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/analyzeHeaderFile.sh -w $(WORKING_FOLDER)/preprocessor -h $(WORKING_FOLDER)/source -p $(HELPERS_PREFIX) -d
 
 $(SETUP_CLASSES_OBJECT).o: $(WORKING_FOLDER)/preprocessor/$(SETUP_CLASSES).c
 	@echo Compiling $<
@@ -300,16 +300,16 @@ $(STORE)/%.o: $(WORKING_FOLDER)/source/%.c
 
 $(WORKING_FOLDER)/source/%.c: %.c
 	@echo Compiling $<
-	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processVirtualCalls.sh -i $< -o $@ -d -w $(WORKING_FOLDER)/preprocessor -p engine -p $(HELPERS_PREFIX) -c $(CLASSES_HIERARCHY_FILE)
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processSourceFile.sh -i $< -o $@ -d -w $(WORKING_FOLDER)/preprocessor -p engine -p $(HELPERS_PREFIX) -c $(CLASSES_HIERARCHY_FILE)
 
 $(STORE)/%.o: %.s
 	@echo Creating object file for $*
 	@$(AS) -o $@ $<
 
 $(WORKING_FOLDER)/source/%.h: %.h
-	@echo Analysing $<
+#	@echo Analysing $<
 #	@echo into $@
-	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processHeader.sh -i $< -o $@ -w $(WORKING_FOLDER)/preprocessor -c $(CLASSES_HIERARCHY_FILE)
+	@sh $(VUENGINE_HOME)/lib/compiler/preprocessor/processHeaderFile.sh -i $< -o $@ -w $(WORKING_FOLDER)/preprocessor -c $(CLASSES_HIERARCHY_FILE)
 
 $(VUENGINE): deleteEngine
 	@echo Building VUEngine...

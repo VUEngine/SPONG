@@ -47,11 +47,11 @@
 singleton class HighscoresScreenState : GameState
 {
 	static HighscoresScreenState getInstance();
-	override void enter(HighscoresScreenState this, void* owner);
-	override void exit(HighscoresScreenState this, void* owner);
-	override void resume(HighscoresScreenState this, void* owner);
-	override void suspend(HighscoresScreenState this, void* owner);
-	override void processUserInput(HighscoresScreenState this, UserInput userInput);
+	override void enter(void* owner);
+	override void exit(void* owner);
+	override void resume(void* owner);
+	override void suspend(void* owner);
+	override void processUserInput(UserInput userInput);
 }
 
 

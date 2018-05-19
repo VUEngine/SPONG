@@ -53,10 +53,10 @@ singleton class Player : Object
 	bool ballIsRolling;
 
 	static Player getInstance();
-	void getReady(Player this, GameState gameState);
-	void gameIsOver(Player this, GameState gameState);
-	void printScore(Player this);
-	override bool handleMessage(Player this, Telegram telegram);
+	void getReady(GameState gameState);
+	void gameIsOver(GameState gameState);
+	void printScore();
+	override bool handleMessage(Telegram telegram);
 }
 
 

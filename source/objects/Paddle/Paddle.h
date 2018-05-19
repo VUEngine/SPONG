@@ -64,19 +64,19 @@ class Paddle : Actor
 	PaddleDefinition* paddleDefinition;
 	Shape paddleShape;
 
-	void constructor(Paddle this, PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
-	void startMovement(Paddle this);
-	void stopMovement(Paddle this);
-	void moveTowards(Paddle this, Direction direction);
-	void stopTowards(Paddle this, Direction direction);
-	void retract(Paddle this);
-	void eject(Paddle this);
-	override void ready(Paddle this, bool recursive);
-	override bool handleMessage(Paddle this, Telegram telegram);
-	override void setExtraInfo(Paddle this, void* extraInfo);
-	override void transform(Paddle this, const Transformation* environmentTransform, u8 invalidateTransformationFlag);
-	override void syncRotationWithBody(Paddle this);
-	override bool mustBounce(Paddle this);
+	void constructor(PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
+	void startMovement();
+	void stopMovement();
+	void moveTowards(Direction direction);
+	void stopTowards(Direction direction);
+	void retract();
+	void eject();
+	override void ready(bool recursive);
+	override bool handleMessage(Telegram telegram);
+	override void setExtraInfo(void* extraInfo);
+	override void transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag);
+	override void syncRotationWithBody();
+	override bool mustBounce();
 }
 
 

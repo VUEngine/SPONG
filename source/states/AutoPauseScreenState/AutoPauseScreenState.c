@@ -45,54 +45,38 @@
 extern StageROMDef PAUSE_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void AutoPauseScreenState::constructor(AutoPauseScreenState this);
-static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)));
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) AutoPauseScreenState::constructor(AutoPauseScreenState this)
+void AutoPauseScreenState::constructor()
 {
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void AutoPauseScreenState::destructor(AutoPauseScreenState this)
+void AutoPauseScreenState::destructor()
 {
 	// remove event listeners
-    Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+    Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void AutoPauseScreenState::enter(AutoPauseScreenState this, void* owner __attribute__ ((unused)))
+void AutoPauseScreenState::enter(void* owner __attribute__ ((unused)))
 {
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -102,16 +86,16 @@ void AutoPauseScreenState::enter(AutoPauseScreenState this, void* owner __attrib
 }
 
 // state's exit
-void AutoPauseScreenState::exit(AutoPauseScreenState this __attribute__ ((unused)), void* owner __attribute__ ((unused)))
+void AutoPauseScreenState::exit(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::exit(this, owner);
 
 	// destroy the state
-	__DELETE(this);
+	delete this;
 }
 
-void AutoPauseScreenState::processUserInput(AutoPauseScreenState this __attribute__ ((unused)), UserInput userInput)
+void AutoPauseScreenState::processUserInput(UserInput userInput)
 {
 	if(K_STA & userInput.pressedKey)
 	{
@@ -121,10 +105,8 @@ void AutoPauseScreenState::processUserInput(AutoPauseScreenState this __attribut
 }
 
 // handle event
-static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void AutoPauseScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "AutoPauseScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
@@ -132,5 +114,5 @@ static void AutoPauseScreenState::onTransitionOutComplete(AutoPauseScreenState t
 	Game::enableKeypad(Game::getInstance());
 
 	// resume game
-	Game::unpause(Game::getInstance(), __SAFE_CAST(GameState, this));
+	Game::unpause(Game::getInstance(), GameState::safeCast(this));
 }

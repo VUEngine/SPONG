@@ -35,32 +35,25 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-static void SplashScreenState::onTransitionOutComplete(SplashScreenState this, Object eventFirer);
-
-
-//---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void SplashScreenState::constructor(SplashScreenState this)
+void SplashScreenState::constructor()
 {
 	Base::constructor();
 
 	this->stageDefinition = NULL;
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void SplashScreenState::destructor(SplashScreenState this)
+void SplashScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy the super object
 	// must always be called at the end of the destructor
@@ -68,23 +61,23 @@ void SplashScreenState::destructor(SplashScreenState this)
 }
 
 // state's enter
-void SplashScreenState::enter(SplashScreenState this, void* owner)
+void SplashScreenState::enter(void* owner)
 {
 	// call base
 	Base::enter(this, owner);
 
 	if(this->stageDefinition)
 	{
-		GameState::loadStage(__SAFE_CAST(GameState, this), this->stageDefinition, NULL, true);
+		GameState::loadStage(GameState::safeCast(this), this->stageDefinition, NULL, true);
 	}
 
 	SplashScreenState::print(this);
 
 	// start fade in effect in 1 ms, because a full render cycle is needed to put everything in place
-	MessageDispatcher::dispatchMessage(1, __SAFE_CAST(Object, this), __SAFE_CAST(Object, Game::getInstance()), kScreenStarted, NULL);
+	MessageDispatcher::dispatchMessage(1, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenStarted, NULL);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -94,17 +87,17 @@ void SplashScreenState::enter(SplashScreenState this, void* owner)
 }
 
 // state's exit
-void SplashScreenState::exit(SplashScreenState this, void* owner)
+void SplashScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 
 	// destroy the state
-	__DELETE(this);
+	delete this;
 }
 
 // state's resume
-void SplashScreenState::resume(SplashScreenState this, void* owner)
+void SplashScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -137,7 +130,7 @@ void SplashScreenState::resume(SplashScreenState this, void* owner)
 #endif
 }
 
-void SplashScreenState::processUserInput(SplashScreenState this, UserInput userInput)
+void SplashScreenState::processUserInput(UserInput userInput)
 {
 	if(userInput.pressedKey & ~K_PWR)
 	{
@@ -146,32 +139,32 @@ void SplashScreenState::processUserInput(SplashScreenState this, UserInput userI
 }
 
 // state's handle message
-bool SplashScreenState::processMessage(SplashScreenState this __attribute__ ((unused)), void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
+bool SplashScreenState::processMessage(void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
 {
 	return false;
 }
 
-void SplashScreenState::processInput(SplashScreenState this, u32 pressedKey __attribute__ ((unused)))
+void SplashScreenState::processInput(u32 pressedKey __attribute__ ((unused)))
 {
 	SplashScreenState::loadNextState(this);
 }
 
-void SplashScreenState::print(SplashScreenState this __attribute__ ((unused)))
+void SplashScreenState::print()
 {
 }
 
-void SplashScreenState::setNextState(SplashScreenState this, GameState nextState)
+void SplashScreenState::setNextState(GameState nextState)
 {
 	this->nextState = nextState;
 }
 
-void SplashScreenState::loadNextState(SplashScreenState this __attribute__ ((unused)))
+void SplashScreenState::loadNextState()
 {
 	// disable user input
 	Game::disableKeypad(Game::getInstance());
 
 	// transition layer animation
-	AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 	if(transitionLayerEntity)
 	{
 		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -179,10 +172,8 @@ void SplashScreenState::loadNextState(SplashScreenState this __attribute__ ((unu
 }
 
 // handle event
-static void SplashScreenState::onTransitionOutComplete(SplashScreenState this, Object eventFirer __attribute__ ((unused)))
+void SplashScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "SplashScreenState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 

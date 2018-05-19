@@ -48,10 +48,10 @@ singleton class BrightnessManager : Object
 	// declare a BrightnessManager
 	static BrightnessManager getInstance();
 
-	void showScreen(BrightnessManager this);
-	void hideScreen(BrightnessManager this);
-	void setBrightnessFactor(BrightnessManager this, u8 brightnessFactor);
-	u8 getBrightnessFactor(BrightnessManager this);
+	void showScreen();
+	void hideScreen();
+	void setBrightnessFactor(u8 brightnessFactor);
+	u8 getBrightnessFactor();
 }
 
 

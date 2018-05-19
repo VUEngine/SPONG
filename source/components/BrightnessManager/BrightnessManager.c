@@ -35,15 +35,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-
-
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-void BrightnessManager::constructor(BrightnessManager this);
-
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
@@ -52,10 +43,8 @@ void BrightnessManager::constructor(BrightnessManager this);
 
 
 // class's constructor
-void BrightnessManager::constructor(BrightnessManager this)
+void BrightnessManager::constructor()
 {
-	ASSERT(this, "BrightnessManager::constructor: null this");
-
 	// construct base object
 	Base::constructor();
 
@@ -64,18 +53,14 @@ void BrightnessManager::constructor(BrightnessManager this)
 }
 
 // class's destructor
-void BrightnessManager::destructor(BrightnessManager this)
+void BrightnessManager::destructor()
 {
-	ASSERT(this, "BrightnessManager::destructor: null this");
-
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
-void BrightnessManager::showScreen(BrightnessManager this)
+void BrightnessManager::showScreen()
 {
-	ASSERT(this, "BrightnessManager::showScreen: null this");
-
 	Brightness defaultBrightness = CameraEffectManager::getDefaultBrightness(CameraEffectManager::getInstance());
 
 	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + ((this->brightnessFactor - 2) * 8)))) ? 4 : darkRed;
@@ -85,25 +70,19 @@ void BrightnessManager::showScreen(BrightnessManager this)
 	__SET_BRIGHT(darkRed, mediumRed, brightRed);
 }
 
-void BrightnessManager::hideScreen(BrightnessManager this __attribute__ ((unused)))
+void BrightnessManager::hideScreen()
 {
-	ASSERT(this, "BrightnessManager::showScreen: null this");
-
 	__SET_BRIGHT(0, 0, 0);
 }
 
-void BrightnessManager::setBrightnessFactor(BrightnessManager this, u8 brightnessFactor)
+void BrightnessManager::setBrightnessFactor(u8 brightnessFactor)
 {
-	ASSERT(this, "BrightnessManager::setBrightness: null this");
-
 	this->brightnessFactor = brightnessFactor;
 	BrightnessManager::showScreen(this);
 }
 
-u8 BrightnessManager::getBrightnessFactor(BrightnessManager this)
+u8 BrightnessManager::getBrightnessFactor()
 {
-	ASSERT(this, "BrightnessManager::setBrightness: null this");
-
 	return this->brightnessFactor;
 }
 

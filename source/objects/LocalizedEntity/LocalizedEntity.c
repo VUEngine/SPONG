@@ -36,53 +36,33 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-
-
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-void LocalizedEntity::localize(LocalizedEntity this);
-static void LocalizedEntity::onLanguageChanged(LocalizedEntity this, Object eventFirer);
-
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void LocalizedEntity::constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
+void LocalizedEntity::constructor(const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "LocalizedEntity::constructor: null this");
-
 	// construct base object
 	Base::constructor((AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, Game::getCurrentState(Game::getInstance())), __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object::addEventListener(Object::safeCast(Game::getCurrentState(Game::getInstance())), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 }
 
 // class's destructor
-void LocalizedEntity::destructor(LocalizedEntity this)
+void LocalizedEntity::destructor()
 {
-	ASSERT(this, "LocalizedEntity::destructor: null this");
-
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, Game::getCurrentState(Game::getInstance())), __SAFE_CAST(Object, this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object::removeEventListener(Object::safeCast(Game::getCurrentState(Game::getInstance())), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 
 	// destroy the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
 }
 
-void LocalizedEntity::ready(LocalizedEntity this, bool recursive)
+void LocalizedEntity::ready(bool recursive)
 {
-	ASSERT(this, "LocalizedEntity::ready: null this");
-
 	// call base
 	Base::ready(this, recursive);
 
@@ -90,16 +70,14 @@ void LocalizedEntity::ready(LocalizedEntity this, bool recursive)
 	LocalizedEntity::localize(this);
 }
 
-void LocalizedEntity::localize(LocalizedEntity this)
+void LocalizedEntity::localize()
 {
-	ASSERT(this, "LocalizedEntity::localize: null this");
-
 	char* language = Utilities::itoa(I18n::getActiveLanguage(I18n::getInstance()), 10, 1);
-	AnimatedEntity::playAnimation(__SAFE_CAST(AnimatedEntity, this), language);
+	AnimatedEntity::playAnimation(AnimatedEntity::safeCast(this), language);
 }
 
 // handle event
-static void LocalizedEntity::onLanguageChanged(LocalizedEntity this, Object eventFirer __attribute__ ((unused)))
+void LocalizedEntity::onLanguageChanged(Object eventFirer __attribute__ ((unused)))
 {
 	// translate entity
 	LocalizedEntity::localize(this);

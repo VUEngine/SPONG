@@ -41,8 +41,8 @@ typedef const LocalizedEntityDefinition LocalizedEntityROMDef;
 
 class LocalizedEntity : AnimatedEntity
 {
-	void constructor(LocalizedEntity this, const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
-	override void ready(LocalizedEntity this, bool recursive);
+	void constructor(const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name);
+	override void ready(bool recursive);
 }
 
 

@@ -45,49 +45,29 @@
 extern StageROMDef LANG_SELECT_SCREEN_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void LangSelectScreenState::constructor(LangSelectScreenState this);
-void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forward);
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void __attribute__ ((noinline)) LangSelectScreenState::constructor(LangSelectScreenState this)
+void LangSelectScreenState::constructor()
 {
-	ASSERT(this, "LangSelectScreenState::constructor: null this");
-
 	Base::constructor();
 
 	// init members
 	this->language = 0;
-	SplashScreenState::setNextState(__SAFE_CAST(SplashScreenState, this), __SAFE_CAST(GameState, TitleScreenState::getInstance()));
+	SplashScreenState::setNextState(SplashScreenState::safeCast(this), GameState::safeCast(TitleScreenState::getInstance()));
 	this->stageDefinition = (StageDefinition*)&LANG_SELECT_SCREEN_STAGE_ST;
 }
 
-void LangSelectScreenState::destructor(LangSelectScreenState this)
+void LangSelectScreenState::destructor()
 {
-	ASSERT(this, "LangSelectScreenState::destructor: null this");
-
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void LangSelectScreenState::enter(LangSelectScreenState this, void* owner)
+void LangSelectScreenState::enter(void* owner)
 {
 	// call base
 	Base::enter(this, owner);
@@ -96,7 +76,7 @@ void LangSelectScreenState::enter(LangSelectScreenState this, void* owner)
 	LangSelectScreenState::print(this);
 }
 
-void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forward)
+void LangSelectScreenState::changeLanguage(bool forward)
 {
 	int numLangs = sizeof(I18n::getLanguages(I18n::getInstance()));
 	this->language = forward
@@ -107,7 +87,7 @@ void LangSelectScreenState::changeLanguage(LangSelectScreenState this, bool forw
 	LangSelectScreenState::print(this);
 }
 
-void LangSelectScreenState::processInput(LangSelectScreenState this, u32 pressedKey)
+void LangSelectScreenState::processInput(u32 pressedKey)
 {
 	if((pressedKey & K_LL) || (pressedKey & K_RL))
 	{
@@ -119,15 +99,15 @@ void LangSelectScreenState::processInput(LangSelectScreenState this, u32 pressed
 	}
 	else if((pressedKey & K_A) || (pressedKey & K_STA))
 	{
-		SplashScreenState::loadNextState(__SAFE_CAST(SplashScreenState, this));
+		SplashScreenState::loadNextState(SplashScreenState::safeCast(this));
 	}
 }
 
-void LangSelectScreenState::print(LangSelectScreenState this __attribute__ ((unused)))
+void LangSelectScreenState::print()
 {
 	// move cursor entity
-	Entity cursorEntity = __SAFE_CAST(Entity, Container::getChildByName(
-		__SAFE_CAST(Container, Game::getStage(Game::getInstance())),
+	Entity cursorEntity = Entity::safeCast(Container::getChildByName(
+		Container::safeCast(Game::getStage(Game::getInstance())),
 		"Cursor",
 		false
 	));
@@ -135,14 +115,14 @@ void LangSelectScreenState::print(LangSelectScreenState this __attribute__ ((unu
 	Entity::setLocalPosition(cursorEntity, &cursorPosition);
 
 	// move cursor entity
-	AnimatedEntity LangNameEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(
-		__SAFE_CAST(Container, Game::getStage(Game::getInstance())),
+	AnimatedEntity LangNameEntity = AnimatedEntity::safeCast(Container::getChildByName(
+		Container::safeCast(Game::getStage(Game::getInstance())),
 		"LangName",
 		false
 	));
 
 	// change language name
-	Object::fireEvent(__SAFE_CAST(Object, this), kEventLanguageChanged);
+	Object::fireEvent(Object::safeCast(this), kEventLanguageChanged);
 
 	// change language name position
 	Vector3D languageNamePosition =
@@ -151,6 +131,6 @@ void LangSelectScreenState::print(LangSelectScreenState this __attribute__ ((unu
 		__PIXELS_TO_METERS(124),
 		0,
 	};
-	Entity::setLocalPosition(__SAFE_CAST(Entity, LangNameEntity), &languageNamePosition);
+	Entity::setLocalPosition(Entity::safeCast(LangNameEntity), &languageNamePosition);
 }
 

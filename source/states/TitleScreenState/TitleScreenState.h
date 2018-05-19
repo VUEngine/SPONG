@@ -67,11 +67,11 @@ singleton class TitleScreenState : GameState
 
 	static TitleScreenState getInstance();
 
-	override void enter(TitleScreenState this, void* owner);
-	override void exit(TitleScreenState this, void* owner);
-	override void resume(TitleScreenState this, void* owner);
-	override void suspend(TitleScreenState this, void* owner);
-	override void processUserInput(TitleScreenState this, UserInput userInput);
+	override void enter(void* owner);
+	override void exit(void* owner);
+	override void resume(void* owner);
+	override void suspend(void* owner);
+	override void processUserInput(UserInput userInput);
 }
 
 

@@ -47,29 +47,13 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-
-
-//---------------------------------------------------------------------------------------------------------
-//												CLASS'S PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-static void PongBallLight::onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)));
-static void PongBallLight::onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)));
-
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void PongBallLight::constructor(PongBallLight this, PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
+void PongBallLight::constructor(PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
 {
-	ASSERT(this, "PongBallLight::constructor: null this");
-
 	// construct base
 	Base::constructor((EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
 
@@ -80,12 +64,10 @@ void PongBallLight::constructor(PongBallLight this, PongBallLightDefinition* Pon
 }
 
 // class's constructor
-void PongBallLight::destructor(PongBallLight this)
+void PongBallLight::destructor()
 {
-	ASSERT(this, "PongBallLight::destructor: null this");
-
-	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
@@ -93,22 +75,20 @@ void PongBallLight::destructor(PongBallLight this)
 	Base::destructor();
 }
 
-void PongBallLight::ready(PongBallLight this, bool recursive)
+void PongBallLight::ready(bool recursive)
 {
-	ASSERT(this, "PongBallLight::ready: null this");
-
 	// call base
 	Base::ready(this, recursive);
 
-	this->pongBall = __SAFE_CAST(PongBall, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
+	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
 	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject::getPosition(this->pongBall)->z;
 	this->followPongBall = true;
-	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(__SAFE_CAST(Object, this->pongBall), __SAFE_CAST(Object, this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
-void PongBallLight::update(PongBallLight this, u32 elapsedTime)
+void PongBallLight::update(u32 elapsedTime)
 {
 	Base::update(this, elapsedTime);
 
@@ -125,20 +105,20 @@ void PongBallLight::update(PongBallLight this, u32 elapsedTime)
 
 		Scale localScale = this->transformation.localScale;
 		localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __FIX10_6_DIV(this->pongBallInitialZDistance, this->transformation.globalPosition.z - (pongBallPosition->z - Z_SCALING_COMPENSATION))));
-		Container::setLocalScale(__SAFE_CAST(Container, this), &localScale);
+		Container::setLocalScale(Container::safeCast(this), &localScale);
 	}
 }
 
-static void PongBallLight::onPongBallHitFloor(PongBallLight this, Object eventFirer __attribute__ ((unused)))
+void PongBallLight::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kFollowPongBall, NULL);
 }
 
-static void PongBallLight::onPongBallHitCeiling(PongBallLight this, Object eventFirer __attribute__ ((unused)))
+void PongBallLight::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, __SAFE_CAST(Object, this), __SAFE_CAST(Object, this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kFollowPongBall, NULL);
 /*
 	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
 	displacement.parallax = -5;
@@ -146,11 +126,11 @@ static void PongBallLight::onPongBallHitCeiling(PongBallLight this, Object event
 
 	Scale localScale = this->transformation.localScale;
 	localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __I_TO_FIX10_6(2)));
-	Container::setLocalScale(__SAFE_CAST(Container, this), &localScale);
+	Container::setLocalScale(Container::safeCast(this), &localScale);
 	*/
 }
 
-bool PongBallLight::handleMessage(PongBallLight this, Telegram telegram)
+bool PongBallLight::handleMessage(Telegram telegram)
 {
 	// process message
 	switch(Telegram::getMessage(telegram))

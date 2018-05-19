@@ -42,8 +42,8 @@ typedef const TransitionEntityDefinition TransitionEntityROMDef;
 class TransitionEntity : AnimatedEntity
 {
 
-	void constructor(TransitionEntity this, const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
-	void onTransitionComplete(TransitionEntity this, Object eventFirer);
+	void constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
+	void onTransitionComplete(Object eventFirer);
 }
 
 

@@ -50,76 +50,60 @@
 extern StageROMDef PLAYFIELD_STAGE_ST;
 
 
-//---------------------------------------------------------------------------------------------------------
-//												PROTOTYPES
-//---------------------------------------------------------------------------------------------------------
-
-
-void PongState::constructor(PongState this);
-static void PongState::onTransitionOutComplete(PongState this, Object eventFirer);
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void __attribute__ ((noinline)) PongState::constructor(PongState this)
+void PongState::constructor()
 {
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void PongState::destructor(PongState this)
+void PongState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(__SAFE_CAST(Object, this), __SAFE_CAST(Object, this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
-	__SINGLETON_DESTROY;
+	Base::destructor();
 }
 
 // state's enter
-void PongState::enter(PongState this, void* owner)
+void PongState::enter(void* owner)
 {
 	// call base
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(__SAFE_CAST(GameState, this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&PLAYFIELD_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState::startClocks(__SAFE_CAST(GameState, this));
+	GameState::startClocks(GameState::safeCast(this));
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
 
-	Player::getReady(Player::getInstance(), __SAFE_CAST(GameState, this));
+	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
 	// show screen
 	BrightnessManager::showScreen(BrightnessManager::getInstance());
 }
 
 // state's exit
-void PongState::exit(PongState this, void* owner)
+void PongState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 }
 
 // state's resume
-void PongState::resume(PongState this, void* owner)
+void PongState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -127,14 +111,14 @@ void PongState::resume(PongState this, void* owner)
 }
 
 // state's suspend
-void PongState::suspend(PongState this, void* owner)
+void PongState::suspend(void* owner)
 {
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
 	Base::suspend(this, owner);
 }
 
-void PongState::processUserInput(PongState this, UserInput userInput)
+void PongState::processUserInput(UserInput userInput)
 {
 
 	if(userInput.pressedKey & ~K_PWR)
@@ -148,30 +132,30 @@ void PongState::processUserInput(PongState this, UserInput userInput)
 
 				// set next state of adjustment screen state to null so it can differentiate between
 				// being called the splash screen sequence or from within the game (a bit hacky...)
-//				SplashScreenState::setNextState(__SAFE_CAST(SplashScreenState, AdjustmentScreenState::getInstance()), NULL);
+//				SplashScreenState::setNextState(SplashScreenState::safeCast(AdjustmentScreenState::getInstance()), NULL);
 
 				// pause game and switch to adjustment screen state
-//				Game::pause(Game::getInstance(), __SAFE_CAST(GameState, AdjustmentScreenState::getInstance()));
+//				Game::pause(Game::getInstance(), GameState::safeCast(AdjustmentScreenState::getInstance()));
 
 				return;
 			}
 			else if(K_STA & userInput.pressedKey)
 			{
 				// pause game and switch to pause screen state
-//				Game::pause(Game::getInstance(), __SAFE_CAST(GameState, PauseScreenState::getInstance()));
+//				Game::pause(Game::getInstance(), GameState::safeCast(PauseScreenState::getInstance()));
 
 				return;
 			}
 		}
 
-	//	Object::fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+	//	Object::fireEvent(Object::safeCast(this), kEventUserInput);
 
 	/*
 		// disable user input
 		Game::disableKeypad(Game::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = __SAFE_CAST(AnimatedEntity, Container::getChildByName(__SAFE_CAST(Container, Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -179,17 +163,15 @@ void PongState::processUserInput(PongState this, UserInput userInput)
 	*/
 	}
 
-	Object::fireEvent(__SAFE_CAST(Object, this), kEventUserInput);
+	Object::fireEvent(Object::safeCast(this), kEventUserInput);
 
 }
 
 // handle event
-static void PongState::onTransitionOutComplete(PongState this __attribute__ ((unused)), Object eventFirer __attribute__ ((unused)))
+void PongState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	ASSERT(this, "PongState::onTransitionOutComplete: null this");
-
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
-	Player::gameIsOver(Player::getInstance(), __SAFE_CAST(GameState, this));
+	Player::gameIsOver(Player::getInstance(), GameState::safeCast(this));
 }

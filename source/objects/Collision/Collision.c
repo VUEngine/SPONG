@@ -35,28 +35,11 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
-//---------------------------------------------------------------------------------------------------------
-
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-
-
-//---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// always call these two macros next to each other
-
-
-
 // class's constructor
-void Collision::constructor(Collision this, EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
+void Collision::constructor(EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
 	Base::constructor(entityDefinition, id, internalId, name);
@@ -65,7 +48,7 @@ void Collision::constructor(Collision this, EntityDefinition* entityDefinition, 
  }
 
 // class's destructor
-void Collision::destructor(Collision this)
+void Collision::destructor()
 {
 	// delete the super object
 	// must always be called at the end of the destructor
@@ -73,23 +56,19 @@ void Collision::destructor(Collision this)
 }
 
 // set extra info
-void Collision::setExtraInfo(Collision this, void* extraInfo)
+void Collision::setExtraInfo(void* extraInfo)
 {
-	ASSERT(this, "Collision::setExtraInfo: null this");
-
 	this->size = Size::getFromPixelSize(((CollisionExtraInfo*)extraInfo)->size);
 	this->shapeLayers = (((CollisionExtraInfo*)extraInfo)->shapeLayers);
 }
 
-void Collision::initialTransform(Collision this, Transformation* environmentTransform, u32 recursive)
+void Collision::initialTransform(Transformation* environmentTransform, u32 recursive)
 {
-	ASSERT(this, "Collision::setExtraInfo: null this");
-
 	Base::initialTransform(this, environmentTransform, recursive);
 
 	if(!this->shapes)
 	{
-		this->shapes = __NEW(VirtualList);
+		this->shapes = new VirtualList();
 
 		ShapeDefinition shapeDefinition =
 		{
@@ -118,11 +97,11 @@ void Collision::initialTransform(Collision this, Transformation* environmentTran
 			kNoLayer,
 		};
 
-		Shape shape = CollisionManager::createShape(Game::getCollisionManager(Game::getInstance()), __SAFE_CAST(SpatialObject, this), &shapeDefinition);
+		Shape shape = CollisionManager::createShape(Game::getCollisionManager(Game::getInstance()), SpatialObject::safeCast(this), &shapeDefinition);
 
-		const Vector3D* myPosition = Entity::getPosition(__SAFE_CAST(Entity, this));
-		const Rotation* myRotation = Entity::getRotation(__SAFE_CAST(Entity, this));
-		const Scale* myScale = Entity::getScale(__SAFE_CAST(Entity, this));
+		const Vector3D* myPosition = Entity::getPosition(Entity::safeCast(this));
+		const Rotation* myRotation = Entity::getRotation(Entity::safeCast(this));
+		const Scale* myScale = Entity::getScale(Entity::safeCast(this));
 
 		 Shape::position(shape, myPosition, myRotation, myScale, &this->size);
 

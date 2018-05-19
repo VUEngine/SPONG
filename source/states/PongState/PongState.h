@@ -38,11 +38,11 @@ singleton class PongState : GameState
 {
 	static PongState getInstance();
 
-	override void enter(PongState this, void* owner);
-	override void exit(PongState this, void* owner);
-	override void resume(PongState this, void* owner);
-	override void suspend(PongState this, void* owner);
-	override void processUserInput(PongState this, UserInput userInput);
+	override void enter(void* owner);
+	override void exit(void* owner);
+	override void resume(void* owner);
+	override void suspend(void* owner);
+	override void processUserInput(UserInput userInput);
 }
 
 
