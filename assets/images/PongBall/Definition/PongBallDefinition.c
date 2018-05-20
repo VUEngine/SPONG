@@ -35,7 +35,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern BYTE PongBallTiles[];
-extern BYTE PongBallMap[];
+extern BYTE PongBallLMap[];
+extern BYTE PongBallRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ CharSetROMDef PONG_BALL_CH =
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	4,
+	12,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
@@ -57,13 +58,15 @@ CharSetROMDef PONG_BALL_CH =
 	PongBallTiles,
 };
 
-TextureROMDef PONG_BALL_TX =
+/* Left */
+
+TextureROMDef PONG_BALL_L_TX =
 {
 	// charset definition
 	(CharSetDefinition*)&PONG_BALL_CH,
 
 	// bgmap definition
-	PongBallMap,
+	PongBallLMap,
 
 	// cols (max 64)
 	3,
@@ -86,14 +89,14 @@ TextureROMDef PONG_BALL_TX =
 	false,
 };
 
-BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
+BgmapSpriteROMDef PONG_BALL_L_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture definition
-		(TextureDefinition*)&PONG_BALL_TX,
+		(TextureDefinition*)&PONG_BALL_L_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -110,16 +113,77 @@ BgmapSpriteROMDef PONG_BALL_AC_SPRITE =
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
-	__WORLD_ON,
+	__WORLD_LON,
 };
 
-BgmapSpriteROMDef* const PONG_BALL_AC_SPRITES[] =
+/* Right */
+
+TextureROMDef PONG_BALL_R_TX =
 {
-	&PONG_BALL_AC_SPRITE,
+	// charset definition
+	(CharSetDefinition*)&PONG_BALL_CH,
+
+	// bgmap definition
+	PongBallRMap,
+
+	// cols (max 64)
+	3,
+
+	// rows (max 64)
+	3,
+
+	// padding for affine/hbias transformations (cols, rows)
+	{12, 12},
+
+	// number of frames, depending on charset's allocation type:
+	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
+	// __ANIMATED_MULTI: total number of frames
+	1,
+
+	// palette number (0-3)
+	0,
+
+	// recyclable
+	false,
+};
+
+BgmapSpriteROMDef PONG_BALL_R_SPRITE =
+{
+	{
+		// sprite's type
+		__TYPE(BgmapSprite),
+
+		// texture definition
+		(TextureDefinition*)&PONG_BALL_R_TX,
+
+		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
+		__TRANSPARENCY_NONE,
+
+		// displacement
+		{0, 0, 0, 0},
+	},
+
+	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
+	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
+	__WORLD_AFFINE,
+
+	// pointer to affine/hbias manipulation function
+	NULL,
+
+	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
+	__WORLD_RON,
+};
+
+/* Entity */
+
+BgmapSpriteROMDef* const PONG_BALL_SPRITES[] =
+{
+	&PONG_BALL_L_SPRITE,
+	&PONG_BALL_R_SPRITE,
 	NULL
 };
 
-ShapeROMDef PONG_BALL_AC_SHAPES[] =
+ShapeROMDef PONG_BALL_SHAPES[] =
 {
 	// ball
 	{
@@ -151,7 +215,7 @@ ShapeROMDef PONG_BALL_AC_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
 };
 
-PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
+PhysicalSpecificationROMDef PONG_BALL_PHYSICAL_PROPERTIES =
 {
 	// mass
 	__F_TO_FIX10_6(0.4f),
@@ -166,7 +230,7 @@ PhysicalSpecificationROMDef PONG_BALL_AC_PHYSICAL_PROPERTIES =
 	{__I_TO_FIX10_6(8), __I_TO_FIX10_6(6), __I_TO_FIX10_6(13)}
 };
 
-PongBallROMDef PONG_BALL_AC =
+PongBallROMDef PONG_BALL_PB =
 {
 	{
 		{
@@ -175,10 +239,10 @@ PongBallROMDef PONG_BALL_AC =
 				__TYPE(PongBall),
 
 				// sprites
-				(SpriteROMDef**)PONG_BALL_AC_SPRITES,
+				(SpriteROMDef**)PONG_BALL_SPRITES,
 
 				// collision shapes
-				(ShapeDefinition*)PONG_BALL_AC_SHAPES,
+				(ShapeDefinition*)PONG_BALL_SHAPES,
 
 				// size
 				// if 0, width and height will be inferred from the first sprite's texture's size
@@ -188,7 +252,7 @@ PongBallROMDef PONG_BALL_AC =
 				kPongBallType,
 
 				// physical specification
-				(PhysicalSpecification*)&PONG_BALL_AC_PHYSICAL_PROPERTIES,
+				(PhysicalSpecification*)&PONG_BALL_PHYSICAL_PROPERTIES,
 			},
 
 			// pointer to the animation definition for the character
