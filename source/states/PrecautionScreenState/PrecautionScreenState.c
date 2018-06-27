@@ -47,7 +47,6 @@ extern StageROMDef PRECAUTION_SCREEN_STAGE_ST;
 extern const u16 COLLECT_SND[];
 
 
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
@@ -105,9 +104,6 @@ bool PrecautionScreenState::processMessage(void* owner __attribute__ ((unused)),
 
 void PrecautionScreenState::enter(void* owner)
 {
-	// init progress manager
-	ProgressManager::initialize(ProgressManager::getInstance());
-
 	// call base
 	Base::enter(this, owner);
 }

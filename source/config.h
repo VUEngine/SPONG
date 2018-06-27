@@ -24,6 +24,16 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//												COMPONENTS
+//---------------------------------------------------------------------------------------------------------
+
+#define __SAVE_DATA_MANAGER_ENABLED
+#define __AUTOMATIC_PAUSE_MANAGER_ENABLED
+
+#define __SAVE_DATA_MANAGER_SAVE_STAMP						"Spoooong"
+
+
+//---------------------------------------------------------------------------------------------------------
 //											DEBUGGING/ PROFILING
 //---------------------------------------------------------------------------------------------------------
 
@@ -387,41 +397,6 @@
 #define __OBJECT_PALETTE_1						__BGMAP_PALETTE_1
 #define __OBJECT_PALETTE_2						__BGMAP_PALETTE_2
 #define __OBJECT_PALETTE_3						__BGMAP_PALETTE_3
-
-
-//---------------------------------------------------------------------------------------------------------
-//											LOW BATTERY INDICATOR
-//---------------------------------------------------------------------------------------------------------
-
-// When defined, the engine's default low battery indicator is used
-#define __LOW_BATTERY_INDICATOR
-
-// Position of low battery indicator
-#define __LOW_BATTERY_INDICATOR_POS_X			45
-#define __LOW_BATTERY_INDICATOR_POS_Y			1
-
-// Delay between showing/not showing the low battery indicator (in milliseconds)
-#define __LOW_BATTERY_INDICATOR_BLINK_DELAY		500
-
-/* Wait this long after first receiving the PWR signal
- * before showing the low battery indicator (in milliseconds)
- */
-#define __LOW_BATTERY_INDICATOR_INITIAL_DELAY	2000
-
-
-//---------------------------------------------------------------------------------------------------------
-//											AUTOMATIC PAUSE
-//---------------------------------------------------------------------------------------------------------
-
-// Amount of time after which to show auto pause (in milliseconds)
-#define __AUTO_PAUSE_DELAY						(30 * 60 * 1000)
-
-/* The automatic pause state is not pushed until
- * there is only one state in the game's stack.
- * the following defines the time between checks
- * whether the condition is met (in milliseconds)
- */
-#define __AUTO_PAUSE_RECHECK_DELAY				(60 * 1000)
 
 
 //---------------------------------------------------------------------------------------------------------

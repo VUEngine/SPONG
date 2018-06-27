@@ -45,7 +45,6 @@
 extern StageROMDef LANG_SELECT_SCREEN_STAGE_ST;
 
 
-
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
@@ -83,7 +82,7 @@ void LangSelectScreenState::changeLanguage(bool forward)
 		? (this->language < (numLangs - 1)) ? this->language + 1 : 0
 		: (this->language > 0) ? this->language - 1 : numLangs - 1;
 	I18n::setActiveLanguage(I18n::getInstance(), this->language);
-	ProgressManager::setLanguage(ProgressManager::getInstance(), this->language);
+	SaveDataManager::setLanguage(ProgressManager::getInstance(), this->language);
 	LangSelectScreenState::print(this);
 }
 

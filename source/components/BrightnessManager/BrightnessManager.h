@@ -45,9 +45,7 @@ singleton class BrightnessManager : Object
 {
 	u8 brightnessFactor;
 
-	// declare a BrightnessManager
 	static BrightnessManager getInstance();
-
 	void showScreen();
 	void hideScreen();
 	void setBrightnessFactor(u8 brightnessFactor);

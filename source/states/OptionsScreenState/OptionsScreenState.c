@@ -39,7 +39,7 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
-#include <AutoPauseScreenState.h>
+#include <AutoPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 
@@ -49,7 +49,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern StageROMDef OPTIONS_SCREEN_STAGE_ST;
-
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -153,7 +152,7 @@ void OptionsScreenState::switchLanguage(bool forward)
 		? (language < (numLangs - 1)) ? language + 1 : 0
 		: (language > 0) ? language - 1 : numLangs - 1;
 	I18n::setActiveLanguage(I18n::getInstance(), language);
-	ProgressManager::setLanguage(ProgressManager::getInstance(), language);
+	SaveDataManager::setLanguage(ProgressManager::getInstance(), language);
 
 	// fire event to re-translate all entities
 	Object::fireEvent(Object::safeCast(this), kEventLanguageChanged);
@@ -161,7 +160,7 @@ void OptionsScreenState::switchLanguage(bool forward)
 
 void OptionsScreenState::updateAutomaticPauseCheckBox()
 {
-	bool autoPauseEnabled = (Game::getAutomaticPauseState(Game::getInstance()) != NULL);
+	bool autoPauseEnabled = AutoPauseManager::isActive(AutoPauseManager::getInstance());
 	AnimatedEntity autoPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "APChckBx", true));
 	if(autoPauseCheckBoxEntity)
 	{
@@ -197,15 +196,13 @@ void OptionsScreenState::switchBrightness(bool forward)
 void OptionsScreenState::toggleAutomaticPause()
 {
 	// (un)set auto pause state
-	bool autoPauseEnabled = (Game::getAutomaticPauseState(Game::getInstance()) != NULL);
+	bool autoPauseEnabled = AutoPauseManager::isActive(AutoPauseManager::getInstance());
 	autoPauseEnabled = !autoPauseEnabled;
-	Game::setAutomaticPauseState(Game::getInstance(), autoPauseEnabled
-		? GameState::safeCast(AutoPauseScreenState::getInstance())
-		: NULL
-	);
+
+	AutoPauseManager::setActive(AutoPauseManager::getInstance(), autoPauseEnabled);
 
 	// write state to sram
-	ProgressManager::setAutomaticPauseStatus(ProgressManager::getInstance(), autoPauseEnabled);
+	SaveDataManager::setAutomaticPauseStatus(ProgressManager::getInstance(), autoPauseEnabled);
 
 	// update visual representation
 	OptionsScreenState::updateAutomaticPauseCheckBox(this);
@@ -240,7 +237,7 @@ void OptionsScreenState::processUserInputModeShowOptions(UserInput userInput)
 		switch(this->option)
 		{
 			case kOptionScreenOptionLanguage:
-				OptionsScreenState::switchLanguage(this, (K_LR | K_RR) & userInput.pressedKey);
+				OptionsScreenState::switchLanguage(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
 				break;
 
 			case kOptionScreenOptionAutomaticPause:
@@ -248,7 +245,7 @@ void OptionsScreenState::processUserInputModeShowOptions(UserInput userInput)
 				break;
 
 			case kOptionScreenOptionBrightness:
-				OptionsScreenState::switchBrightness(this, (K_LR | K_RR) & userInput.pressedKey);
+				OptionsScreenState_switchBrightness(this, (K_LR & userInput.pressedKey) || (K_RR & userInput.pressedKey));
 				break;
 		}
 	}

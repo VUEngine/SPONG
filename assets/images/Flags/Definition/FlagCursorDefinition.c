@@ -118,7 +118,7 @@ BgmapSpriteROMDef* const FLAG_CURSOR_SPRITES[] =
 	NULL
 };
 
-EntityROMDef FLAG_CURSOR_IM =
+EntityROMDef FLAG_CURSOR_EN =
 {
 	// class allocator
 	__TYPE(Entity),

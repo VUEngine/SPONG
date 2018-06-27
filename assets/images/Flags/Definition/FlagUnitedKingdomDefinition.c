@@ -118,7 +118,7 @@ BgmapSpriteROMDef* const FLAG_UNITED_KINGDOM_SPRITES[] =
 	NULL
 };
 
-EntityROMDef FLAG_UNITED_KINGDOM_IM =
+EntityROMDef FLAG_UNITED_KINGDOM_EN =
 {
 	// class allocator
 	__TYPE(Entity),

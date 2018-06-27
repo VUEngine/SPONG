@@ -24,7 +24,9 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <ProgressManager.h>
+#include <AutoPauseManager.h>
+#include <LowBatteryIndicatorManager.h>
 #include <PrecautionScreenState.h>
 
 
@@ -34,6 +36,11 @@
 
 int main(void)
 {
+	// initialize components
+	AutoPauseManager::setActive(AutoPauseManager::getInstance(), true);
+	LowBatteryIndicatorManager::setActive(LowBatteryIndicatorManager::getInstance(), true);
+	ProgressManager::restoreSettings(ProgressManager::getInstance());
+
 	// start the game
 	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
 

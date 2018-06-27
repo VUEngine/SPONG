@@ -34,31 +34,19 @@
 #include <ProgressManager.h>
 #include <SRAMManager.h>
 #include <Utilities.h>
-#include <AutoPauseScreenState.h>
 #include <BrightnessManager.h>
 #include <macros.h>
-
-
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// it's a singleton
-
-
 // class's constructor
 void ProgressManager::constructor()
 {
 	// construct base object
 	Base::constructor();
-
-	// init class variables
-	this->sramAvailable = false;
 }
 
 // class's destructor
@@ -68,147 +56,12 @@ void ProgressManager::destructor()
 	Base::destructor();
 }
 
-// write then immediately read save stamp to validate sram
-bool ProgressManager::verifySaveStamp()
+void ProgressManager::restoreSettings()
 {
-	char saveStamp[SAVE_STAMP_LENGTH];
+	Base::restoreSettings(this);
 
-	// write save stamp
-	SRAMManager::save(SRAMManager::getInstance(), (BYTE*)SAVE_STAMP, offsetof(struct SaveData, saveStamp), sizeof(saveStamp));
-
-	// read save stamp
-	SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&saveStamp, offsetof(struct SaveData, saveStamp), sizeof(saveStamp));
-
-	return !strncmp(saveStamp, SAVE_STAMP, SAVE_STAMP_LENGTH);
-}
-
-u32 ProgressManager::computeChecksum()
-{
-	u32 crc32 = ~0;
-
-	// iterate over whole save data, starting right after the previously saved checksum
-	int i = (offsetof(struct SaveData, checksum) + sizeof(crc32));
-	for(; i < (int)sizeof(SaveData); i++)
-	{
-		// get the current byte
-		u8 currentByte;
-		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&currentByte, i, sizeof(currentByte));
-
-		// loop over all bits of the current byte and add to checksum
-		u8 bit = 0;
-		for(; bit < sizeof(currentByte); bit++)
-		{
-			if((crc32 & 1) != GET_BIT(currentByte, bit))
-			{
-				crc32 = (crc32 >> 1) ^ 0xEDB88320;
-			}
-			else
-			{
-				crc32 = (crc32 >> 1);
-			}
-		}
-	}
-
-	return ~crc32;
-}
-
-void ProgressManager::writeChecksum()
-{
-	u32 checksum = ProgressManager::computeChecksum(this);
-	SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&checksum, offsetof(struct SaveData, checksum), sizeof(checksum));
-}
-
-bool ProgressManager::verifyChecksum()
-{
-	u32 computedChecksum = ProgressManager::computeChecksum(this);
-	u32 savedChecksum = 0;
-	SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&savedChecksum, offsetof(struct SaveData, checksum), sizeof(savedChecksum));
-
-	return (computedChecksum == savedChecksum);
-}
-
-void ProgressManager::initialize()
-{
-	// verify sram validity
-	if(ProgressManager::verifySaveStamp(this))
-	{
-		// set sram available flag
-		this->sramAvailable = true;
-
-		// verify saved progress presence and integrity
-		if(!ProgressManager::verifyChecksum(this))
-		{
-			// if no previous save could be verified, completely erase sram to start clean
-			SRAMManager::clear(SRAMManager::getInstance(), 0, (int)sizeof(SaveData));
-
-			ProgressManager::setBrightnessFactor(this, DEFAULT_BRIGHTNESS_FACTOR);
-
-			// write checksum
-			ProgressManager::writeChecksum(this);
-		}
-
-		// load and set active language
-		I18n::setActiveLanguage(I18n::getInstance(), ProgressManager::getLanguage(this));
-
-		// load and set auto pause state
-		Game::setAutomaticPauseState(Game::getInstance(), ProgressManager::getAutomaticPauseStatus(this)
-			? GameState::safeCast(AutoPauseScreenState::getInstance())
-			: NULL
-		);
-
-		// load and set brightness factor
-		BrightnessManager::setBrightnessFactor(BrightnessManager::getInstance(), ProgressManager::getBrightnessFactor(this));
-	}
-}
-
-u8 ProgressManager::getLanguage()
-{
-	u8 languageId = 0;
-	if(this->sramAvailable)
-	{
-		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&languageId, offsetof(struct SaveData, languageId), sizeof(languageId));
-	}
-
-	return languageId;
-}
-
-void ProgressManager::setLanguage(u8 languageId)
-{
-	if(this->sramAvailable)
-	{
-		// write language
-		SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&languageId, offsetof(struct SaveData, languageId), sizeof(languageId));
-
-		// write checksum
-		ProgressManager::writeChecksum(this);
-	}
-}
-
-bool ProgressManager::getAutomaticPauseStatus()
-{
-	u8 autoPauseStatus = 0;
-	if(this->sramAvailable)
-	{
-		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&autoPauseStatus, offsetof(struct SaveData, autoPauseStatus), sizeof(autoPauseStatus));
-	}
-
-	return !autoPauseStatus;
-}
-
-void ProgressManager::setAutomaticPauseStatus(u8 autoPauseStatus)
-{
-	if(this->sramAvailable)
-	{
-		// we save the inverted status, so that 0 = enabled, 1 = disabled.
-		// that way, a blank value means enabled, which is the standard setting.
-		autoPauseStatus = !autoPauseStatus;
-
-		// write auto pause status
-		SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&autoPauseStatus, offsetof(struct SaveData, autoPauseStatus), sizeof(autoPauseStatus));
-
-		// write checksum
-		ProgressManager::writeChecksum(this);
-	}
+	// load and set brightness factor
+	BrightnessManager::setBrightnessFactor(BrightnessManager::getInstance(), ProgressManager::getBrightnessFactor(this));
 }
 
 u8 ProgressManager::getBrightnessFactor()
@@ -216,7 +69,7 @@ u8 ProgressManager::getBrightnessFactor()
 	u8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
 	if(this->sramAvailable)
 	{
-		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct SaveData, brightnessFactor), sizeof(brightnessFactor));
+		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct GameSaveData, brightnessFactor), sizeof(brightnessFactor));
 	}
 
 	return brightnessFactor;
@@ -227,9 +80,9 @@ void ProgressManager::setBrightnessFactor(u8 brightnessFactor)
 	if(this->sramAvailable)
 	{
 		// write auto brightness factor
-		SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct SaveData, brightnessFactor), sizeof(brightnessFactor));
+		SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct GameSaveData, brightnessFactor), sizeof(brightnessFactor));
 
 		// write checksum
-		ProgressManager::writeChecksum(this);
+		SaveDataManager::writeChecksum(this);
 	}
 }

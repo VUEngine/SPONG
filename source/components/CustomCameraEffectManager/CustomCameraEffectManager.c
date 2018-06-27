@@ -54,9 +54,6 @@ static Camera _camera = NULL;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// it's a singleton
-
-
 // class's constructor
 void CustomCameraEffectManager::constructor()
 {
