@@ -92,7 +92,7 @@ StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
 			// z
 			0,
 			// p
-			0
+			0,
 		},
 
 		// camera's frustum
@@ -108,7 +108,7 @@ StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
         	// y1
         	__SCREEN_HEIGHT,
         	// z1
-        	__SCREEN_WIDTH * 5
+        	__SCREEN_WIDTH * 5,
         }
 	},
 
@@ -235,7 +235,7 @@ StageROMDef ADJUSTMENT_SCREEN_STAGE_ST =
 		{
 			__I_TO_FIX10_6(0),
 			__F_TO_FIX10_6(0),
-			__I_TO_FIX10_6(0)
+			__I_TO_FIX10_6(0),
 		},
 
 		// friction
