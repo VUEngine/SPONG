@@ -32,16 +32,19 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
+//											TYPE DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
 typedef const AnimatedEntityDefinition TransitionEntityDefinition;
 typedef const TransitionEntityDefinition TransitionEntityROMDef;
 
 
+//---------------------------------------------------------------------------------------------------------
+//											CLASS'S DECLARATION
+//---------------------------------------------------------------------------------------------------------
+
 class TransitionEntity : AnimatedEntity
 {
-
 	void constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
 	void onTransitionComplete(Object eventFirer);
 }
