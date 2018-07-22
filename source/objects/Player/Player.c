@@ -123,7 +123,8 @@ void Player::gameIsOver(GameState gameState)
 
 // process user input
 void Player::onUserInput(Object eventFirer __attribute__ ((unused)))
-{	ASSERT(PongState::safeCast(eventFirer), "Player::onUserInput: wrong event firer");
+{
+	ASSERT(PongState::safeCast(eventFirer), "Player::onUserInput: wrong event firer");
 
 	UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
 

@@ -43,6 +43,7 @@ extern EntityDefinition OPTIONS_HEADER_LE;
 extern EntityDefinition OPTIONS_LANGUAGE_LE;
 extern EntityDefinition LANGUAGE_NAME_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
+extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -63,6 +64,7 @@ PositionedEntityROMDef OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
 	{&OPTIONS_BRIGHTNESS_LE,		{144, 124,  0,  0},   	0, NULL, NULL, NULL, false},
 	{&BRIGHTNESS_METER_AE,			{232, 124,  0,  0},   	0, "BrghtnMt", NULL, NULL, false},
 
+	{&LOW_BATTERY_INDICATOR_LB, 	{ 16,  12,  0,  0}, 	0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},

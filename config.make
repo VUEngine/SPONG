@@ -1,7 +1,7 @@
 # VUEngine based components that the project uses
-COMPONENTS = 	vuengine-components/fonts/IndustrialFont												\
+COMPONENTS =	vuengine-components/entities/LowBatteryIndicatorEntity									\
+				vuengine-components/fonts/IndustrialFont												\
 				vuengine-components/other/AutomaticPause												\
-				vuengine-components/other/LowBatteryIndicator											\
 				vuengine-components/other/SaveDataManager												\
 
 # Compiler's output

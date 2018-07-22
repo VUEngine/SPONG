@@ -141,7 +141,8 @@ bool PongBall::handleMessage(Telegram telegram)
 }
 
 bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
-{	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
+{
+	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
 
 	Shape collidingShape = collisionInformation->collidingShape;
 	SpatialObject collidingObject = Shape::getOwner(collidingShape);
