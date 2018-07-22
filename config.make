@@ -1,5 +1,6 @@
 # VUEngine based components that the project uses
-COMPONENTS = 	vuengine-components/other/AutomaticPause												\
+COMPONENTS = 	vuengine-components/fonts/IndustrialFont												\
+				vuengine-components/other/AutomaticPause												\
 				vuengine-components/other/LowBatteryIndicator											\
 				vuengine-components/other/SaveDataManager												\
 

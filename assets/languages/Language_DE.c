@@ -41,37 +41,11 @@ extern EntityDefinition FLAG_GERMANY_EN;
 /*
  * IMPORTANT: Ensure that this file is encoded in Windows-1252 or ISO-8859-1 ("ANSI") to make use
  * of the full extended ASCII character set including special characters of European languages.
- *
- * The following character is meant to prevent editors from loading this file as UTF-8, since it doesn't
- * form part of a valid UTF-8 byte sequence: £
  */
 
 const char* const LANGUAGE_DE_STRINGS[] =
 {
-	/* General */
-
-	/* STR_ARE_YOU_SURE */				"Bist Du sicher?",
-	/* STR_AUTOMATIC_PAUSE */			"Automatische Pause",
-	/* STR_BACK */						"Zurück",
-	/* STR_CREDITS */					"Mitwirkende",
-	/* STR_IMPORTANT */					"Wichtig",
-	/* STR_LANGUAGE */					"Sprache",
-	/* STR_LANGUAGE_SELECT */			"Sprachauswahl",
-	/* STR_NO */						"Nein",
-	/* STR_OFF */						"Aus",
-	/* STR_ON */						"An",
-	/* STR_OPTIONS */					"Optionen",
-	/* STR_PAUSE */						"Pause",
-	/* STR_PRESS_START_BUTTON */		"Start-Knopf drücken",
-	/* STR_PROGRESS_WILL_BE_ERASED */	"Dein kompletter Fortschritt wird gelöscht.",
-	/* STR_SELECT */					"Auswählen",
-	/* STR_TAKE_A_REST */				"Bitte mache eine Pause!",
-	/* STR_YES */						"Ja",
-
-	/* Splash Screens */
-
-	/* STR_PRECAUTION_SCREEN_TEXT */	"   Lesen Sie vor dem\n\n Spielen die Anleitung\n\nund Sicherheitshinweise",
-	/* STR_AUTO_PAUSE_EXPLANATION */	" Die Automatische Pause Funktion\nerinnert dich daran, das Spiel ca.\n  alle 30 Minuten zu pausieren",
+	""
 };
 
 const LangROMDef LANGUAGE_DE =

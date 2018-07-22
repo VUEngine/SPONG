@@ -41,37 +41,11 @@ extern EntityDefinition FLAG_FRANCE_EN;
 /*
  * IMPORTANT: Ensure that this file is encoded in Windows-1252 or ISO-8859-1 ("ANSI") to make use
  * of the full extended ASCII character set including special characters of European languages.
- *
- * The following character is meant to prevent editors from loading this file as UTF-8, since it doesn't
- * form part of a valid UTF-8 byte sequence: £
  */
 
 const char* const LANGUAGE_FR_STRINGS[] =
 {
-	/* General */
-
-	/* STR_ARE_YOU_SURE */				"Es tu sûr?",
-	/* STR_AUTOMATIC_PAUSE */			"Pause Automatique",
-	/* STR_BACK */						"Arrière",
-	/* STR_CREDITS */					"Crédits",
-	/* STR_IMPORTANT */					"Important",
-	/* STR_LANGUAGE */					"Langue",
-	/* STR_LANGUAGE_SELECT */			"Choix de la langue",
-	/* STR_NO */						"Non",
-	/* STR_OFF */						"Desactivé",
-	/* STR_ON */						"Activé",
-	/* STR_OPTIONS */					"Options",
-	/* STR_PAUSE */						"Pause",
-	/* STR_PRESS_START_BUTTON */		"Appuyer sur Start",
-	/* STR_PROGRESS_WILL_BE_ERASED */	"Tout vôtre progrès sera effacé.",
-	/* STR_SELECT */					"Sélectionner",
-	/* STR_TAKE_A_REST */				"Se il vous plaît, prendre un repos!",
-	/* STR_YES */						"Oui",
-
-	/* Splash Screens */
-
-	/* STR_PRECAUTION_SCREEN_TEXT */	"Prenez conaissance de la\n\nnotice et des précautions\n\na avant de jouer",
-	/* STR_AUTO_PAUSE_EXPLANATION */	"  La fonction Pause automatique va\nvous rappelerez de prendre une pause\n  de jeu chaque 30 minutes environ",
+	""
 };
 
 const LangROMDef LANGUAGE_FR =

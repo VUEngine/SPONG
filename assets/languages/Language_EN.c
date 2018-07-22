@@ -41,37 +41,11 @@ extern EntityDefinition FLAG_UNITED_KINGDOM_EN;
 /*
  * IMPORTANT: Ensure that this file is encoded in Windows-1252 or ISO-8859-1 ("ANSI") to make use
  * of the full extended ASCII character set including special characters of European languages.
- *
- * The following character is meant to prevent editors from loading this file as UTF-8, since it doesn't
- * form part of a valid UTF-8 byte sequence: £
  */
 
 const char* const LANGUAGE_EN_STRINGS[] =
 {
-	/* General */
-
-	/* STR_ARE_YOU_SURE */				"Are you sure?",
-	/* STR_AUTOMATIC_PAUSE */			"Automatic Pause",
-	/* STR_BACK */						"Back",
-	/* STR_CREDITS */					"Credits",
-	/* STR_IMPORTANT */					"Important",
-	/* STR_LANGUAGE */					"Language",
-	/* STR_LANGUAGE_SELECT */			"Language Select",
-	/* STR_NO */						"No",
-	/* STR_OFF */						"Off",
-	/* STR_ON */						"On",
-	/* STR_OPTIONS */					"Options",
-	/* STR_PAUSE */						"Pause",
-	/* STR_PRESS_START_BUTTON */		"Press Start Button",
-	/* STR_PROGRESS_WILL_BE_ERASED */	"All your progress will be erased.",
-	/* STR_SELECT */					"Select",
-	/* STR_TAKE_A_REST */				"Please take a rest!",
-	/* STR_YES */						"Yes",
-
-	/* Splash Screens */
-
-	/* STR_PRECAUTION_SCREEN_TEXT */	"Read Instruction and\n\nPrecaution Booklets\n\n  before operating",
-	/* STR_AUTO_PAUSE_EXPLANATION */	"The Automatic Pause feature will\nremind you to take a break from\nplaying approx. every 30 minutes",
+	""
 };
 
 const LangROMDef LANGUAGE_EN =

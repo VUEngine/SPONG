@@ -86,6 +86,7 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// print pause text
+/*
 	const char* strPause = I18n::getText(I18n::getInstance(), STR_PAUSE);
 	FontSize strPauseSize = Printing::getTextSize(Printing::getInstance(), strPause, NULL);
 	Printing::text(
@@ -95,8 +96,10 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 		14,
 		NULL
 	);
+*/
 
 	// show menu
+	/*
 	VirtualList options = new VirtualList();
 	Option* option = NULL;
 
@@ -128,7 +131,7 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 		this->optionsSelector,
 		(((__SCREEN_WIDTH_IN_CHARS) - strPauseSize.x) >> 1) - 1,
 		17
-	);
+	);*/
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
@@ -177,6 +180,7 @@ void PauseScreenState::processUserInput(UserInput userInput)
 				case kPauseScreenOptionQuitLevel:
 				{
 					// print confirmation message
+					/*
 					const char* strYes = I18n::getText(I18n::getInstance(), STR_YES);
 					FontSize strYesSize = Printing::getTextSize(Printing::getInstance(), strYes, NULL);
 					const char* strNo = I18n::getText(I18n::getInstance(), STR_NO);
@@ -192,6 +196,7 @@ void PauseScreenState::processUserInput(UserInput userInput)
 					Printing::text(Printing::getInstance(), strYes, strXPos + 1, 22, NULL);
 					Printing::text(Printing::getInstance(), __CHAR_B_BUTTON, strNoXPos, 22, NULL);
 					Printing::text(Printing::getInstance(), strNo, strNoXPos + 1, 22, NULL);
+					*/
 
 					// set mode accordingly
 					this->mode = kPauseScreenModeShowConfirmQuit;

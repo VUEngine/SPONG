@@ -41,38 +41,11 @@ extern EntityDefinition FLAG_SPAIN_EN;
 /*
  * IMPORTANT: Ensure that this file is encoded in Windows-1252 or ISO-8859-1 ("ANSI") to make use
  * of the full extended ASCII character set including special characters of European languages.
- *
- * The following character is meant to prevent editors from loading this file as UTF-8, since it doesn't
- * form part of a valid UTF-8 byte sequence: £
  */
 
 const char* const LANGUAGE_ES_STRINGS[] =
 {
-	/* General */
-
-	/* STR_ARE_YOU_SURE */				"¿Estás seguro?",
-	/* STR_AUTOMATIC_PAUSE */			"Pausa Automatica", //"Pausa Automática",
-	/* STR_BACK */						"Regresar",
-	/* STR_CREDITS */					"Créditos",
-	/* STR_IMPORTANT */					"Importante:",
-	/* STR_LANGUAGE */					"Idioma",
-	/* STR_LANGUAGE_SELECT */			"Seleccionar Idioma",
-	/* STR_NO */						"No",
-	/* STR_OFF */						"Apagado",
-	/* STR_ON */						"Encendido",
-	/* STR_OPTIONS */					"Opciones",
-	/* STR_PAUSE */						"Pausa",
-	/* STR_PRESS_START_BUTTON */		"Presionar Start",
-	/* STR_PROGRESS_WILL_BE_ERASED */	"Esto eliminará todo tu progreso.",
-	/* STR_SELECT */					"Seleccionar",
-	/* STR_TAKE_A_REST */				"¡Por favor, tómate un descanso!",
-	/* STR_YES */						"Sí",
-
-	/* Splash Screens */
-
-	/* STR_PRECAUTION_SCREEN_TEXT */	//"      Lee los libros de\n\nInstrucciones y Precauciones\n\n       antes de jugar",
-	/* STR_PRECAUTION_SCREEN_TEXT */	"  Antes de comenzar  \n\nleer las Indicaciones\n\ndel manual de usuario",
-	/* STR_AUTO_PAUSE_EXPLANATION */	" La función automática de pausa te\nrecordará que debes tomar un descanso\n  approximadamente cada 30 minutos",
+	""
 };
 
 const LangROMDef LANGUAGE_ES =
