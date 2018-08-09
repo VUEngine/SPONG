@@ -38,7 +38,7 @@ extern EntityDefinition PONG_BALL_PB;
 extern EntityDefinition PADDLE_LEFT_AC;
 extern EntityDefinition PADDLE_RIGHT_AC;
 extern EntityDefinition PLAYFIELD_EN;
-extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
+extern EntityDefinition LOW_POWER_INDICATOR_LB;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 extern EntityDefinition COLLISION_WALL_CL;
 extern EntityDefinition COLLISION_CEILING_CL;
@@ -121,7 +121,6 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 	{&COLLISION_WALL_CL,		{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
 	{&COLLISION_WALL_CL,		{192,    112,     48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
-	{&LOW_BATTERY_INDICATOR_LB, { 16,  	 112, 	   0, 0},	0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,	{192,    112,      0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -129,6 +128,8 @@ PositionedEntityROMDef PLAYFIELD_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef PLAYFIELD_STAGE_ST_UI_ENTITIES[] =
 {
+	{&LOW_POWER_INDICATOR_LB, 	{ 16,  	 112, 	   0, 0},	0, NULL, NULL, NULL, false},
+
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 

@@ -37,7 +37,7 @@ extern EntityDefinition HEXAGON_BACKGROUND_AE;
 extern EntityDefinition HIGHSCORES_HEADER_LE;
 extern EntityDefinition MAIN_MENU_MARATHON_MODE_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
-extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
+extern EntityDefinition LOW_POWER_INDICATOR_LB;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -50,7 +50,6 @@ PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_ENTITIES[] =
 	{&HIGHSCORES_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
 	{&MAIN_MENU_MARATHON_MODE_LE,	{192, 96,   0,  0},   	0, NULL, NULL, NULL, false},
 
-	{&LOW_BATTERY_INDICATOR_LB, 	{ 16,  12,  0,  0}, 	0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -58,6 +57,8 @@ PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
+	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  0,  0}, 	0, NULL, NULL, NULL, false},
+
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 

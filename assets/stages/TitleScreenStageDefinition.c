@@ -44,7 +44,7 @@ extern EntityDefinition MAIN_MENU_VERSUS_MODE_LE;
 extern EntityDefinition PRESS_START_BUTTON_LE;
 extern EntityDefinition LOGO_AE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
-extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
+extern EntityDefinition LOW_POWER_INDICATOR_LB;
 
 extern u16 TITLE_BGM[][2];
 
@@ -100,7 +100,6 @@ PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 	{&PRESS_START_BUTTON_LE, 		{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
 	{&COPYRIGHT_EN, 				{188, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
 
-	{&LOW_BATTERY_INDICATOR_LB, 	{ 16,  12,  0,  0},		0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -108,6 +107,9 @@ PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
+
+	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  0,  0},		0, NULL, NULL, NULL, false},
+
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 

@@ -40,7 +40,7 @@ extern EntityDefinition FLAG_SPAIN_EN;
 extern EntityDefinition FLAG_UNITED_KINGDOM_EN;
 extern EntityDefinition LANGUAGE_NAME_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
-extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
+extern EntityDefinition LOW_POWER_INDICATOR_LB;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -56,7 +56,6 @@ PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
 	{&FLAG_CURSOR_EN, 			{120,  96, 0,  0}, 0, "Cursor", NULL, NULL, false},
 	{&LANGUAGE_NAME_LE,			{192, 124, 0,  0}, 0, "LangName", NULL, NULL, false},
 
-	{&LOW_BATTERY_INDICATOR_LB, { 16,  12, 0,  0}, 0, NULL, NULL, NULL, false},
 	{&TRANSITION_LAYER_B_AE,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -64,6 +63,7 @@ PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
+	{&LOW_POWER_INDICATOR_LB, 	{ 16,  12, 0,  0}, 0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

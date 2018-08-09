@@ -1,8 +1,8 @@
-# VUEngine based components that the project uses
-COMPONENTS =	vuengine-components/entities/LowBatteryIndicatorEntity									\
-				vuengine-components/fonts/IndustrialFont												\
-				vuengine-components/other/AutomaticPause												\
-				vuengine-components/other/SaveDataManager												\
+# VUEngine based plugins that the project uses
+PLUGINS =	vuengine/plugins/entities/LowPowerEntity														\
+			vuengine/plugins/fonts/Industrial																\
+			vuengine/plugins/other/AutomaticPause															\
+			vuengine/plugins/other/SaveDataManager															\
 
 # Compiler's output
 COMPILER_OUTPUT         = c

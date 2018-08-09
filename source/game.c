@@ -36,7 +36,7 @@
 
 int main(void)
 {
-	// initialize components
+	// initialize plugins
 	AutoPauseManager::setActive(AutoPauseManager::getInstance(), true);
 	ProgressManager::restoreSettings(ProgressManager::getInstance());
 

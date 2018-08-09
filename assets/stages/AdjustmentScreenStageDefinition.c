@@ -36,7 +36,7 @@ extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_BG_IM;
 extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L;
 extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R;
 extern EntityDefinition ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM;
-extern EntityDefinition LOW_BATTERY_INDICATOR_LB;
+extern EntityDefinition LOW_POWER_INDICATOR_LB;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 
@@ -46,13 +46,13 @@ extern EntityDefinition TRANSITION_LAYER_B_AE;
 
 PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&LOW_BATTERY_INDICATOR_LB, 				{40, 12, 0, 0}, 	0, NULL, NULL, NULL, false},
 	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, 	{12, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
 	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, 	{12, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Left (Right Eye)
 	{&ADJUSTMENT_SCREEN_VUENGINE_BG_IM, 		{192, 112, 16, 0}, 	0, NULL, NULL, NULL, false}, // Background
 	{&ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false}, // Logo
 	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, 	{372, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Right (Left Eye)
 	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, 	{372, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Right (Right Eye)
+
 	{&TRANSITION_LAYER_B_AE, 					{192, 112, 0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
@@ -60,6 +60,8 @@ PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
+	{&LOW_POWER_INDICATOR_LB, 					{40, 12, 0, 0}, 	0, NULL, NULL, NULL, false},
+
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
