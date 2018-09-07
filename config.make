@@ -1,5 +1,5 @@
 # VUEngine based plugins that the project uses
-PLUGINS =	vuengine/plugins/entities/LowPowerEntity														\
+PLUGINS = 	vuengine/plugins/entities/LowPowerEntity														\
 			vuengine/plugins/fonts/Industrial																\
 			vuengine/plugins/other/AutomaticPause															\
 			vuengine/plugins/other/SaveDataManager															\
@@ -44,7 +44,7 @@ PAD_ROM                 = 0
 # Dump elf
 # 0:                    No dumping.
 # 1:                    Dump the assembly code and the memory sections.
-DUMP_ELF                = 1
+DUMP_ELF                = 0
 
 # Sections' usage
 # SRAM's usage
