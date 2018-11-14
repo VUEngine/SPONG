@@ -98,101 +98,69 @@ void PongState::execute(void* owner)
 {
 	Base::execute(this, owner);
 	UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
-return;
+
+//	int numberOfBytes = sizeof(u32);
+//	BYTE* pointer = (BYTE*)((u32)MemoryPool_allocate(MemoryPool_getInstance(), numberOfBytes + __DYNAMIC_STRUCT_PAD) + __DYNAMIC_STRUCT_PAD);
+//	delete pointer;
+
 	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 	{
-		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
-			PRINT_TEXT("master", 30, 6);
-		else
-			PRINT_TEXT("slave", 30, 6);
-
+		static u32 pressedKey = 0x12345678;
 
 		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
 		{
-		PRINT_TEXT("master", 30, 7);
-//			static u8 pressedKey = 0x12;
-//			static u16 pressedKey = 0x1234;
-//			CommunicationManager::sendData(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey));
-//			CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), PongState::onCommunicationCompletes, Object::safeCast(this));
-			//pressedKey++;
+			CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
 		}
 		else
 		{
-		PRINT_TEXT("slave", 30, 7);
-		//	static u32 expectedPressedKey = 0x12345678;
-//			u32 pressedKey = 0;
-//			static u16 expectedPressedKey = 0x1234;
-//			u16 pressedKey = 0;
-//			CommunicationManager::receiveData(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), PongState::onCommunicationCompletes);
-//			CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), PongState::onCommunicationCompletes, Object::safeCast(this));
-
+			CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
+		}
 /*
-//			PRINT_HEX(pressedKey, 5, 10);
-			//expectedPressedKey++;
+		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
+		{
+			u32 data = 0x12345678;
 
-			static int success = 0;
-			static int errors = 0;
-
-			if(pressedKey == expectedPressedKey)
-			{
-				success++;
-			}
-			else
-			{
-				errors++;
-			}
-
-			PRINT_TEXT("     %", 2, 5);
-			PRINT_FLOAT(success / (float)(success + errors), 2, 5);
-			PRINT_INT(success, 10, 5);
-			PRINT_INT(errors, 16, 5);
-			*/
+			CommunicationManager::sendData(CommunicationManager::getInstance(), (BYTE*)&data, sizeof(data));
 		}
+		else
+		{
+			u32 data = 0;
+			CommunicationManager::receiveData(CommunicationManager::getInstance(), (BYTE*)&data, sizeof(data));
+
+			PongState::checkData(this, data, 0x12345678);
+		}
+*/
 	}
+}
+
+void PongState::checkData(u32 data, u32 expectedData)
+{
+	static int success = 0;
+	static int errors = 0;
+
+	if(data == expectedData)
+	{
+		success++;
+	}
+	else
+	{
+		errors++;
+	}
+
+	//PRINT_TEXT("     %", 2, 5);
+	//PRINT_FLOAT(success / (float)(success + errors), 2, 5);
+	PRINT_INT(success, 10, 5);
+	PRINT_INT(errors, 16, 5);
 }
 
 void PongState::onCommunicationCompletes(Object eventFirer)
 {
-		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
-		{
-			PRINT_TIME(30, 8);
-		PRINT_TEXT("master event", 30, 7);
-		}
-		else
-		{
-		PRINT_TEXT("slave event", 30, 7);
-			PRINT_TIME(30, 8);
-			BYTE* pressedKeyPointer = CommunicationManager::getData(CommunicationManager::getInstance());
-//			static u8 expectedPressedKey = 0x12;
-//			u8 pressedKey = *((u8*)pressedKeyPointer);
-//			static u16 expectedPressedKey = 0x1234;
-//			u16 pressedKey = *((u16*)pressedKeyPointer);
-			static u32 expectedPressedKey = 0x12345678;
-			u32 pressedKey = *((u32*)pressedKeyPointer);
-
-				PRINT_HEX(pressedKey, 10, 16);
-
-//			PRINT_HEX(pressedKey, 5, 10);
-			//expectedPressedKey++;
-
-			static int success = 0;
-			static int errors = 0;
-
-			if(pressedKey == expectedPressedKey)
-			{
-				success++;
-			}
-			else
-			{
-				errors++;
-			}
-
-			PRINT_TEXT("     %", 2, 5);
-			PRINT_FLOAT(success / (float)(success + errors), 2, 5);
-			PRINT_INT(success, 10, 5);
-			PRINT_INT(errors, 16, 5);
-
-		}
+	if(!CommunicationManager::isMaster(CommunicationManager::getInstance()))
+	{
+		BYTE* dataPointer = CommunicationManager::getData(CommunicationManager::getInstance());
+		u32 data = *((u32*)dataPointer);
+		PongState::checkData(this, data, 0x12345678);
+	}
 }
 
 // state's exit
@@ -248,7 +216,7 @@ void PongState::processUserInput(UserInput userInput)
 			}
 		}
 
-		Object::fireEvent(Object::safeCast(this), kEventUserInput);
+		//Object::fireEvent(Object::safeCast(this), kEventUserInput);
 
 	/*
 		// disable user input
@@ -263,62 +231,25 @@ void PongState::processUserInput(UserInput userInput)
 	*/
 	}
 
-//	Object::fireEvent(Object::safeCast(this), kEventUserInput);
-
+	Object::fireEvent(Object::safeCast(this), kEventUserInput);
+/*
 	if(userInput.pressedKey & K_A)
 	{
 		if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 		{
-			PRINT_TEXT("connected", 30, 6);
-
-//				static u8 pressedKey = 0x12;
-//			static u16 pressedKey = 0x1234;
-				static u32 pressedKey = 0x12345678;
+			static u32 pressedKey = 0x12345678;
 
 			if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
 			{
-			PRINT_TEXT("send as master", 30, 7);
-//				CommunicationManager::sendData(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey));
-
-			CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-				//pressedKey++;
+				CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
 			}
 			else
 			{
-			PRINT_TEXT("receive as slave", 30, 7);
-				static u8 expectedPressedKey = 0x12;
-//				u8 pressedKey = 0;
-//				static u16 expectedPressedKey = 0x1234;
-//				u16 pressedKey = 0;
-//				static u32 expectedPressedKey = 0x12345678;
-//				u32 pressedKey = 0;
-//				CommunicationManager::receiveData(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey));
-			//PRINT_TIME(1, 6); PRINT_TEXT("AA", 10, 6);
-			CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-return;
-				//expectedPressedKey++;
-
-				static int success = 0;
-				static int errors = 0;
-
-				if(pressedKey == expectedPressedKey)
-				{
-				PRINT_HEX(pressedKey, 25, 15);
-					success++;
-				}
-				else
-				{
-				PRINT_HEX(pressedKey, 25, 17);
-					errors++;
-				}
-
-				PRINT_TEXT("     %", 2, 5);
-				PRINT_FLOAT(success / (float)(success + errors), 2, 5);
-				PRINT_INT(success, 10, 5);
-				PRINT_INT(errors, 16, 5);
+				CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
 			}
 		}
 	}
+	*/
 }
 
 // handle event
