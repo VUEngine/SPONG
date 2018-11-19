@@ -57,7 +57,7 @@ PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef HIGHSCORES_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

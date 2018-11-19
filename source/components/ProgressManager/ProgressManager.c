@@ -66,7 +66,7 @@ void ProgressManager::restoreSettings()
 
 u8 ProgressManager::getBrightnessFactor()
 {
-	u8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
+	s8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
 	if(this->sramAvailable)
 	{
 		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct GameSaveData, brightnessFactor), sizeof(brightnessFactor));
@@ -75,7 +75,7 @@ u8 ProgressManager::getBrightnessFactor()
 	return brightnessFactor;
 }
 
-void ProgressManager::setBrightnessFactor(u8 brightnessFactor)
+void ProgressManager::setBrightnessFactor(s8 brightnessFactor)
 {
 	if(this->sramAvailable)
 	{

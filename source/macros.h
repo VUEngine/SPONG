@@ -63,6 +63,7 @@ enum PlatformerLevelStateMessageTypes
 	kLevelSetUp = kLastEngineMessage + 1,
 	kFollowPongBall,
 	kAddBonusScore,
+	kShowScreen,
 };
 
 #define PONG_BALL_NAME			"PongBall"

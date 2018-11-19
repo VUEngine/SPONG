@@ -132,10 +132,7 @@ void SplashScreenState::resume(void* owner)
 
 void SplashScreenState::processUserInput(UserInput userInput)
 {
-	if(userInput.pressedKey & ~K_PWR)
-	{
-		SplashScreenState::processInput(this, userInput.pressedKey);
-	}
+	SplashScreenState::processInput(this, userInput.pressedKey);
 }
 
 // state's handle message

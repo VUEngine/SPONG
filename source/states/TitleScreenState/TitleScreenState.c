@@ -110,7 +110,7 @@ void TitleScreenState::enter(void* owner)
 	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
 // state's exit
@@ -173,6 +173,13 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 {
 	if((K_A | K_STA) & userInput.pressedKey)
 	{
+		// (temporarily) disable challenge mode and highscores screen
+		if( this->option == kTitleScreenOptionChallengeMode ||
+			this->option == kTitleScreenOptionHighscores)
+		{
+			return;
+		}
+
 		// disable user input
 		Game::disableKeypad(Game::getInstance());
 

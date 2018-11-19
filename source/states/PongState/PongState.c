@@ -91,7 +91,7 @@ void PongState::enter(void* owner)
 	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
 void PongState::execute(void* owner)
@@ -189,47 +189,44 @@ void PongState::suspend(void* owner)
 
 void PongState::processUserInput(UserInput userInput)
 {
-	if(userInput.pressedKey & ~K_PWR)
+	if(userInput.pressedKey)
 	{
-		if(userInput.pressedKey)
+		if(K_SEL & userInput.pressedKey)
 		{
-			if(K_SEL & userInput.pressedKey)
-			{
-				// adjustment screen
+			// adjustment screen
 //				PlatformerLevelState::setModeToPaused(this);
 
-				// set next state of adjustment screen state to null so it can differentiate between
-				// being called the splash screen sequence or from within the game (a bit hacky...)
+			// set next state of adjustment screen state to null so it can differentiate between
+			// being called the splash screen sequence or from within the game (a bit hacky...)
 //				SplashScreenState::setNextState(SplashScreenState::safeCast(AdjustmentScreenState::getInstance()), NULL);
 
-				// pause game and switch to adjustment screen state
+			// pause game and switch to adjustment screen state
 //				Game::pause(Game::getInstance(), GameState::safeCast(AdjustmentScreenState::getInstance()));
 
-				return;
-			}
-			else if(K_STA & userInput.pressedKey)
-			{
-				// pause game and switch to pause screen state
+			return;
+		}
+		else if(K_STA & userInput.pressedKey)
+		{
+			// pause game and switch to pause screen state
 //				Game::pause(Game::getInstance(), GameState::safeCast(PauseScreenState::getInstance()));
 
-				return;
-			}
+			return;
 		}
+	}
 
-		//Object::fireEvent(Object::safeCast(this), kEventUserInput);
+	//Object::fireEvent(Object::safeCast(this), kEventUserInput);
 
 	/*
-		// disable user input
-		Game::disableKeypad(Game::getInstance());
+	// disable user input
+	Game::disableKeypad(Game::getInstance());
 
-		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
-		if(transitionLayerEntity)
-		{
-			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
-		}
-	*/
+	// transition layer animation
+	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+	if(transitionLayerEntity)
+	{
+		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
 	}
+	*/
 
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
 

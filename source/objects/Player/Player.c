@@ -160,7 +160,6 @@ void Player::onKeyPressed(const UserInput* userInput)
 	}
 	else if(K_LU & userInput->pressedKey)
 	{
-
 	}
 }
 
@@ -228,11 +227,11 @@ void Player::onKeyHold(const UserInput* userInput)
 		horizontalInput = 1;
 	}
 
-	if((K_RU) & userInput->holdKey)
+	if((K_LU) & userInput->holdKey)
 	{
 		verticalInput = -1;
 	}
-	else if((K_RD) & userInput->holdKey)
+	else if((K_LD) & userInput->holdKey)
 	{
 		verticalInput = 1;
 	}

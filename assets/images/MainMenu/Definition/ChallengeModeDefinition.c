@@ -177,7 +177,7 @@ TextureROMDef MAIN_MENU_CHALLENGE_MODE_TX =
 	1,
 
 	// palette number (0-3)
-	0,
+	3,
 
 	// recyclable
 	false,

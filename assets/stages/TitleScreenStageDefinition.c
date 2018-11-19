@@ -35,6 +35,7 @@
 
 extern EntityDefinition COPYRIGHT_EN;
 extern EntityDefinition RHOMBUS_BACKGROUND_AE;
+extern EntityDefinition DEMO_BADGE_LE;
 extern EntityDefinition MAIN_MENU_CHALLENGE_MODE_LE;
 extern EntityDefinition MAIN_MENU_CURSOR_AE;
 extern EntityDefinition MAIN_MENU_HIGHSCORES_LE;
@@ -96,6 +97,7 @@ PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 {
 	{&RHOMBUS_BACKGROUND_AE,		{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
 	{&LOGO_AE, 						{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&DEMO_BADGE_LE, 				{316, 100,  0,  0}, 	0, NULL, NULL, NULL, false},
 	{&MAIN_MENU_CONTAINER, 			{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
 	{&PRESS_START_BUTTON_LE, 		{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
 	{&COPYRIGHT_EN, 				{188, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
@@ -107,8 +109,7 @@ PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
 
 PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
-
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  0,  0},		0, NULL, NULL, NULL, false},
+	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0},		0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };

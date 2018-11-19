@@ -45,11 +45,11 @@ extern BYTE TransitionLayerBMap[];
 AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_IN_ANIM =
 {
 	// number of frames of this animation function
-	18,
+	19,
 	//9,
 
 	// frames to play in animation
-	{17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
+	{17, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
 	//{16, 14, 12, 10, 8, 6, 4, 2, 0},
 
 	// number of cycles a frame of animation is displayed

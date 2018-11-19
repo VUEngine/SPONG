@@ -56,13 +56,13 @@ enum TitleScreenOptions
 
 singleton class TitleScreenState : GameState
 {
-	/* entity references */
+	// entity references
 	Entity entityMainMenu;
 	Entity entityCursor;
 	Entity entityPressStart;
-	/* current state of the main menu */
+	// current state of the main menu
 	u8 mode;
-	/* currently selected option of the main menu */
+	// currently selected option of the main menu
 	u8 option;
 
 	static TitleScreenState getInstance();
@@ -70,7 +70,6 @@ singleton class TitleScreenState : GameState
 	override void enter(void* owner);
 	override void exit(void* owner);
 	override void resume(void* owner);
-	override void suspend(void* owner);
 	override void processUserInput(UserInput userInput);
 }
 

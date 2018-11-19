@@ -24,50 +24,149 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Entity.h>
+#include <BgmapAnimatedSprite.h>
 #include <macros.h>
+#include <LocalizedEntity.h>
+#include <Actor.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE AdjustmentScreenVUEngineLogoTiles[];
-extern BYTE AdjustmentScreenVUEngineLogoMap[];
+extern BYTE DemoBadgeTiles[];
+extern BYTE DemoBadgeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_CH =
+AnimationFunctionROMDef DEMO_BADGE_EN_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{0},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"0",
+};
+
+AnimationFunctionROMDef DEMO_BADGE_DE_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{1},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"1",
+};
+
+AnimationFunctionROMDef DEMO_BADGE_ES_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{2},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"2",
+};
+
+AnimationFunctionROMDef DEMO_BADGE_FR_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{3},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"3",
+};
+
+// an animation definition
+AnimationDescriptionROMDef DEMO_BADGE_ANIM =
+{
+	// animation functions
+	{
+		(AnimationFunction*)&DEMO_BADGE_EN_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_DE_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_ES_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_FR_ANIM,
+		NULL,
+	}
+};
+
+CharSetROMDef DEMO_BADGE_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	73,
+	10,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__NOT_ANIMATED,
+	__ANIMATED_SINGLE,
 
 	// char definition
-	AdjustmentScreenVUEngineLogoTiles,
+	DemoBadgeTiles,
 };
 
-TextureROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX =
+TextureROMDef DEMO_BADGE_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&ADJUSTMENT_SCREEN_VUENGINE_LOGO_CH,
+	(CharSetDefinition*)&DEMO_BADGE_CH,
 
 	// bgmap definition
-	AdjustmentScreenVUEngineLogoMap,
+	DemoBadgeMap,
 
 	// cols (max 64)
-	18,
+	5,
 
 	// rows (max 64)
-	18,
+	2,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -84,20 +183,20 @@ TextureROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX =
 	false,
 };
 
-BgmapSpriteROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE =
+BgmapSpriteROMDef DEMO_BADGE_SPRITE =
 {
 	{
 		// sprite's type
-		__TYPE(BgmapSprite),
+		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX,
+		(TextureDefinition*)&DEMO_BADGE_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, 0, 0},
+		{0, 0, 0, 1},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
@@ -111,30 +210,38 @@ BgmapSpriteROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES[] =
+BgmapSpriteROMDef* const DEMO_BADGE_SPRITES[] =
 {
-	&ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE,
+	&DEMO_BADGE_SPRITE,
 	NULL
 };
 
-EntityROMDef ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM =
+LocalizedEntityROMDef DEMO_BADGE_LE =
 {
-	// class allocator
-	__TYPE(Entity),
+	{
+		// class allocator
+		__TYPE(LocalizedEntity),
 
-	// sprites
-	(SpriteROMDef**)ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES,
+		// sprites
+		(SpriteROMDef**)DEMO_BADGE_SPRITES,
 
-	// collision shapes
-	(ShapeDefinition*)NULL,
+		// collision shapes
+		(ShapeDefinition*)NULL,
 
-	// size
-	// if 0, width and height will be inferred from the first sprite's texture's size
-	{0, 0, 0},
+		// size
+		// if 0, width and height will be inferred from the first sprite's texture's size
+		{0, 0, 0},
 
-	// gameworld's character's type
-	kNoType,
+		// gameworld's character's type
+		kNoType,
 
-	// physical specification
-	(PhysicalSpecification*)NULL,
+		// physical specification
+		(PhysicalSpecification*)NULL,
+	},
+
+	// pointer to the animation definition for the character
+	(AnimationDescription*)&DEMO_BADGE_ANIM,
+
+	// initial animation
+	"0"
 };
