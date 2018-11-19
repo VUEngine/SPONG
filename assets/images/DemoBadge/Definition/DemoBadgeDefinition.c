@@ -34,15 +34,15 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE ChallengeModeTiles[];
-extern BYTE ChallengeModeMap[];
+extern BYTE DemoBadgeTiles[];
+extern BYTE DemoBadgeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_EN_ANIM =
+AnimationFunctionROMDef DEMO_BADGE_EN_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -63,7 +63,7 @@ AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_EN_ANIM =
 	"0",
 };
 
-AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_DE_ANIM =
+AnimationFunctionROMDef DEMO_BADGE_DE_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -84,7 +84,7 @@ AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_DE_ANIM =
 	"1",
 };
 
-AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_ES_ANIM =
+AnimationFunctionROMDef DEMO_BADGE_ES_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -105,7 +105,7 @@ AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_ES_ANIM =
 	"2",
 };
 
-AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_FR_ANIM =
+AnimationFunctionROMDef DEMO_BADGE_FR_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -127,46 +127,46 @@ AnimationFunctionROMDef MAIN_MENU_CHALLENGE_MODE_FR_ANIM =
 };
 
 // an animation definition
-AnimationDescriptionROMDef MAIN_MENU_CHALLENGE_MODE_ANIM =
+AnimationDescriptionROMDef DEMO_BADGE_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_EN_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_DE_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_ES_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_FR_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_EN_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_DE_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_ES_ANIM,
+		(AnimationFunction*)&DEMO_BADGE_FR_ANIM,
 		NULL,
 	}
 };
 
-CharSetROMDef MAIN_MENU_CHALLENGE_MODE_CH =
+CharSetROMDef DEMO_BADGE_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	15,
+	10,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__ANIMATED_SINGLE,
 
 	// char definition
-	ChallengeModeTiles,
+	DemoBadgeTiles,
 };
 
-TextureROMDef MAIN_MENU_CHALLENGE_MODE_TX =
+TextureROMDef DEMO_BADGE_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&MAIN_MENU_CHALLENGE_MODE_CH,
+	(CharSetDefinition*)&DEMO_BADGE_CH,
 
 	// bgmap definition
-	ChallengeModeMap,
+	DemoBadgeMap,
 
 	// cols (max 64)
-	15,
+	5,
 
 	// rows (max 64)
-	1,
+	2,
 
 	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
@@ -177,20 +177,20 @@ TextureROMDef MAIN_MENU_CHALLENGE_MODE_TX =
 	1,
 
 	// palette number (0-3)
-	3,
+	0,
 
 	// recyclable
 	false,
 };
 
-BgmapSpriteROMDef MAIN_MENU_CHALLENGE_MODE_SPRITE =
+BgmapSpriteROMDef DEMO_BADGE_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&MAIN_MENU_CHALLENGE_MODE_TX,
+		(TextureDefinition*)&DEMO_BADGE_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -210,20 +210,20 @@ BgmapSpriteROMDef MAIN_MENU_CHALLENGE_MODE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const MAIN_MENU_CHALLENGE_MODE_SPRITES[] =
+BgmapSpriteROMDef* const DEMO_BADGE_SPRITES[] =
 {
-	&MAIN_MENU_CHALLENGE_MODE_SPRITE,
+	&DEMO_BADGE_SPRITE,
 	NULL
 };
 
-LocalizedEntityROMDef MAIN_MENU_CHALLENGE_MODE_LE =
+LocalizedEntityROMDef DEMO_BADGE_LE =
 {
 	{
 		// class allocator
 		__TYPE(LocalizedEntity),
 
 		// sprites
-		(SpriteROMDef**)MAIN_MENU_CHALLENGE_MODE_SPRITES,
+		(SpriteROMDef**)DEMO_BADGE_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -240,7 +240,7 @@ LocalizedEntityROMDef MAIN_MENU_CHALLENGE_MODE_LE =
 	},
 
 	// pointer to the animation definition for the character
-	(AnimationDescription*)&MAIN_MENU_CHALLENGE_MODE_ANIM,
+	(AnimationDescription*)&DEMO_BADGE_ANIM,
 
 	// initial animation
 	"0"
