@@ -53,11 +53,11 @@ enum OptionsScreenOptions
 
 singleton class OptionsScreenState : GameState
 {
-	/* entity references */
+	// entity references
 	Entity entityCursor;
-	/* current state of the menu */
+	// current state of the menu
 	u8 mode;
-	/* currently selected option of the menu */
+	// currently selected option of the menu
 	u8 option;
 
 	static OptionsScreenState getInstance();

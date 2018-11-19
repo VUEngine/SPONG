@@ -32,19 +32,12 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
-//---------------------------------------------------------------------------------------------------------
-
-// declare the virtual methods
-
-
-//---------------------------------------------------------------------------------------------------------
 //										PUBLIC INTERFACE
 //---------------------------------------------------------------------------------------------------------
 
 dynamic_singleton class LangSelectScreenState : SplashScreenState
 {
-	/* current active language */
+	// current active language
 	u8 language;
 
 	static LangSelectScreenState getInstance();

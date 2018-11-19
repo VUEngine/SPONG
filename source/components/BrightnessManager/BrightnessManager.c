@@ -28,6 +28,8 @@
 #include <VirtualList.h>
 #include <CameraEffectManager.h>
 #include <VIPManager.h>
+#include <MessageDispatcher.h>
+#include <macros.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -51,13 +53,19 @@ void BrightnessManager::destructor()
 	Base::destructor();
 }
 
+void BrightnessManager::delayedShowScreen()
+{
+	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kShowScreen, NULL);
+}
+
 void BrightnessManager::showScreen()
 {
+	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kShowScreen, NULL);
 	Brightness defaultBrightness = CameraEffectManager::getDefaultBrightness(CameraEffectManager::getInstance());
 
-	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + ((this->brightnessFactor - 2) * 8)))) ? 4 : darkRed;
-	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + ((this->brightnessFactor - 2) * 16)))) ? 8 : mediumRed;
-	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + ((this->brightnessFactor - 2) * 32)))) ? 16 : brightRed;
+	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + (this->brightnessFactor * 8)))) ? 4 : darkRed;
+	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + (this->brightnessFactor * 16)))) ? 8 : mediumRed;
+	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + (this->brightnessFactor * 32)))) ? 16 : brightRed;
 
 	__SET_BRIGHT(darkRed, mediumRed, brightRed);
 }
@@ -67,14 +75,26 @@ void BrightnessManager::hideScreen()
 	__SET_BRIGHT(0, 0, 0);
 }
 
-void BrightnessManager::setBrightnessFactor(u8 brightnessFactor)
+void BrightnessManager::setBrightnessFactor(s8 brightnessFactor)
 {
 	this->brightnessFactor = brightnessFactor;
 	BrightnessManager::showScreen(this);
 }
 
-u8 BrightnessManager::getBrightnessFactor()
+s8 BrightnessManager::getBrightnessFactor()
 {
 	return this->brightnessFactor;
+}
+
+bool BrightnessManager::handleMessage(Telegram telegram)
+{
+	switch(Telegram::getMessage(telegram))
+	{
+		case kShowScreen:
+			// show screen
+			BrightnessManager::showScreen(this);
+			break;
+	}
+	return true;
 }
 

@@ -89,10 +89,10 @@ void HighscoresScreenState::enter(void* owner)
 	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 
 
- 	/**/
+ 	/*/
 	Printing::text(Printing::getInstance(), " 1   1,000,000   JORGE   ", 12,  1+13, NULL);
 	Printing::text(Printing::getInstance(), " 2     500,000   CHRIS   ", 12,  2+13, NULL);
 	Printing::text(Printing::getInstance(), " 3     100,000   SOMEONE ", 12,  3+13, NULL);

@@ -34,7 +34,7 @@
 //												MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define DEFAULT_BRIGHTNESS_FACTOR		2
+#define DEFAULT_BRIGHTNESS_FACTOR		0
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,13 +43,15 @@
 
 singleton class BrightnessManager : Object
 {
-	u8 brightnessFactor;
+	s8 brightnessFactor;
 
 	static BrightnessManager getInstance();
 	void showScreen();
+	void delayedShowScreen();
 	void hideScreen();
-	void setBrightnessFactor(u8 brightnessFactor);
-	u8 getBrightnessFactor();
+	void setBrightnessFactor(s8 brightnessFactor);
+	s8 getBrightnessFactor();
+	override bool handleMessage(Telegram telegram);
 }
 
 

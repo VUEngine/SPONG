@@ -106,7 +106,7 @@ void OptionsScreenState::enter(void* owner)
 	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
 // state's exit
@@ -170,11 +170,11 @@ void OptionsScreenState::updateAutomaticPauseCheckBox()
 
 void OptionsScreenState::updateBrightnessMeter()
 {
-	u8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
+	s8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
 	AnimatedEntity brightnessMeterEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "BrghtnMt", true));
 	if(brightnessMeterEntity)
 	{
-		char* charBrightness = Utilities::itoa(brightnessFactor, 10, 1);
+		char* charBrightness = Utilities::itoa(brightnessFactor + 2, 10, 1);
 		AnimatedEntity::playAnimation(brightnessMeterEntity, charBrightness);
 	}
 }
@@ -182,10 +182,10 @@ void OptionsScreenState::updateBrightnessMeter()
 void OptionsScreenState::switchBrightness(bool forward)
 {
 	// change brightness factor
-	u8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
+	s8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
 	brightnessFactor = forward
-    		? (brightnessFactor < 4) ? brightnessFactor + 1 : 4
-    		: (brightnessFactor > 0) ? brightnessFactor - 1 : 0;
+    		? (brightnessFactor < 2) ? brightnessFactor + 1 : 2
+    		: (brightnessFactor > -2) ? brightnessFactor - 1 : -2;
 	BrightnessManager::setBrightnessFactor(BrightnessManager::getInstance(), brightnessFactor);
 	ProgressManager::setBrightnessFactor(ProgressManager::getInstance(), brightnessFactor);
 

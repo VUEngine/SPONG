@@ -43,7 +43,7 @@ typedef struct GameSaveData
 	SaveData baseSaveData;
 
 	// brightness factor
-	u8 brightnessFactor;
+	s8 brightnessFactor;
 
 } GameSaveData;
 
@@ -57,7 +57,7 @@ singleton class ProgressManager : SaveDataManager
 	// declare class
 	static ProgressManager getInstance();
 	u8   getBrightnessFactor();
-	void setBrightnessFactor(u8 brightnessFactor);
+	void setBrightnessFactor(s8 brightnessFactor);
 	override void restoreSettings();
 }
 

@@ -91,7 +91,7 @@ void PongState::enter(void* owner)
 	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
 void PongState::execute(void* owner)
