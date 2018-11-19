@@ -78,9 +78,6 @@ bool PrecautionScreenState::processMessage(void* owner __attribute__ ((unused)),
 				Vector3D position = {0, 0, 0};
 				SoundManager::playFxSound(SoundManager::getInstance(), COLLECT_SND, position);
 
-				// wait some seconds for the screen to stabilize, as defined by Nintendo in the official development manual
-				Game::wait(Game::getInstance(), 1500);
-
 				// show this screen for at least 2 seconds, as defined by Nintendo in the official development manual (Appendix 1)
 				MessageDispatcher::dispatchMessage(2000, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenAllowUserInput, NULL);
 
