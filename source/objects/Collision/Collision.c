@@ -103,7 +103,7 @@ void Collision::initialTransform(Transformation* environmentTransform, u32 recur
 		const Rotation* myRotation = Entity::getRotation(Entity::safeCast(this));
 		const Scale* myScale = Entity::getScale(Entity::safeCast(this));
 
-		 Shape::position(shape, myPosition, myRotation, myScale, &this->size);
+		Shape::position(shape, myPosition, myRotation, myScale, &this->size);
 
 		VirtualList::pushBack(this->shapes, shape);
 	}

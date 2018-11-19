@@ -232,6 +232,8 @@ void PongState::processUserInput(UserInput userInput)
 	}
 
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
+
+
 /*
 	if(userInput.pressedKey & K_A)
 	{
