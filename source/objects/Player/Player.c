@@ -124,7 +124,7 @@ void Player::getReady(GameState gameState)
 		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
 	}
-	else if(kPlayerOne == this->playerNumber)
+	else if(kPlayerTwo == this->playerNumber)
 	{
 		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
