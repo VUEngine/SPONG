@@ -30,6 +30,7 @@
 #include <GameEvents.h>
 #include <PongState.h>
 #include <debugUtilities.h>
+#include <CommunicationManager.h>
 #include "Player.h"
 
 
@@ -51,8 +52,8 @@ void Player::constructor()
 	Base::constructor();
 
 	this->pongBall = NULL;
-	this->paddles[kLeftPaddle] = NULL;
-	this->paddles[kRightPaddle] = NULL;
+	this->playerPaddles = new VirtualList();
+	this->opponentPaddles = new VirtualList();
 
 	this->leftScore = 0;
 	this->rightScore = 0;
@@ -67,8 +68,10 @@ void Player::constructor()
 void Player::destructor()
 {
 	this->pongBall = NULL;
-	this->paddles[kLeftPaddle] = NULL;
-	this->paddles[kRightPaddle] = NULL;
+	delete this->playerPaddles;
+	this->playerPaddles = NULL;
+	delete this->opponentPaddles;
+	this->opponentPaddles = NULL;
 
 	// allow a new construct
 	Base::destructor();
@@ -94,12 +97,42 @@ bool Player::handleMessage(Telegram telegram __attribute__ ((unused)))
 
 void Player::getReady(GameState gameState)
 {
-	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
-	this->paddles[kLeftPaddle] = Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true));
-	this->paddles[kRightPaddle] = Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true));
+	this->playerNumber = kPlayerAlone;
 
-	ASSERT(this->paddles[kLeftPaddle], "Player::getReady: left paddle not found");
-	ASSERT(this->paddles[kRightPaddle], "Player::getReady: right paddle not found");
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
+		{
+			this->playerNumber = kPlayerOne;
+		}
+		else
+		{
+			this->playerNumber = kPlayerTwo;
+		}
+	}
+
+	if(kPlayerAlone == this->playerNumber)
+	{
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		ASSERT(2 == VirtualList::getSize(this->playerPaddles), "Player::getReady: not all paddles found");
+	}
+	else if(kPlayerOne == this->playerNumber)
+	{
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find left paddle");
+		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
+	}
+	else if(kPlayerOne == this->playerNumber)
+	{
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
+		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		ASSERT(1 == VirtualList::getSize(this->opponentPaddles), "Player::getReady: didn't find left paddle");
+	}
+
+	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
 
 	Object::addEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player_onUserInput, kEventUserInput);
 	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
@@ -112,8 +145,8 @@ void Player::getReady(GameState gameState)
 
 void Player::gameIsOver(GameState gameState)
 {
-	this->paddles[kLeftPaddle] = NULL;
-	this->paddles[kRightPaddle] = NULL;
+	VirtualList::clear(this->playerPaddles);
+	VirtualList::clear(this->opponentPaddles);
 
 	Object::removeEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player_onUserInput, kEventUserInput);
 	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
@@ -130,21 +163,39 @@ void Player::onUserInput(Object eventFirer __attribute__ ((unused)))
 
 	if(userInput.pressedKey)
 	{
-		Player::onKeyPressed(this, &userInput);
+		Player::onKeyPressed(this, &userInput, this->playerPaddles);
 	}
 
 	if(userInput.releasedKey)
 	{
-		Player::onKeyReleased(this, &userInput);
+		Player::onKeyReleased(this, &userInput, this->playerPaddles);
 	}
 
 	if(userInput.holdKey)
 	{
-		Player::onKeyHold(this, &userInput);
+		Player::onKeyHold(this, &userInput, this->playerPaddles);
 	}
 }
 
-void Player::onKeyPressed(const UserInput* userInput)
+void Player::onOpponentInput(UserInput userInput)
+{
+	if(userInput.pressedKey)
+	{
+		Player::onKeyPressed(this, &userInput, this->opponentPaddles);
+	}
+
+	if(userInput.releasedKey)
+	{
+		Player::onKeyReleased(this, &userInput, this->opponentPaddles);
+	}
+
+	if(userInput.holdKey)
+	{
+		Player::onKeyHold(this, &userInput, this->opponentPaddles);
+	}
+}
+
+void Player::onKeyPressed(const UserInput* userInput, VirtualList paddles)
 {
 	if(K_B & userInput->pressedKey)
 	{
@@ -163,7 +214,7 @@ void Player::onKeyPressed(const UserInput* userInput)
 	}
 }
 
-void Player::onKeyReleased(const UserInput* userInput)
+void Player::onKeyReleased(const UserInput* userInput, VirtualList paddles)
 {
 	if(K_B & userInput->releasedKey)
 	{
@@ -171,7 +222,7 @@ void Player::onKeyReleased(const UserInput* userInput)
 
 	if(K_A & userInput->releasedKey)
 	{
-		Player::ejectPaddles(this);
+		Player::ejectPaddles(this, paddles);
 	}
 /*
 	s8 horizontalInput = 0;
@@ -203,7 +254,7 @@ void Player::onKeyReleased(const UserInput* userInput)
 */
 }
 
-void Player::onKeyHold(const UserInput* userInput)
+void Player::onKeyHold(const UserInput* userInput, VirtualList paddles)
 {
 	if(K_B & userInput->holdKey)
 	{
@@ -211,7 +262,7 @@ void Player::onKeyHold(const UserInput* userInput)
 
 	if(K_A & userInput->holdKey)
 	{
-		Player::retractPaddles(this);
+		Player::retractPaddles(this, paddles);
 	}
 
 	s8 horizontalInput = 0;
@@ -238,14 +289,12 @@ void Player::onKeyHold(const UserInput* userInput)
 
 	if(horizontalInput || verticalInput)
 	{
-		Player::movePaddles(this, horizontalInput, verticalInput);
+		Player::movePaddles(this, paddles, horizontalInput, verticalInput);
 	}
 }
 
-void Player::movePaddles(s8 horizontalInput, s8 verticalInput)
+void Player::movePaddles(VirtualList paddles, s8 horizontalInput, s8 verticalInput)
 {
-	int i = 0;
-
 	Direction direction =
 	{
 		horizontalInput,
@@ -253,19 +302,16 @@ void Player::movePaddles(s8 horizontalInput, s8 verticalInput)
 		0
 	};
 
-	for(; i < 2; i++)
+	VirtualNode node = VirtualList::begin(paddles);
+
+	for(; node; node = VirtualNode::getNext(node))
 	{
-		if(this->paddles[i])
-		{
-			Paddle::moveTowards(this->paddles[i], direction);
-		}
+		Paddle::moveTowards(VirtualNode::getData(node), direction);
 	}
 }
 
-void Player::stopPaddles(s8 horizontalInput, s8 verticalInput)
+void Player::stopPaddles(VirtualList paddles, s8 horizontalInput, s8 verticalInput)
 {
-	int i = 0;
-
 	Direction direction =
 	{
 		horizontalInput,
@@ -273,38 +319,31 @@ void Player::stopPaddles(s8 horizontalInput, s8 verticalInput)
 		0
 	};
 
-	for(; i < 2; i++)
+	VirtualNode node = VirtualList::begin(paddles);
+
+	for(; node; node = VirtualNode::getNext(node))
 	{
-		if(this->paddles[i])
-		{
-			//Paddle::stopTowards(this->paddles[i], direction);
-		}
+		//Paddle::stopTowards(VirtualNode::getData(node), direction);
 	}
 }
 
-void Player::retractPaddles()
+void Player::retractPaddles(VirtualList paddles)
 {
-	int i = 0;
+	VirtualNode node = VirtualList::begin(paddles);
 
-	for(; i < 2; i++)
+	for(; node; node = VirtualNode::getNext(node))
 	{
-		if(this->paddles[i])
-		{
-			Paddle::retract(this->paddles[i]);
-		}
+		Paddle::retract(VirtualNode::getData(node));
 	}
 }
 
-void Player::ejectPaddles()
+void Player::ejectPaddles(VirtualList paddles)
 {
-	int i = 0;
+	VirtualNode node = VirtualList::begin(paddles);
 
-	for(; i < 2; i++)
+	for(; node; node = VirtualNode::getNext(node))
 	{
-		if(this->paddles[i])
-		{
-			Paddle::eject(this->paddles[i]);
-		}
+		Paddle::eject(VirtualNode::getData(node));
 	}
 }
 
@@ -438,5 +477,8 @@ void Player::printScore()
 	PRINT_INT(this->totalScore, 20 + 7, 0);
 	PRINT_TEXT("(X):       ", 22, 1);
 	PRINT_INT(this->scoreMultiplier, 20 + 7, 1);
+
+	PRINT_TEXT("Player ", 20, 27);
+	PRINT_INT(this->playerNumber, 28, 27);
 
 }

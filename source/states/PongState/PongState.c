@@ -97,70 +97,20 @@ void PongState::enter(void* owner)
 void PongState::execute(void* owner)
 {
 	Base::execute(this, owner);
-	UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
-
-//	int numberOfBytes = sizeof(u32);
-//	BYTE* pointer = (BYTE*)((u32)MemoryPool_allocate(MemoryPool_getInstance(), numberOfBytes + __DYNAMIC_STRUCT_PAD) + __DYNAMIC_STRUCT_PAD);
-//	delete pointer;
 
 	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 	{
-		static u32 pressedKey = 0x12345678;
+		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
 
-		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
-		{
-			CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-		}
-		else
-		{
-			CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-		}
-/*
-		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
-		{
-			u32 data = 0x12345678;
-
-			CommunicationManager::sendData(CommunicationManager::getInstance(), (BYTE*)&data, sizeof(data));
-		}
-		else
-		{
-			u32 data = 0;
-			CommunicationManager::receiveData(CommunicationManager::getInstance(), (BYTE*)&data, sizeof(data));
-
-			PongState::checkData(this, data, 0x12345678);
-		}
-*/
+		CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&userInput, sizeof(userInput), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
 	}
 }
 
-void PongState::checkData(u32 data, u32 expectedData)
+void PongState::onUserInputTransmitted(Object eventFirer)
 {
-	static int success = 0;
-	static int errors = 0;
-
-	if(data == expectedData)
-	{
-		success++;
-	}
-	else
-	{
-		errors++;
-	}
-
-	//PRINT_TEXT("     %", 2, 5);
-	//PRINT_FLOAT(success / (float)(success + errors), 2, 5);
-	PRINT_INT(success, 10, 5);
-	PRINT_INT(errors, 16, 5);
-}
-
-void PongState::onCommunicationCompletes(Object eventFirer)
-{
-	if(!CommunicationManager::isMaster(CommunicationManager::getInstance()))
-	{
-		BYTE* dataPointer = CommunicationManager::getData(CommunicationManager::getInstance());
-		u32 data = *((u32*)dataPointer);
-		PongState::checkData(this, data, 0x12345678);
-	}
+	const UserInput* userInput = (UserInput*)CommunicationManager::getData(CommunicationManager::getInstance());
+	//KeypadManager::printUserInput(userInput, 5, 6);
+	Player::onOpponentInput(Player::getInstance(), *userInput);
 }
 
 // state's exit
@@ -214,41 +164,7 @@ void PongState::processUserInput(UserInput userInput)
 		}
 	}
 
-	//Object::fireEvent(Object::safeCast(this), kEventUserInput);
-
-	/*
-	// disable user input
-	Game::disableKeypad(Game::getInstance());
-
-	// transition layer animation
-	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
-	if(transitionLayerEntity)
-	{
-		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
-	}
-	*/
-
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
-
-
-/*
-	if(userInput.pressedKey & K_A)
-	{
-		if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
-		{
-			static u32 pressedKey = 0x12345678;
-
-			if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
-			{
-				CommunicationManager::sendDataAsync(CommunicationManager::getInstance(), (BYTE*)&pressedKey, sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-			}
-			else
-			{
-				CommunicationManager::receiveDataAsync(CommunicationManager::getInstance(), sizeof(pressedKey), (EventListener)PongState::onCommunicationCompletes, Object::safeCast(this));
-			}
-		}
-	}
-	*/
 }
 
 // handle event

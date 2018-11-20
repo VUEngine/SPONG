@@ -86,3 +86,26 @@ void ProgressManager::setBrightnessFactor(s8 brightnessFactor)
 		SaveDataManager::writeChecksum(this);
 	}
 }
+
+u8 ProgressManager::getPlayerNumber()
+{
+	u8 playerNumber = 1;
+	if(this->sramAvailable)
+	{
+		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&playerNumber, offsetof(struct GameSaveData, playerNumber), sizeof(playerNumber));
+	}
+
+	return playerNumber;
+}
+
+void ProgressManager::setPlayerNumber(u8 playerNumber)
+{
+	if(this->sramAvailable)
+	{
+		// write auto brightness factor
+		SRAMManager::save(SRAMManager::getInstance(), (BYTE*)&playerNumber, offsetof(struct GameSaveData, playerNumber), sizeof(playerNumber));
+
+		// write checksum
+		SaveDataManager::writeChecksum(this);
+	}
+}

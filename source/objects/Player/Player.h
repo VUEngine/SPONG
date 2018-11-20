@@ -42,7 +42,8 @@ singleton class Player : Object
 {
 	/* definition pointer */
 	PongBall pongBall;
-	Paddle paddles[2];
+	VirtualList playerPaddles;
+	VirtualList opponentPaddles;
 	u32 leftScore;
 	u32 rightScore;
 	u32 totalLeftScore;
@@ -51,13 +52,22 @@ singleton class Player : Object
 	int scoreMultiplierThreshold;
 	u32 scoreMultiplier;
 	bool ballIsRolling;
+	int playerNumber;
 
 	static Player getInstance();
 	void getReady(GameState gameState);
 	void gameIsOver(GameState gameState);
+	void onOpponentInput(UserInput userInput);
 	void printScore();
 	override bool handleMessage(Telegram telegram);
 }
+
+enum PlayerNumbers
+{
+	kPlayerAlone = 0,
+	kPlayerOne,
+	kPlayerTwo
+};
 
 
 #endif
