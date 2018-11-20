@@ -151,7 +151,7 @@ void TitleScreenState::updateCursorPosition()
 	// change parallax
 	VirtualList cursorSprites = Entity::getSprites(this->entityCursor);
 	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(cursorSprites));
-	displacement.parallax = - (this->option - 2);
+	displacement.parallax = (this->option - 2);
 	Sprite::setDisplacement(VirtualList::front(cursorSprites), displacement);
 }
 

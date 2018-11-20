@@ -196,7 +196,7 @@ BgmapSpriteROMDef MAIN_MENU_HIGHSCORES_SPRITE =
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, 0, -1},
+		{0, 0, 0, 1},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
