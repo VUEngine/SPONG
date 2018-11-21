@@ -102,7 +102,7 @@ void PongBall::transform(const Transformation* environmentTransform, u8 invalida
 	{
 		localRotation.z -= __FIX10_6_TO_I(Vector3D::squareLength(Body::getVelocity(this->body))) >> 4;
 	}
-
+/*
 	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 	{
 		Vector3D otherWorldPosition = {0, 0, 0};
@@ -113,7 +113,7 @@ void PongBall::transform(const Transformation* environmentTransform, u8 invalida
 			Entity::setLocalPosition(Entity::safeCast(this), &otherWorldPosition);
 		}
 	}
-
+*/
 	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);
 }
 
