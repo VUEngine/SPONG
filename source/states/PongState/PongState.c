@@ -152,8 +152,7 @@ void PongState::processUserInput(UserInput userInput)
 
 	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 	{
-		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
-		ResumedUserInput resumedUserInput = {0, 0, 0, 0, 0, 0, 0};
+		ResumedUserInput resumedUserInput = {0, 0, 0};
 		resumedUserInput.pressedKey = userInput.pressedKey;
 		resumedUserInput.releasedKey = userInput.releasedKey;
 		resumedUserInput.holdKey = userInput.holdKey;
@@ -179,7 +178,7 @@ void PongState::processUserInput(UserInput userInput)
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
 }
 
-void PongState::processUserInputRegardlessOfInput()
+bool PongState::processUserInputRegardlessOfInput()
 {
 	return true;
 }
