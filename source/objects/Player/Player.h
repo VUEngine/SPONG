@@ -30,6 +30,7 @@
 #include <Object.h>
 #include <GameState.h>
 #include <PongBall.h>
+#include <PongState.h>
 #include <Paddle.h>
 #include <macros.h>
 
@@ -57,8 +58,8 @@ singleton class Player : Object
 	static Player getInstance();
 	void getReady(GameState gameState);
 	void gameIsOver(GameState gameState);
-	void onOpponentInput(UserInput userInput);
 	void printScore();
+	int getPlayerNumber();
 	override bool handleMessage(Telegram telegram);
 }
 

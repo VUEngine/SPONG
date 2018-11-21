@@ -41,7 +41,7 @@ int main(void)
 	ProgressManager::restoreSettings(ProgressManager::getInstance());
 
 	// start the game
-	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
+	Game::start(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 
 	// end program
 	return true;

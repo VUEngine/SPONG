@@ -134,10 +134,10 @@ void Player::getReady(GameState gameState)
 
 	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
 
-	Object::addEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player_onUserInput, kEventUserInput);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::addEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 
 	Player::printScore(this);
 	KeypadManager::registerInput(KeypadManager::getInstance(), __KEY_PRESSED | __KEY_RELEASED | __KEY_HOLD);
@@ -148,10 +148,10 @@ void Player::gameIsOver(GameState gameState)
 	VirtualList::clear(this->playerPaddles);
 	VirtualList::clear(this->opponentPaddles);
 
-	Object::removeEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player_onUserInput, kEventUserInput);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player_onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::removeEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 }
 
 // process user input
@@ -163,64 +163,55 @@ void Player::onUserInput(Object eventFirer __attribute__ ((unused)))
 
 	if(userInput.pressedKey)
 	{
-		Player::onKeyPressed(this, &userInput, this->playerPaddles);
+		Player::onKeyPressed(this, userInput.pressedKey, this->playerPaddles);
 	}
 
 	if(userInput.releasedKey)
 	{
-		Player::onKeyReleased(this, &userInput, this->playerPaddles);
+		Player::onKeyReleased(this, userInput.releasedKey, this->playerPaddles);
 	}
 
 	if(userInput.holdKey)
 	{
-		Player::onKeyHold(this, &userInput, this->playerPaddles);
+		Player::onKeyHold(this, userInput.holdKey, this->playerPaddles);
+	}
+
+	ResumedUserInput resumedUserInput = PongState::getOpponentInput(PongState::safeCast(eventFirer));
+
+	if(resumedUserInput.pressedKey)
+	{
+		Player::onKeyPressed(this, resumedUserInput.pressedKey, this->opponentPaddles);
+	}
+
+	if(resumedUserInput.releasedKey)
+	{
+		Player::onKeyReleased(this, resumedUserInput.releasedKey, this->opponentPaddles);
+	}
+
+	if(resumedUserInput.holdKey)
+	{
+		Player::onKeyHold(this, resumedUserInput.holdKey, this->opponentPaddles);
 	}
 }
 
-void Player::onOpponentInput(UserInput userInput)
+void Player::onKeyPressed(u16 pressedKey, VirtualList paddles)
 {
-	if(userInput.pressedKey)
-	{
-		Player::onKeyPressed(this, &userInput, this->opponentPaddles);
-	}
-
-	if(userInput.releasedKey)
-	{
-		Player::onKeyReleased(this, &userInput, this->opponentPaddles);
-	}
-
-	if(userInput.holdKey)
-	{
-		Player::onKeyHold(this, &userInput, this->opponentPaddles);
-	}
-}
-
-void Player::onKeyPressed(const UserInput* userInput, VirtualList paddles)
-{
-	if(K_B & userInput->pressedKey)
+	if(K_B & pressedKey)
 	{
 	}
 
-	if(K_A & userInput->pressedKey)
-	{
-	}
-
-	// check direction
-	if((K_LL | K_LR ) & (userInput->pressedKey | userInput->holdKey))
-	{
-	}
-	else if(K_LU & userInput->pressedKey)
+	if(K_A & pressedKey)
 	{
 	}
 }
 
-void Player::onKeyReleased(const UserInput* userInput, VirtualList paddles)
+void Player::onKeyReleased(u16 releasedKey, VirtualList paddles)
 {
-	if(K_B & userInput->releasedKey)
+	if(K_B & releasedKey)
 	{
 	}
 
-	if(K_A & userInput->releasedKey)
+	if(K_A & releasedKey)
 	{
 		Player::ejectPaddles(this, paddles);
 	}
@@ -229,20 +220,20 @@ void Player::onKeyReleased(const UserInput* userInput, VirtualList paddles)
 	s8 verticalInput = 0;
 
 	// check direction
-	if(K_LL & userInput->releasedKey)
+	if(K_LL & releasedKey)
 	{
 		horizontalInput = -1;
 	}
-	else if(K_LR & userInput->releasedKey)
+	else if(K_LR & releasedKey)
 	{
 		horizontalInput = 1;
 	}
 
-	if(K_LU & userInput->releasedKey)
+	if(K_LU & releasedKey)
 	{
 		verticalInput = -1;
 	}
-	else if(K_LD & userInput->releasedKey)
+	else if(K_LD & releasedKey)
 	{
 		verticalInput = 1;
 	}
@@ -254,13 +245,13 @@ void Player::onKeyReleased(const UserInput* userInput, VirtualList paddles)
 */
 }
 
-void Player::onKeyHold(const UserInput* userInput, VirtualList paddles)
+void Player::onKeyHold(u16 holdKey, VirtualList paddles)
 {
-	if(K_B & userInput->holdKey)
+	if(K_B & holdKey)
 	{
 	}
 
-	if(K_A & userInput->holdKey)
+	if(K_A & holdKey)
 	{
 		Player::retractPaddles(this, paddles);
 	}
@@ -269,20 +260,20 @@ void Player::onKeyHold(const UserInput* userInput, VirtualList paddles)
 	s8 verticalInput = 0;
 
 	// check direction
-	if((K_LL) & userInput->holdKey)
+	if(K_LL & holdKey)
 	{
 		horizontalInput = -1;
 	}
-	else if((K_LR) & userInput->holdKey)
+	else if(K_LR & holdKey)
 	{
 		horizontalInput = 1;
 	}
 
-	if((K_LU) & userInput->holdKey)
+	if(K_LU & holdKey)
 	{
 		verticalInput = -1;
 	}
-	else if((K_LD) & userInput->holdKey)
+	else if(K_LD & holdKey)
 	{
 		verticalInput = 1;
 	}
@@ -461,6 +452,12 @@ void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
 	}
 }
 
+int Player::getPlayerNumber()
+{
+	return this->playerNumber;
+}
+
+
 void Player::printScore()
 {
 	PRINT_TEXT("Total:      ", 1, 0);
@@ -478,7 +475,14 @@ void Player::printScore()
 	PRINT_TEXT("(X):       ", 22, 1);
 	PRINT_INT(this->scoreMultiplier, 20 + 7, 1);
 
-	PRINT_TEXT("Player ", 20, 27);
-	PRINT_INT(this->playerNumber, 28, 27);
-
+	if(kPlayerOne == this->playerNumber)
+	{
+		PRINT_TEXT("Player ", 3, 26);
+		PRINT_INT(this->playerNumber, 3 + 7, 26);
+	}
+	else if(kPlayerTwo == this->playerNumber)
+	{
+		PRINT_TEXT("Player ", 38, 26);
+		PRINT_INT(this->playerNumber, 38 + 7, 26);
+	}
 }

@@ -35,7 +35,7 @@
 #include <PongState.h>
 #include <ParticleSystem.h>
 #include <ProgressManager.h>
-#include <KeyPadManager.h>
+#include <KeypadManager.h>
 #include <Player.h>
 #include <GameEvents.h>
 #include <debugUtilities.h>
@@ -97,20 +97,6 @@ void PongState::enter(void* owner)
 void PongState::execute(void* owner)
 {
 	Base::execute(this, owner);
-
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
-	{
-		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
-
-		CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&userInput, sizeof(userInput), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
-	}
-}
-
-void PongState::onUserInputTransmitted(Object eventFirer)
-{
-	const UserInput* userInput = (UserInput*)CommunicationManager::getData(CommunicationManager::getInstance());
-	//KeypadManager::printUserInput(userInput, 5, 6);
-	Player::onOpponentInput(Player::getInstance(), *userInput);
 }
 
 // state's exit
@@ -164,7 +150,43 @@ void PongState::processUserInput(UserInput userInput)
 		}
 	}
 
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
+		ResumedUserInput resumedUserInput = {0, 0, 0, 0, 0, 0, 0};
+		resumedUserInput.pressedKey = userInput.pressedKey;
+		resumedUserInput.releasedKey = userInput.releasedKey;
+		resumedUserInput.holdKey = userInput.holdKey;
+
+		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&resumedUserInput, (BYTE*)&this->opponentInput, sizeof(resumedUserInput));
+	}
+
+
+/*
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		PRINT_TIME(4, 6);
+		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
+		ResumedUserInput resumedUserInput = {0, 0, 0, 0, 0, 0, 0};
+		resumedUserInput.pressedKey = userInput.pressedKey;
+		resumedUserInput.releasedKey = userInput.releasedKey;
+		resumedUserInput.holdKey = userInput.holdKey;
+
+		CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&resumedUserInput, sizeof(resumedUserInput), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
+	}
+	*/
+
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
+}
+
+void PongState::processUserInputRegardlessOfInput()
+{
+	return true;
+}
+
+void PongState::onUserInputTransmitted(Object eventFirer __attribute__ ((unused)))
+{
+	this->opponentInput = *((ResumedUserInput*)CommunicationManager::getData(CommunicationManager::getInstance()));
 }
 
 // handle event
@@ -175,3 +197,9 @@ void PongState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused
 
 	Player::gameIsOver(Player::getInstance(), GameState::safeCast(this));
 }
+
+ResumedUserInput PongState::getOpponentInput()
+{
+	return this->opponentInput;
+}
+

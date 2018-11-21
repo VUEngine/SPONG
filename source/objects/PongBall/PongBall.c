@@ -31,6 +31,7 @@
 #include <Utilities.h>
 #include <GameEvents.h>
 #include <MessageDispatcher.h>
+#include <Player.h>
 #include <debugUtilities.h>
 #include "PongBall.h"
 
@@ -66,6 +67,8 @@ void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 i
 	this->modifierForce = (Vector3D){0, 0, 0};
 	this->paddleEnum = kNoPaddle;
 	this->rolling = false;
+
+	this->transformation.localScale = (Scale){__F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f)};
 }
 
 // class's constructor
@@ -84,9 +87,9 @@ void PongBall::ready(bool recursive)
 	PongBall::startMovement(this);
 }
 
-void PongBall::update(u32 elapsedTime)
+void PongBall::transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag)
 {
-	Base::update(this, elapsedTime);
+	Base::transform(this, environmentTransform, invalidateTransformationFlag);
 
 	Velocity velocity = Body::getVelocity(this->body);
 	Rotation localRotation = this->transformation.localRotation;
@@ -98,6 +101,17 @@ void PongBall::update(u32 elapsedTime)
 	else
 	{
 		localRotation.z -= __FIX10_6_TO_I(Vector3D::squareLength(Body::getVelocity(this->body))) >> 4;
+	}
+
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		Vector3D otherWorldPosition = {0, 0, 0};
+		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&this->transformation.localPosition, (BYTE*)&otherWorldPosition, sizeof(otherWorldPosition));
+
+		if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
+		{
+			Entity::setLocalPosition(Entity::safeCast(this), &otherWorldPosition);
+		}
 	}
 
 	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);

@@ -34,8 +34,20 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
+typedef struct ResumedUserInput
+{
+	/// Currently pressed key(s)
+	u16 pressedKey;
+	/// Released key(s)
+	u16 releasedKey;
+	/// Held key(s)
+	u16 holdKey;
+} ResumedUserInput;
+
 singleton class PongState : GameState
 {
+	ResumedUserInput opponentInput;
+
 	static PongState getInstance();
 
 	override void enter(void* owner);
@@ -43,9 +55,13 @@ singleton class PongState : GameState
 	override void resume(void* owner);
 	override void suspend(void* owner);
 	override void processUserInput(UserInput userInput);
+	override void processUserInputRegardlessOfInput();
 
 	override void execute(void* owner);
+
+	ResumedUserInput getOpponentInput();
 }
+
 
 
 #endif

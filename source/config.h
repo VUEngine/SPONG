@@ -133,7 +133,7 @@
 #define __PARALLAX_CORRECTION_FACTOR			2
 
 // Affects the strength of the scaling
-#define __SCALING_MODIFIER_FACTOR				0.3f
+#define __SCALING_MODIFIER_FACTOR				0.1f
 
 // minimum number of pixels that the camera can move
 #define __CAMERA_MINIMUM_DISPLACEMENT_PIXELS_POWER	1
@@ -288,7 +288,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 // Maximum possible scale: affects param table allocation space
-#define __MAXIMUM_SCALE							2
+#define __MAXIMUM_SCALE							4
 
 // Maximum number of rows to write on each call to affine calculation functions
 #define __MAXIMUM_AFFINE_ROWS_PER_CALL			16

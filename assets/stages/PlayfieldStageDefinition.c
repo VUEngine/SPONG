@@ -242,7 +242,7 @@ StageROMDef PLAYFIELD_STAGE_ST =
 		64,
 
 		// maximum number of rows to compute on each call to the affine functions
-		32,
+		64,
 
 		// colors config
 		{
