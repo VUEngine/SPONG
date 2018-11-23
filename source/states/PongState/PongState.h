@@ -44,20 +44,30 @@ typedef struct ResumedUserInput
 	u16 holdKey;
 } ResumedUserInput;
 
+
+typedef struct DataToTransmit
+{
+	//Vector3D ballLocalPosition;
+	ResumedUserInput resumedUserInput;
+} DataToTransmit;
+
 singleton class PongState : GameState
 {
-	ResumedUserInput opponentInput;
+	DataToTransmit opponentData;
+	bool isVersusMode;
 
 	static PongState getInstance();
 
+	void setVersusMode(bool value);
+	bool getVersusMode();
+
+	override bool isVersusMode();
 	override void enter(void* owner);
 	override void exit(void* owner);
 	override void resume(void* owner);
 	override void suspend(void* owner);
 	override void processUserInput(UserInput userInput);
 	override bool processUserInputRegardlessOfInput();
-
-	override void execute(void* owner);
 
 	ResumedUserInput getOpponentInput();
 }

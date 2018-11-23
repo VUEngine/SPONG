@@ -59,6 +59,8 @@ void PongState::constructor()
 {
 	Base::constructor();
 
+	this->isVersusMode = false;
+
 	// add event listeners
 	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
@@ -71,6 +73,21 @@ void PongState::destructor()
 
 	// destroy base
 	Base::destructor();
+}
+
+void PongState::setVersusMode(bool value)
+{
+	this->isVersusMode = value;
+}
+
+bool PongState::getVersusMode()
+{
+	return this->isVersusMode;
+}
+
+bool PongState::isVersusMode()
+{
+	return PongState::getVersusMode(this);
 }
 
 // state's enter
@@ -92,11 +109,6 @@ void PongState::enter(void* owner)
 
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
-}
-
-void PongState::execute(void* owner)
-{
-	Base::execute(this, owner);
 }
 
 // state's exit
@@ -150,30 +162,24 @@ void PongState::processUserInput(UserInput userInput)
 		}
 	}
 
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	if(this->isVersusMode)
 	{
-		ResumedUserInput resumedUserInput = {0, 0, 0};
-		resumedUserInput.pressedKey = userInput.pressedKey;
-		resumedUserInput.releasedKey = userInput.releasedKey;
-		resumedUserInput.holdKey = userInput.holdKey;
+	//	PongBall pongBall = Player::getPongBall(Player::getInstance());
+		DataToTransmit dataToTransmit;
+	//	dataToTransmit.ballLocalPosition = *Container::getLocalPosition(Container::safeCast(pongBall));
+		dataToTransmit.resumedUserInput.pressedKey = userInput.pressedKey;
+		dataToTransmit.resumedUserInput.releasedKey = userInput.releasedKey;
+		dataToTransmit.resumedUserInput.holdKey = userInput.holdKey;
 
-		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&resumedUserInput, (BYTE*)&this->opponentInput, sizeof(resumedUserInput));
-	}
-
-
+		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&dataToTransmit, (BYTE*)&this->opponentData, sizeof(dataToTransmit));
 /*
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
-	{
-		PRINT_TIME(4, 6);
-		UserInput userInput = KeypadManager::getUserInput(KeypadManager::getInstance());
-		ResumedUserInput resumedUserInput = {0, 0, 0, 0, 0, 0, 0};
-		resumedUserInput.pressedKey = userInput.pressedKey;
-		resumedUserInput.releasedKey = userInput.releasedKey;
-		resumedUserInput.holdKey = userInput.holdKey;
-
-		CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&resumedUserInput, sizeof(resumedUserInput), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
+		if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
+		{
+			Container::setLocalPosition(Container::safeCast(pongBall), &this->opponentData.ballLocalPosition);
+		}
+*/
+	//	CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&dataToTransmit, sizeof(dataToTransmit), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
 	}
-	*/
 
 	Object::fireEvent(Object::safeCast(this), kEventUserInput);
 }
@@ -185,7 +191,14 @@ bool PongState::processUserInputRegardlessOfInput()
 
 void PongState::onUserInputTransmitted(Object eventFirer __attribute__ ((unused)))
 {
-	this->opponentInput = *((ResumedUserInput*)CommunicationManager::getData(CommunicationManager::getInstance()));
+	this->opponentData = *((DataToTransmit*)CommunicationManager::getData(CommunicationManager::getInstance()));
+/*
+	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
+	{
+		PongBall pongBall = Player::getPongBall(Player::getInstance());
+		Container::setLocalPosition(Container::safeCast(pongBall), &this->opponentData.ballLocalPosition);
+	}
+	*/
 }
 
 // handle event
@@ -199,6 +212,6 @@ void PongState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused
 
 ResumedUserInput PongState::getOpponentInput()
 {
-	return this->opponentInput;
+	return this->opponentData.resumedUserInput;
 }
 

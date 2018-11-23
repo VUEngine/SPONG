@@ -60,6 +60,7 @@ singleton class Player : Object
 	void gameIsOver(GameState gameState);
 	void printScore();
 	int getPlayerNumber();
+	PongBall getPongBall();
 	override bool handleMessage(Telegram telegram);
 }
 

@@ -99,7 +99,7 @@ void Player::getReady(GameState gameState)
 {
 	this->playerNumber = kPlayerAlone;
 
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	if(PongState::getVersusMode(PongState::getInstance()))
 	{
 		if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
 		{
@@ -299,6 +299,11 @@ void Player::movePaddles(VirtualList paddles, s8 horizontalInput, s8 verticalInp
 	{
 		Paddle::moveTowards(VirtualNode::getData(node), direction);
 	}
+}
+
+PongBall Player::getPongBall()
+{
+	return this->pongBall;
 }
 
 void Player::stopPaddles(VirtualList paddles, s8 horizontalInput, s8 verticalInput)

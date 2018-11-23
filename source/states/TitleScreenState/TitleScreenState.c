@@ -181,22 +181,48 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 			return;
 		}
 
-		// disable user input
-		Game::disableKeypad(Game::getInstance());
+	#define START_VERSUS_MATCH	0x334587CC
 
-		if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+		if(this->option == kTitleScreenOptionVersusMode)
 		{
-#define START_VERSUS_MATCH	0x334587CC
-			u32 message = START_VERSUS_MATCH;
+			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+			{
+				// disable user input
+				Game::disableKeypad(Game::getInstance());
 
-			PRINT_TEXT("Waiting other VB...", 1,1);
-			CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&message, sizeof(message), (EventListener)TitleScreenState::onStartMatchMessageSend, Object::safeCast(this));
-			Entity::hide(this->entityMainMenu);
+				u32 messageToSend = START_VERSUS_MATCH;
+				u32 receivedMessage = START_VERSUS_MATCH;
+
+				Entity::hide(this->entityMainMenu);
+				PRINT_TEXT("Waiting other VB...", 1,1);
+
+				do
+				{
+					CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&messageToSend, (BYTE*)&receivedMessage, sizeof(receivedMessage));
+
+				}
+				while(START_VERSUS_MATCH != receivedMessage);
+
+				PongState::setVersusMode(PongState::getInstance(), true);
+
+				// transition layer animation
+				AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+				if(transitionLayerEntity)
+				{
+					AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
+				}
+
+//				CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&message, sizeof(message), (EventListener)TitleScreenState::onStartMatchMessageSend, Object::safeCast(this));
+			}
 		}
-		else
+		else if(this->option == kTitleScreenOptionMarathonMode)
 		{
+			// disable user input
+			Game::disableKeypad(Game::getInstance());
+
 			// transition layer animation
 			AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+
 			if(transitionLayerEntity)
 			{
 				AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -221,6 +247,8 @@ void TitleScreenState::onStartMatchMessageSend(Object eventFirer)
 
 	if(START_VERSUS_MATCH == message)
 	{
+		PongState::setVersusMode(PongState::getInstance(), true);
+
 		// transition layer animation
 		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)

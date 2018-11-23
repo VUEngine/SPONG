@@ -102,19 +102,28 @@ void PongBall::transform(const Transformation* environmentTransform, u8 invalida
 	{
 		localRotation.z -= __FIX10_6_TO_I(Vector3D::squareLength(Body::getVelocity(this->body))) >> 4;
 	}
+
+	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);
+}
+
+void PongBall::update(u32 elapsedTime)
+{
+	Base::update(this, elapsedTime);
 /*
 	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 	{
-		Vector3D otherWorldPosition = {0, 0, 0};
-		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&this->transformation.localPosition, (BYTE*)&otherWorldPosition, sizeof(otherWorldPosition));
-
-		if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
-		{
-			Entity::setLocalPosition(Entity::safeCast(this), &otherWorldPosition);
-		}
+		CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&this->transformation.localPosition, sizeof(Vector3D), (EventListener)PongBall::onPositionTransmitted, Object::safeCast(this));
 	}
-*/
-	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);
+	*/
+}
+
+void PongBall::onPositionTransmitted(Object eventFirer __attribute__((unused)))
+{
+	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
+	{
+		const Vector3D* otherWorldPosition = (Vector3D*)CommunicationManager::getData(CommunicationManager::getInstance());
+		Entity::setLocalPosition(Entity::safeCast(this), otherWorldPosition);
+	}
 }
 
 // start moving

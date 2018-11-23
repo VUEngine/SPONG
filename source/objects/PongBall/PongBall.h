@@ -70,6 +70,7 @@ class PongBall : Actor
 	int getPaddleEnum();
 	void startRolling();
 	override void ready(bool recursive);
+	override void update(u32 elapsedTime);
 	override void transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag);
 	override bool handleMessage(Telegram telegram);
 	override bool enterCollision(const CollisionInformation* collisionInformation);
