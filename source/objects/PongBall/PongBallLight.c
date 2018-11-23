@@ -66,8 +66,8 @@ void PongBallLight::constructor(PongBallLightDefinition* PongBallLightDefinition
 // class's constructor
 void PongBallLight::destructor()
 {
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
@@ -84,8 +84,8 @@ void PongBallLight::ready(bool recursive)
 	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject::getPosition(this->pongBall)->z;
 	this->followPongBall = true;
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight_onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
 void PongBallLight::update(u32 elapsedTime)

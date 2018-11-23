@@ -19,30 +19,58 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-//---------------------------------------------------------------------------------------------------------
+ //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
-#include <ProgressManager.h>
-#include <AutoPauseManager.h>
-#include <PrecautionScreenState.h>
+#include <SoundManager.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											GAME'S MAIN LOOP
+//												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-int main(void)
+const u16 BALL_HIT_CEILING_SND[] =
 {
-	// initialize plugins
-	AutoPauseManager::setActive(AutoPauseManager::getInstance(), true);
-	ProgressManager::restoreSettings(ProgressManager::getInstance());
+//songlength
+		2,
+//stdwait
+		0x0C,
+//stdSxLRV
+		0x55,
+//stdSxEV0
+		0x51,
+//stdSxEV1
+		0x01,
+//stdSxRAM
+		0x00,
+//stdS5SWP
+		//0x00,
+//song's notes
+		F_4,
+		F_5,
+		NONE,
+		NONE,
+		NONE,
+		C_3,
+		D_3,
+		NONE,
+		NONE,
+		NONE,
+		C_3,
+		D_3,
+		NONE,
+		NONE,
+		NONE,
+		C_3,
+		D_3,
+		NONE,
+		NONE,
+		NONE,
+		C_3,
+		D_3,
+		NONE,
+		NONE,
+		NONE,
 
-	// start the game
-	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
-
-	// end program
-	return true;
-}
+};

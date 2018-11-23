@@ -128,7 +128,7 @@ ObjectSpriteROMDef PONG_BALL_PARTICLE_SPRITE =
 		(TextureDefinition*)&PONG_BALL_PARTICLE_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
-		__TRANSPARENCY_NONE,
+		__TRANSPARENCY_EVEN,
 
 		// displacement
 		{0, 0, 0, 0},
@@ -217,7 +217,7 @@ ParticleSystemROMDef PONG_BALL_PARTICLES_PS =
 	50,
 
 	// maximum total particles
-	20,
+	10,
 
 	// array of textures
 	(const ObjectSpriteDefinition**)PONG_BALL_PARTICLE_SPRITES,

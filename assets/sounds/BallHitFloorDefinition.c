@@ -19,30 +19,56 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-//---------------------------------------------------------------------------------------------------------
+ //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
-#include <ProgressManager.h>
-#include <AutoPauseManager.h>
-#include <PrecautionScreenState.h>
+#include <SoundManager.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											GAME'S MAIN LOOP
+//												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-int main(void)
+const u16 BALL_HIT_FLOOR_SND[] =
 {
-	// initialize plugins
-	AutoPauseManager::setActive(AutoPauseManager::getInstance(), true);
-	ProgressManager::restoreSettings(ProgressManager::getInstance());
 
-	// start the game
-	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
+//songlength
+		10,
+//stdwait
+		0x01,
+//stdSxLRV
+		0x5,
+//stdSxEV0
+		0x51,
+//stdSxEV1
+		0x01,
+//stdSxRAM
+		0x00,
+//stdS5SWP
+		//0x00,
+//song's notes
 
-	// end program
-	return true;
-}
+		A_2,
+		GS2,
+		G_2,
+		GS2,
+		0x12,
+		0x0F,
+		//0x00,
+		//0x00,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x3C,
+		0x31,
+		0x31,
+		0x31,
+};
+
+
