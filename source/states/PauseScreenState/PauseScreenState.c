@@ -140,7 +140,7 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 	Game::enableKeypad(Game::getInstance());
 
 	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 
 	this->mode = kPauseScreenModeShowOptions;
 }

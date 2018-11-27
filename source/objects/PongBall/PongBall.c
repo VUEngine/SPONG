@@ -103,7 +103,7 @@ void PongBall::transform(const Transformation* environmentTransform, u8 invalida
 		localRotation.z -= __FIX10_6_TO_I(Vector3D::squareLength(Body::getVelocity(this->body))) >> 4;
 	}
 
-	Entity::setLocalRotation(Entity::safeCast(this), &localRotation);
+	Entity::setLocalRotation(this, &localRotation);
 }
 
 void PongBall::update(u32 elapsedTime)
@@ -122,7 +122,7 @@ void PongBall::onPositionTransmitted(Object eventFirer __attribute__((unused)))
 	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
 	{
 		const Vector3D* otherWorldPosition = (Vector3D*)CommunicationManager::getData(CommunicationManager::getInstance());
-		Entity::setLocalPosition(Entity::safeCast(this), otherWorldPosition);
+		Entity::setLocalPosition(this, otherWorldPosition);
 	}
 }
 
@@ -143,7 +143,7 @@ void PongBall::startMovement()
 	const Vector3D* paddlePosition =  Entity::getPosition(paddle);
 	localPosition.x = paddlePosition->x;
 	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) / 100.0f);
-	Entity::setLocalPosition(Entity::safeCast(this), &localPosition);
+	Entity::setLocalPosition(this, &localPosition);
 }
 
 // move back to ejector

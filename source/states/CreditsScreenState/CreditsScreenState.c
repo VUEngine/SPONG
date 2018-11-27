@@ -24,14 +24,31 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
+#include <string.h>
+
 #include <Game.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
-#include <SplashScreenState.h>
-#include <KeypadManager.h>
+#include <I18n.h>
+#include <Languages.h>
+#include <PhysicalWorld.h>
+#include <CreditsScreenState.h>
+#include <ParticleSystem.h>
+#include <ProgressManager.h>
+#include <KeyPadManager.h>
 #include <AnimatedEntity.h>
+#include <Utilities.h>
+#include <TitleScreenState.h>
+#include <AutoPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
+
+
+//---------------------------------------------------------------------------------------------------------
+//												DECLARATIONS
+//---------------------------------------------------------------------------------------------------------
+
+extern StageROMDef CREDITS_SCREEN_STAGE_ST;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -39,42 +56,32 @@
 //---------------------------------------------------------------------------------------------------------
 
 // class's constructor
-void SplashScreenState::constructor()
+void CreditsScreenState::constructor()
 {
 	Base::constructor();
 
-	this->stageDefinition = NULL;
-
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
-void SplashScreenState::destructor()
+void CreditsScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 
-	// destroy the super object
-	// must always be called at the end of the destructor
+	// destroy base
 	Base::destructor();
 }
 
 // state's enter
-void SplashScreenState::enter(void* owner)
+void CreditsScreenState::enter(void* owner)
 {
 	// call base
 	Base::enter(this, owner);
 
-	if(this->stageDefinition)
-	{
-		GameState::loadStage(GameState::safeCast(this), this->stageDefinition, NULL, true);
-	}
-
-	SplashScreenState::print(this);
-
-	// start fade in effect in 1 ms, because a full render cycle is needed to put everything in place
-	MessageDispatcher::dispatchMessage(1, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenStarted, NULL);
+	// load stage
+	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&CREDITS_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
@@ -87,93 +94,49 @@ void SplashScreenState::enter(void* owner)
 }
 
 // state's exit
-void SplashScreenState::exit(void* owner)
+void CreditsScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
-
-	// destroy the state
-	delete this;
 }
 
 // state's resume
-void SplashScreenState::resume(void* owner)
+void CreditsScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
-	SplashScreenState::print(this);
-
-#ifdef __DEBUG_TOOLS
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-#ifdef __STAGE_EDITOR
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-#ifdef __ANIMATION_INSPECTOR
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-
-	// start a fade in effect
 	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-
-#ifdef __DEBUG_TOOLS
-	}
-#endif
-#ifdef __STAGE_EDITOR
-	}
-#endif
-#ifdef __ANIMATION_INSPECTOR
-	}
-#endif
 }
 
-void SplashScreenState::processUserInput(UserInput userInput)
+// state's suspend
+void CreditsScreenState::suspend(void* owner)
 {
-	SplashScreenState::processInput(this, userInput.pressedKey);
+	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
+
+	Base::suspend(this, owner);
 }
 
-// state's handle message
-bool SplashScreenState::processMessage(void* owner __attribute__ ((unused)), Telegram telegram __attribute__ ((unused)))
+void CreditsScreenState::processUserInput(UserInput userInput)
 {
-	return false;
-}
-
-void SplashScreenState::processInput(u32 pressedKey __attribute__ ((unused)))
-{
-	SplashScreenState::loadNextState(this);
-}
-
-void SplashScreenState::print()
-{
-}
-
-void SplashScreenState::setNextState(GameState nextState)
-{
-	this->nextState = nextState;
-}
-
-void SplashScreenState::loadNextState()
-{
-	// disable user input
-	Game::disableKeypad(Game::getInstance());
-
-	// transition layer animation
-	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
-	if(transitionLayerEntity)
+	if((K_A | K_B | K_STA | K_SEL) & userInput.pressedKey)
 	{
-		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
+		// disable user input
+		Game::disableKeypad(Game::getInstance());
+
+		// transition layer animation
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		if(transitionLayerEntity)
+		{
+			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
+		}
 	}
 }
 
 // handle event
-void SplashScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void CreditsScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
-	// change to next stage
-	Game::changeState(Game::getInstance(), this->nextState);
+	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

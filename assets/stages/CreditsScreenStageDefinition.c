@@ -33,87 +33,34 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition COPYRIGHT_EN;
-extern EntityDefinition RHOMBUS_BACKGROUND_AE;
-extern EntityDefinition DEMO_BADGE_LE;
-extern EntityDefinition MAIN_MENU_CHALLENGE_MODE_LE;
-extern EntityDefinition MAIN_MENU_CREDITS_LE;
-extern EntityDefinition MAIN_MENU_CURSOR_AE;
-extern EntityDefinition MAIN_MENU_HIGHSCORES_LE;
-extern EntityDefinition MAIN_MENU_MARATHON_MODE_LE;
-extern EntityDefinition MAIN_MENU_OPTIONS_LE;
-extern EntityDefinition MAIN_MENU_VERSUS_MODE_LE;
-extern EntityDefinition MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE;
-extern EntityDefinition PRESS_START_BUTTON_LE;
-extern EntityDefinition LOGO_AE;
+extern EntityDefinition HEXAGON_BACKGROUND_AE;
+extern EntityDefinition CREDITS_SCREEN_EN;
+extern EntityDefinition CREDITS_A_GAME_BY_LE;
+extern EntityDefinition CREDITS_PATRON_THANKS_LE;
 extern EntityDefinition TRANSITION_LAYER_B_AE;
 extern EntityDefinition LOW_POWER_INDICATOR_LB;
-
-extern u16 TITLE_BGM[][2];
-
-
-//---------------------------------------------------------------------------------------------------------
-//												ASSETS
-//---------------------------------------------------------------------------------------------------------
-
-EntityROMDef MAIN_MENU_CONTAINER =
-{
-	// class allocator
-	__TYPE(Entity),
-
-	// sprites
-	NULL,
-
-	// collision shapes
-	NULL,
-
-	// size
-	// if 0, width and height will be inferred from the first sprite's texture's size
-	{0, 0, 0},
-
-	// gameworld's character's type
-	kNoType,
-
-	// physical specification
-	NULL,
-};
-
-PositionedEntityROMDef MAIN_MENU_CHILDREN[] =
-{
-	{&MAIN_MENU_CURSOR_AE, 			{0,   0, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
-	{&MAIN_MENU_MARATHON_MODE_LE, 	{0, -24, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_CHALLENGE_MODE_LE, 	{0, -12, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_VERSUS_MODE_LE,		{0,   0, 0, 0}, 	0, "MMVersus", NULL, NULL, false},
-	{&MAIN_MENU_HIGHSCORES_LE, 		{0,  12, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_OPTIONS_LE, 		{0,  24, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_CREDITS_LE, 		{0,  36, 0, 0}, 	0, NULL, NULL, NULL, false},
-
-	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
-};
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMDef CREDITS_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&RHOMBUS_BACKGROUND_AE,					{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&LOGO_AE, 									{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
-	{&DEMO_BADGE_LE, 							{314, 104,  0,  0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_CONTAINER, 						{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
-	{&PRESS_START_BUTTON_LE, 					{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
-	{&COPYRIGHT_EN, 							{192, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&HEXAGON_BACKGROUND_AE,	{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,					{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
-	{&MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE, 	{192, 168, -1,  0}, 	0, "Waiting", NULL, NULL, false},
+	{&CREDITS_SCREEN_EN,		{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&CREDITS_A_GAME_BY_LE,		{192,  12,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&CREDITS_PATRON_THANKS_LE,	{192,  58,  0,  0},   	0, NULL, NULL, NULL, false},
+
+	{&TRANSITION_LAYER_B_AE,	{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMDef CREDITS_SCREEN_STAGE_ST_UI_ENTITIES[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0},		0, NULL, NULL, NULL, false},
+	{&LOW_POWER_INDICATOR_LB, 	{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -123,19 +70,19 @@ PositionedEntityROMDef TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMDef* const TITLE_SCREEN_STAGE_ST_FONTS[] =
+FontROMDef* const CREDITS_SCREEN_STAGE_ST_FONTS[] =
 {
 	&INDUSTRIAL_FONT,
 
 	NULL
 };
 
-CharSetROMDef* const TITLE_SCREEN_STAGE_ST_CHARSETS[] =
+CharSetROMDef* const CREDITS_SCREEN_STAGE_ST_CHARSETS[] =
 {
 	NULL
 };
 
-TextureDefinition* const TITLE_SCREEN_STAGE_ST_TEXTURES[] =
+TextureDefinition* const CREDITS_SCREEN_STAGE_ST_TEXTURES[] =
 {
 	NULL
 };
@@ -145,7 +92,7 @@ TextureDefinition* const TITLE_SCREEN_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMDef TITLE_SCREEN_STAGE_ST =
+StageROMDef CREDITS_SCREEN_STAGE_ST =
 {
 	// allocator
 	__TYPE(Stage),
@@ -324,28 +271,28 @@ StageROMDef TITLE_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontDefinition**)TITLE_SCREEN_STAGE_ST_FONTS,
+		(FontDefinition**)CREDITS_SCREEN_STAGE_ST_FONTS,
 
 		// char sets to preload
-		(CharSetDefinition**)TITLE_SCREEN_STAGE_ST_CHARSETS,
+		(CharSetDefinition**)CREDITS_SCREEN_STAGE_ST_CHARSETS,
 
 		// textures to preload
-		(TextureDefinition**)TITLE_SCREEN_STAGE_ST_TEXTURES,
+		(TextureDefinition**)CREDITS_SCREEN_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])TITLE_BGM,
+		(const u16 (*)[])NULL,
 	},
 
 	// entities
 	{
 		// ui
 		{
-			TITLE_SCREEN_STAGE_ST_UI_ENTITIES,
+			CREDITS_SCREEN_STAGE_ST_UI_ENTITIES,
 			__TYPE(UiContainer),
 		},
 
 		// children
-		TITLE_SCREEN_STAGE_ST_ENTITIES,
+		CREDITS_SCREEN_STAGE_ST_ENTITIES,
 	},
 
 	// post processing effects

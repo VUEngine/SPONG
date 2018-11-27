@@ -1,7 +1,7 @@
 /* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
  * A universal game engine for the Nintendo Virtual Boy
  *
- * Copyright (C) 2007, 2018 by Jorge Eremiev<jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction, including
@@ -24,98 +24,156 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <libgccvb.h>
-#include <AnimatedEntity.h>
 #include <BgmapAnimatedSprite.h>
+#include <macros.h>
+#include <LocalizedEntity.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE HexagonBackgroundLeftMap[];
-extern BYTE HexagonBackgroundLeftTiles[];
-extern BYTE HexagonBackgroundRightTiles[];
-extern BYTE HexagonBackgroundRightMap[];
+extern BYTE AGameByTiles[];
+extern BYTE AGameByMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-/* Animation */
-
-AnimationFunctionROMDef HEXAGON_BACKGROUND_DEFAULT_ANIM =
+AnimationFunctionROMDef CREDITS_A_GAME_BY_EN_ANIM =
 {
 	// number of frames of this animation function
-	8,
+	1,
 
 	// frames to play in animation
-	{
-		0, 1, 2, 3, 4, 5, 6, 7,
-	},
+	{0},
 
 	// number of cycles a frame of animation is displayed
-	4,
+	8,
 
 	// whether to play it in loop or not
-	true,
+	false,
 
 	// method to call on function completion
 	NULL,
 
 	// function's name
-	"Default",
+	"0",
 };
 
-AnimationDescriptionROMDef HEXAGON_BACKGROUND_ANIM =
+AnimationFunctionROMDef CREDITS_A_GAME_BY_DE_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{1},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"1",
+};
+
+AnimationFunctionROMDef CREDITS_A_GAME_BY_ES_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{2},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"2",
+};
+
+AnimationFunctionROMDef CREDITS_A_GAME_BY_FR_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{3},
+
+	// number of cycles a frame of animation is displayed
+	8,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"3",
+};
+
+// an animation definition
+AnimationDescriptionROMDef CREDITS_A_GAME_BY_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&HEXAGON_BACKGROUND_DEFAULT_ANIM,
+		(AnimationFunction*)&CREDITS_A_GAME_BY_EN_ANIM,
+		(AnimationFunction*)&CREDITS_A_GAME_BY_DE_ANIM,
+		(AnimationFunction*)&CREDITS_A_GAME_BY_ES_ANIM,
+		(AnimationFunction*)&CREDITS_A_GAME_BY_FR_ANIM,
 		NULL,
 	}
 };
 
-
-/* Left */
-
-CharSetROMDef HEXAGON_BACKGROUND_L_CH =
+CharSetROMDef CREDITS_A_GAME_BY_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	526,
+	17,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__ANIMATED_SINGLE_OPTIMIZED,
+	__ANIMATED_SINGLE,
 
 	// char definition
-	HexagonBackgroundLeftTiles,
+	AGameByTiles,
 };
 
-TextureROMDef HEXAGON_BACKGROUND_L_TX =
+TextureROMDef CREDITS_A_GAME_BY_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&HEXAGON_BACKGROUND_L_CH,
+	(CharSetDefinition*)&CREDITS_A_GAME_BY_CH,
 
 	// bgmap definition
-	HexagonBackgroundLeftMap,
+	AGameByMap,
 
 	// cols (max 64)
-	48,
+	17,
 
 	// rows (max 64)
-	28,
+	1,
 
-	// padding for affine transformations
+	// padding for affine/hbias transformations (cols, rows)
 	{0, 0},
 
 	// number of frames, depending on charset's allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
 	// __ANIMATED_MULTI: total number of frames
-	__ANIMATED_SINGLE_OPTIMIZED,
+	1,
 
 	// palette number (0-3)
 	0,
@@ -124,17 +182,17 @@ TextureROMDef HEXAGON_BACKGROUND_L_TX =
 	false,
 };
 
-BgmapSpriteROMDef HEXAGON_BACKGROUND_L_SPRITE =
+BgmapSpriteROMDef CREDITS_A_GAME_BY_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&HEXAGON_BACKGROUND_L_TX,
+		(TextureDefinition*)&CREDITS_A_GAME_BY_TX,
 
-		// transparent
-		false,
+		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},
@@ -144,105 +202,27 @@ BgmapSpriteROMDef HEXAGON_BACKGROUND_L_SPRITE =
 	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
 	__WORLD_BGMAP,
 
-	// pointer to affine / hbias manipulation function
+	// pointer to affine/hbias manipulation function
 	NULL,
 
 	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
-	__WORLD_LON,
+	__WORLD_ON,
 };
 
-
-/* Right */
-
-CharSetROMDef HEXAGON_BACKGROUND_R_CH =
+BgmapSpriteROMDef* const CREDITS_A_GAME_BY_SPRITES[] =
 {
-	// number of chars, depending on allocation type:
-	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
-	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	529,
-
-	// allocation type
-	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
-	__ANIMATED_SINGLE_OPTIMIZED,
-
-	// char definition
-	HexagonBackgroundRightTiles,
-};
-
-TextureROMDef HEXAGON_BACKGROUND_R_TX =
-{
-	// charset definition
-	(CharSetDefinition*)&HEXAGON_BACKGROUND_R_CH,
-
-	// bgmap definition
-	HexagonBackgroundRightMap,
-
-	// cols (max 64)
-	48,
-
-	// rows (max 64)
-	28,
-
-	// padding for affine transformations
-	{0, 0},
-
-	// number of frames, depending on charset's allocation type:
-	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*, __NOT_ANIMATED: 1
-	// __ANIMATED_MULTI: total number of frames
-	__ANIMATED_SINGLE_OPTIMIZED,
-
-	// palette number (0-3)
-	0,
-
-	// recyclable
-	false,
-};
-
-BgmapSpriteROMDef HEXAGON_BACKGROUND_R_SPRITE =
-{
-	{
-		// sprite's type
-		__TYPE(BgmapAnimatedSprite),
-
-		// texture definition
-		(TextureDefinition*)&HEXAGON_BACKGROUND_R_TX,
-
-		// transparent
-		false,
-
-		// displacement
-		{0, 0, 0, 0},
-	},
-
-	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
-	// make sure to use the proper corresponding sprite type throughout the definition (BgmapSprite or ObjectSprite)
-	__WORLD_BGMAP,
-
-	// pointer to affine / hbias manipulation function
-	NULL,
-
-	// display mode (__WORLD_ON, __WORLD_LON or __WORLD_RON)
-	__WORLD_RON,
-};
-
-
-/* Entity */
-
-BgmapSpriteROMDef* const HEXAGON_BACKGROUND_SPRITES[] =
-{
-	&HEXAGON_BACKGROUND_L_SPRITE,
-	&HEXAGON_BACKGROUND_R_SPRITE,
+	&CREDITS_A_GAME_BY_SPRITE,
 	NULL
 };
 
-AnimatedEntityROMDef HEXAGON_BACKGROUND_AE =
+LocalizedEntityROMDef CREDITS_A_GAME_BY_LE =
 {
 	{
 		// class allocator
-		__TYPE(AnimatedEntity),
+		__TYPE(LocalizedEntity),
 
 		// sprites
-		(SpriteROMDef**)HEXAGON_BACKGROUND_SPRITES,
+		(SpriteROMDef**)CREDITS_A_GAME_BY_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -252,16 +232,15 @@ AnimatedEntityROMDef HEXAGON_BACKGROUND_AE =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		0,
+		kNoType,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation definition for the item
-	(AnimationDescription*)&HEXAGON_BACKGROUND_ANIM,
+	// pointer to the animation definition for the character
+	(AnimationDescription*)&CREDITS_A_GAME_BY_ANIM,
 
 	// initial animation
-	"Default",
+	"0"
 };
-

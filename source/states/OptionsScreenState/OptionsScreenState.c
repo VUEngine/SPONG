@@ -82,11 +82,11 @@ void OptionsScreenState::destructor()
 // state's enter
 void OptionsScreenState::enter(void* owner)
 {
-	// reset mode
-	this->mode = kOptionsScreenModeShowOptions;
-
 	// call base
 	Base::enter(this, owner);
+
+	// reset mode
+	this->mode = kOptionsScreenModeShowOptions;
 
 	// load stage
 	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);

@@ -130,6 +130,6 @@ void LangSelectScreenState::print()
 		__PIXELS_TO_METERS(124),
 		0,
 	};
-	Entity::setLocalPosition(Entity::safeCast(LangNameEntity), &languageNamePosition);
+	Entity::setLocalPosition(LangNameEntity, &languageNamePosition);
 }
 

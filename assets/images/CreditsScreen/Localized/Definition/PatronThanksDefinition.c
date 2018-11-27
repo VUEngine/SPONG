@@ -27,22 +27,21 @@
 #include <BgmapAnimatedSprite.h>
 #include <macros.h>
 #include <LocalizedEntity.h>
-#include <Actor.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE MarathonModeTiles[];
-extern BYTE MarathonModeMap[];
+extern BYTE PatronThanksTiles[];
+extern BYTE PatronThanksMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_EN_ANIM =
+AnimationFunctionROMDef CREDITS_PATRON_THANKS_EN_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -63,7 +62,7 @@ AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_EN_ANIM =
 	"0",
 };
 
-AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_DE_ANIM =
+AnimationFunctionROMDef CREDITS_PATRON_THANKS_DE_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -84,7 +83,7 @@ AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_DE_ANIM =
 	"1",
 };
 
-AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_ES_ANIM =
+AnimationFunctionROMDef CREDITS_PATRON_THANKS_ES_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -105,7 +104,7 @@ AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_ES_ANIM =
 	"2",
 };
 
-AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_FR_ANIM =
+AnimationFunctionROMDef CREDITS_PATRON_THANKS_FR_ANIM =
 {
 	// number of frames of this animation function
 	1,
@@ -127,43 +126,43 @@ AnimationFunctionROMDef MAIN_MENU_MARATHON_MODE_FR_ANIM =
 };
 
 // an animation definition
-AnimationDescriptionROMDef MAIN_MENU_MARATHON_MODE_ANIM =
+AnimationDescriptionROMDef CREDITS_PATRON_THANKS_ANIM =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&MAIN_MENU_MARATHON_MODE_EN_ANIM,
-		(AnimationFunction*)&MAIN_MENU_MARATHON_MODE_DE_ANIM,
-		(AnimationFunction*)&MAIN_MENU_MARATHON_MODE_ES_ANIM,
-		(AnimationFunction*)&MAIN_MENU_MARATHON_MODE_FR_ANIM,
+		(AnimationFunction*)&CREDITS_PATRON_THANKS_EN_ANIM,
+		(AnimationFunction*)&CREDITS_PATRON_THANKS_DE_ANIM,
+		(AnimationFunction*)&CREDITS_PATRON_THANKS_ES_ANIM,
+		(AnimationFunction*)&CREDITS_PATRON_THANKS_FR_ANIM,
 		NULL,
 	}
 };
 
-CharSetROMDef MAIN_MENU_MARATHON_MODE_CH =
+CharSetROMDef CREDITS_PATRON_THANKS_CH =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
 	// __ANIMATED_MULTI, __NOT_ANIMATED: sum of all chars
-	14,
+	47,
 
 	// allocation type
 	// (__ANIMATED_SINGLE, __ANIMATED_SINGLE_OPTIMIZED, __ANIMATED_SHARED, __ANIMATED_SHARED_COORDINATED, __ANIMATED_MULTI or __NOT_ANIMATED)
 	__ANIMATED_SINGLE,
 
 	// char definition
-	MarathonModeTiles,
+	PatronThanksTiles,
 };
 
-TextureROMDef MAIN_MENU_MARATHON_MODE_TX =
+TextureROMDef CREDITS_PATRON_THANKS_TX =
 {
 	// charset definition
-	(CharSetDefinition*)&MAIN_MENU_MARATHON_MODE_CH,
+	(CharSetDefinition*)&CREDITS_PATRON_THANKS_CH,
 
 	// bgmap definition
-	MarathonModeMap,
+	PatronThanksMap,
 
 	// cols (max 64)
-	14,
+	47,
 
 	// rows (max 64)
 	1,
@@ -183,20 +182,20 @@ TextureROMDef MAIN_MENU_MARATHON_MODE_TX =
 	false,
 };
 
-BgmapSpriteROMDef MAIN_MENU_MARATHON_MODE_SPRITE =
+BgmapSpriteROMDef CREDITS_PATRON_THANKS_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture definition
-		(TextureDefinition*)&MAIN_MENU_MARATHON_MODE_TX,
+		(TextureDefinition*)&CREDITS_PATRON_THANKS_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
 
 		// displacement
-		{0, 0, 0, -2},
+		{0, 0, 0, 0},
 	},
 
 	// bgmap mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
@@ -210,20 +209,20 @@ BgmapSpriteROMDef MAIN_MENU_MARATHON_MODE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMDef* const MAIN_MENU_MARATHON_MODE_SPRITES[] =
+BgmapSpriteROMDef* const CREDITS_PATRON_THANKS_SPRITES[] =
 {
-	&MAIN_MENU_MARATHON_MODE_SPRITE,
+	&CREDITS_PATRON_THANKS_SPRITE,
 	NULL
 };
 
-LocalizedEntityROMDef MAIN_MENU_MARATHON_MODE_LE =
+LocalizedEntityROMDef CREDITS_PATRON_THANKS_LE =
 {
 	{
 		// class allocator
 		__TYPE(LocalizedEntity),
 
 		// sprites
-		(SpriteROMDef**)MAIN_MENU_MARATHON_MODE_SPRITES,
+		(SpriteROMDef**)CREDITS_PATRON_THANKS_SPRITES,
 
 		// collision shapes
 		(ShapeDefinition*)NULL,
@@ -240,7 +239,7 @@ LocalizedEntityROMDef MAIN_MENU_MARATHON_MODE_LE =
 	},
 
 	// pointer to the animation definition for the character
-	(AnimationDescription*)&MAIN_MENU_MARATHON_MODE_ANIM,
+	(AnimationDescription*)&CREDITS_PATRON_THANKS_ANIM,
 
 	// initial animation
 	"0"

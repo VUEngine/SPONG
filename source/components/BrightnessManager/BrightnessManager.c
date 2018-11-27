@@ -60,7 +60,6 @@ void BrightnessManager::delayedShowScreen()
 
 void BrightnessManager::showScreen()
 {
-	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kShowScreen, NULL);
 	Brightness defaultBrightness = CameraEffectManager::getDefaultBrightness(CameraEffectManager::getInstance());
 
 	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + (this->brightnessFactor * 8)))) ? 4 : darkRed;

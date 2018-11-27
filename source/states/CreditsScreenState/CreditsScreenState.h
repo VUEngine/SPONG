@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef TITLE_SCREEN_STATE_H_
-#define TITLE_SCREEN_STATE_H_
+#ifndef CREDITS_SCREEN_STATE_H_
+#define CREDITS_SCREEN_STATE_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -31,52 +31,18 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
-//---------------------------------------------------------------------------------------------------------
-
-#define START_VERSUS_MATCH	0x334587CC
-
-enum TitleScreenModes
-{
-	kTitleScreenModeShowPressStart,
-	kTitleScreenModeShowOptions,
-};
-
-enum TitleScreenOptions
-{
-	kTitleScreenOptionMarathonMode,
-	kTitleScreenOptionChallengeMode,
-	kTitleScreenOptionVersusMode,
-	kTitleScreenOptionHighscores,
-	kTitleScreenOptionOptions,
-	kTitleScreenOptionCredits,
-};
-
-
-//---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class TitleScreenState : GameState
+singleton class CreditsScreenState : GameState
 {
-	// entity references
-	Entity entityMainMenu;
-	Entity entityMainMenuVersus;
-	Entity entityCursor;
-	Entity entityPressStart;
-	Entity entityWaitingForOtherPlayer;
-	// current state of the main menu
-	u8 mode;
-	// currently selected option of the main menu
-	u8 option;
-
-	static TitleScreenState getInstance();
+	static CreditsScreenState getInstance();
 
 	override void enter(void* owner);
-	override void execute(void* owner);
 	override void exit(void* owner);
-	override void processUserInput(UserInput userInput);
 	override void resume(void* owner);
+	override void suspend(void* owner);
+	override void processUserInput(UserInput userInput);
 }
 
 
