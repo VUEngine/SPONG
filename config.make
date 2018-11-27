@@ -19,8 +19,7 @@ COMPILER_OUTPUT         = c
 TYPE                    = tools
 
 # Optimization level
-# Optimization level 3 causes unexpected out of sync
-# behaviour in multiplayer matches when framerate drops
+# Do not use O3 for multiplayer games, it causes unexpected out of sync behaviour when framerate drops
 OPTIMIZATION            = O2
 
 # Enable pedantic warnings
