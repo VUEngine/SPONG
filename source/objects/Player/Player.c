@@ -266,20 +266,20 @@ void Player::onKeyHold(u16 holdKey, VirtualList paddles)
 	s8 verticalInput = 0;
 
 	// check direction
-	if(K_LL & holdKey)
+	if((K_LL | K_RL) & holdKey)
 	{
 		horizontalInput = -1;
 	}
-	else if(K_LR & holdKey)
+	else if((K_LR | K_RR) & holdKey)
 	{
 		horizontalInput = 1;
 	}
 
-	if(K_LU & holdKey)
+	if((K_LU | K_RU) & holdKey)
 	{
 		verticalInput = -1;
 	}
-	else if(K_LD & holdKey)
+	else if((K_LD | K_RD) & holdKey)
 	{
 		verticalInput = 1;
 	}
