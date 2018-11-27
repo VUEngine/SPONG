@@ -217,7 +217,7 @@ ParticleSystemROMDef PONG_BALL_PARTICLES_PS =
 	50,
 
 	// maximum total particles
-	10,
+	6,
 
 	// array of textures
 	(const ObjectSpriteDefinition**)PONG_BALL_PARTICLE_SPRITES,

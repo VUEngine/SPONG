@@ -71,6 +71,7 @@ class PongBall : Actor
 	void stopMovement();
 	int getPaddleEnum();
 	void startRolling();
+	bool isRolling();
 	override void ready(bool recursive);
 	override void update(u32 elapsedTime);
 	override void transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag);

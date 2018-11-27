@@ -87,7 +87,7 @@ const CollisionExtraInfo floorCollision =
 
 const CollisionExtraInfo splitterCollision =
 {
-	{4 * 8, 	28 * 8, 	48 * 8},
+	{2 * 8, 	28 * 8, 	48 * 8},
 	kPlayFieldSplitterLayer
 };
 

@@ -31,6 +31,7 @@
 #include <Utilities.h>
 #include <GameEvents.h>
 #include <MessageDispatcher.h>
+#include <Player.h>
 #include <debugUtilities.h>
 #include "PongBallLight.h"
 
@@ -91,6 +92,8 @@ void PongBallLight::ready(bool recursive)
 void PongBallLight::update(u32 elapsedTime)
 {
 	Base::update(this, elapsedTime);
+
+	this->followPongBall |= PongBall::isRolling(Player::getPongBall(Player::getInstance()));
 
 	if(this->followPongBall)
 	{

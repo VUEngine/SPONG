@@ -182,6 +182,8 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 	switch( SpatialObject::getInGameType(collidingObject))
 	{
 		case kPaddleType:
+
+//			PRINT_TEXT("Paddle", 20, 3);
 			{
 				if(this->transformation.globalPosition.x < (__SCREEN_WIDTH_METERS >> 1))
 				{
@@ -217,28 +219,34 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 		case kCeiling:
 			{
-				Object::fireEvent(Object::safeCast(this), kEventPongBallHitCeiling);
+//			PRINT_TEXT("Ceil  ", 20, 3);
+//				Object::fireEvent(Object::safeCast(this), kEventPongBallHitCeiling);
 				break;
 			}
 
 		case kFloor:
 			{
+//			PRINT_TEXT("Floor  ", 20, 3);
 				const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
 
-				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(16))
+				Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
+/*
+				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(8))
 				{
 					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
 				}
-				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(16))
+				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(8))
 				{
 					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
 				}
+				*/
 			}
 
 			break;
 
 		case kWall:
 
+//			PRINT_TEXT("Wall  ", 20, 3);
 			if(this->rolling)
 			{
 				velocityModifier.x = __FIX10_6_MULT(__I_TO_FIX10_6(1) - __ABS(collisionInformation->solutionVector.direction.x), SPEED_Y_MULTIPLIER);
@@ -372,4 +380,9 @@ void PongBall::startRolling()
 
 		ParticleSystem::start(this->particles);
 	}
+}
+
+bool PongBall::isRolling()
+{
+	return this->rolling;
 }

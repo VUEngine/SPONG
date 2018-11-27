@@ -41,7 +41,7 @@
 
 #define SCORE_MULTIPLIER_THRESHOLD			5
 #define BONUS_INCREMENT_DELAY				100
-#define SCORE_MULTIPLIER_TO_ENABLE_BONUS	5
+#define SCORE_MULTIPLIER_TO_ENABLE_BONUS	10
 
 extern const u16 BALL_START_ROLLING_SND[];
 extern const u16 BALL_HIT_PADDLE_SND[];
@@ -91,6 +91,7 @@ bool Player::handleMessage(Telegram telegram __attribute__ ((unused)))
 
 			this->leftScore += 1;
 			this->rightScore += 1;
+			SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(this->pongBall)));
 			Player::printScore(this);
 
 			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kAddBonusScore, NULL);
@@ -361,21 +362,6 @@ void Player::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
 	}
 	else
 	{
-		switch(PongBall::getPaddleEnum(this->pongBall))
-		{
-			case kLeftPaddle:
-
-				this->totalLeftScore += this->scoreMultiplier * this->leftScore;
-				this->totalRightScore += this->rightScore;
-				break;
-
-			case kRightPaddle:
-
-				this->totalLeftScore += this->leftScore;
-				this->totalRightScore += this->scoreMultiplier * this->rightScore;
-				break;
-		}
-
 		Player::totalizeScore(this);
 
 		SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_FLOOR_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
@@ -384,8 +370,21 @@ void Player::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
 
 void Player::totalizeScore()
 {
-	this->totalLeftScore += this->scoreMultiplier * this->leftScore;
-	this->totalRightScore += this->scoreMultiplier * this->rightScore;
+	switch(PongBall::getPaddleEnum(this->pongBall))
+	{
+		case kLeftPaddle:
+
+			this->totalLeftScore += this->scoreMultiplier * this->leftScore;
+			this->totalRightScore += this->rightScore;
+			break;
+
+		case kRightPaddle:
+
+			this->totalLeftScore += this->leftScore;
+			this->totalRightScore += this->scoreMultiplier * this->rightScore;
+			break;
+	}
+
 	this->scoreMultiplierThreshold = SCORE_MULTIPLIER_THRESHOLD;
 	this->scoreMultiplier = 1;
 	this->leftScore = 0;
