@@ -39,8 +39,8 @@
 //											CLASS'S MACROS
 //---------------------------------------------------------------------------------------------------------
 
-#define Z_SCALING_COMPENSATION				__I_TO_FIX10_6(3)
-#define WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING		150
+#define Z_SCALING_COMPENSATION				__F_TO_FIX10_6(2.5f)
+#define WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING		500
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DEFINITION

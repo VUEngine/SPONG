@@ -223,7 +223,7 @@ ParticleSystemROMDef PONG_BALL_PARTICLES_PS =
 	(const ObjectSpriteDefinition**)PONG_BALL_PARTICLE_SPRITES,
 
 	// auto start
-	true,
+	false,
 
 	// particle definition
 	(ParticleDefinition*)&PONG_BALL_PARTICLE,

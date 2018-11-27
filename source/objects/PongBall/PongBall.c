@@ -67,6 +67,7 @@ void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 i
 	this->modifierForce = (Vector3D){0, 0, 0};
 	this->paddleEnum = kNoPaddle;
 	this->rolling = false;
+	this->particles = NULL;
 
 	this->transformation.localScale = (Scale){__F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f)};
 }
@@ -83,6 +84,10 @@ void PongBall::ready(bool recursive)
 {
 	// call base
 	Base::ready(this, recursive);
+
+	this->particles = ParticleSystem::safeCast(Container::getChildByName(Container::safeCast(this), "Partcls", true));
+
+	ParticleSystem::setLoop(this->particles, false);
 
 	PongBall::startMovement(this);
 }
@@ -195,7 +200,14 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 					velocityModifier.y = __FIX10_6_DIV(__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) - 5), __I_TO_FIX10_6(100));
 				}
 
+				if(this->particles)
+				{
+					ParticleSystem::setLoop(this->particles, false);
+					ParticleSystem::start(this->particles);
+				}
+
 				this->rolling = false;
+
 				Body::setMaximumVelocity(this->body, this->pongBallDefinition->maximumVelocity);
 
 				Object::fireEvent(Object::safeCast(this), kEventPongBallHitPaddle);
@@ -297,7 +309,6 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 		}
 	}
 
-
 	if(velocityModifier.y)
 	{
 		if(__ABS(velocity.y) < MINIMUM_VERTICAL_SPEED)
@@ -354,4 +365,11 @@ void PongBall::startRolling()
 	velocity.y += 0 < velocity.y ? __ABS(this->pongBallDefinition->bonusVelocity.y) : 0 > velocity.y ? -__ABS(this->pongBallDefinition->bonusVelocity.y) : this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
 	velocity.z = -velocity.z;
 	Body::modifyVelocity(this->body, &velocity);
+
+	if(this->particles)
+	{
+		ParticleSystem::setLoop(this->particles, true);
+
+		ParticleSystem::start(this->particles);
+	}
 }

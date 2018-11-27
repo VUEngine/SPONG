@@ -29,6 +29,7 @@
 
 #include <Actor.h>
 #include <Paddle.h>
+#include <ParticleSystem.h>
 #include <macros.h>
 
 
@@ -59,6 +60,7 @@ typedef const PongBallDefinition PongBallROMDef;
 class PongBall : Actor
 {
 	/* definition pointer */
+	ParticleSystem particles;
 	PongBallDefinition* pongBallDefinition;
 	Force modifierForce;
 	int paddleEnum;
