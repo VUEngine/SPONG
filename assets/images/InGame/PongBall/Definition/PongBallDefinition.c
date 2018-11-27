@@ -191,7 +191,7 @@ ShapeROMDef PONG_BALL_SHAPES[] =
 		__TYPE(Ball),
 
 		// size (x, y, z)
-		{16, 16, 16},
+		{24, 24, 24},
 
 		// displacement (x, y, z, p)
 		{0, 0, 0, 0},

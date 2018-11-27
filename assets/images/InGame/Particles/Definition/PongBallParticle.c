@@ -128,7 +128,7 @@ ObjectSpriteROMDef PONG_BALL_PARTICLE_SPRITE =
 		(TextureDefinition*)&PONG_BALL_PARTICLE_TX,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
-		__TRANSPARENCY_EVEN,
+		__TRANSPARENCY_NONE,
 
 		// displacement
 		{0, 0, 0, 0},
