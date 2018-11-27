@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/spong.iml" filepath="$PROJECT_DIR$/.idea/spong.iml" />
       <module fileurl="file://C:/vbde/libs/vuengine/core/.idea/core.iml" filepath="C:/vbde/libs/vuengine/core/.idea/core.iml" />
       <module fileurl="file://C:/vbde/libs/vuengine/plugins/.idea/plugins.iml" filepath="C:/vbde/libs/vuengine/plugins/.idea/plugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spong.iml" filepath="$PROJECT_DIR$/.idea/spong.iml" />
     </modules>
   </component>
 </project>
