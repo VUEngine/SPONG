@@ -307,8 +307,8 @@ PaddleROMDef PADDLE_RIGHT_AC =
 
 	// force
 	{
-		__I_TO_FIX10_6(70),
-		__I_TO_FIX10_6(70),
+		__I_TO_FIX10_6(80),
+		__I_TO_FIX10_6(80),
 		0
 	}
 };
