@@ -60,14 +60,14 @@ void HighscoresScreenState::constructor()
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void HighscoresScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();

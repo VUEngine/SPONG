@@ -40,11 +40,17 @@ void TransitionEntity::constructor(const TransitionEntityDefinition* TransitionE
 {
 	// construct base object
 	Base::constructor((AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
+
+	// add event listeners
+	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);
 }
 
 // class's destructor
 void TransitionEntity::destructor()
 {
+	// remove event listeners
+	Object::removeEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);
+
 	// destroy the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
@@ -53,5 +59,11 @@ void TransitionEntity::destructor()
 // handle event
 void TransitionEntity::onTransitionComplete(Object eventFirer __attribute__ ((unused)))
 {
-	Object::fireEvent(Object::safeCast(Game::getCurrentState(Game::getInstance())), kEventTransitionOutComplete);
+	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventTransitionOutComplete);
+}
+
+// handle event
+void TransitionEntity::onShowScreen(Object eventFirer __attribute__ ((unused)))
+{
+	AnimatedEntity::playAnimation(this, "FadeIn");
 }

@@ -62,14 +62,14 @@ void PongState::constructor()
 	this->isVersusMode = false;
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void PongState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();
@@ -123,7 +123,8 @@ void PongState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
+	// show screen
+	BrightnessManager::showScreen(BrightnessManager::getInstance());
 }
 
 // state's suspend
@@ -181,7 +182,7 @@ void PongState::processUserInput(UserInput userInput)
 	//	CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&dataToTransmit, sizeof(dataToTransmit), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
 	}
 
-	Object::fireEvent(Object::safeCast(this), kEventUserInput);
+	Object::fireEvent(this, kEventUserInput);
 }
 
 bool PongState::processUserInputRegardlessOfInput()

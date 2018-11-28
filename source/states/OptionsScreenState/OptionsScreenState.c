@@ -66,14 +66,14 @@ void OptionsScreenState::constructor()
 	this->option = 0;
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void OptionsScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();
@@ -155,7 +155,7 @@ void OptionsScreenState::switchLanguage(bool forward)
 	SaveDataManager::setLanguage(ProgressManager::getInstance(), language);
 
 	// fire event to re-translate all entities
-	Object::fireEvent(Object::safeCast(this), kEventLanguageChanged);
+	Object::fireEvent(this, kEventLanguageChanged);
 }
 
 void OptionsScreenState::updateAutomaticPauseCheckBox()

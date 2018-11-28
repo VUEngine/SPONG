@@ -61,14 +61,14 @@ void PauseScreenState::constructor()
 	this->optionsSelector = new OptionsSelector(1, 3, NULL);
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void PauseScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	delete this->optionsSelector;
 

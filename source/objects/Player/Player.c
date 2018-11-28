@@ -141,10 +141,10 @@ void Player::getReady(GameState gameState)
 
 	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
 
-	Object::addEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::addEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::addEventListener(gameState, Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 
 	Player::printScore(this);
 	KeypadManager::registerInput(KeypadManager::getInstance(), __KEY_PRESSED | __KEY_RELEASED | __KEY_HOLD);
@@ -155,10 +155,10 @@ void Player::gameIsOver(GameState gameState)
 	VirtualList::clear(this->playerPaddles);
 	VirtualList::clear(this->opponentPaddles);
 
-	Object::removeEventListener(Object::safeCast(gameState), Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::removeEventListener(Object::safeCast(this->pongBall), Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
+	Object::removeEventListener(gameState, Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 }
 
 // process user input

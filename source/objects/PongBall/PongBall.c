@@ -212,7 +212,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 				Body::setMaximumVelocity(this->body, this->pongBallDefinition->maximumVelocity);
 
-				Object::fireEvent(Object::safeCast(this), kEventPongBallHitPaddle);
+				Object::fireEvent(this, kEventPongBallHitPaddle);
 			}
 
 			break;
@@ -220,7 +220,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 		case kCeiling:
 			{
 //			PRINT_TEXT("Ceil  ", 20, 3);
-//				Object::fireEvent(Object::safeCast(this), kEventPongBallHitCeiling);
+//				Object::fireEvent(this, kEventPongBallHitCeiling);
 				break;
 			}
 
@@ -229,15 +229,15 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 //			PRINT_TEXT("Floor  ", 20, 3);
 				const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
 
-				Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
+				Object::fireEvent(this, kEventPongBallHitFloor);
 /*
 				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(8))
 				{
-					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
+					Object::fireEvent(this, kEventPongBallHitFloor);
 				}
 				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(8))
 				{
-					Object::fireEvent(Object::safeCast(this), kEventPongBallHitFloor);
+					Object::fireEvent(this, kEventPongBallHitFloor);
 				}
 				*/
 			}

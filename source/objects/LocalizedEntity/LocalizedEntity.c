@@ -47,14 +47,14 @@ void LocalizedEntity::constructor(const LocalizedEntityDefinition* localizedEnti
 	Base::constructor((AnimatedEntityDefinition*)localizedEntityDefinition, id, internalId, name);
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(Game::getCurrentState(Game::getInstance())), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 }
 
 // class's destructor
 void LocalizedEntity::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(Game::getCurrentState(Game::getInstance())), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
+	Object::removeEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 
 	// destroy the super object
 	// must always be called at the end of the destructor

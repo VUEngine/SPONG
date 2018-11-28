@@ -42,6 +42,28 @@ extern BYTE TransitionLayerBMap[];
 //---------------------------------------------------------------------------------------------------------
 
 // a function which defines the frames to play
+AnimationFunctionROMDef TRANSITION_LAYER_B_HIDDEN_ANIM =
+{
+	// number of frames of this animation function
+	1,
+
+	// frames to play in animation
+	{17},
+
+	// number of cycles a frame of animation is displayed
+	1,
+
+	// whether to play it in loop or not
+	false,
+
+	// method to call on function completion
+	NULL,
+
+	// function's name
+	"Hidden",
+};
+
+// a function which defines the frames to play
 AnimationFunctionROMDef TRANSITION_LAYER_B_FADE_IN_ANIM =
 {
 	// number of frames of this animation function
@@ -94,6 +116,7 @@ AnimationDescriptionROMDef TRANSITION_LAYER_B_ANIM =
 {
 	// animation functions
 	{
+		(AnimationFunction*)&TRANSITION_LAYER_B_HIDDEN_ANIM,
 		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_IN_ANIM,
 		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_OUT_ANIM,
 		NULL,
@@ -204,5 +227,5 @@ TransitionEntityROMDef TRANSITION_LAYER_B_AE =
 	(AnimationDescription*)&TRANSITION_LAYER_B_ANIM,
 
 	// initial animation
-	"FadeIn",
+	"Hidden",
 };

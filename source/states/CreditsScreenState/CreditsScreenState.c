@@ -61,14 +61,14 @@ void CreditsScreenState::constructor()
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void CreditsScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();

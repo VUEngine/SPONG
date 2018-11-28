@@ -24,11 +24,13 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
+#include <Game.h>
 #include <BrightnessManager.h>
 #include <VirtualList.h>
 #include <CameraEffectManager.h>
 #include <VIPManager.h>
 #include <MessageDispatcher.h>
+#include <GameEvents.h>
 #include <macros.h>
 
 
@@ -67,6 +69,8 @@ void BrightnessManager::showScreen()
 	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + (this->brightnessFactor * 32)))) ? 16 : brightRed;
 
 	__SET_BRIGHT(darkRed, mediumRed, brightRed);
+
+	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventShowScreen);
 }
 
 void BrightnessManager::hideScreen()

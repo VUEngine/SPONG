@@ -38,6 +38,7 @@ enum GameEvents
 {
 	kSomeGameEvent = kLastEngineEvent + 1,
 
+	kEventShowScreen,
 	kEventTransitionOutComplete,
 	kEventLanguageChanged,
 	kEventUserInput,

@@ -74,14 +74,14 @@ void TitleScreenState::constructor()
 	this->option = 0;
 
 	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 // class's destructor
 void TitleScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();
