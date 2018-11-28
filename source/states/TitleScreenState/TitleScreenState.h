@@ -27,7 +27,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <SpongScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ enum TitleScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class TitleScreenState : GameState
+singleton class TitleScreenState : SpongScreenState
 {
 	// entity references
 	Entity entityMainMenu;
@@ -76,7 +76,7 @@ singleton class TitleScreenState : GameState
 	override void execute(void* owner);
 	override void exit(void* owner);
 	override void processUserInput(UserInput userInput);
-	override void resume(void* owner);
+	override void switchState();
 }
 
 

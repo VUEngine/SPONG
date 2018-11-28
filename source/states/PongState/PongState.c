@@ -39,6 +39,7 @@
 #include <Player.h>
 #include <GameEvents.h>
 #include <debugUtilities.h>
+#include <AutoPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 
@@ -54,23 +55,15 @@ extern StageROMDef PLAYFIELD_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void PongState::constructor()
 {
 	Base::constructor();
 
 	this->isVersusMode = false;
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void PongState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)PongState_onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
@@ -90,7 +83,6 @@ bool PongState::isVersusMode()
 	return PongState::getVersusMode(this);
 }
 
-// state's enter
 void PongState::enter(void* owner)
 {
 	// call base
@@ -107,34 +99,18 @@ void PongState::enter(void* owner)
 
 	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
+	// disable automatic pause in versus mode
+	AutoPauseManager::setActive(AutoPauseManager::getInstance(), !this->isVersusMode);
+
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
 void PongState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
 }
-
-// state's resume
-void PongState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	// show screen
-	BrightnessManager::showScreen(BrightnessManager::getInstance());
-}
-
-// state's suspend
-void PongState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
-}
-
 
 void PongState::processUserInput(UserInput userInput)
 {
@@ -202,11 +178,9 @@ void PongState::onUserInputTransmitted(Object eventFirer __attribute__ ((unused)
 	*/
 }
 
-// handle event
-void PongState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void PongState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+	Base::switchState(this);
 
 	Player::gameIsOver(Player::getInstance(), GameState::safeCast(this));
 }

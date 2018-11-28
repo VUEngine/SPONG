@@ -54,7 +54,6 @@ static Camera _camera = NULL;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void CustomCameraEffectManager::constructor()
 {
 	// construct base object
@@ -71,7 +70,6 @@ void CustomCameraEffectManager::constructor()
 	NM_ASSERT(_camera, "CustomCameraEffectManager::constructor: null _camera");
 }
 
-// class's destructor
 void CustomCameraEffectManager::destructor()
 {
 	// destroy base

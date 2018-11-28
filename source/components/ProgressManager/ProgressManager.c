@@ -42,14 +42,12 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void ProgressManager::constructor()
 {
 	// construct base object
 	Base::constructor();
 }
 
-// class's destructor
 void ProgressManager::destructor()
 {
 	// destroy base

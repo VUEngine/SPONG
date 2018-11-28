@@ -19,29 +19,63 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef HIGHSCORES_SCREEN_STATE_H_
-#define HIGHSCORES_SCREEN_STATE_H_
-
 
 //---------------------------------------------------------------------------------------------------------
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
+#include <Game.h>
+#include <BrightnessManager.h>
+#include <GameEvents.h>
 #include <SpongScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DECLARATION
+//												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-singleton class HighscoresScreenState : SpongScreenState
+void SpongScreenState::constructor()
 {
-	static HighscoresScreenState getInstance();
-	override void enter(void* owner);
-	override void exit(void* owner);
-	override void processUserInput(UserInput userInput);
-	override void switchState();
+	Base::constructor();
+
+	// add event listeners
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
+void SpongScreenState::destructor()
+{
+	// remove event listeners
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
-#endif
+	// destroy base
+	Base::destructor();
+}
+
+void SpongScreenState::resume(void* owner)
+{
+	Base::resume(this, owner);
+
+	// enable user input
+	Game::enableKeypad(Game::getInstance());
+
+	// show screen
+	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
+}
+
+void SpongScreenState::suspend(void* owner)
+{
+	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
+
+	Base::suspend(this, owner);
+}
+
+void SpongScreenState::switchState()
+{
+	// hide screen
+	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+}
+
+void SpongScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+{
+	SpongScreenState::switchState(this);
+}

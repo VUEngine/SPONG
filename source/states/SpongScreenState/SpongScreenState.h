@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef AUTOMATIC_PAUSE_SCREEN_STATE_H_
-#define AUTOMATIC_PAUSE_SCREEN_STATE_H_
+#ifndef SPONG_SCREEN_STATE_H_
+#define SPONG_SCREEN_STATE_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -34,13 +34,13 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-dynamic_singleton class AutoPauseScreenState : GameState
+abstract class SpongScreenState : GameState
 {
-	static AutoPauseScreenState getInstance();
+	void constructor();
 
-	override void enter(void* owner);
-	override void exit(void* owner);
-	override void processUserInput(UserInput userInput);
+	override void resume(void* owner);
+	override void suspend(void* owner);
+	virtual  void switchState();
 }
 
 

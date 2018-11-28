@@ -27,7 +27,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <SpongScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ enum OptionsScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class OptionsScreenState : GameState
+singleton class OptionsScreenState : SpongScreenState
 {
 	// entity references
 	Entity entityCursor;
@@ -64,9 +64,8 @@ singleton class OptionsScreenState : GameState
 
 	override void enter(void* owner);
 	override void exit(void* owner);
-	override void resume(void* owner);
-	override void suspend(void* owner);
 	override void processUserInput(UserInput userInput);
+	override void switchState();
 }
 
 

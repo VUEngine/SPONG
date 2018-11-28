@@ -27,7 +27,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <SpongScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -45,11 +45,11 @@ enum SplashScreensMessageTypes
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-abstract class SplashScreenState : GameState
+abstract class SplashScreenState : SpongScreenState
 {
-	/* state to enter after this one */
+	// state to enter after this one
 	GameState nextState;
-	/* definition of screen's stage */
+	// definition of screen's stage
 	StageDefinition* stageDefinition;
 
 	void constructor();
@@ -59,9 +59,9 @@ abstract class SplashScreenState : GameState
 	virtual void processInput(u32 releasedKey);
 	override void enter(void* owner);
 	override void exit(void* owner);
-	override void resume(void* owner);
 	override bool processMessage(void* owner, Telegram telegram);
 	override void processUserInput(UserInput userInput);
+	override void switchState();
 }
 
 

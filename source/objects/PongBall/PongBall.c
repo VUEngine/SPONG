@@ -32,6 +32,7 @@
 #include <GameEvents.h>
 #include <MessageDispatcher.h>
 #include <Player.h>
+#include <ParticleSystem.h>
 #include <debugUtilities.h>
 #include "PongBall.h"
 
@@ -56,7 +57,6 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
@@ -72,7 +72,6 @@ void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 i
 	this->transformation.localScale = (Scale){__F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f), __F_TO_FIX7_9(1.75f)};
 }
 
-// class's constructor
 void PongBall::destructor()
 {
 	// delete the super object
@@ -177,9 +176,9 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 	Velocity velocityModifier = (Vector3D){0, 0, 0};
 
-	bool hitFloor = false;
+	//bool hitFloor = false;
 
-	switch( SpatialObject::getInGameType(collidingObject))
+	switch(SpatialObject::getInGameType(collidingObject))
 	{
 		case kPaddleType:
 
@@ -227,7 +226,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 		case kFloor:
 			{
 //			PRINT_TEXT("Floor  ", 20, 3);
-				const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
+				//const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
 
 				Object::fireEvent(this, kEventPongBallHitFloor);
 /*

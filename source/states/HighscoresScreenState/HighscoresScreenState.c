@@ -54,26 +54,17 @@ extern StageROMDef HIGHSCORES_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void HighscoresScreenState::constructor()
 {
 	Base::constructor();
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void HighscoresScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)HighscoresScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void HighscoresScreenState::enter(void* owner)
 {
 	// call base
@@ -106,27 +97,10 @@ void HighscoresScreenState::enter(void* owner)
 	/**/
 }
 
-// state's exit
 void HighscoresScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
-}
-
-// state's resume
-void HighscoresScreenState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-}
-
-// state's suspend
-void HighscoresScreenState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
 }
 
 void HighscoresScreenState::processUserInput(UserInput userInput __attribute__ ((unused)))
@@ -142,11 +116,9 @@ void HighscoresScreenState::processUserInput(UserInput userInput __attribute__ (
 	}
 }
 
-// handle event
-void HighscoresScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void HighscoresScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+	Base::switchState(this);
 
 	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

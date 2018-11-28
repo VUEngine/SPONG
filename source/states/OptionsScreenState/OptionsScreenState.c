@@ -55,7 +55,6 @@ extern StageROMDef OPTIONS_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void OptionsScreenState::constructor()
 {
 	Base::constructor();
@@ -64,22 +63,14 @@ void OptionsScreenState::constructor()
 	this->entityCursor = NULL;
 	this->mode = kOptionsScreenModeShowOptions;
 	this->option = 0;
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void OptionsScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)OptionsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void OptionsScreenState::enter(void* owner)
 {
 	// call base
@@ -109,27 +100,10 @@ void OptionsScreenState::enter(void* owner)
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
 void OptionsScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
-}
-
-// state's resume
-void OptionsScreenState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-}
-
-// state's suspend
-void OptionsScreenState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
 }
 
 void OptionsScreenState::updateCursorPosition()
@@ -264,10 +238,9 @@ void OptionsScreenState::processUserInput(UserInput userInput)
 }
 
 // handle event
-void OptionsScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void OptionsScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+	Base::switchState(this);
 
 	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

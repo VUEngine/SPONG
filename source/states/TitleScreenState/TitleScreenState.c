@@ -59,7 +59,6 @@ extern StageROMDef TITLE_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void TitleScreenState::constructor()
 {
 	Base::constructor();
@@ -72,22 +71,14 @@ void TitleScreenState::constructor()
 	this->entityWaitingForOtherPlayer = NULL;
 	this->mode = kTitleScreenModeShowPressStart;
 	this->option = 0;
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void TitleScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)TitleScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void TitleScreenState::enter(void* owner)
 {
 	// reset mode
@@ -121,27 +112,10 @@ void TitleScreenState::enter(void* owner)
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
 void TitleScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
-}
-
-// state's resume
-void TitleScreenState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-}
-
-// state's suspend
-void TitleScreenState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
 }
 
 void TitleScreenState::execute(void* owner __attribute__ ((unused)))
@@ -269,32 +243,35 @@ void TitleScreenState::processUserInput(UserInput userInput)
 	}
 }
 
-// handle event
-void TitleScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void TitleScreenState::switchState()
 {
 	switch(this->option)
 	{
 		case kTitleScreenOptionMarathonMode:
 		case kTitleScreenOptionChallengeMode:
 		{
+			BrightnessManager::hideScreen(BrightnessManager::getInstance());
 			Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionHighscores:
 		{
+			BrightnessManager::hideScreen(BrightnessManager::getInstance());
 			Game::changeState(Game::getInstance(), GameState::safeCast(HighscoresScreenState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionOptions:
 		{
+			BrightnessManager::hideScreen(BrightnessManager::getInstance());
 			Game::changeState(Game::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionCredits:
 		{
+			BrightnessManager::hideScreen(BrightnessManager::getInstance());
 			Game::changeState(Game::getInstance(), GameState::safeCast(CreditsScreenState::getInstance()));
 			break;
 		}
@@ -326,6 +303,7 @@ void TitleScreenState::onTransitionOutComplete(Object eventFirer __attribute__ (
 
 					PongState::setVersusMode(PongState::getInstance(), true);
 
+					BrightnessManager::hideScreen(BrightnessManager::getInstance());
 					Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
 
 					//CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&message, sizeof(message), (EventListener)TitleScreenState::onStartMatchMessageSend, Object::safeCast(this));

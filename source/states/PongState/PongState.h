@@ -27,7 +27,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <SpongScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ typedef struct DataToTransmit
 	ResumedUserInput resumedUserInput;
 } DataToTransmit;
 
-singleton class PongState : GameState
+singleton class PongState : SpongScreenState
 {
 	DataToTransmit opponentData;
 	bool isVersusMode;
@@ -64,8 +64,6 @@ singleton class PongState : GameState
 	override bool isVersusMode();
 	override void enter(void* owner);
 	override void exit(void* owner);
-	override void resume(void* owner);
-	override void suspend(void* owner);
 	override void processUserInput(UserInput userInput);
 	override bool processUserInputRegardlessOfInput();
 

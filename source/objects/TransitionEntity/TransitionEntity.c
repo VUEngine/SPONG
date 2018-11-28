@@ -35,7 +35,6 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void TransitionEntity::constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base object
@@ -45,7 +44,6 @@ void TransitionEntity::constructor(const TransitionEntityDefinition* TransitionE
 	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);
 }
 
-// class's destructor
 void TransitionEntity::destructor()
 {
 	// remove event listeners

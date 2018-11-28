@@ -38,29 +38,20 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void SplashScreenState::constructor()
 {
 	Base::constructor();
 
 	this->stageDefinition = NULL;
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void SplashScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)SplashScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy the super object
 	// must always be called at the end of the destructor
 	Base::destructor();
 }
 
-// state's enter
 void SplashScreenState::enter(void* owner)
 {
 	// call base
@@ -86,7 +77,6 @@ void SplashScreenState::enter(void* owner)
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
 void SplashScreenState::exit(void* owner)
 {
 	// call base
@@ -102,32 +92,6 @@ void SplashScreenState::resume(void* owner)
 	Base::resume(this, owner);
 
 	SplashScreenState::print(this);
-
-#ifdef __DEBUG_TOOLS
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-#ifdef __STAGE_EDITOR
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-#ifdef __ANIMATION_INSPECTOR
-	if(!Game::isExitingSpecialMode(Game::getInstance()))
-	{
-#endif
-
-	// start a fade in effect
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-
-#ifdef __DEBUG_TOOLS
-	}
-#endif
-#ifdef __STAGE_EDITOR
-	}
-#endif
-#ifdef __ANIMATION_INSPECTOR
-	}
-#endif
 }
 
 void SplashScreenState::processUserInput(UserInput userInput)
@@ -168,11 +132,9 @@ void SplashScreenState::loadNextState()
 	}
 }
 
-// handle event
-void SplashScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void SplashScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+	Base::switchState(this);
 
 	// change to next stage
 	Game::changeState(Game::getInstance(), this->nextState);

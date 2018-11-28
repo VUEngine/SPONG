@@ -43,16 +43,11 @@
 #define Z_SCALING_COMPENSATION				__F_TO_FIX10_6(2.5f)
 #define WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING		500
 
-//---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void PongBallLight::constructor(PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
@@ -64,7 +59,6 @@ void PongBallLight::constructor(PongBallLightDefinition* PongBallLightDefinition
 	this->followPongBall = false;
 }
 
-// class's constructor
 void PongBallLight::destructor()
 {
 	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);

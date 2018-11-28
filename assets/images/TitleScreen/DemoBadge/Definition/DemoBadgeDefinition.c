@@ -177,7 +177,7 @@ TextureROMDef DEMO_BADGE_TX =
 	1,
 
 	// palette number (0-3)
-	0,
+	1,
 
 	// recyclable
 	false,

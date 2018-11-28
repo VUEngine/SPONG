@@ -65,7 +65,6 @@ void LangSelectScreenState::destructor()
 	Base::destructor();
 }
 
-// state's enter
 void LangSelectScreenState::enter(void* owner)
 {
 	// call base

@@ -38,7 +38,6 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void Collision::constructor(EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
@@ -47,7 +46,6 @@ void Collision::constructor(EntityDefinition* entityDefinition, s16 id, s16 inte
 	this->shapeLayers = kSolidLayer;
  }
 
-// class's destructor
 void Collision::destructor()
 {
 	// delete the super object

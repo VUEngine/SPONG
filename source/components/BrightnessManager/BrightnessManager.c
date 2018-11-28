@@ -38,7 +38,6 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void BrightnessManager::constructor()
 {
 	// construct base object
@@ -48,7 +47,6 @@ void BrightnessManager::constructor()
 	this->brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
 }
 
-// class's destructor
 void BrightnessManager::destructor()
 {
 	// destroy base
@@ -57,19 +55,16 @@ void BrightnessManager::destructor()
 
 void BrightnessManager::delayedShowScreen()
 {
+	// hide screen
+	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+
+	// show screen in a moment
 	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kShowScreen, NULL);
 }
 
 void BrightnessManager::showScreen()
 {
-	Brightness defaultBrightness = CameraEffectManager::getDefaultBrightness(CameraEffectManager::getInstance());
-
-	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + (this->brightnessFactor * 8)))) ? 4 : darkRed;
-	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + (this->brightnessFactor * 16)))) ? 8 : mediumRed;
-	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + (this->brightnessFactor * 32)))) ? 16 : brightRed;
-
-	__SET_BRIGHT(darkRed, mediumRed, brightRed);
-
+	BrightnessManager::setDefaultBrightness(this);
 	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventShowScreen);
 }
 
@@ -78,10 +73,21 @@ void BrightnessManager::hideScreen()
 	__SET_BRIGHT(0, 0, 0);
 }
 
+void BrightnessManager::setDefaultBrightness()
+{
+	Brightness defaultBrightness = CameraEffectManager::getDefaultBrightness(CameraEffectManager::getInstance());
+
+	int darkRed = (0 >= (darkRed = (defaultBrightness.darkRed + (this->brightnessFactor * 8)))) ? 4 : darkRed;
+	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + (this->brightnessFactor * 16)))) ? 8 : mediumRed;
+	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + (this->brightnessFactor * 32)))) ? 16 : brightRed;
+
+	__SET_BRIGHT(darkRed, mediumRed, brightRed);
+}
+
 void BrightnessManager::setBrightnessFactor(s8 brightnessFactor)
 {
 	this->brightnessFactor = brightnessFactor;
-	BrightnessManager::showScreen(this);
+	BrightnessManager::setDefaultBrightness(this);
 }
 
 s8 BrightnessManager::getBrightnessFactor()

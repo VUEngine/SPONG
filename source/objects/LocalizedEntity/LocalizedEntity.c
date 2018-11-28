@@ -32,15 +32,9 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CLASS'S DEFINITION
-//---------------------------------------------------------------------------------------------------------
-
-
-//---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void LocalizedEntity::constructor(const LocalizedEntityDefinition* localizedEntityDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base object
@@ -50,7 +44,6 @@ void LocalizedEntity::constructor(const LocalizedEntityDefinition* localizedEnti
 	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)LocalizedEntity_onLanguageChanged, kEventLanguageChanged);
 }
 
-// class's destructor
 void LocalizedEntity::destructor()
 {
 	// remove event listeners

@@ -201,7 +201,7 @@ void Player::onUserInput(Object eventFirer __attribute__ ((unused)))
 	}
 }
 
-void Player::onKeyPressed(u16 pressedKey, VirtualList paddles)
+void Player::onKeyPressed(u16 pressedKey, VirtualList paddles __attribute__ ((unused)))
 {
 	if(K_B & pressedKey)
 	{
@@ -313,14 +313,14 @@ PongBall Player::getPongBall()
 	return this->pongBall;
 }
 
-void Player::stopPaddles(VirtualList paddles, s8 horizontalInput, s8 verticalInput)
+void Player::stopPaddles(VirtualList paddles, s8 horizontalInput __attribute__ ((unused)), s8 verticalInput __attribute__ ((unused)))
 {
-	Direction direction =
+	/*Direction direction =
 	{
 		horizontalInput,
 		verticalInput,
 		0
-	};
+	};*/
 
 	VirtualNode node = VirtualList::begin(paddles);
 

@@ -43,7 +43,6 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void Paddle::constructor(PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
@@ -54,7 +53,6 @@ void Paddle::constructor(PaddleDefinition* paddleDefinition, s16 id, s16 interna
 	this->paddleShape = NULL;
 }
 
-// class's constructor
 void Paddle::destructor()
 {
 	// delete the super object

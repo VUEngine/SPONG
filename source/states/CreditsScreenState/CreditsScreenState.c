@@ -55,26 +55,17 @@ extern StageROMDef CREDITS_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void CreditsScreenState::constructor()
 {
 	Base::constructor();
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void CreditsScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)CreditsScreenState_onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void CreditsScreenState::enter(void* owner)
 {
 	// call base
@@ -93,27 +84,10 @@ void CreditsScreenState::enter(void* owner)
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
 void CreditsScreenState::exit(void* owner)
 {
 	// call base
 	Base::exit(this, owner);
-}
-
-// state's resume
-void CreditsScreenState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	Camera::startEffect(Camera::getInstance(), kFadeIn, __FADE_DELAY);
-}
-
-// state's suspend
-void CreditsScreenState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
 }
 
 void CreditsScreenState::processUserInput(UserInput userInput)
@@ -132,11 +106,9 @@ void CreditsScreenState::processUserInput(UserInput userInput)
 	}
 }
 
-// handle event
-void CreditsScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void CreditsScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
+	Base::switchState(this);
 
 	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

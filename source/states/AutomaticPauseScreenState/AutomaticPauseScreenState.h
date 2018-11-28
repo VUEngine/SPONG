@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef HIGHSCORES_SCREEN_STATE_H_
-#define HIGHSCORES_SCREEN_STATE_H_
+#ifndef AUTOMATIC_PAUSE_SCREEN_STATE_H_
+#define AUTOMATIC_PAUSE_SCREEN_STATE_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -34,12 +34,12 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class HighscoresScreenState : SpongScreenState
+singleton class AutomaticPauseScreenState : SpongScreenState
 {
-	static HighscoresScreenState getInstance();
-	override void enter(void* owner);
-	override void exit(void* owner);
+	static AutomaticPauseScreenState getInstance();
 	override void processUserInput(UserInput userInput);
+	override void exit(void* owner);
+	override void enter(void* owner);
 	override void switchState();
 }
 

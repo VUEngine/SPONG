@@ -24,61 +24,47 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <string.h>
 #include <Game.h>
-#include <Camera.h>
+#include <Printing.h>
 #include <MessageDispatcher.h>
-#include <PhysicalWorld.h>
-#include <I18n.h>
-#include <AutoPauseScreenState.h>
-#include <KeypadManager.h>
-#include <Languages.h>
-#include <Utilities.h>
+#include <AnimatedEntity.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
+#include <AutomaticPauseScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef PAUSE_SCREEN_STAGE_ST;
+extern StageROMDef AUTO_PAUSE_SCREEN_STAGE_ST;
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
-void AutoPauseScreenState::constructor()
+void AutomaticPauseScreenState::constructor()
 {
 	Base::constructor();
-
-	// add event listeners
-	Object::addEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
-void AutoPauseScreenState::destructor()
+void AutomaticPauseScreenState::destructor()
 {
-	// remove event listeners
-    Object::removeEventListener(Object::safeCast(this), Object::safeCast(this), (EventListener)AutoPauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
-
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
-void AutoPauseScreenState::enter(void* owner __attribute__ ((unused)))
+void AutomaticPauseScreenState::enter(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&PAUSE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(this, (StageDefinition*)&AUTO_PAUSE_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
-	GameState::startClocks(GameState::safeCast(this));
+	GameState::startClocks(this);
 
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
@@ -87,33 +73,33 @@ void AutoPauseScreenState::enter(void* owner __attribute__ ((unused)))
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-// state's exit
-void AutoPauseScreenState::exit(void* owner __attribute__ ((unused)))
+void AutomaticPauseScreenState::exit(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::exit(this, owner);
 
-	// destroy the state
 	delete this;
 }
 
-void AutoPauseScreenState::processUserInput(UserInput userInput)
+void AutomaticPauseScreenState::processUserInput(UserInput userInput)
 {
 	if(K_STA & userInput.pressedKey)
 	{
 		// disable user input
 		Game::disableKeypad(Game::getInstance());
+
+		// transition layer animation
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		if(transitionLayerEntity)
+		{
+			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
+		}
 	}
 }
 
-// handle event
-void AutoPauseScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void AutomaticPauseScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
-
-	// re-enable user input
-	Game::enableKeypad(Game::getInstance());
+	Base::switchState(this);
 
 	// resume game
 	Game::unpause(Game::getInstance(), GameState::safeCast(this));

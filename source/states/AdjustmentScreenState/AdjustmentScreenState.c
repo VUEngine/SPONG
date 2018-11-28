@@ -43,7 +43,6 @@ extern StageROMDef ADJUSTMENT_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void AdjustmentScreenState::constructor()
 {
 	Base::constructor();
@@ -52,14 +51,12 @@ void AdjustmentScreenState::constructor()
 	this->stageDefinition = (StageDefinition*)&ADJUSTMENT_SCREEN_STAGE_ST;
 }
 
-// class's destructor
 void AdjustmentScreenState::destructor()
 {
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void AdjustmentScreenState::enter(void* owner)
 {
 	// call base

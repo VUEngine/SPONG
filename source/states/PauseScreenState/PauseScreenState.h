@@ -27,7 +27,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <GameState.h>
+#include <SpongScreenState.h>
 #include <OptionsSelector.h>
 
 
@@ -53,7 +53,7 @@ enum PauseScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class PauseScreenState : GameState
+singleton class PauseScreenState : SpongScreenState
 {
 	u8 mode;
 	OptionsSelector optionsSelector;
@@ -63,6 +63,7 @@ singleton class PauseScreenState : GameState
 	override void enter(void* owner);
 	override void exit(void* owner);
 	override void processUserInput(UserInput userInput);
+	override void switchState();
 }
 
 

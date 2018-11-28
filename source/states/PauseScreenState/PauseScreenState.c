@@ -51,7 +51,6 @@ extern StageROMDef PAUSE_SCREEN_STAGE_ST;
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void PauseScreenState::constructor()
 {
 	Base::constructor();
@@ -59,24 +58,16 @@ void PauseScreenState::constructor()
 	// init members
 	this->mode = kPauseScreenModeShowOptions;
 	this->optionsSelector = new OptionsSelector(1, 3, NULL);
-
-	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-// class's destructor
 void PauseScreenState::destructor()
 {
-	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)PauseScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
-
 	delete this->optionsSelector;
 
 	// destroy base
 	Base::destructor();
 }
 
-// state's enter
 void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 {
 	// call base
@@ -145,7 +136,6 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 	this->mode = kPauseScreenModeShowOptions;
 }
 
-// state's exit
 void PauseScreenState::exit(void* owner __attribute__ ((unused)))
 {
 	// call base
@@ -236,14 +226,9 @@ void PauseScreenState::processUserInput(UserInput userInput)
 	}
 }
 
-// handle event
-void PauseScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void PauseScreenState::switchState()
 {
-	// hide screen
-	BrightnessManager::hideScreen(BrightnessManager::getInstance());
-
-	// re-enable user input
-	Game::enableKeypad(Game::getInstance());
+	Base::switchState(this);
 
 	// switch state according to selection
 	int selectedOption = OptionsSelector::getSelectedOption(this->optionsSelector);

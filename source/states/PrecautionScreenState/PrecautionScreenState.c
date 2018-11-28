@@ -51,7 +51,6 @@ extern const u16 COLLECT_SND[];
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-// class's constructor
 void PrecautionScreenState::constructor()
 {
 	Base::constructor();
@@ -60,7 +59,6 @@ void PrecautionScreenState::constructor()
 	this->stageDefinition = (StageDefinition*)&PRECAUTION_SCREEN_STAGE_ST;
 }
 
-// class's destructor
 void PrecautionScreenState::destructor()
 {
 	// destroy base
