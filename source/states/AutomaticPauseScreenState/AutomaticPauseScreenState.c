@@ -77,8 +77,6 @@ void AutomaticPauseScreenState::exit(void* owner __attribute__ ((unused)))
 {
 	// call base
 	Base::exit(this, owner);
-
-	delete this;
 }
 
 void AutomaticPauseScreenState::processUserInput(UserInput userInput)
