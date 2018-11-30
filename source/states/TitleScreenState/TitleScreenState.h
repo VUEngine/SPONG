@@ -73,7 +73,6 @@ singleton class TitleScreenState : SpongScreenState
 	static TitleScreenState getInstance();
 
 	override void enter(void* owner);
-	override void execute(void* owner);
 	override void exit(void* owner);
 	override void processUserInput(UserInput userInput);
 	override void switchState();

@@ -108,22 +108,30 @@ void TitleScreenState::enter(void* owner)
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
 
+	// Enable communications
+	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, Object::safeCast(this));
+
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
 void TitleScreenState::exit(void* owner)
 {
+	this->entityPressStart = NULL;
+	this->entityMainMenu = NULL;
+	this->entityMainMenuVersus = NULL;
+	this->entityCursor = NULL;
+	this->entityWaitingForOtherPlayer = NULL;
+	this->mode = kTitleScreenModeShowPressStart;
+	this->option = 0;
+
 	// call base
 	Base::exit(this, owner);
 }
 
-void TitleScreenState::execute(void* owner __attribute__ ((unused)))
+void TitleScreenState::onConnectedWithRemoteSystem(Object eventFirer __attribute__ ((unused)))
 {
-	Base::execute(this, owner);
-
-	// poll comms to enable/disable "versus mode" option accordingly
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	if(!isDeleted(this->entityMainMenuVersus))
 	{
 		VirtualList sprites = Entity::getSprites(this->entityMainMenuVersus);
 		Sprite sprite = Sprite::safeCast(VirtualList::front(sprites));
@@ -305,8 +313,6 @@ void TitleScreenState::switchState()
 
 					BrightnessManager::hideScreen(BrightnessManager::getInstance());
 					Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
-
-					//CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&message, sizeof(message), (EventListener)TitleScreenState::onStartMatchMessageSend, Object::safeCast(this));
 				}
 			}
 			break;
