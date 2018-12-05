@@ -132,11 +132,11 @@ void Paddle::stopTowards(Direction direction)
 
 void Paddle::retract()
 {
-	if(Shape::isActive(this->paddleShape))
+	if(Shape::isEnabled(this->paddleShape))
 	{
 		AnimatedEntity::playAnimation(AnimatedEntity::safeCast(this), "Retracted");
 
-		Shape::setActive(this->paddleShape, false);
+		Shape::enable(this->paddleShape, false);
 	}
 }
 
@@ -144,7 +144,7 @@ void Paddle::eject()
 {
 	AnimatedEntity::playAnimation(AnimatedEntity::safeCast(this), "Ejected");
 
-	Shape::setActive(this->paddleShape, true);
+	Shape::enable(this->paddleShape, true);
 }
 
 bool Paddle::mustBounce()
