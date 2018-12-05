@@ -35,8 +35,8 @@
 //											TYPE DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-typedef const AnimatedEntityDefinition TransitionEntityDefinition;
-typedef const TransitionEntityDefinition TransitionEntityROMDef;
+typedef const AnimatedEntitySpec TransitionEntitySpec;
+typedef const TransitionEntitySpec TransitionEntityROMSpec;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ typedef const TransitionEntityDefinition TransitionEntityROMDef;
 
 class TransitionEntity : AnimatedEntity
 {
-	void constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(const TransitionEntitySpec* TransitionEntitySpec, s16 id, s16 internalId, const char* const name);
 	void onTransitionComplete(Object eventFirer);
 }
 

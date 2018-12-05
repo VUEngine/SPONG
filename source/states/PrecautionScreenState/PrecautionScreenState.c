@@ -43,7 +43,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef PRECAUTION_SCREEN_STAGE_ST;
+extern StageROMSpec PRECAUTION_SCREEN_STAGE_ST;
 extern const u16 COLLECT_SND[];
 
 
@@ -56,7 +56,7 @@ void PrecautionScreenState::constructor()
 	Base::constructor();
 
 	SplashScreenState::setNextState(SplashScreenState::safeCast(this), GameState::safeCast(AdjustmentScreenState::getInstance()));
-	this->stageDefinition = (StageDefinition*)&PRECAUTION_SCREEN_STAGE_ST;
+	this->stageSpec = (StageSpec*)&PRECAUTION_SCREEN_STAGE_ST;
 }
 
 void PrecautionScreenState::destructor()

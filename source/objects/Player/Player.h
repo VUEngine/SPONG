@@ -41,7 +41,7 @@
 
 singleton class Player : Object
 {
-	/* definition pointer */
+	/* spec pointer */
 	PongBall pongBall;
 	VirtualList playerPaddles;
 	VirtualList opponentPaddles;

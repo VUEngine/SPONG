@@ -48,7 +48,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef OPTIONS_SCREEN_STAGE_ST;
+extern StageROMSpec OPTIONS_SCREEN_STAGE_ST;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void OptionsScreenState::enter(void* owner)
 	this->mode = kOptionsScreenModeShowOptions;
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
 
 	// get entity references
 	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "Cursor", true));

@@ -42,7 +42,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef LANG_SELECT_SCREEN_STAGE_ST;
+extern StageROMSpec LANG_SELECT_SCREEN_STAGE_ST;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void LangSelectScreenState::constructor()
 	// init members
 	this->language = 0;
 	SplashScreenState::setNextState(SplashScreenState::safeCast(this), GameState::safeCast(TitleScreenState::getInstance()));
-	this->stageDefinition = (StageDefinition*)&LANG_SELECT_SCREEN_STAGE_ST;
+	this->stageSpec = (StageSpec*)&LANG_SELECT_SCREEN_STAGE_ST;
 }
 
 void LangSelectScreenState::destructor()

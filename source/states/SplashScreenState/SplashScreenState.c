@@ -42,7 +42,7 @@ void SplashScreenState::constructor()
 {
 	Base::constructor();
 
-	this->stageDefinition = NULL;
+	this->stageSpec = NULL;
 }
 
 void SplashScreenState::destructor()
@@ -57,9 +57,9 @@ void SplashScreenState::enter(void* owner)
 	// call base
 	Base::enter(this, owner);
 
-	if(this->stageDefinition)
+	if(this->stageSpec)
 	{
-		GameState::loadStage(GameState::safeCast(this), this->stageDefinition, NULL, true);
+		GameState::loadStage(GameState::safeCast(this), this->stageSpec, NULL, true);
 	}
 
 	SplashScreenState::print(this);

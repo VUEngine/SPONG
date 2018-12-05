@@ -38,10 +38,10 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-typedef struct PongBallDefinition
+typedef struct PongBallSpec
 {
 	// the base animated entity
-	ActorDefinition actorDefinition;
+	ActorSpec actorSpec;
 
 	// minimum velocity when moving
 	Velocity minimumVelocity;
@@ -52,21 +52,21 @@ typedef struct PongBallDefinition
 	// maximum velocity when moving
 	Velocity bonusVelocity;
 
-} PongBallDefinition;
+} PongBallSpec;
 
-typedef const PongBallDefinition PongBallROMDef;
+typedef const PongBallSpec PongBallROMSpec;
 
 
 class PongBall : Actor
 {
-	/* definition pointer */
+	/* spec pointer */
 	ParticleSystem particles;
-	PongBallDefinition* pongBallDefinition;
+	PongBallSpec* pongBallSpec;
 	Force modifierForce;
 	int paddleEnum;
 	bool rolling;
 
-	void constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(PongBallSpec* pongBallSpec, s16 id, s16 internalId, const char* const name);
 	void startMovement();
 	void stopMovement();
 	int getPaddleEnum();

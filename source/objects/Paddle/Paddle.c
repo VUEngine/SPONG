@@ -43,13 +43,13 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void Paddle::constructor(PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name)
+void Paddle::constructor(PaddleSpec* paddleSpec, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((ActorDefinition*)&paddleDefinition->actorDefinition, id, internalId, name);
+	Base::constructor((ActorSpec*)&paddleSpec->actorSpec, id, internalId, name);
 
-	// save definition
-	this->paddleDefinition = paddleDefinition;
+	// save spec
+	this->paddleSpec = paddleSpec;
 	this->paddleShape = NULL;
 }
 
@@ -114,8 +114,8 @@ void Paddle::moveTowards(Direction direction)
 {
 	Force force =
 	{
-		__FIX10_6_MULT(this->paddleDefinition->force.x, __I_TO_FIX10_6(direction.x)),
-		__FIX10_6_MULT(this->paddleDefinition->force.y, __I_TO_FIX10_6(direction.y)),
+		__FIX10_6_MULT(this->paddleSpec->force.x, __I_TO_FIX10_6(direction.x)),
+		__FIX10_6_MULT(this->paddleSpec->force.y, __I_TO_FIX10_6(direction.y)),
 		0
 	};
 

@@ -48,12 +48,12 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void PongBallLight::constructor(PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name)
+void PongBallLight::constructor(PongBallLightSpec* PongBallLightSpec, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((EntityDefinition*)&PongBallLightDefinition->entityDefinition, id, internalId, name);
+	Base::constructor((EntitySpec*)&PongBallLightSpec->entitySpec, id, internalId, name);
 
-	// save definition
+	// save spec
 	this->pongBall = NULL;
 	this->pongBallInitialZDistance = __I_TO_FIX10_6(1);
 	this->followPongBall = false;

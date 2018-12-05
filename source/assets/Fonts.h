@@ -35,7 +35,7 @@
 //												DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-extern FontDefinition INDUSTRIAL_FONT;
+extern FontSpec INDUSTRIAL_FONT;
 
 
 #endif

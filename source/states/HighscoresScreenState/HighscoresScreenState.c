@@ -47,7 +47,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMDef HIGHSCORES_SCREEN_STAGE_ST;
+extern StageROMSpec HIGHSCORES_SCREEN_STAGE_ST;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void HighscoresScreenState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageDefinition*)&HIGHSCORES_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&HIGHSCORES_SCREEN_STAGE_ST, NULL, true);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));

@@ -36,8 +36,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-typedef const EntityDefinition CollisionDefinition;
-typedef const CollisionDefinition CollisionROMDef;
+typedef const EntitySpec CollisionSpec;
+typedef const CollisionSpec CollisionROMSpec;
 
 
 typedef struct CollisionExtraInfo
@@ -52,7 +52,7 @@ class Collision : Entity
 {
 	u32 shapeLayers;
 
-	void constructor(EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(EntitySpec* entitySpec, s16 id, s16 internalId, const char* const name);
 	override void setExtraInfo(void* extraInfo);
 	override void initialTransform(Transformation* environmentTransform, u32 recursive);
 }

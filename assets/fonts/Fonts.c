@@ -31,8 +31,8 @@
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-FontDefinition* const __FONTS[] =
+FontSpec* const __FONTS[] =
 {
-	(FontDefinition*)&INDUSTRIAL_FONT,
+	(FontSpec*)&INDUSTRIAL_FONT,
 	NULL
 };

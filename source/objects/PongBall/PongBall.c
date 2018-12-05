@@ -57,13 +57,13 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void PongBall::constructor(PongBallDefinition* pongBallDefinition, s16 id, s16 internalId, const char* const name)
+void PongBall::constructor(PongBallSpec* pongBallSpec, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((ActorDefinition*)&pongBallDefinition->actorDefinition, id, internalId, name);
+	Base::constructor((ActorSpec*)&pongBallSpec->actorSpec, id, internalId, name);
 
-	// save definition
-	this->pongBallDefinition = pongBallDefinition;
+	// save spec
+	this->pongBallSpec = pongBallSpec;
 	this->modifierForce = (Vector3D){0, 0, 0};
 	this->paddleEnum = kNoPaddle;
 	this->rolling = false;
@@ -209,7 +209,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 				this->rolling = false;
 
-				Body::setMaximumVelocity(this->body, this->pongBallDefinition->maximumVelocity);
+				Body::setMaximumVelocity(this->body, this->pongBallSpec->maximumVelocity);
 
 				Object::fireEvent(this, kEventPongBallHitPaddle);
 			}
@@ -364,12 +364,12 @@ void PongBall::startRolling()
 {
 	this->rolling = true;
 
-	Body::setMaximumVelocity(this->body, this->pongBallDefinition->bonusVelocity);
+	Body::setMaximumVelocity(this->body, this->pongBallSpec->bonusVelocity);
 
 	Velocity velocity = Body::getVelocity(this->body);
 
-	velocity.x += 0 < velocity.x ? __ABS(this->pongBallDefinition->bonusVelocity.x) : 0 > velocity.x ? -__ABS(this->pongBallDefinition->bonusVelocity.x) : this->transformation.globalPosition.x > (__SCREEN_WIDTH_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
-	velocity.y += 0 < velocity.y ? __ABS(this->pongBallDefinition->bonusVelocity.y) : 0 > velocity.y ? -__ABS(this->pongBallDefinition->bonusVelocity.y) : this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
+	velocity.x += 0 < velocity.x ? __ABS(this->pongBallSpec->bonusVelocity.x) : 0 > velocity.x ? -__ABS(this->pongBallSpec->bonusVelocity.x) : this->transformation.globalPosition.x > (__SCREEN_WIDTH_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
+	velocity.y += 0 < velocity.y ? __ABS(this->pongBallSpec->bonusVelocity.y) : 0 > velocity.y ? -__ABS(this->pongBallSpec->bonusVelocity.y) : this->transformation.globalPosition.y > (__SCREEN_HEIGHT_METERS >> 1) ? -MINIMUM_HORIZONTAL_SPEED : MINIMUM_HORIZONTAL_SPEED;
 	velocity.z = -velocity.z;
 	Body::modifyVelocity(this->body, &velocity);
 

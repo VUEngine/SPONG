@@ -38,10 +38,10 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void Collision::constructor(EntityDefinition* entityDefinition, s16 id, s16 internalId, const char* const name)
+void Collision::constructor(EntitySpec* entitySpec, s16 id, s16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor(entityDefinition, id, internalId, name);
+	Base::constructor(entitySpec, id, internalId, name);
 
 	this->shapeLayers = kSolidLayer;
  }
@@ -68,7 +68,7 @@ void Collision::initialTransform(Transformation* environmentTransform, u32 recur
 	{
 		this->shapes = new VirtualList();
 
-		ShapeDefinition shapeDefinition =
+		ShapeSpec shapeSpec =
 		{
 			// class allocator
 			__TYPE(Box),
@@ -95,7 +95,7 @@ void Collision::initialTransform(Transformation* environmentTransform, u32 recur
 			kNoLayer,
 		};
 
-		Shape shape = CollisionManager::createShape(Game::getCollisionManager(Game::getInstance()), SpatialObject::safeCast(this), &shapeDefinition);
+		Shape shape = CollisionManager::createShape(Game::getCollisionManager(Game::getInstance()), SpatialObject::safeCast(this), &shapeSpec);
 
 		const Vector3D* myPosition = Entity::getPosition(this);
 		const Rotation* myRotation = Entity::getRotation(this);

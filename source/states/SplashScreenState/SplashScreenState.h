@@ -49,8 +49,8 @@ abstract class SplashScreenState : SpongScreenState
 {
 	// state to enter after this one
 	GameState nextState;
-	// definition of screen's stage
-	StageDefinition* stageDefinition;
+	// spec of screen's stage
+	StageSpec* stageSpec;
 
 	void constructor();
 	void setNextState(GameState nextState);

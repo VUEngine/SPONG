@@ -37,17 +37,17 @@
 //---------------------------------------------------------------------------------------------------------
 
 
-typedef struct PaddleDefinition
+typedef struct PaddleSpec
 {
 	// the base animated entity
-	ActorDefinition actorDefinition;
+	ActorSpec actorSpec;
 
 	// force to apply
 	Force force;
 
-} PaddleDefinition;
+} PaddleSpec;
 
-typedef const PaddleDefinition PaddleROMDef;
+typedef const PaddleSpec PaddleROMSpec;
 
 
 enum PlayerPaddles
@@ -60,11 +60,11 @@ enum PlayerPaddles
 
 class Paddle : Actor
 {
-	/* definition pointer */
-	PaddleDefinition* paddleDefinition;
+	/* spec pointer */
+	PaddleSpec* paddleSpec;
 	Shape paddleShape;
 
-	void constructor(PaddleDefinition* paddleDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(PaddleSpec* paddleSpec, s16 id, s16 internalId, const char* const name);
 	void startMovement();
 	void stopMovement();
 	void moveTowards(Direction direction);

@@ -31,7 +31,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition FLAG_UNITED_KINGDOM_EN;
+extern EntitySpec FLAG_UNITED_KINGDOM_EN;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ const char* const LANGUAGE_EN_STRINGS[] =
 	""
 };
 
-const LangROMDef LANGUAGE_EN =
+const LangROMSpec LANGUAGE_EN =
 {
 	// Language Name
 	"English",

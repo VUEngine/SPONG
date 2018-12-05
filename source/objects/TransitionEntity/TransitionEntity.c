@@ -35,10 +35,10 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void TransitionEntity::constructor(const TransitionEntityDefinition* TransitionEntityDefinition, s16 id, s16 internalId, const char* const name)
+void TransitionEntity::constructor(const TransitionEntitySpec* TransitionEntitySpec, s16 id, s16 internalId, const char* const name)
 {
 	// construct base object
-	Base::constructor((AnimatedEntityDefinition*)TransitionEntityDefinition, id, internalId, name);
+	Base::constructor((AnimatedEntitySpec*)TransitionEntitySpec, id, internalId, name);
 
 	// add event listeners
 	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);

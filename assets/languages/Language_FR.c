@@ -31,7 +31,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntityDefinition FLAG_FRANCE_EN;
+extern EntitySpec FLAG_FRANCE_EN;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ const char* const LANGUAGE_FR_STRINGS[] =
 	""
 };
 
-const LangROMDef LANGUAGE_FR =
+const LangROMSpec LANGUAGE_FR =
 {
 	// Language Name
 	"Français",

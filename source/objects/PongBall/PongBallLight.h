@@ -36,14 +36,14 @@
 //											TYPE DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-typedef struct PongBallLightDefinition
+typedef struct PongBallLightSpec
 {
 	// the base animated entity
-	EntityDefinition entityDefinition;
+	EntitySpec entitySpec;
 
-} PongBallLightDefinition;
+} PongBallLightSpec;
 
-typedef const PongBallLightDefinition PongBallLightROMDef;
+typedef const PongBallLightSpec PongBallLightROMSpec;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,13 +52,13 @@ typedef const PongBallLightDefinition PongBallLightROMDef;
 
 class PongBallLight : Entity
 {
-	/* definition pointer */
-	PongBallLightDefinition* PongBallLightDefinition;
+	/* spec pointer */
+	PongBallLightSpec* PongBallLightSpec;
 	PongBall pongBall;
 	fix10_6 pongBallInitialZDistance;
 	bool followPongBall;
 
-	void constructor(PongBallLightDefinition* PongBallLightDefinition, s16 id, s16 internalId, const char* const name);
+	void constructor(PongBallLightSpec* PongBallLightSpec, s16 id, s16 internalId, const char* const name);
 	override void ready(bool recursive);
 	override void update(u32 elapsedTime);
 	override bool handleMessage(Telegram telegram);
