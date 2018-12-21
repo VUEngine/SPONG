@@ -2,7 +2,7 @@
 PLUGINS = 	vuengine/plugins/entities/LowPowerEntity														\
 			vuengine/plugins/fonts/Industrial																\
 			vuengine/plugins/other/AutomaticPause															\
-			vuengine/plugins/other/SaveDataManager															\
+			vuengine/plugins/other/SaveDataManager
 
 # Compiler's output
 COMPILER_OUTPUT         = c
