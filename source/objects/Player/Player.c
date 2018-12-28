@@ -25,7 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Game.h>
-#include <KeyPadManager.h>
+#include <KeypadManager.h>
 #include <MessageDispatcher.h>
 #include <GameEvents.h>
 #include <PongState.h>

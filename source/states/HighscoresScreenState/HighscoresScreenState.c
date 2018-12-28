@@ -35,7 +35,7 @@
 #include <HighscoresScreenState.h>
 #include <ParticleSystem.h>
 #include <ProgressManager.h>
-#include <KeyPadManager.h>
+#include <KeypadManager.h>
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
