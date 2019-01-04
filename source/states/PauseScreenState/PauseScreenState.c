@@ -33,7 +33,7 @@
 #include <PhysicalWorld.h>
 #include <PauseScreenState.h>
 #include <Languages.h>
-#include <KeyPadManager.h>
+#include <KeypadManager.h>
 #include <Utilities.h>
 #include <AnimatedEntity.h>
 #include <BrightnessManager.h>
