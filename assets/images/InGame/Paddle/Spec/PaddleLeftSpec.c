@@ -410,7 +410,10 @@ PaddleROMSpec PADDLE_LEFT_AC =
 		true,
 
 		// axes subject to gravity
-		__Z_AXIS
+		__Z_AXIS,
+
+		// axis around which to rotate the entity when syncronizing with body
+		__NO_AXIS
 	},
 
 	// force

@@ -266,6 +266,9 @@ PongBallROMSpec PONG_BALL_PB =
 		true,
 
 		// axes subject to gravity
+		__Z_AXIS,
+
+		// axis around which to rotate the entity when syncronizing with body
 		__Z_AXIS
 	},
 
