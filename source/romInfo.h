@@ -32,7 +32,7 @@
 // maker code (2 chars)		 ##
 #define __MAKER_CODE		"TV"
 // game code (4 chars)		 ####
-#define __GAME_CODE			"SPNG"
+#define __GAME_CODE			"VSPM"
 // revision (1.x)			 #
 #define __ROM_VERSION		 0
 
