@@ -94,7 +94,7 @@ void HighscoresScreenState::enter(void* owner)
 	Printing::text(Printing::getInstance(), " 8           -   -       ", 12,  8+13, NULL);
 	Printing::text(Printing::getInstance(), " 9           -   -       ", 12,  9+13, NULL);
 	Printing::text(Printing::getInstance(), "10           -   -       ", 12, 10+13, NULL);
-	/**/
+	*/
 }
 
 void HighscoresScreenState::exit(void* owner)

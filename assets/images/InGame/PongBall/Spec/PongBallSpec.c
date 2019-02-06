@@ -228,6 +228,9 @@ PhysicalSpecificationROMSpec PONG_BALL_PHYSICAL_PROPERTIES =
 
 	// maximum velocity
 	{__I_TO_FIX10_6(10), __I_TO_FIX10_6(9), __I_TO_FIX10_6(13)},
+
+	// maximum speed
+	__I_TO_FIX10_6(0)
 };
 
 PongBallROMSpec PONG_BALL_PB =

@@ -371,7 +371,10 @@ PhysicalSpecificationROMSpec PADDLE_AC_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(5.0f),
 
 	// maximum velocity
-	{0, 0, 0}
+	{0, 0, 0},
+
+	// maximum speed
+	__I_TO_FIX10_6(0)
 };
 
 PaddleROMSpec PADDLE_LEFT_AC =

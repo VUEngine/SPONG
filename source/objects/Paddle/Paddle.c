@@ -65,7 +65,7 @@ void Paddle::ready(bool recursive)
 	// call base
 	Base::ready(this, recursive);
 
-	Paddle::stopMovement(this);
+	Paddle::stopAllMovement(this);
 
 	this->paddleShape = VirtualList::back(this->shapes);
 
@@ -75,13 +75,6 @@ void Paddle::ready(bool recursive)
 // start moving
 void Paddle::startMovement()
 {
-}
-
-// move back to ejector
-void Paddle::stopMovement()
-{
-	// stop movement
-	Actor::stopAllMovement(Actor::safeCast(this));
 }
 
 // state's handle message

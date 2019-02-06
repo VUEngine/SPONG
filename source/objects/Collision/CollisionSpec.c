@@ -46,7 +46,10 @@ PhysicalSpecificationROMSpec COLLISION_CL_PHYSICAL_PROPERTIES =
 	__F_TO_FIX10_6(0),
 
 	// maximum velocity
-	{0, 0, 0}
+	{0, 0, 0},
+
+	// maximum speed
+	__I_TO_FIX10_6(0)
 };
 
 CollisionROMSpec COLLISION_WALL_CL =

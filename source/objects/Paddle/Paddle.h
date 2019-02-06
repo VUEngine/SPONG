@@ -66,7 +66,6 @@ class Paddle : Actor
 
 	void constructor(PaddleSpec* paddleSpec, s16 id, s16 internalId, const char* const name);
 	void startMovement();
-	void stopMovement();
 	void moveTowards(Direction direction);
 	void stopTowards(Direction direction);
 	void retract();
