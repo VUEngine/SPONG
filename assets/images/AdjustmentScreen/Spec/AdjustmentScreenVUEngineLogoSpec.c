@@ -122,8 +122,11 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM =
 	// class allocator
 	__TYPE(Entity),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES,
+	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

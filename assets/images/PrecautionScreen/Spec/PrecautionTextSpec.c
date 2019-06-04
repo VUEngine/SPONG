@@ -221,8 +221,11 @@ LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)PRECAUTION_TEXT_SPRITES,
+		(SpriteSpec**)PRECAUTION_TEXT_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

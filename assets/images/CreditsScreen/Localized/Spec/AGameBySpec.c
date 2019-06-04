@@ -221,8 +221,11 @@ LocalizedEntityROMSpec CREDITS_A_GAME_BY_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)CREDITS_A_GAME_BY_SPRITES,
+		(SpriteSpec**)CREDITS_A_GAME_BY_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

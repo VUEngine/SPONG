@@ -221,8 +221,11 @@ LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)CREDITS_PATRON_THANKS_SPRITES,
+		(SpriteSpec**)CREDITS_PATRON_THANKS_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

@@ -178,8 +178,11 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)OPTIONS_CHECKBOX_SPRITES,
+		(SpriteSpec**)OPTIONS_CHECKBOX_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

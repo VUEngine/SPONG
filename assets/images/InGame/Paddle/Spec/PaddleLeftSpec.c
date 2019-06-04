@@ -385,8 +385,11 @@ PaddleROMSpec PADDLE_LEFT_AC =
 				// class allocator
 				__TYPE(Paddle),
 
+				// behaviors 
+				NULL,
+
 				// sprites
-				(SpriteROMSpec**)PADDLE_LEFT_SPRITES,
+				(SpriteSpec**)PADDLE_LEFT_SPRITES,
 
 				// collision shapes
 				(ShapeSpec*)PADDLE_LEFT_AC_SHAPES,

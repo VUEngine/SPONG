@@ -244,8 +244,11 @@ AnimatedEntityROMSpec BRIGHTNESS_METER_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)BRIGHTNESS_METER_SPRITES,
+		(SpriteSpec**)BRIGHTNESS_METER_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

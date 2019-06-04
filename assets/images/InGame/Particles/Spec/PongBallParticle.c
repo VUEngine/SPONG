@@ -25,7 +25,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Libgccvb.h>
-#include <SolidParticle.h>
+#include <PhysicalParticle.h>
 #include <ParticleSystem.h>
 #include <ObjectAnimatedSprite.h>
 #include <AnimatedEntity.h>
@@ -154,34 +154,37 @@ ObjectSpriteROMSpec* const PONG_BALL_PARTICLE_SPRITES[] =
 };
 
 // particle's spec
-ParticleROMSpec PONG_BALL_PARTICLE =
+PhysicalParticleROMSpec PONG_BALL_PARTICLE =
 {
-	// allocator
-	__TYPE(Particle),
+	{
+		// allocator
+		__TYPE(PhysicalParticle),
 
-	// particle's minimum life span in milliseconds
-	100,
+		// particle's minimum life span in milliseconds
+		100,
 
-	// particle's maximum life span in milliseconds
-	1000,
+		// particle's life span delta in milliseconds (maximum = minimum + delta)
+		1000,
+
+		// function pointer to control particle's behavior
+		//(void (*)(Particle))&dustParticleBehavior,
+		NULL,
+
+		// animation description (used only if sprite is animated)
+		(AnimationDescription*)&PONG_BALL_PARTICLE_ANIM,
+
+		// name of animation to play
+		"Default"
+	},
 
 	// particle's minimum mass
 	__F_TO_FIX10_6(0.1f),
 
-	// particle's maximum mass
-	__F_TO_FIX10_6(0.1f),
+	// particle's mass delta (maximum = minimum + delta)
+	__F_TO_FIX10_6(0),
 
 	// axis subject to gravity (bitwise or of __X_AXIS, __Y_AXIS, __Z_AXIS, or false to disable)
 	__NO_AXIS,
-
-	// function pointer to control particle's behavior
-	(void (*)(Particle))NULL,
-
-	// animation description (used only if sprite is animated)
-	(AnimationDescription*)&PONG_BALL_PARTICLE_ANIM,
-
-	// name of animation to play
-	"Default"
 };
 
 ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
@@ -190,8 +193,11 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 		// class allocator
 		__TYPE(ParticleSystem),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)NULL,
+		(SpriteSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

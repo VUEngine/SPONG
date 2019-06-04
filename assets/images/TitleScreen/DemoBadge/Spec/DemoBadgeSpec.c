@@ -222,8 +222,11 @@ LocalizedEntityROMSpec DEMO_BADGE_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)DEMO_BADGE_SPRITES,
+		(SpriteSpec**)DEMO_BADGE_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

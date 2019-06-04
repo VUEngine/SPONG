@@ -304,8 +304,11 @@ LocalizedEntityROMSpec HIGHSCORES_HEADER_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)HIGHSCORES_HEADER_SPRITES,
+		(SpriteSpec**)HIGHSCORES_HEADER_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

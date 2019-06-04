@@ -202,8 +202,11 @@ TransitionEntityROMSpec TRANSITION_LAYER_A_AE =
 		// class allocator
 		__TYPE(TransitionEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)TRANSITION_LAYER_A_SPRITES,
+		(SpriteSpec**)TRANSITION_LAYER_A_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

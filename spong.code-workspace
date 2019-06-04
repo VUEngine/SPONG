@@ -1,16 +1,16 @@
 {
 	"folders": [
 		{
-            "name": "Project",
+            "name": "Spong",
 			"path": "."
 		},
 		{
 			"name": "VUEngine",
-			"path": "..\\..\\..\\libs\\vuengine\\core"
+			"path": "../../vuengine/core"
 		},
 		{
 			"name": "Plugins",
-			"path": "..\\..\\..\\libs\\vuengine\\plugins"
+			"path": "../../vuengine/plugins"
 		}
 	],
 	"extensions": {

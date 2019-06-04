@@ -222,8 +222,11 @@ LocalizedEntityROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITES,
+		(SpriteSpec**)MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

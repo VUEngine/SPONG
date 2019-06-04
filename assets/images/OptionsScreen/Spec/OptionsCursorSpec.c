@@ -156,8 +156,11 @@ AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)OPTIONS_CURSOR_SPRITES,
+		(SpriteSpec**)OPTIONS_CURSOR_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

@@ -241,8 +241,11 @@ AnimatedEntityROMSpec RHOMBUS_BACKGROUND_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)RHOMBUS_BACKGROUND_SPRITES,
+		(SpriteSpec**)RHOMBUS_BACKGROUND_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

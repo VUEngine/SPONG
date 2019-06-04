@@ -122,8 +122,11 @@ EntityROMSpec COPYRIGHT_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)COPYRIGHT_SPRITES,
+	(SpriteSpec**)COPYRIGHT_SPRITES,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

@@ -241,8 +241,11 @@ AnimatedEntityROMSpec CIRCLE_BACKGROUND_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)CIRCLE_BACKGROUND_SPRITES,
+		(SpriteSpec**)CIRCLE_BACKGROUND_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

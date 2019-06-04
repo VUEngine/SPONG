@@ -156,8 +156,11 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	// class allocator
 	__TYPE(Entity),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITES,
+	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITES,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -178,8 +181,11 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
 	// class allocator
 	__TYPE(Entity),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITES,
+	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITES,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

@@ -241,8 +241,11 @@ AnimatedEntityROMSpec HEXAGON_BACKGROUND_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)HEXAGON_BACKGROUND_SPRITES,
+		(SpriteSpec**)HEXAGON_BACKGROUND_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

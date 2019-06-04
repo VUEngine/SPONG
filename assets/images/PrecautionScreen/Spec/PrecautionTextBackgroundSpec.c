@@ -122,8 +122,11 @@ EntityROMSpec PRECAUTION_TEXT_BACKGROUND_IM =
 	// class allocator
 	__TYPE(Entity),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)PRECAUTION_TEXT_BACKGROUND_SPRITES,
+	(SpriteSpec**)PRECAUTION_TEXT_BACKGROUND_SPRITES,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

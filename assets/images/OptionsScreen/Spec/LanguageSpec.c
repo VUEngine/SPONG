@@ -222,8 +222,11 @@ LocalizedEntityROMSpec OPTIONS_LANGUAGE_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)OPTIONS_LANGUAGE_SPRITES,
+		(SpriteSpec**)OPTIONS_LANGUAGE_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

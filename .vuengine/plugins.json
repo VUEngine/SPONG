@@ -1,0 +1,9 @@
+{
+	"plugins": [
+		"vuengine/entities/LowPowerEntity",
+		"vuengine/fonts/IndustrialFont",
+		"vuengine/other/AutomaticPause",
+		"vuengine/other/SaveDataManager"	
+	]
+}
+

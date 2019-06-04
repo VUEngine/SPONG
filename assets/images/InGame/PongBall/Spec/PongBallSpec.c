@@ -241,8 +241,11 @@ PongBallROMSpec PONG_BALL_PB =
 				// class allocator
 				__TYPE(PongBall),
 
+				// behaviors 
+				NULL,
+
 				// sprites
-				(SpriteROMSpec**)PONG_BALL_SPRITES,
+				(SpriteSpec**)PONG_BALL_SPRITES,
 
 				// collision shapes
 				(ShapeSpec*)PONG_BALL_SHAPES,

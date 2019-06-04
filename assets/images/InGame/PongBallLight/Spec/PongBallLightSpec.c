@@ -127,8 +127,11 @@ PongBallLightROMSpec PONG_BALL_LIGHT_IM =
 		// class allocator
 		__TYPE(PongBallLight),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)PONG_BALL_LIGHT_SPRITES,
+		(SpriteSpec**)PONG_BALL_LIGHT_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

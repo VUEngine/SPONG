@@ -57,8 +57,11 @@ CollisionROMSpec COLLISION_WALL_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)NULL,
+	(SpriteSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -79,8 +82,11 @@ CollisionROMSpec COLLISION_FLOOR_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)NULL,
+	(SpriteSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -101,8 +107,11 @@ CollisionROMSpec COLLISION_CEILING_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// behaviors 
+	NULL,
+
 	// sprites
-	(SpriteROMSpec**)NULL,
+	(SpriteSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

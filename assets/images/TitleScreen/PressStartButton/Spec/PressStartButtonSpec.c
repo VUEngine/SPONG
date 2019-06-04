@@ -242,8 +242,11 @@ LocalizedEntityROMSpec PRESS_START_BUTTON_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)PRESS_START_BUTTON_SPRITES,
+		(SpriteSpec**)PRESS_START_BUTTON_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

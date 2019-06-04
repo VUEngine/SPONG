@@ -222,8 +222,11 @@ LocalizedEntityROMSpec MAIN_MENU_HIGHSCORES_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)MAIN_MENU_HIGHSCORES_SPRITES,
+		(SpriteSpec**)MAIN_MENU_HIGHSCORES_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

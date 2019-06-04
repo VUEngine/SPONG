@@ -244,8 +244,11 @@ AnimatedEntityROMSpec VOLUME_METER_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// behaviors 
+		NULL,
+
 		// sprites
-		(SpriteROMSpec**)VOLUME_METER_SPRITES,
+		(SpriteSpec**)VOLUME_METER_SPRITES,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
