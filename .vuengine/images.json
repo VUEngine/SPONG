@@ -48,7 +48,8 @@
 				"template": "entitySharedTileset"
 			},
 			"assets/images/InGame/PongBall": {
-				"template": "animatedEntity"
+				"name": "PongBall",
+				"template": "entitySharedTileset"
 			},
 			"assets/images/InGame/PongBallLight": {
 				"template": "entity"
@@ -87,7 +88,7 @@
 			"assets/images/Transitions/TransitionLayerB": {
 				"name": "TransitionLayerB",
 				"template": "entityStacked"
-			},
+			}
 		}
 	}
 }

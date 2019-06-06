@@ -1,7 +1,7 @@
 // Number of frames: 8
 // Number of chars per frame: 526
-
-const unsigned int HexagonBackgroundLeftTiles[] __attribute__((aligned(4))) =
+ 
+const unsigned int HexagonBackgroundLeftTiles[] __attribute__((aligned(4))) = 
 {
 0x00000000,0x00000000,0x00000000,0x00000000,0x00450155,0x00050015,0x00000001,0x00000000,
 0x00000000,0x00000000,0x40004000,0x54005400,0x45405540,0x55545554,0x45455555,0x04541555,
@@ -3026,7 +3026,7 @@ const unsigned int HexagonBackgroundLeftTiles[] __attribute__((aligned(4))) =
 0x00000000,
 0x00000000,
 };
-
+ 
 const unsigned short HexagonBackgroundLeftMap[] __attribute__((aligned(4)))=
 {
 0x0001,0x0002,0x0003,0x0004,0x0002,0x0005,0x0006,0x0007,

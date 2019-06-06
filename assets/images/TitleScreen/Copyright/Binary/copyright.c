@@ -1,10 +1,10 @@
 
 
-//{{BLOCK(copyright)
+//{{BLOCK(Copyright)
 
 //======================================================================
 //
-//	copyright, 128x8@2, 
+//	Copyright, 128x8@2, 
 //	+ 16 tiles (t|f reduced) not compressed
 //	+ regular map (flat), not compressed, 16x1 
 //	Total size: 272 + 32 = 304
@@ -14,7 +14,7 @@
 //
 //======================================================================
 
-const unsigned int copyrightTiles[68] __attribute__((aligned(4)))=
+const unsigned int CopyrightTiles[68] __attribute__((aligned(4)))=
 {
 	0x2A000000,0x2A208080,0x2A200220,0x2A008080,
 	0x00000000,0x20820A00,0x00820A02,0x00002A80,0x00000000,0x28822028,0x20822082,0x00002028,
@@ -28,10 +28,10 @@ const unsigned int copyrightTiles[68] __attribute__((aligned(4)))=
 	0x02AA0000,0x02A80200,0x02A80280,0x02AA0200,
 };
 
-const unsigned short copyrightMap[16] __attribute__((aligned(4)))=
+const unsigned short CopyrightMap[16] __attribute__((aligned(4)))=
 {
 	0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,
-	0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F,
+	0x0008,0x0009,0x000a,0x000b,0x000c,0x000d,0x000e,0x000f,
 };
 
-//}}BLOCK(copyright)
+//}}BLOCK(Copyright)
