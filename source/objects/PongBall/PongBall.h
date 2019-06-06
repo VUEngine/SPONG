@@ -79,6 +79,7 @@ class PongBall : Actor
 	override bool enterCollision(const CollisionInformation* collisionInformation);
 	override fix10_6 getFrictionOnCollision(SpatialObject collidingObject, const Vector3D* collidingObjectNormal);
 	override fix10_6 getSurroundingFrictionCoefficient();
+	override void syncRotationWithBody();
 }
 
 

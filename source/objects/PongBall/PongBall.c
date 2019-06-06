@@ -385,3 +385,8 @@ bool PongBall::isRolling()
 {
 	return this->rolling;
 }
+
+void PongBall::syncRotationWithBody()
+{
+	
+}
