@@ -1,4 +1,21 @@
 {
-	"languages": {},
+	"languages": {
+		"EN": {
+			"flag": "FLAG_UNITED_KINGDOM_EN",
+			"name": "English"
+		},
+		"DE": {
+			"flag": "FLAG_GERMANY_EN",
+			"name": "Deutsch"
+		},
+		"ES": {
+			"flag": "FLAG_SPAIN_EN",
+			"name": "Español"
+		},
+		"FR": {
+			"flag": "FLAG_FRANCE_EN",
+			"name": "Français"
+		}
+	},
 	"strings": {}
 }

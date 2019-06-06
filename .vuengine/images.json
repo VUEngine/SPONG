@@ -1,3 +1,93 @@
 {
-	"images": {}
+	"images": {
+		"folders": {
+			"assets/images/AdjustmentScreen": {
+				"template": "entity"
+			},
+			"assets/images/Backgrounds/CircleBackground/Left": {
+				"name": "CircleBackgroundLeft",
+				"template": "entityStacked"
+			},
+			"assets/images/Backgrounds/CircleBackground/Right": {
+				"name": "CircleBackgroundRight",
+				"template": "entityStacked"
+			},
+			"assets/images/Backgrounds/HexagonBackground/Left": {
+				"name": "HexagonBackgroundLeft",
+				"template": "entityStacked"
+			},
+			"assets/images/Backgrounds/HexagonBackground/Right": {
+				"name": "HexagonBackgroundRight",
+				"template": "entityStacked"
+			},
+			"assets/images/Backgrounds/RhombusBackground/Left": {
+				"name": "RhombusBackgroundLeft",
+				"template": "entityStacked"
+			},
+			"assets/images/Backgrounds/RhombusBackground/Right": {
+				"name": "RhombusBackgroundRight",
+				"template": "entityStacked"
+			},
+			"assets/images/CreditsScreen/Credits": {
+				"template": "entity"
+			},
+			"assets/images/CreditsScreen/Localized": {
+				"template": "animatedEntity"
+			},
+			"assets/images/HighscoresScreen/HighscoresHeader": {
+				"template": "animatedEntity"
+			},
+			"assets/images/InGame/Paddle": {
+				"template": "animatedEntity"
+			},
+			"assets/images/InGame/Particles": {
+				"template": "animatedEntity"
+			},
+			"assets/images/InGame/Playfield": {
+				"name": "Playfield",
+				"template": "entitySharedTileset"
+			},
+			"assets/images/InGame/PongBall": {
+				"template": "animatedEntity"
+			},
+			"assets/images/InGame/PongBallLight": {
+				"template": "entity"
+			},
+			"assets/images/LangSelectScreen": {
+				"template": "entity"
+			},
+			"assets/images/OptionsScreen": {
+				"template": "animatedEntity"
+			},
+			"assets/images/PrecautionScreen/PrecautionText": {
+				"template": "animatedEntity"
+			},
+			"assets/images/PrecautionScreen/PrecautionTextBackground": {
+				"template": "entity"
+			},
+			"assets/images/TitleScreen/Copyright": {
+				"template": "entity"
+			},
+			"assets/images/TitleScreen/DemoBadge": {
+				"template": "animatedEntity"
+			},
+			"assets/images/TitleScreen/Logo": {
+				"template": "animatedEntity"
+			},
+			"assets/images/TitleScreen/MainMenu": {
+				"template": "animatedEntity"
+			},
+			"assets/images/TitleScreen/PressStartButton": {
+				"template": "animatedEntity"
+			},
+			"assets/images/Transitions/TransitionLayerA": {
+				"name": "TransitionLayerA",
+				"template": "entityStacked"
+			},
+			"assets/images/Transitions/TransitionLayerB": {
+				"name": "TransitionLayerB",
+				"template": "entityStacked"
+			},
+		}
+	}
 }
