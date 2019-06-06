@@ -19,10 +19,5 @@ enum LanguageIdentifiers
 	
 };
 
-enum LanguageStrings
-{
-	
-};
-
 
 #endif

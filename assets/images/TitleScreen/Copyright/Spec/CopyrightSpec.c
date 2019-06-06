@@ -32,8 +32,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE copyrightTiles[];
-extern BYTE copyrightMap[];
+extern BYTE CopyrightTiles[];
+extern BYTE CopyrightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ CharSetROMSpec COPYRIGHT_CH =
 	__NOT_ANIMATED,
 
 	// char spec
-	copyrightTiles,
+	CopyrightTiles,
 };
 
 TextureROMSpec COPYRIGHT_TX =
@@ -61,7 +61,7 @@ TextureROMSpec COPYRIGHT_TX =
 	(CharSetSpec*)&COPYRIGHT_CH,
 
 	// bgmap spec
-	copyrightMap,
+	CopyrightMap,
 
 	// cols (max 64)
 	16,
