@@ -362,19 +362,19 @@ ShapeROMSpec PADDLE_LEFT_AC_SHAPES[] =
 PhysicalSpecificationROMSpec PADDLE_AC_PHYSICAL_PROPERTIES =
 {
 	// mass
-	__F_TO_FIX10_6(0.6f),
+	__F_TO_FIX10_6(0.55f),
 
 	// friction
-	__F_TO_FIX10_6(0.4f),
+	__F_TO_FIX10_6(0.25f),
 
 	// bounciness
-	__F_TO_FIX10_6(5.0f),
+	__F_TO_FIX10_6(0.0f),
 
 	// maximum velocity
 	{0, 0, 0},
 
 	// maximum speed
-	__I_TO_FIX10_6(0)
+	__I_TO_FIX10_6(8)
 };
 
 PaddleROMSpec PADDLE_LEFT_AC =

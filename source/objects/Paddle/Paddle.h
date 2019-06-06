@@ -63,6 +63,7 @@ class Paddle : Actor
 	/* spec pointer */
 	PaddleSpec* paddleSpec;
 	Shape paddleShape;
+	bool mustBounce;
 
 	void constructor(PaddleSpec* paddleSpec, s16 id, s16 internalId, const char* const name);
 	void startMovement();
@@ -76,6 +77,9 @@ class Paddle : Actor
 	override void transform(const Transformation* environmentTransform, u8 invalidateTransformationFlag);
 	override void syncRotationWithBody();
 	override bool mustBounce();
+	override bool enterCollision(const CollisionInformation* collisionInformation);
+	override void exitCollision(Shape shape, Shape shapeNotCollidingAnymore, bool isShapeImpenetrable);
+	override bool isSubjectToGravity(Acceleration gravity);
 }
 
 

@@ -51,6 +51,7 @@ void Paddle::constructor(PaddleSpec* paddleSpec, s16 id, s16 internalId, const c
 	// save spec
 	this->paddleSpec = paddleSpec;
 	this->paddleShape = NULL;
+	this->mustBounce = true;
 }
 
 void Paddle::destructor()
@@ -142,5 +143,57 @@ void Paddle::eject()
 
 bool Paddle::mustBounce()
 {
+	return this->mustBounce;
+}
+
+bool Paddle::enterCollision(const CollisionInformation* collisionInformation)
+{
+	ASSERT(collisionInformation->collidingShape, "Hero::enterCollision: null collidingObjects");
+
+	Shape collidingShape = collisionInformation->collidingShape;
+	SpatialObject collidingObject = Shape::getOwner(collidingShape);
+
+	switch(SpatialObject::getInGameType(collidingObject))
+	{
+		case kFloor:
+
+			Base::enterCollision(this, collisionInformation);
+			this->mustBounce = false;
+			Body::setAxisSubjectToGravity(this->body, __NO_AXIS);
+			Paddle::stopAllMovement(this);
+			return true;
+			break;
+	}
+
+	return Base::enterCollision(this, collisionInformation);
+}
+
+void Paddle::exitCollision(Shape shape  __attribute__ ((unused)), Shape shapeNotCollidingAnymore, bool isShapeImpenetrable)
+{
+	if(!this->body)
+	{
+		return;
+	}
+
+	Body::setSurroundingFrictionCoefficient(this->body,  Actor::getSurroundingFrictionCoefficient(this));
+
+	SpatialObject collidingObject = Shape::getOwner(shapeNotCollidingAnymore);
+
+	if(kFloor != SpatialObject::getInGameType(collidingObject))
+	{
+		if(isShapeImpenetrable)
+		{
+			Body::clearNormal(this->body, Object::safeCast(shapeNotCollidingAnymore));
+		}
+	}
+}
+
+bool Paddle::isSubjectToGravity(Acceleration gravity)
+{
+	if(this->mustBounce)
+	{
+		return Base::isSubjectToGravity(this, gravity);
+	}
+
 	return false;
 }
