@@ -342,7 +342,7 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 		{
 			__F_TO_FIX10_6(0),
 			__F_TO_FIX10_6(0),
-			__F_TO_FIX10_6(__GRAVITY_Z)
+			__F_TO_FIX10_6(__GRAVITY)
 		},
 
 		// friction
