@@ -107,12 +107,6 @@
 		"addUserInputAndTimeToRandomSeed": false,
 		"seedCycles": 2
 	},
-	"romHeader": {
-		"gameCode": "VSPM",
-		"gameTitle": "SPONG",
-		"makerCode": "TV",
-		"revision": 0
-	},
 	"sections": {
 		"initializedData": ".sdata",
 		"memoryPool": ".sbss",
