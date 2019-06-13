@@ -98,8 +98,10 @@
 	},
 	"physics": {
 		"bodiesToCheckForGravity": 10,
+		"frictionForceFactorPower": 4,
 		"gravity": 17.6,
-		"timeElapsedDivisor": 2,
+		"maximumBouncinessCoefficient": 5.5,
+		"timeElapsedDivisor": 1,
 		"stopVelocityThreshold": 8,
 		"stopBouncingVelocityThreshold": 48
 	},

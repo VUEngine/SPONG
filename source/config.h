@@ -300,11 +300,16 @@
 #define __BODIES_TO_CHECK_FOR_GRAVITY				10
 
 // divisor to speed up physics simulations, bigger numbers equal faster computations
-#define __PHYSICS_TIME_ELAPSED_DIVISOR				2
+#define __PHYSICS_TIME_ELAPSED_DIVISOR				1
 
 // thresholds to stop bodies
 #define __STOP_VELOCITY_THRESHOLD					__PIXELS_TO_METERS(8)
 #define __STOP_BOUNCING_VELOCITY_THRESHOLD 			__PIXELS_TO_METERS(48)
+
+// maximum bounciness coefficient allowed
+#define __MAXIMUM_BOUNCINESS_COEFFICIENT			5.5f
+
+#define __FRICTION_FORCE_FACTOR_POWER				4
 
 
 //---------------------------------------------------------------------------------------------------------
