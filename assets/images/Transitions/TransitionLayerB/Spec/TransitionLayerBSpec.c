@@ -81,7 +81,7 @@ AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_IN_ANIM =
 	false,
 
 	// method to call on function completion
-	NULL,
+	(EventListener)&TransitionEntity_onTransitionInComplete,
 
 	// function's name
 	"FadeIn",
@@ -105,7 +105,7 @@ AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_OUT_ANIM =
 	false,
 
 	// method to call on function completion
-	(EventListener)&TransitionEntity_onTransitionComplete,
+	(EventListener)&TransitionEntity_onTransitionOutComplete,
 
 	// function's name
 	"FadeOut",

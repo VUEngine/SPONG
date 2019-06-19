@@ -55,7 +55,12 @@ void TransitionEntity::destructor()
 }
 
 // handle event
-void TransitionEntity::onTransitionComplete(Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onTransitionInComplete(Object eventFirer __attribute__ ((unused)))
+{
+	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventTransitionInComplete);
+}
+
+void TransitionEntity::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
 	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventTransitionOutComplete);
 }

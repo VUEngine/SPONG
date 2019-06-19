@@ -66,9 +66,6 @@ void AutomaticPauseScreenState::enter(void* owner __attribute__ ((unused)))
 	// start clocks to start animations
 	GameState::startClocks(this);
 
-	// enable user input
-	Game::enableKeypad(Game::getInstance());
-
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }

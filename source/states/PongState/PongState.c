@@ -94,9 +94,6 @@ void PongState::enter(void* owner)
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
 
-	// enable user input
-	Game::enableKeypad(Game::getInstance());
-
 	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
 	// disable automatic pause in versus mode

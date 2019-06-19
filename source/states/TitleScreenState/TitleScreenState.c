@@ -105,9 +105,6 @@ void TitleScreenState::enter(void* owner)
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
 
-	// enable user input
-	Game::enableKeypad(Game::getInstance());
-
 	// Enable communications
 	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, Object::safeCast(this));
 

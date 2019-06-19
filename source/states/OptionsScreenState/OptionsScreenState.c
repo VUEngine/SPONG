@@ -93,9 +93,6 @@ void OptionsScreenState::enter(void* owner)
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
 
-	// enable user input
-	Game::enableKeypad(Game::getInstance());
-
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
