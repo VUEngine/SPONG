@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <Game.h>
+#include <Utilities.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -85,6 +86,12 @@ bool PongState::isVersusMode()
 
 void PongState::enter(void* owner)
 {
+	if(PongState::isVersusMode(this))
+	{
+		// Reset random seed in multiplayer mode so both machines are completely in sync
+		Utilities::resetRandomSeed();
+	}
+
 	// call base
 	Base::enter(this, owner);
 
