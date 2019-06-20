@@ -76,6 +76,6 @@ void AdjustmentScreenState::processInput(u32 pressedKey __attribute__ ((unused))
 	}
 	else
 	{
-		SplashScreenState::loadNextState(SplashScreenState::safeCast(this));
+		SplashScreenState::loadNextState(this);
 	}
 }
