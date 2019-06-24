@@ -7,6 +7,7 @@ PLUGINS 						= vuengine/entities/LocalizedEntity \
 								  vuengine/entities/LowPowerEntity \
 								  vuengine/fonts/IndustrialFont \
 								  vuengine/other/AutomaticPause \
+								  vuengine/other/I18n \
 								  vuengine/other/SaveDataManager
 
 # Compiler's output
