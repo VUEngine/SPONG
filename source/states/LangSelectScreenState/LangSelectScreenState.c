@@ -119,9 +119,6 @@ void LangSelectScreenState::print()
 		false
 	));
 
-	// change language name
-	Object::fireEvent(this, kEventLanguageChanged);
-
 	// change language name position
 	Vector3D languageNamePosition =
 	{

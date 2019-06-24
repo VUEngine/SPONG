@@ -41,7 +41,6 @@ enum GameEvents
 	kEventShowScreen,
 	kEventTransitionInComplete,
 	kEventTransitionOutComplete,
-	kEventLanguageChanged,
 	kEventUserInput,
 	kEventPongBallHitCeiling,
 	kEventPongBallHitFloor,

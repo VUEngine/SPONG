@@ -34,6 +34,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE ChallengeModeTiles[];
 extern BYTE ChallengeModeMap[];
 
@@ -41,103 +42,6 @@ extern BYTE ChallengeModeMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec MAIN_MENU_CHALLENGE_MODE_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec MAIN_MENU_CHALLENGE_MODE_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec MAIN_MENU_CHALLENGE_MODE_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec MAIN_MENU_CHALLENGE_MODE_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec MAIN_MENU_CHALLENGE_MODE_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_EN_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_DE_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_ES_ANIM,
-		(AnimationFunction*)&MAIN_MENU_CHALLENGE_MODE_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec MAIN_MENU_CHALLENGE_MODE_CH =
 {
@@ -243,7 +147,7 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&MAIN_MENU_CHALLENGE_MODE_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0"

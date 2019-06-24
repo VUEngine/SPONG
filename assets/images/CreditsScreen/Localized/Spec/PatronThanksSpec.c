@@ -33,6 +33,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE PatronThanksTiles[];
 extern BYTE PatronThanksMap[];
 
@@ -40,103 +41,6 @@ extern BYTE PatronThanksMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec CREDITS_PATRON_THANKS_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec CREDITS_PATRON_THANKS_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec CREDITS_PATRON_THANKS_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec CREDITS_PATRON_THANKS_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec CREDITS_PATRON_THANKS_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&CREDITS_PATRON_THANKS_EN_ANIM,
-		(AnimationFunction*)&CREDITS_PATRON_THANKS_DE_ANIM,
-		(AnimationFunction*)&CREDITS_PATRON_THANKS_ES_ANIM,
-		(AnimationFunction*)&CREDITS_PATRON_THANKS_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec CREDITS_PATRON_THANKS_CH =
 {
@@ -242,7 +146,7 @@ LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&CREDITS_PATRON_THANKS_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0"

@@ -32,6 +32,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE LanguageNameTiles[];
 extern BYTE LanguageNameMap[];
 
@@ -39,103 +40,6 @@ extern BYTE LanguageNameMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec LANGUAGE_NAME_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	4,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec LANGUAGE_NAME_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	4,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec LANGUAGE_NAME_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	4,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec LANGUAGE_NAME_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	4,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec LANGUAGE_NAME_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&LANGUAGE_NAME_EN_ANIM,
-		(AnimationFunction*)&LANGUAGE_NAME_DE_ANIM,
-		(AnimationFunction*)&LANGUAGE_NAME_ES_ANIM,
-		(AnimationFunction*)&LANGUAGE_NAME_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec LANGUAGE_NAME_CH =
 {
@@ -241,7 +145,7 @@ LocalizedEntityROMSpec LANGUAGE_NAME_LE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&LANGUAGE_NAME_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0",

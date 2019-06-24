@@ -1,5 +1,6 @@
 {
 	"plugins": [
+		"vuengine/entities/LocalizedEntity",
 		"vuengine/entities/LowPowerEntity",
 		"vuengine/fonts/IndustrialFont",
 		"vuengine/other/AutomaticPause",

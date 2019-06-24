@@ -3,7 +3,8 @@
 ###########################################################################################################
 
 # VUEngine based plugins that the project uses
-PLUGINS 						= vuengine/entities/LowPowerEntity \
+PLUGINS 						= vuengine/entities/LocalizedEntity \
+								  vuengine/entities/LowPowerEntity \
 								  vuengine/fonts/IndustrialFont \
 								  vuengine/other/AutomaticPause \
 								  vuengine/other/SaveDataManager

@@ -33,6 +33,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE PrecautionTextTiles[];
 extern BYTE PrecautionTextMap[];
 
@@ -40,103 +41,6 @@ extern BYTE PrecautionTextMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec PRECAUTION_TEXT_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec PRECAUTION_TEXT_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec PRECAUTION_TEXT_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec PRECAUTION_TEXT_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec PRECAUTION_TEXT_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&PRECAUTION_TEXT_EN_ANIM,
-		(AnimationFunction*)&PRECAUTION_TEXT_DE_ANIM,
-		(AnimationFunction*)&PRECAUTION_TEXT_ES_ANIM,
-		(AnimationFunction*)&PRECAUTION_TEXT_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec PRECAUTION_TEXT_CH =
 {
@@ -242,7 +146,7 @@ LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&PRECAUTION_TEXT_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0",

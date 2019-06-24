@@ -34,6 +34,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE BrightnessTiles[];
 extern BYTE BrightnessMap[];
 
@@ -41,103 +42,6 @@ extern BYTE BrightnessMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec OPTIONS_BRIGHTNESS_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec OPTIONS_BRIGHTNESS_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec OPTIONS_BRIGHTNESS_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec OPTIONS_BRIGHTNESS_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec OPTIONS_BRIGHTNESS_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&OPTIONS_BRIGHTNESS_EN_ANIM,
-		(AnimationFunction*)&OPTIONS_BRIGHTNESS_DE_ANIM,
-		(AnimationFunction*)&OPTIONS_BRIGHTNESS_ES_ANIM,
-		(AnimationFunction*)&OPTIONS_BRIGHTNESS_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec OPTIONS_BRIGHTNESS_CH =
 {
@@ -243,7 +147,7 @@ LocalizedEntityROMSpec OPTIONS_BRIGHTNESS_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&OPTIONS_BRIGHTNESS_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0"

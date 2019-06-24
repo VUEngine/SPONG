@@ -34,6 +34,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern AnimationDescription LOCALIZED_ENTITY_ANIM;
 extern BYTE AutomaticPauseTiles[];
 extern BYTE AutomaticPauseMap[];
 
@@ -41,103 +42,6 @@ extern BYTE AutomaticPauseMap[];
 //---------------------------------------------------------------------------------------------------------
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
-
-AnimationFunctionROMSpec OPTIONS_AUTOMATIC_PAUSE_EN_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{0},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"0",
-};
-
-AnimationFunctionROMSpec OPTIONS_AUTOMATIC_PAUSE_DE_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{1},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"1",
-};
-
-AnimationFunctionROMSpec OPTIONS_AUTOMATIC_PAUSE_ES_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{2},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"2",
-};
-
-AnimationFunctionROMSpec OPTIONS_AUTOMATIC_PAUSE_FR_ANIM =
-{
-	// number of frames of this animation function
-	1,
-
-	// frames to play in animation
-	{3},
-
-	// number of cycles a frame of animation is displayed
-	8,
-
-	// whether to play it in loop or not
-	false,
-
-	// method to call on function completion
-	NULL,
-
-	// function's name
-	"3",
-};
-
-// an animation spec
-AnimationDescriptionROMSpec OPTIONS_AUTOMATIC_PAUSE_ANIM =
-{
-	// animation functions
-	{
-		(AnimationFunction*)&OPTIONS_AUTOMATIC_PAUSE_EN_ANIM,
-		(AnimationFunction*)&OPTIONS_AUTOMATIC_PAUSE_DE_ANIM,
-		(AnimationFunction*)&OPTIONS_AUTOMATIC_PAUSE_ES_ANIM,
-		(AnimationFunction*)&OPTIONS_AUTOMATIC_PAUSE_FR_ANIM,
-		NULL,
-	}
-};
 
 CharSetROMSpec OPTIONS_AUTOMATIC_PAUSE_CH =
 {
@@ -243,7 +147,7 @@ LocalizedEntityROMSpec OPTIONS_AUTOMATIC_PAUSE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&OPTIONS_AUTOMATIC_PAUSE_ANIM,
+	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
 
 	// initial animation
 	"0"

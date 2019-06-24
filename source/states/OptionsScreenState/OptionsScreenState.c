@@ -124,9 +124,6 @@ void OptionsScreenState::switchLanguage(bool forward)
 		: (language > 0) ? language - 1 : numLangs - 1;
 	I18n::setActiveLanguage(I18n::getInstance(), language);
 	SaveDataManager::setLanguage(ProgressManager::getInstance(), language);
-
-	// fire event to re-translate all entities
-	Object::fireEvent(this, kEventLanguageChanged);
 }
 
 void OptionsScreenState::updateAutomaticPauseCheckBox()
