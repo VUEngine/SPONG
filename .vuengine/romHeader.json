@@ -1,8 +1,6 @@
 {
-	"romHeader": {
-		"gameCode": "VSPM",
-		"gameTitle": "SPONG",
-		"makerCode": "TV",
-		"revision": 0
-	}
+	"gameCode": "VSPM",
+	"gameTitle": "SPONG",
+	"makerCode": "TV",
+	"revision": 0
 }
