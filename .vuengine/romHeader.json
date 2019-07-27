@@ -1,5 +1,7 @@
 {
-	"gameCode": "VSPM",
+	"gameCodeSystem": "V",
+	"gameCodeId": "SP",
+	"gameCodeLanguage": "M",
 	"gameTitle": "SPONG",
 	"makerCode": "TV",
 	"revision": 0
