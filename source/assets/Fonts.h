@@ -18,7 +18,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
+extern FontSpec DEFAULT_FONT;
 extern FontSpec INDUSTRIAL_FONT;
+extern FontSpec INDUSTRIAL_EXT_FONT;
 
 
 #endif

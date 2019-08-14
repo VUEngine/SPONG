@@ -16,7 +16,9 @@
 
 FontSpec* const __FONTS[] =
 {
+	(FontSpec*)&DEFAULT_FONT,
 	(FontSpec*)&INDUSTRIAL_FONT,
+	(FontSpec*)&INDUSTRIAL_EXT_FONT,
 	
 	NULL
 };
