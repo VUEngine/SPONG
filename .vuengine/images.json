@@ -1,90 +1,90 @@
 {
 	"folders": {
-		"assets/images/AdjustmentScreen": {
+		"AdjustmentScreen": {
 			"template": "entity"
 		},
-		"assets/images/Backgrounds/CircleBackground/Left": {
+		"Backgrounds/CircleBackground/Left": {
 			"name": "CircleBackgroundLeft",
 			"template": "entityStacked"
 		},
-		"assets/images/Backgrounds/CircleBackground/Right": {
+		"Backgrounds/CircleBackground/Right": {
 			"name": "CircleBackgroundRight",
 			"template": "entityStacked"
 		},
-		"assets/images/Backgrounds/HexagonBackground/Left": {
+		"Backgrounds/HexagonBackground/Left": {
 			"name": "HexagonBackgroundLeft",
 			"template": "entityStacked"
 		},
-		"assets/images/Backgrounds/HexagonBackground/Right": {
+		"Backgrounds/HexagonBackground/Right": {
 			"name": "HexagonBackgroundRight",
 			"template": "entityStacked"
 		},
-		"assets/images/Backgrounds/RhombusBackground/Left": {
+		"Backgrounds/RhombusBackground/Left": {
 			"name": "RhombusBackgroundLeft",
 			"template": "entityStacked"
 		},
-		"assets/images/Backgrounds/RhombusBackground/Right": {
+		"Backgrounds/RhombusBackground/Right": {
 			"name": "RhombusBackgroundRight",
 			"template": "entityStacked"
 		},
-		"assets/images/CreditsScreen/Credits": {
+		"CreditsScreen/Credits": {
 			"template": "entity"
 		},
-		"assets/images/CreditsScreen/Localized": {
+		"CreditsScreen/Localized": {
 			"template": "animatedEntity"
 		},
-		"assets/images/HighscoresScreen/HighscoresHeader": {
+		"HighscoresScreen/HighscoresHeader": {
 			"template": "animatedEntity"
 		},
-		"assets/images/InGame/Paddle": {
+		"InGame/Paddle": {
 			"template": "animatedEntity"
 		},
-		"assets/images/InGame/Particles": {
+		"InGame/Particles": {
 			"template": "animatedEntity"
 		},
-		"assets/images/InGame/Playfield": {
+		"InGame/Playfield": {
 			"name": "Playfield",
 			"template": "entitySharedTileset"
 		},
-		"assets/images/InGame/PongBall": {
+		"InGame/PongBall": {
 			"name": "PongBall",
 			"template": "entitySharedTileset"
 		},
-		"assets/images/InGame/PongBallLight": {
+		"InGame/PongBallLight": {
 			"template": "entity"
 		},
-		"assets/images/LangSelectScreen": {
+		"LangSelectScreen": {
 			"template": "entity"
 		},
-		"assets/images/OptionsScreen": {
+		"OptionsScreen": {
 			"template": "animatedEntity"
 		},
-		"assets/images/PrecautionScreen/PrecautionText": {
+		"PrecautionScreen/PrecautionText": {
 			"template": "animatedEntity"
 		},
-		"assets/images/PrecautionScreen/PrecautionTextBackground": {
+		"PrecautionScreen/PrecautionTextBackground": {
 			"template": "entity"
 		},
-		"assets/images/TitleScreen/Copyright": {
+		"TitleScreen/Copyright": {
 			"template": "entity"
 		},
-		"assets/images/TitleScreen/DemoBadge": {
+		"TitleScreen/DemoBadge": {
 			"template": "animatedEntity"
 		},
-		"assets/images/TitleScreen/Logo": {
+		"TitleScreen/Logo": {
 			"template": "animatedEntity"
 		},
-		"assets/images/TitleScreen/MainMenu": {
+		"TitleScreen/MainMenu": {
 			"template": "animatedEntity"
 		},
-		"assets/images/TitleScreen/PressStartButton": {
+		"TitleScreen/PressStartButton": {
 			"template": "animatedEntity"
 		},
-		"assets/images/Transitions/TransitionLayerA": {
+		"Transitions/TransitionLayerA": {
 			"name": "TransitionLayerA",
 			"template": "entityStacked"
 		},
-		"assets/images/Transitions/TransitionLayerB": {
+		"Transitions/TransitionLayerB": {
 			"name": "TransitionLayerB",
 			"template": "entityStacked"
 		}
