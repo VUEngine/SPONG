@@ -178,7 +178,7 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -192,7 +192,7 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,

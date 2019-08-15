@@ -323,10 +323,10 @@ ShapeROMSpec PADDLE_LEFT_AC_SHAPES[] =
 		true,
 
 		// layers in which I live
-		kPlayFieldLayer | kPlayFieldPaddleHelperLayer,
+		kLayerPlayField | kLayerPlayFieldPaddleHelper,
 
 		// layers to ignore when checking for collisions
-		kAllLayers & ~(kPlayFieldWallsLayer | kPlayFieldSplitterLayer | kPlayFieldFloorLayer | kPlayFieldFloorLayer),
+		kLayerAll & ~(kLayerPlayFieldWalls | kLayerPlayFieldSplitter | kLayerPlayFieldFloor | kLayerPlayFieldFloor),
 	},
 
 	// ball collider
@@ -350,13 +350,13 @@ ShapeROMSpec PADDLE_LEFT_AC_SHAPES[] =
 		false,
 
 		// layers in which I live
-		kPlayFieldLayer | kPlayFieldPaddleLayer,
+		kLayerPlayField | kLayerPlayFieldPaddle,
 
 		// layers to ignore when checking for collisions
-		kAllLayers,
+		kLayerAll,
 	},
 
-	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
+	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
 };
 
 PhysicalSpecificationROMSpec PADDLE_AC_PHYSICAL_PROPERTIES =
@@ -385,7 +385,7 @@ PaddleROMSpec PADDLE_LEFT_AC =
 				// class allocator
 				__TYPE(Paddle),
 
-				// behaviors 
+				// behaviors
 				NULL,
 
 				// sprites
@@ -399,7 +399,7 @@ PaddleROMSpec PADDLE_LEFT_AC =
 				{0, 0, 0},
 
 				// gameworld's character's type
-				kPaddleType,
+				kTypePaddle,
 
 				// physical specification
 				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,

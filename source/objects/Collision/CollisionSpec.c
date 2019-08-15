@@ -57,7 +57,7 @@ CollisionROMSpec COLLISION_WALL_CL =
 	// class allocator
 	__TYPE(Collision),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -71,7 +71,7 @@ CollisionROMSpec COLLISION_WALL_CL =
 	{100, 100, 16},
 
 	// gameworld's character's type
-	kWall,
+	kTypeWall,
 
 	// physical specification
 	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
@@ -82,7 +82,7 @@ CollisionROMSpec COLLISION_FLOOR_CL =
 	// class allocator
 	__TYPE(Collision),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -96,7 +96,7 @@ CollisionROMSpec COLLISION_FLOOR_CL =
 	{100, 100, 16},
 
 	// gameworld's character's type
-	kFloor,
+	kTypeFloor,
 
 	// physical specification
 	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
@@ -107,7 +107,7 @@ CollisionROMSpec COLLISION_CEILING_CL =
 	// class allocator
 	__TYPE(Collision),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -121,7 +121,7 @@ CollisionROMSpec COLLISION_CEILING_CL =
 	{100, 100, 16},
 
 	// gameworld's character's type
-	kCeiling,
+	kTypeCeiling,
 
 	// physical specification
 	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,

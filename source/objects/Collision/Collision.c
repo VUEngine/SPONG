@@ -43,7 +43,7 @@ void Collision::constructor(EntitySpec* entitySpec, s16 id, s16 internalId, cons
 	// construct base
 	Base::constructor(entitySpec, id, internalId, name);
 
-	this->shapeLayers = kSolidLayer;
+	this->shapeLayers = kLayerSolid;
  }
 
 void Collision::destructor()
@@ -92,7 +92,7 @@ void Collision::initialTransform(Transformation* environmentTransform, u32 recur
 			this->shapeLayers,
 
 			/// layers to ignore when checking for collisions
-			kNoLayer,
+			kLayerNone,
 		};
 
 		Shape shape = CollisionManager::createShape(Game::getCollisionManager(Game::getInstance()), SpatialObject::safeCast(this), &shapeSpec);

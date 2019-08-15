@@ -108,6 +108,18 @@ StageROMSpec OPTIONS_SCREEN_STAGE_ST =
 	// allocator
 	__TYPE(Stage),
 
+	// Timer config
+	{
+		__TIMER_100US,
+		10,
+		kMS
+	},
+
+	// Sound config
+	{
+		__DEFAULT_PCM_HZ,
+	},
+
 	// level
 	{
 		// size
@@ -291,7 +303,7 @@ StageROMSpec OPTIONS_SCREEN_STAGE_ST =
 		(TextureSpec**)OPTIONS_SCREEN_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])NULL,
+		(Sound**)NULL,
 	},
 
 	// entities
@@ -299,7 +311,7 @@ StageROMSpec OPTIONS_SCREEN_STAGE_ST =
 		// ui
 		{
 			OPTIONS_SCREEN_STAGE_ST_UI_ENTITIES,
-			__TYPE(UiContainer),
+			__TYPE(UIContainer),
 		},
 
 		// children

@@ -126,7 +126,7 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -140,7 +140,7 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,

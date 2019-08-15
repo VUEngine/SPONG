@@ -44,7 +44,6 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern StageROMSpec PRECAUTION_SCREEN_STAGE_ST;
-extern const u16 COLLECT_SND[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -73,8 +72,8 @@ bool PrecautionScreenState::processMessage(void* owner __attribute__ ((unused)),
 		case kScreenStarted:
 			{
 				// play start-up sound
-				Vector3D position = {0, 0, 0};
-				SoundManager::playFxSound(SoundManager::getInstance(), COLLECT_SND, position);
+				//Vector3D position = {0, 0, 0};
+				//SoundManager::playFxSound(SoundManager::getInstance(), COLLECT_SND, position);
 
 				// show this screen for at least 2 seconds, as defined by Nintendo in the official development manual (Appendix 1)
 				MessageDispatcher::dispatchMessage(2000, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenAllowUserInput, NULL);

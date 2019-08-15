@@ -109,13 +109,13 @@ void PongBallLight::update(u32 elapsedTime)
 void PongBallLight::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kMessageFollowPongBall, NULL);
 }
 
 void PongBallLight::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kMessageFollowPongBall, NULL);
 /*
 	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
 	displacement.parallax = -5;
@@ -132,7 +132,7 @@ bool PongBallLight::handleMessage(Telegram telegram)
 	// process message
 	switch(Telegram::getMessage(telegram))
 	{
-		case kFollowPongBall:
+		case kMessageFollowPongBall:
 			{
 				PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
 				displacement.parallax = 0;

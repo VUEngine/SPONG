@@ -289,7 +289,7 @@ void TitleScreenState::switchState()
 				Game::disableKeypad(Game::getInstance());
 
 				// stop all sounds
-				SoundManager::stopAllSound(SoundManager::getInstance());
+				SoundManager::stopAllSounds(SoundManager::getInstance());
 				SoundManager::reset(SoundManager::getInstance());
 
 				Entity::show(this->entityWaitingForOtherPlayer);

@@ -156,7 +156,7 @@ AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -170,7 +170,7 @@ AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,

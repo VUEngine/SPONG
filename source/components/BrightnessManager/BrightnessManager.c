@@ -59,7 +59,7 @@ void BrightnessManager::delayedShowScreen()
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
 	// show screen in a moment
-	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kShowScreen, NULL);
+	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kMessageShowScreen, NULL);
 }
 
 void BrightnessManager::showScreen()
@@ -99,7 +99,7 @@ bool BrightnessManager::handleMessage(Telegram telegram)
 {
 	switch(Telegram::getMessage(telegram))
 	{
-		case kShowScreen:
+		case kMessageShowScreen:
 			// show screen
 			BrightnessManager::showScreen(this);
 			break;

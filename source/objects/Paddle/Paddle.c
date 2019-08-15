@@ -113,7 +113,7 @@ void Paddle::moveTowards(Direction direction)
 		0
 	};
 
-	Actor::addForce(Actor::safeCast(this), &force);
+	Actor::addForce(this, &force, false);
 }
 
 void Paddle::stopTowards(Direction direction)
@@ -121,7 +121,7 @@ void Paddle::stopTowards(Direction direction)
 	u16 axis = __NO_AXIS;
 	axis |= direction.x ? __X_AXIS : 0;
 	axis |= direction.y ? __Y_AXIS : 0;
-	Actor::stopMovement(Actor::safeCast(this), axis);
+	Actor::stopMovement(this, axis);
 }
 
 void Paddle::retract()
@@ -155,7 +155,7 @@ bool Paddle::enterCollision(const CollisionInformation* collisionInformation)
 
 	switch(SpatialObject::getInGameType(collidingObject))
 	{
-		case kFloor:
+		case kTypeFloor:
 
 			Base::enterCollision(this, collisionInformation);
 			this->mustBounce = false;
@@ -179,7 +179,7 @@ void Paddle::exitCollision(Shape shape  __attribute__ ((unused)), Shape shapeNot
 
 	SpatialObject collidingObject = Shape::getOwner(shapeNotCollidingAnymore);
 
-	if(kFloor != SpatialObject::getInGameType(collidingObject))
+	if(kTypeFloor != SpatialObject::getInGameType(collidingObject))
 	{
 		if(isShapeImpenetrable)
 		{

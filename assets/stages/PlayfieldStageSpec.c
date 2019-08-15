@@ -64,31 +64,31 @@ extern u16 GAME_BGM_1[][2];
 const CollisionExtraInfo horizontalWallCollision =
 {
 	{48 * 8, 	4 * 8, 		48 * 8},
-	kPlayFieldWallsLayer
+	kLayerPlayFieldWalls
 };
 
 const CollisionExtraInfo verticalWallCollision =
 {
 	{4 * 8, 	28 * 8, 	48 * 8},
-	kPlayFieldWallsLayer
+	kLayerPlayFieldWalls
 };
 
 const CollisionExtraInfo ceilingCollision =
 {
 	{48 * 8, 	28 * 8, 	4 * 8},
-	kPlayFieldCeilingLayer
+	kLayerPlayFieldCeiling
 };
 
 const CollisionExtraInfo floorCollision =
 {
 	{48 * 8, 	28 * 8, 	4 * 8},
-	kPlayFieldFloorLayer
+	kLayerPlayFieldFloor
 };
 
 const CollisionExtraInfo splitterCollision =
 {
 	{2 * 8, 	28 * 8, 	48 * 8},
-	kPlayFieldSplitterLayer
+	kLayerPlayFieldSplitter
 };
 
 
@@ -177,6 +177,18 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 {
 	// allocator
 	__TYPE(Stage),
+
+	// Timer config
+	{
+		__TIMER_100US,
+		10,
+		kMS
+	},
+
+	// Sound config
+	{
+		__DEFAULT_PCM_HZ,
+	},
 
 	// level
 	{
@@ -361,7 +373,7 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 		(TextureSpec**)PLAYFIELD_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])GAME_BGM_1,
+		(Sound**)NULL,
 	},
 
 	// entities
@@ -369,7 +381,7 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 		// ui
 		{
 			PLAYFIELD_STAGE_ST_UI_ENTITIES,
-			__TYPE(UiContainer),
+			__TYPE(UIContainer),
 		},
 
 		// children

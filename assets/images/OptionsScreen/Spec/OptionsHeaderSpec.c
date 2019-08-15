@@ -206,7 +206,7 @@ LocalizedEntityROMSpec OPTIONS_HEADER_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -220,7 +220,7 @@ LocalizedEntityROMSpec OPTIONS_HEADER_LE =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,

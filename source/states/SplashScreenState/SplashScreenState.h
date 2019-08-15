@@ -36,7 +36,7 @@
 
 enum SplashScreensMessageTypes
 {
-	kScreenStarted = kLastEngineMessage + 1,
+	kScreenStarted = kMessageLastEngine + 1,
 	kScreenAllowUserInput,
 };
 

@@ -154,7 +154,7 @@ void PongBall::startMovement()
 void PongBall::stopMovement()
 {
 	// stop movement
-	Actor::stopAllMovement(Actor::safeCast(this));
+	Actor::stopAllMovement(this);
 }
 
 // state's handle message
@@ -180,7 +180,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 	switch(SpatialObject::getInGameType(collidingObject))
 	{
-		case kPaddleType:
+		case kTypePaddle:
 
 //			PRINT_TEXT("Paddle", 20, 3);
 			{
@@ -216,14 +216,14 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 			break;
 
-		case kCeiling:
+		case kTypeCeiling:
 			{
 //			PRINT_TEXT("Ceil  ", 20, 3);
 //				Object::fireEvent(this, kEventPongBallHitCeiling);
 				break;
 			}
 
-		case kFloor:
+		case kTypeFloor:
 			{
 //			PRINT_TEXT("Floor  ", 20, 3);
 				//const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
@@ -243,7 +243,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 			break;
 
-		case kWall:
+		case kTypeWall:
 
 //			PRINT_TEXT("Wall  ", 20, 3);
 			if(this->rolling)
@@ -388,5 +388,5 @@ bool PongBall::isRolling()
 
 void PongBall::syncRotationWithBody()
 {
-	
+
 }

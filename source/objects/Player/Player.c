@@ -43,11 +43,6 @@
 #define BONUS_INCREMENT_DELAY				100
 #define SCORE_MULTIPLIER_TO_ENABLE_BONUS	10
 
-extern const u16 BALL_START_ROLLING_SND[];
-extern const u16 BALL_HIT_PADDLE_SND[];
-extern const u16 BALL_HIT_CEILING_SND[];
-extern const u16 BALL_HIT_FLOOR_SND[];
-
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
@@ -87,14 +82,14 @@ bool Player::handleMessage(Telegram telegram __attribute__ ((unused)))
 {
 	switch(Telegram::getMessage(telegram))
 	{
-		case kAddBonusScore:
+		case kMessageAddBonusScore:
 
 			this->leftScore += 1;
 			this->rightScore += 1;
-			SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(this->pongBall)));
+			//SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(this->pongBall)));
 			Player::printScore(this);
 
-			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kAddBonusScore, NULL);
+			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kMessageAddBonusScore, NULL);
 			break;
 	}
 
@@ -356,15 +351,15 @@ void Player::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
 	{
 		PongBall::startRolling(this->pongBall);
 		this->ballIsRolling = true;
-		MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kAddBonusScore, NULL);
+		MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kMessageAddBonusScore, NULL);
 
-		SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
+		//SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 	}
 	else
 	{
 		Player::totalizeScore(this);
 
-		SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_FLOOR_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
+		//SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_FLOOR_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 	}
 }
 
@@ -414,7 +409,7 @@ void Player::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
 
 	Player::printScore(this);
 
-	SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_CEILING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
+	//SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_CEILING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 }
 
 void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
@@ -441,7 +436,7 @@ void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
 
 		Player::totalizeScore(this);
 
-		MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), Object::safeCast(this), kAddBonusScore);
+		MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), Object::safeCast(this), kMessageAddBonusScore);
 	}
 	else
 	{
@@ -467,7 +462,7 @@ void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
 		Player::printScore(this);
 	}
 
-	SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_PADDLE_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
+	//SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_PADDLE_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 }
 
 int Player::getPlayerNumber()

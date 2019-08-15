@@ -186,7 +186,7 @@ EntityROMSpec PLAYFIELD_EN =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -200,7 +200,7 @@ EntityROMSpec PLAYFIELD_EN =
 	{0, 0, 0},
 
 	// gameworld's character's type
-	kNoType,
+	kTypeNone,
 
 	// physical specification
 	(PhysicalSpecification*)NULL,

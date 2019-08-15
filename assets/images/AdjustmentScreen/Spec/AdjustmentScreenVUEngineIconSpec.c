@@ -156,7 +156,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -170,7 +170,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	{0, 0, 0},
 
 	// gameworld's character's type
-	kNoType,
+	kTypeNone,
 
 	// physical specification
 	(PhysicalSpecification*)NULL,
@@ -181,7 +181,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -195,7 +195,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
 	{0, 0, 0},
 
 	// gameworld's character's type
-	kNoType,
+	kTypeNone,
 
 	// physical specification
 	(PhysicalSpecification*)NULL,

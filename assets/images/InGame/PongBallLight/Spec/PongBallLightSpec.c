@@ -127,7 +127,7 @@ PongBallLightROMSpec PONG_BALL_LIGHT_IM =
 		// class allocator
 		__TYPE(PongBallLight),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -141,7 +141,7 @@ PongBallLightROMSpec PONG_BALL_LIGHT_IM =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,

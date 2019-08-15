@@ -61,7 +61,7 @@ EntityROMSpec MAIN_MENU_CONTAINER =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -75,7 +75,7 @@ EntityROMSpec MAIN_MENU_CONTAINER =
 	{0, 0, 0},
 
 	// gameworld's character's type
-	kNoType,
+	kTypeNone,
 
 	// physical specification
 	NULL,
@@ -152,6 +152,18 @@ StageROMSpec TITLE_SCREEN_STAGE_ST =
 {
 	// allocator
 	__TYPE(Stage),
+
+	// Timer config
+	{
+		__TIMER_100US,
+		10,
+		kMS
+	},
+
+	// Sound config
+	{
+		__DEFAULT_PCM_HZ,
+	},
 
 	// level
 	{
@@ -336,7 +348,7 @@ StageROMSpec TITLE_SCREEN_STAGE_ST =
 		(TextureSpec**)TITLE_SCREEN_STAGE_ST_TEXTURES,
 
 		// background music
-		(const u16 (*)[])TITLE_BGM,
+		(Sound**)NULL,
 	},
 
 	// entities
@@ -344,7 +356,7 @@ StageROMSpec TITLE_SCREEN_STAGE_ST =
 		// ui
 		{
 			TITLE_SCREEN_STAGE_ST_UI_ENTITIES,
-			__TYPE(UiContainer),
+			__TYPE(UIContainer),
 		},
 
 		// children

@@ -206,13 +206,13 @@ ShapeROMSpec PONG_BALL_SHAPES[] =
 		true,
 
 		// layers in which I live
-		kPlayFieldLayer | kPlayFieldBallLayer,
+		kLayerPlayField | kLayerPlayFieldBall,
 
 		// layers to ignore when checking for collisions
-		kPlayFieldBallLayer | kPlayFieldSplitterLayer | kPlayFieldPaddleHelperLayer,
+		kLayerPlayFieldBall | kLayerPlayFieldSplitter | kLayerPlayFieldPaddleHelper,
 	},
 
-	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kNoLayer, kNoLayer}
+	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
 };
 
 PhysicalSpecificationROMSpec PONG_BALL_PHYSICAL_PROPERTIES =
@@ -241,7 +241,7 @@ PongBallROMSpec PONG_BALL_PB =
 				// class allocator
 				__TYPE(PongBall),
 
-				// behaviors 
+				// behaviors
 				NULL,
 
 				// sprites
@@ -255,7 +255,7 @@ PongBallROMSpec PONG_BALL_PB =
 				{0, 0, 0},
 
 				// gameworld's character's type
-				kPongBallType,
+				kTypePongBall,
 
 				// physical specification
 				(PhysicalSpecification*)&PONG_BALL_PHYSICAL_PROPERTIES,

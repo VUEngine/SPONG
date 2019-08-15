@@ -123,7 +123,7 @@ EntityROMSpec FLAG_UNITED_KINGDOM_EN =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// behaviors
 	NULL,
 
 	// sprites
@@ -137,7 +137,7 @@ EntityROMSpec FLAG_UNITED_KINGDOM_EN =
 	{0, 0, 0},
 
 	// gameworld's character's type
-	kNoType,
+	kTypeNone,
 
 	// physical specification
 	NULL,

@@ -193,7 +193,7 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 		// class allocator
 		__TYPE(ParticleSystem),
 
-		// behaviors 
+		// behaviors
 		NULL,
 
 		// sprites
@@ -207,7 +207,7 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 		{0, 0, 0},
 
 		// gameworld's character's type
-		kNoType,
+		kTypeNone,
 
 		// physical specification
 		(PhysicalSpecification*)NULL,
