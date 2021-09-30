@@ -1,22 +1,10 @@
-/* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
- * A universal game engine for the Nintendo Virtual Boy
+/**
+ * SPONG
  *
- * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * © Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 
@@ -59,7 +47,7 @@ extern TextureSpec PADDLE_RIGHT_R_TX;
 extern TextureSpec PLAYFIELD_L_TX;
 extern TextureSpec PLAYFIELD_R_TX;
 
-extern u16 GAME_BGM_1[][2];
+extern uint16 GAME_BGM_1[][2];
 
 const CollisionExtraInfo horizontalWallCollision =
 {
@@ -98,7 +86,7 @@ const CollisionExtraInfo splitterCollision =
 
 PositionedEntityROMSpec PONG_BALL_CHILDREN[] =
 {
-	{&PONG_BALL_PARTICLES_PS, 			{0,    0,     1, 0}, 	0, "Partcls", NULL, NULL, false},
+	{&PONG_BALL_PARTICLES_PS, 			{0,	0,	 1, 0}, 	0, "Partcls", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -106,22 +94,22 @@ PositionedEntityROMSpec PONG_BALL_CHILDREN[] =
 
 PositionedEntityROMSpec PLAYFIELD_STAGE_ST_ENTITIES[] =
 {
-	{&PLAYFIELD_EN, 			{192,    120,     96+8, 0}, 	0, NULL, NULL, NULL, false},
+	{&PLAYFIELD_EN, 			{192,	120,	 96+8, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&PADDLE_LEFT_AC, 			{192-96, 112,     96, 0}, 	0, PADDLE_LEFT_NAME, NULL, NULL, false},
-	{&PADDLE_RIGHT_AC, 			{192+96, 112,     96, 0}, 	0, PADDLE_RIGHT_NAME, NULL, NULL, false},
-	{&PONG_BALL_PB, 			{192,    112,     0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PONG_BALL_CHILDREN, NULL, false},
-	{&PONG_BALL_LIGHT_IM,		{192,    112,     96+8+1, 0}, 	0, NULL, NULL, NULL, false},
+	{&PADDLE_LEFT_AC, 			{192-96, 112,	 96, 0}, 	0, PADDLE_LEFT_NAME, NULL, NULL, false},
+	{&PADDLE_RIGHT_AC, 			{192+96, 112,	 96, 0}, 	0, PADDLE_RIGHT_NAME, NULL, NULL, false},
+	{&PONG_BALL_PB, 			{192,	112,	 0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PONG_BALL_CHILDREN, NULL, false},
+	{&PONG_BALL_LIGHT_IM,		{192,	112,	 96+8+1, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&COLLISION_FLOOR_CL,		{192, 112,     96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
-	{&COLLISION_CEILING_CL,		{192,    112,      -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
-	{&COLLISION_WALL_CL,		{ 12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
-	{&COLLISION_WALL_CL,		{384-12, 112,      0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
-	{&COLLISION_WALL_CL,		{192,    16+12,    0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
-	{&COLLISION_WALL_CL,		{192,    224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{&COLLISION_WALL_CL,		{192,    112,     48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
+	{&COLLISION_FLOOR_CL,		{192, 112,	 96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+	{&COLLISION_CEILING_CL,		{192,	112,	  -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&COLLISION_WALL_CL,		{ 12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
+	{&COLLISION_WALL_CL,		{384-12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
+	{&COLLISION_WALL_CL,		{192,	16+12,	0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
+	{&COLLISION_WALL_CL,		{192,	224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
+	{&COLLISION_WALL_CL,		{192,	112,	 48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
-	{&TRANSITION_LAYER_B_AE,	{192,    112,      0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TRANSITION_LAYER_B_AE,	{192,	112,	  0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -215,20 +203,20 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 		},
 
 		// camera's frustum
-        {
-        	// x0
-        	0,
-        	// y0
+		{
+			// x0
+			0,
+			// y0
 			0,
 			// z0
 			-10,
-        	// x1
-        	__SCREEN_WIDTH,
-        	// y1
-        	__SCREEN_HEIGHT,
-        	// z1
-        	__SCREEN_WIDTH * 5
-        }
+			// x1
+			__SCREEN_WIDTH,
+			// y1
+			__SCREEN_HEIGHT,
+			// z1
+			__SCREEN_WIDTH * 5
+		}
 	},
 
 	// streaming

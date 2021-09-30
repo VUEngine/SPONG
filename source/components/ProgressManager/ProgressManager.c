@@ -1,22 +1,10 @@
-/* VUEngine - Virtual Utopia Engine <http://vuengine.planetvb.com/>
- * A universal game engine for the Nintendo Virtual Boy
+/**
+ * SPONG
  *
- * Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+ * © Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 
@@ -62,9 +50,9 @@ void ProgressManager::restoreSettings()
 	BrightnessManager::setBrightnessFactor(BrightnessManager::getInstance(), ProgressManager::getBrightnessFactor(this));
 }
 
-u8 ProgressManager::getBrightnessFactor()
+uint8 ProgressManager::getBrightnessFactor()
 {
-	s8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
+	int8 brightnessFactor = DEFAULT_BRIGHTNESS_FACTOR;
 	if(this->sramAvailable)
 	{
 		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&brightnessFactor, offsetof(struct GameSaveData, brightnessFactor), sizeof(brightnessFactor));
@@ -73,7 +61,7 @@ u8 ProgressManager::getBrightnessFactor()
 	return brightnessFactor;
 }
 
-void ProgressManager::setBrightnessFactor(s8 brightnessFactor)
+void ProgressManager::setBrightnessFactor(int8 brightnessFactor)
 {
 	if(this->sramAvailable)
 	{
@@ -85,9 +73,9 @@ void ProgressManager::setBrightnessFactor(s8 brightnessFactor)
 	}
 }
 
-u8 ProgressManager::getPlayerNumber()
+uint8 ProgressManager::getPlayerNumber()
 {
-	u8 playerNumber = 1;
+	uint8 playerNumber = 1;
 	if(this->sramAvailable)
 	{
 		SRAMManager::read(SRAMManager::getInstance(), (BYTE*)&playerNumber, offsetof(struct GameSaveData, playerNumber), sizeof(playerNumber));
@@ -96,7 +84,7 @@ u8 ProgressManager::getPlayerNumber()
 	return playerNumber;
 }
 
-void ProgressManager::setPlayerNumber(u8 playerNumber)
+void ProgressManager::setPlayerNumber(uint8 playerNumber)
 {
 	if(this->sramAvailable)
 	{

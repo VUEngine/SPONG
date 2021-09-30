@@ -7,35 +7,40 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												PLUGINS
+//                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
 #include "pluginsConfig.h"
+#include "romHeader.h"
 
 
 //---------------------------------------------------------------------------------------------------------
-//											DEBUGGING / PROFILING
+//                                             COMMUNICATIONS
+//---------------------------------------------------------------------------------------------------------
+
+// Enable communications at the start of the game
+#undef __ENABLE_COMMUNICATIONS
+
+
+//---------------------------------------------------------------------------------------------------------
+//                                          DEBUGGING / PROFILING
 //---------------------------------------------------------------------------------------------------------
 
 // print memory pool's status
-#undef __PRINT_MEMORY_POOL_STATUS
-#undef __PRINT_DETAILED_MEMORY_POOL_STATUS
+#undef __SHOW_MEMORY_POOL_STATUS
+#undef __SHOW_DETAILED_MEMORY_POOL_STATUS
+
+// Enable profiler
+#undef __ENABLE_PROFILER
 
 // print frame rate
 #undef __PRINT_FRAMERATE
 
 // alert stack overflows
-#undef __ALERT_STACK_OVERFLOW
-
-// enable detailed profiling of each of the game's main processes
-// • it is more useful when __TIMER_RESOLUTION approaches 1
-#undef __PROFILE_GAME
+#undef __SHOW_STACK_OVERFLOW_ALERT
 
 // enable streaming's profiling
 #undef __PROFILE_STREAMING
-
-// show games's profiling during game
-#undef __SHOW_GAME_PROFILING
 
 // show streaming's profiling during game
 #undef __SHOW_STREAMING_PROFILING
@@ -43,16 +48,15 @@
 // dimm screen to make it easier to read the profiling output
 #undef __DIMM_FOR_PROFILING
 
-// print the game's current process while the VIP's frame start and idle interrupts are fired, but the
-// game frame is still pending processes to complete
-#undef __PROFILE_GAME_STATE_DURING_VIP_INTERRUPT
-
 // alert vip's overtime
-#define __ALERT_VIP_OVERTIME
+#define __SHOW_VIP_OVERTIME_COUNT
+
+// stack headroom
+#define __STACK_HEADROOM								
 
 
 //---------------------------------------------------------------------------------------------------------
-//											DEBUGGING TOOLS
+//                                             DEBUGGING TOOLS
 //---------------------------------------------------------------------------------------------------------
 
 // If tools already defined, enable all
@@ -83,16 +87,6 @@
 #define __TOOLS
 #endif
 
-// print frame rate
-#define __PRINT_FRAMERATE
-
-// enable detailed profiling of each of the game's main processes
-// • it is more useful when __TIMER_RESOLUTION approaches 1
-#define __PROFILE_GAME
-
-// enable streaming's profiling
-#define __PROFILE_STREAMING
-
 #endif
 
 #ifdef __STAGE_EDITOR
@@ -115,21 +109,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											ROM HEADER INFO
-//---------------------------------------------------------------------------------------------------------
-
-// game title (20 chars) 	 ####################
-#define __GAME_TITLE		"SPONG               "
-// maker code (2 chars)		 ##
-#define __MAKER_CODE		"TV"
-// game code (4 chars)		 ####
-#define __GAME_CODE			"VSPM"
-// revision (1.x)			 #
-#define __ROM_VERSION		 0
-
-
-//---------------------------------------------------------------------------------------------------------
-//											OPTICS / PROJECTION
+//                                           OPTICS / PROJECTION
 //---------------------------------------------------------------------------------------------------------
 
 // screen width in pixels
@@ -170,7 +150,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											FRAME RATE CONTROL
+//                                           FRAME RATE CONTROL
 //---------------------------------------------------------------------------------------------------------
 
 // when defined, the engine skips to the next game frame when the VIP's GAMESTART interrupt is fired
@@ -198,7 +178,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												ANIMATION
+//                                                ANIMATION
 //---------------------------------------------------------------------------------------------------------
 
 // maximum length of an animation function's name
@@ -212,7 +192,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												MEMORY POOL
+//                                               MEMORY POOL
 //---------------------------------------------------------------------------------------------------------
 
 // reset to 0 each byte of each free block on resetting game
@@ -255,7 +235,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												SRAM
+//                                                  SRAM
 //---------------------------------------------------------------------------------------------------------
 
 // amount of available sram space, in bytes
@@ -264,7 +244,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											CHAR MANAGEMENT
+//                                             CHAR MANAGEMENT
 //---------------------------------------------------------------------------------------------------------
 
 // total number of available chars in char memory
@@ -272,35 +252,41 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//											SPRITE MANAGEMENT
+//                                            SPRITE MANAGEMENT
 //---------------------------------------------------------------------------------------------------------
 
 // total number of layers (basically the number of worlds)
 #define __TOTAL_LAYERS								32
 
+// Account for VIP's design to draw 8 pixel when BGMAP WORLD's height is less than 8
+#undef __HACK_BGMAP_SPRITE_HEIGHT
+
 
 //---------------------------------------------------------------------------------------------------------
-//											TEXTURE MANAGEMENT
+//                                           TEXTURE MANAGEMENT
 //---------------------------------------------------------------------------------------------------------
 
 // total number of bgmap segments
-#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 			14
+#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 			NaN
 
-// bgmap segments to use (leave 2 to allocate param table, 1 for printing)
-#define __MAX_NUMBER_OF_BGMAPS_SEGMENTS 			(__TOTAL_NUMBER_OF_BGMAPS_SEGMENTS - 3)
+// number of segments for param tables
+#define __PARAM_TABLE_SEGMENTS						
+
+// bgmap segments to use (1 for printing)
+#define __MAX_NUMBER_OF_BGMAPS_SEGMENTS 			(__TOTAL_NUMBER_OF_BGMAPS_SEGMENTS - __PARAM_TABLE_SEGMENTS)
 
 // number of bgmap specs in each bgmap segment
 #define __NUM_BGMAPS_PER_SEGMENT 					16
 
 // printing area
 #define __PRINTING_BGMAP_X_OFFSET					0
-#define __PRINTING_BGMAP_Y_OFFSET					0
+#define __PRINTING_BGMAP_Y_OFFSET					(64 * 8 - __SCREEN_HEIGHT)
 #define __PRINTING_BGMAP_PARALLAX_OFFSET			0
 #define __PRINTABLE_BGMAP_AREA 						1792
 
 
 //---------------------------------------------------------------------------------------------------------
-//												PARAM TABLE
+//                                               PARAM TABLE
 //---------------------------------------------------------------------------------------------------------
 
 // maximum possible scale: affects param table allocation space
@@ -311,26 +297,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												STREAMING
-//---------------------------------------------------------------------------------------------------------
-
-// number of total calls to the streaming method which completes a cycle
-// there are 4 parts for the streaming algorithm:
-// 1) unload entities
-// 2) select the next entity to load
-// 3) create the selected entity
-// 4) initialize the loaded entity
-#define __STREAM_CYCLE_DURATION						24
-
-// padding to determine if an entity must be loaded/unloaded
-// • load pad must always be lower than unload pad!
-// • too close values will put the streaming under heavy usage!
-#define __ENTITY_LOAD_PAD 							256
-#define __ENTITY_UNLOAD_PAD 						312
-
-
-//---------------------------------------------------------------------------------------------------------
-//												PHYSICS
+//                                                 PHYSICS
 //---------------------------------------------------------------------------------------------------------
 
 #define __GRAVITY									17.6f
@@ -352,7 +319,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												SOUND
+//                                                  SOUND
 //---------------------------------------------------------------------------------------------------------
 
 #define __LEFT_EAR_CENTER							96
@@ -360,11 +327,12 @@
 
 // affects the amount of attenuation caused by the distance between the x coordinate and each ear's
 // position defined by __LEFT_EAR_CENTER and __RIGHT_EAR_CENTER
-#define __SOUND_STEREO_ATTENUATION_FACTOR			__F_TO_FIX10_6(0.75f)
+#define __SOUND_STEREO_HORIZONTAL_ATTENUATION_FACTOR		
+#define __SOUND_STEREO_VERTICAL_ATTENUATION_FACTOR			
 
 
 //---------------------------------------------------------------------------------------------------------
-//											BRIGHTNESS
+//                                               BRIGHTNESS
 //---------------------------------------------------------------------------------------------------------
 
 // default brightness settings, actual values are set in stage specs
@@ -377,9 +345,11 @@
 // default delay between steps in fade effect
 #define __FADE_DELAY								8
 
+// defaul step increment in fade transitions
+#define __CAMERA_EFFECT_FADE_INCREMENT				
 
 //---------------------------------------------------------------------------------------------------------
-//											COLOR PALETTES
+//                                             COLOR PALETTES
 //---------------------------------------------------------------------------------------------------------
 
 #define __PRINTING_PALETTE							0
@@ -397,14 +367,14 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//										RANDOM NUMBER GENERATION
+//                                        RANDOM NUMBER GENERATION
 //---------------------------------------------------------------------------------------------------------
 
 #undef __ADD_USER_INPUT_AND_TIME_TO_RANDOM_SEED
 
 
 //---------------------------------------------------------------------------------------------------------
-//												EXCEPTIONS
+//                                               EXCEPTIONS
 //---------------------------------------------------------------------------------------------------------
 
 // camera coordinates for the output of exceptions

@@ -66,13 +66,6 @@
 			}
 		}
 	},
-	"compiler": {
-		"framePointer": false,
-		"optimization": "O2",
-		"output": "c",
-		"prologFunctions": false,
-		"scrambleBinary": false
-	},
 	"debug": {
 		"alertStackOverflow": false,
 		"alertVipOvertime": true,
@@ -175,13 +168,6 @@
 	"random": {
 		"addUserInputAndTimeToRandomSeed": false,
 		"seedCycles": 2
-	},
-	"sections": {
-		"initializedData": ".sdata",
-		"memoryPool": ".sbss",
-		"staticSingletons": ".dram_bss",
-		"uninitializedData": ".sbss",
-		"virtualTables": ".dram_bss"
 	},
 	"sound": {
 		"leftEarCenter": 96,

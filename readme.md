@@ -1,5 +1,4 @@
-Spong
-=====
+# SPONG
 
 A simple Pong-like game that demonstrates VUEngine's multiplayer capabilities.
 
@@ -7,7 +6,7 @@ A simple Pong-like game that demonstrates VUEngine's multiplayer capabilities.
 LICENSE
 -------
 
-Copyright (C) 2007, 2018 by Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <chris@vr32.de>
+© Jorge Eremiev jorgech3@gmail.com and Christian Radke c.radke@posteo.de
 
 This software is licensed under the MIT License, which means you can basically do with it whatever you
 want as long as you include the original copyright and license notice in any copy of the software/source.
@@ -26,17 +25,3 @@ want as long as you include the original copyright and license notice in any cop
 	NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 	WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-COMPILING ON WIN32
-------------------
-
-This game as well as the VUEngine comes bundled with VBDE (http://vbde.planetvb.com).
-Compile by starting the VBDE build system.
-
-
-CREDITS
--------
-
-V810 is a trade mark of NEC. Virtual Boy is a trade mark of Nintendo.
-Jorge Eremiev and Christian Radke are in no way affiliated with either of these parties.

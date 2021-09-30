@@ -1,0 +1,26 @@
+{
+	"compiler": {
+		"framePointer": false,
+		"optimization": "O2",
+		"output": "c",
+		"prologFunctions": false,
+		"scrambleBinary": false
+	},
+	"memory": {
+		"sections": {
+			"initializedData": ".sdata",
+			"memoryPool": ".sbss",
+			"staticSingletons": ".dram_bss",
+			"uninitializedData": ".sbss",
+			"virtualTables": ".dram_bss"
+		}
+	},
+	"plugins": [
+		"vuengine//entities/LocalizedEntity",
+		"vuengine//entities/LowPowerEntity",
+		"vuengine//fonts/IndustrialFont",
+		"vuengine//other/AutomaticPause",
+		"vuengine//other/I18n",
+		"vuengine//other/SaveDataManager"
+	]
+}
