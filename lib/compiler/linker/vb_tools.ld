@@ -11,11 +11,11 @@ SEARCH_DIR(.);
 
 MEMORY
 {
-    dram    (!r)    : ORIGIN = 0x00000NAN, LENGTH = NaNk /* Add additional KB needed for debug tools */
-    wram    (!r)    : ORIGIN = , LENGTH = k
-    exp     (r)     : ORIGIN = , LENGTH = M
-    sram    (!r)    : ORIGIN = , LENGTH = M
-    rom     (rx)    : ORIGIN = , LENGTH = M
+    dram    (!r)    : ORIGIN = 0x00036C00, LENGTH = 27k /* Add additional KB needed for debug tools */
+    wram    (!r)    : ORIGIN = 0x05000000, LENGTH = 64k
+    exp     (r)     : ORIGIN = 0x04000000, LENGTH = 16M
+    sram    (!r)    : ORIGIN = 0x06000000, LENGTH = 16M
+    rom     (rx)    : ORIGIN = 0x07000000, LENGTH = 16M
 }
 
 /*

@@ -46,7 +46,7 @@ class PongBallLight : Entity
 	fix10_6 pongBallInitialZDistance;
 	bool followPongBall;
 
-	void constructor(PongBallLightSpec* PongBallLightSpec, int16 id, int16 internalId, const char* const name);
+	void constructor(PongBallLightSpec* PongBallLightSpec, int16 internalId, const char* const name);
 	override void ready(bool recursive);
 	override void update(uint32 elapsedTime);
 	override bool handleMessage(Telegram telegram);

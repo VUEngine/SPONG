@@ -54,7 +54,7 @@ class PongBall : Actor
 	int paddleEnum;
 	bool rolling;
 
-	void constructor(PongBallSpec* pongBallSpec, int16 id, int16 internalId, const char* const name);
+	void constructor(PongBallSpec* pongBallSpec, int16 internalId, const char* const name);
 	void startMovement();
 	void stopMovement();
 	int getPaddleEnum();

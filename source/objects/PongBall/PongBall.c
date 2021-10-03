@@ -45,10 +45,10 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void PongBall::constructor(PongBallSpec* pongBallSpec, int16 id, int16 internalId, const char* const name)
+void PongBall::constructor(PongBallSpec* pongBallSpec, int16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((ActorSpec*)&pongBallSpec->actorSpec, id, internalId, name);
+	Base::constructor((ActorSpec*)&pongBallSpec->actorSpec, internalId, name);
 
 	// save spec
 	this->pongBallSpec = pongBallSpec;

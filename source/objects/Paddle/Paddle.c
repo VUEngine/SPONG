@@ -31,10 +31,10 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void Paddle::constructor(PaddleSpec* paddleSpec, int16 id, int16 internalId, const char* const name)
+void Paddle::constructor(PaddleSpec* paddleSpec, int16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((ActorSpec*)&paddleSpec->actorSpec, id, internalId, name);
+	Base::constructor((ActorSpec*)&paddleSpec->actorSpec, internalId, name);
 
 	// save spec
 	this->paddleSpec = paddleSpec;

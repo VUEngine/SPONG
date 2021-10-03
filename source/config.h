@@ -52,7 +52,7 @@
 #define __SHOW_VIP_OVERTIME_COUNT
 
 // stack headroom
-#define __STACK_HEADROOM								
+#define __STACK_HEADROOM								1000
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -267,10 +267,10 @@
 //---------------------------------------------------------------------------------------------------------
 
 // total number of bgmap segments
-#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 			NaN
+#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 			11
 
 // number of segments for param tables
-#define __PARAM_TABLE_SEGMENTS						
+#define __PARAM_TABLE_SEGMENTS						1
 
 // bgmap segments to use (1 for printing)
 #define __MAX_NUMBER_OF_BGMAPS_SEGMENTS 			(__TOTAL_NUMBER_OF_BGMAPS_SEGMENTS - __PARAM_TABLE_SEGMENTS)
@@ -327,8 +327,8 @@
 
 // affects the amount of attenuation caused by the distance between the x coordinate and each ear's
 // position defined by __LEFT_EAR_CENTER and __RIGHT_EAR_CENTER
-#define __SOUND_STEREO_HORIZONTAL_ATTENUATION_FACTOR		
-#define __SOUND_STEREO_VERTICAL_ATTENUATION_FACTOR			
+#define __SOUND_STEREO_HORIZONTAL_ATTENUATION_FACTOR		50
+#define __SOUND_STEREO_VERTICAL_ATTENUATION_FACTOR			50
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -346,7 +346,7 @@
 #define __FADE_DELAY								8
 
 // defaul step increment in fade transitions
-#define __CAMERA_EFFECT_FADE_INCREMENT				
+#define __CAMERA_EFFECT_FADE_INCREMENT				1
 
 //---------------------------------------------------------------------------------------------------------
 //                                             COLOR PALETTES

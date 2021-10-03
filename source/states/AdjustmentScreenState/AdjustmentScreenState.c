@@ -51,7 +51,7 @@ void AdjustmentScreenState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// move the printing area out of the visible screen to save CPU resources
-	Printing::setWorldCoordinates(Printing::getInstance(), __SCREEN_WIDTH, __SCREEN_HEIGHT, 0);
+	Printing::setWorldCoordinates(Printing::getInstance(), __SCREEN_WIDTH, __SCREEN_HEIGHT, 0, 0);
 }
 
 void AdjustmentScreenState::processInput(uint32 pressedKey __attribute__ ((unused)))

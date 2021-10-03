@@ -14,7 +14,7 @@
 
 #include <Game.h>
 #include <ProgressManager.h>
-#include <AutoPauseManager.h>
+#include <AutomaticPauseManager.h>
 #include <AutomaticPauseScreenState.h>
 #include <PrecautionScreenState.h>
 
@@ -27,8 +27,8 @@ int main(void)
 {
 	// initialize plugins
 	ProgressManager::restoreSettings(ProgressManager::getInstance());
-	AutoPauseManager::setAutomaticPauseState(AutoPauseManager::getInstance(), GameState::safeCast(AutomaticPauseScreenState::getInstance()));
-	AutoPauseManager::setActive(AutoPauseManager::getInstance(), true);
+	AutomaticPauseManager::setAutomaticPauseState(AutomaticPauseManager::getInstance(), GameState::safeCast(AutomaticPauseScreenState::getInstance()));
+	AutomaticPauseManager::setActive(AutomaticPauseManager::getInstance(), true);
 
 	// start the game
 	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));

@@ -27,7 +27,7 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
-#include <AutoPauseManager.h>
+#include <AutomaticPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 
@@ -68,7 +68,7 @@ void OptionsScreenState::enter(void* owner)
 	this->mode = kOptionsScreenModeShowOptions;
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&OPTIONS_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&OPTIONS_SCREEN_STAGE_ST, NULL, true, false);
 
 	// get entity references
 	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "Cursor", true));
@@ -116,11 +116,11 @@ void OptionsScreenState::switchLanguage(bool forward)
 
 void OptionsScreenState::updateAutomaticPauseCheckBox()
 {
-	bool autoPauseEnabled = AutoPauseManager::isActive(AutoPauseManager::getInstance());
-	AnimatedEntity autoPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "APChckBx", true));
-	if(autoPauseCheckBoxEntity)
+	bool AutomaticPauseEnabled = AutomaticPauseManager::isActive(AutomaticPauseManager::getInstance());
+	AnimatedEntity AutomaticPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "APChckBx", true));
+	if(AutomaticPauseCheckBoxEntity)
 	{
-		AnimatedEntity::playAnimation(autoPauseCheckBoxEntity, Utilities::itoa(autoPauseEnabled, 10, 1));
+		AnimatedEntity::playAnimation(AutomaticPauseCheckBoxEntity, Utilities::itoa(AutomaticPauseEnabled, 10, 1));
 	}
 }
 
@@ -152,13 +152,13 @@ void OptionsScreenState::switchBrightness(bool forward)
 void OptionsScreenState::toggleAutomaticPause()
 {
 	// (un)set auto pause state
-	bool autoPauseEnabled = AutoPauseManager::isActive(AutoPauseManager::getInstance());
-	autoPauseEnabled = !autoPauseEnabled;
+	bool AutomaticPauseEnabled = AutomaticPauseManager::isActive(AutomaticPauseManager::getInstance());
+	AutomaticPauseEnabled = !AutomaticPauseEnabled;
 
-	AutoPauseManager::setActive(AutoPauseManager::getInstance(), autoPauseEnabled);
+	AutomaticPauseManager::setActive(AutomaticPauseManager::getInstance(), AutomaticPauseEnabled);
 
 	// write state to sram
-	SaveDataManager::setAutomaticPauseStatus(ProgressManager::getInstance(), autoPauseEnabled);
+	SaveDataManager::setAutomaticPauseStatus(ProgressManager::getInstance(), AutomaticPauseEnabled);
 
 	// update visual representation
 	OptionsScreenState::updateAutomaticPauseCheckBox(this);

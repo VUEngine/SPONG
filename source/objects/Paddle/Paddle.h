@@ -53,7 +53,7 @@ class Paddle : Actor
 	Shape paddleShape;
 	bool mustBounce;
 
-	void constructor(PaddleSpec* paddleSpec, int16 id, int16 internalId, const char* const name);
+	void constructor(PaddleSpec* paddleSpec, int16 internalId, const char* const name);
 	void startMovement();
 	void moveTowards(Direction direction);
 	void stopTowards(Direction direction);

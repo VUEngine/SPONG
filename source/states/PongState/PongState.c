@@ -28,7 +28,7 @@
 #include <Player.h>
 #include <GameEvents.h>
 #include <debugUtilities.h>
-#include <AutoPauseManager.h>
+#include <AutomaticPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 
@@ -84,7 +84,7 @@ void PongState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PLAYFIELD_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PLAYFIELD_STAGE_ST, NULL, true, false);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
@@ -92,7 +92,7 @@ void PongState::enter(void* owner)
 	Player::getReady(Player::getInstance(), GameState::safeCast(this));
 
 	// disable automatic pause in versus mode
-	AutoPauseManager::setActive(AutoPauseManager::getInstance(), !this->isVersusMode);
+	AutomaticPauseManager::setActive(AutomaticPauseManager::getInstance(), !this->isVersusMode);
 
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());

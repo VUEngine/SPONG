@@ -36,10 +36,10 @@
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void PongBallLight::constructor(PongBallLightSpec* PongBallLightSpec, int16 id, int16 internalId, const char* const name)
+void PongBallLight::constructor(PongBallLightSpec* PongBallLightSpec, int16 internalId, const char* const name)
 {
 	// construct base
-	Base::constructor((EntitySpec*)&PongBallLightSpec->entitySpec, id, internalId, name);
+	Base::constructor((EntitySpec*)&PongBallLightSpec->entitySpec, internalId, name);
 
 	// save spec
 	this->pongBall = NULL;
@@ -105,9 +105,9 @@ void PongBallLight::onPongBallHitCeiling(Object eventFirer __attribute__ ((unuse
 	this->followPongBall = false;
 	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kMessageFollowPongBall, NULL);
 /*
-	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
+	PixelVector displacement = *Sprite::getDisplacement(VirtualList::front(this->sprites));
 	displacement.parallax = -5;
-	Sprite::setDisplacement(VirtualList::front(this->sprites), displacement);
+	Sprite::setDisplacement(VirtualList::front(this->sprites), &displacement);
 
 	Scale localScale = this->transformation.localScale;
 	localScale.x = localScale.y = __FIX10_6_TO_FIX7_9(__FIX10_6_MULT(__I_TO_FIX10_6(1), __I_TO_FIX10_6(2)));
@@ -122,9 +122,9 @@ bool PongBallLight::handleMessage(Telegram telegram)
 	{
 		case kMessageFollowPongBall:
 			{
-				PixelVector displacement = Sprite::getDisplacement(VirtualList::front(this->sprites));
+				PixelVector displacement = *Sprite::getDisplacement(VirtualList::front(this->sprites));
 				displacement.parallax = 0;
-				Sprite::setDisplacement(VirtualList::front(this->sprites), displacement);
+				Sprite::setDisplacement(VirtualList::front(this->sprites), &displacement);
 
 				this->followPongBall = true;
 			}

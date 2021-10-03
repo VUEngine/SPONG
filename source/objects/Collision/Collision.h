@@ -40,7 +40,7 @@ class Collision : Entity
 {
 	uint32 shapeLayers;
 
-	void constructor(EntitySpec* entitySpec, int16 id, int16 internalId, const char* const name);
+	void constructor(EntitySpec* entitySpec, int16 internalId, const char* const name);
 	override void setExtraInfo(void* extraInfo);
 	override void initialTransform(Transformation* environmentTransform, uint32 recursive);
 }

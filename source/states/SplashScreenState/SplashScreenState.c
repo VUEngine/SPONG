@@ -47,7 +47,7 @@ void SplashScreenState::enter(void* owner)
 
 	if(this->stageSpec)
 	{
-		GameState::loadStage(GameState::safeCast(this), this->stageSpec, NULL, true);
+		GameState::loadStage(GameState::safeCast(this), this->stageSpec, NULL, true, false);
 	}
 
 	SplashScreenState::print(this);

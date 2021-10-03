@@ -7,7 +7,29 @@
 		"scrambleBinary": false
 	},
 	"memory": {
-		"sections": {
+        "sections": {
+            "dram": {
+                "length": -24,
+                "origin": "0x0003D800"
+            },
+            "exp": {
+                "length": 16,
+                "origin": "0x04000000"
+            },
+            "rom": {
+                "length": 16,
+                "origin": "0x07000000"
+            },
+            "sram": {
+                "length": 16,
+                "origin": "0x06000000"
+            },
+            "wram": {
+                "length": 64,
+                "origin": "0x05000000"
+            }
+        },
+		"usage": {
 			"initializedData": ".sdata",
 			"memoryPool": ".sbss",
 			"staticSingletons": ".dram_bss",

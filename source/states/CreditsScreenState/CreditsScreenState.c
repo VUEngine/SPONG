@@ -27,7 +27,7 @@
 #include <AnimatedEntity.h>
 #include <Utilities.h>
 #include <TitleScreenState.h>
-#include <AutoPauseManager.h>
+#include <AutomaticPauseManager.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 
@@ -60,7 +60,7 @@ void CreditsScreenState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&CREDITS_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&CREDITS_SCREEN_STAGE_ST, NULL, true, false);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));

@@ -76,7 +76,7 @@ void TitleScreenState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&TITLE_SCREEN_STAGE_ST, NULL, true);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&TITLE_SCREEN_STAGE_ST, NULL, true, false);
 
 	// get entity references
 	this->entityPressStart = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "PrssStrt", true));
@@ -139,9 +139,9 @@ void TitleScreenState::updateCursorPosition()
 
 	// change parallax
 	VirtualList cursorSprites = Entity::getSprites(this->entityCursor);
-	PixelVector displacement = Sprite::getDisplacement(VirtualList::front(cursorSprites));
+	PixelVector displacement = *Sprite::getDisplacement(VirtualList::front(cursorSprites));
 	displacement.parallax = (this->option < 2) ? -1 : (this->option > 3) ? 1 : 0;
-	Sprite::setDisplacement(VirtualList::front(cursorSprites), displacement);
+	Sprite::setDisplacement(VirtualList::front(cursorSprites), &displacement);
 }
 
 void TitleScreenState::processUserInputModePressStart(UserInput userInput)
