@@ -71,6 +71,12 @@ TextureROMSpec FLAG_UNITED_KINGDOM_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec FLAG_UNITED_KINGDOM_SPRITE =
@@ -111,11 +117,20 @@ EntityROMSpec FLAG_UNITED_KINGDOM_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)FLAG_UNITED_KINGDOM_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	NULL,

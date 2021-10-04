@@ -58,7 +58,7 @@ void BrightnessManager::showScreen()
 
 void BrightnessManager::hideScreen()
 {
-	__SET_BRIGHT(0, 0, 0);
+	VIPManager::lowerBrightness(VIPManager::getInstance());
 }
 
 void BrightnessManager::setDefaultBrightness()
@@ -69,7 +69,14 @@ void BrightnessManager::setDefaultBrightness()
 	int mediumRed = (0 >= (mediumRed = (defaultBrightness.mediumRed + (this->brightnessFactor * 16)))) ? 8 : mediumRed;
 	int brightRed = (0 >= (brightRed = (defaultBrightness.brightRed + (this->brightnessFactor * 32)))) ? 16 : brightRed;
 
-	__SET_BRIGHT(darkRed, mediumRed, brightRed);
+	Brightness brightness = 
+	{
+		darkRed,
+		mediumRed,
+		brightRed
+	};
+
+	VIPManager::setupBrightness(VIPManager::getInstance(), &brightness);
 }
 
 void BrightnessManager::setBrightnessFactor(int8 brightnessFactor)

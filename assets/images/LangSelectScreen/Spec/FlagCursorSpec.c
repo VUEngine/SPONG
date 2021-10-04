@@ -71,6 +71,12 @@ TextureROMSpec FLAG_CURSOR_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec FLAG_CURSOR_SPRITE =
@@ -111,11 +117,20 @@ EntityROMSpec FLAG_CURSOR_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)FLAG_CURSOR_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	NULL,

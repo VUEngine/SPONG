@@ -77,6 +77,12 @@ TextureROMSpec OPTIONS_HEADER_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec OPTIONS_HEADER_L_SPRITE =
@@ -150,6 +156,12 @@ TextureROMSpec OPTIONS_HEADER_R_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec OPTIONS_HEADER_R_SPRITE =
@@ -194,11 +206,20 @@ LocalizedEntityROMSpec OPTIONS_HEADER_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)OPTIONS_HEADER_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

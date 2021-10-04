@@ -73,6 +73,12 @@ TextureROMSpec MAIN_MENU_CHALLENGE_MODE_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec MAIN_MENU_CHALLENGE_MODE_SPRITE =
@@ -114,11 +120,20 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)MAIN_MENU_CHALLENGE_MODE_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

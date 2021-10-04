@@ -199,9 +199,9 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 
 void TitleScreenState::onStartMatchMessageSend(Object eventFirer __attribute__ ((unused)))
 {
-	uint32 message = *((uint32*)CommunicationManager::getData(CommunicationManager::getInstance()));
+	uint32 message = *((uint32*)CommunicationManager::getReceivedMessage(CommunicationManager::getInstance()));
 
-	if(START_VERSUS_MATCH == message)
+	if(kCommunicationMessageStartVersusMatch == message)
 	{
 		PongState::setVersusMode(PongState::getInstance(), true);
 
@@ -277,7 +277,7 @@ void TitleScreenState::switchState()
 				Game::disableKeypad(Game::getInstance());
 
 				// stop all sounds
-				SoundManager::stopAllSounds(SoundManager::getInstance());
+				SoundManager::stopAllSounds(SoundManager::getInstance(), true);
 				SoundManager::reset(SoundManager::getInstance());
 
 				Entity::show(this->entityWaitingForOtherPlayer);
@@ -285,14 +285,15 @@ void TitleScreenState::switchState()
 				if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 				{
 
-					uint32 messageToSend = START_VERSUS_MATCH;
-					uint32 receivedMessage = START_VERSUS_MATCH;
+					uint32 message = kCommunicationMessageStartVersusMatch;
 
 					do
 					{
-						CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&messageToSend, (BYTE*)&receivedMessage, sizeof(receivedMessage));
+						CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kCommunicationMessageStartVersusMatch, (BYTE*)&message, sizeof(message));
+
+						message = *((uint32*)CommunicationManager::getReceivedMessage(CommunicationManager::getInstance()));
 					}
-					while(START_VERSUS_MATCH != receivedMessage);
+					while(kCommunicationMessageStartVersusMatch != message);
 
 					PongState::setVersusMode(PongState::getInstance(), true);
 

@@ -70,6 +70,12 @@ TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITE =
@@ -144,11 +150,20 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -169,11 +184,20 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

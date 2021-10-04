@@ -22,8 +22,6 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-#define START_VERSUS_MATCH	0x334587CC
-
 enum TitleScreenModes
 {
 	kTitleScreenModeShowPressStart,

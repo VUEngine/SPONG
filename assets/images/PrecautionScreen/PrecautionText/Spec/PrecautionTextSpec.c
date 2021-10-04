@@ -72,6 +72,12 @@ TextureROMSpec PRECAUTION_TEXT_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PRECAUTION_TEXT_SPRITE =
@@ -113,11 +119,20 @@ LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)PRECAUTION_TEXT_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

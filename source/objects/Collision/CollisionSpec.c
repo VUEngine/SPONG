@@ -45,11 +45,20 @@ CollisionROMSpec COLLISION_WALL_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)NULL,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -70,11 +79,20 @@ CollisionROMSpec COLLISION_FLOOR_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)NULL,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -95,11 +113,20 @@ CollisionROMSpec COLLISION_CEILING_CL =
 	// class allocator
 	__TYPE(Collision),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)NULL,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

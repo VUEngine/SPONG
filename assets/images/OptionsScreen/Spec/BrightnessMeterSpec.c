@@ -191,6 +191,12 @@ TextureROMSpec BRIGHTNESS_METER_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec BRIGHTNESS_METER_SPRITE =
@@ -232,11 +238,20 @@ AnimatedEntityROMSpec BRIGHTNESS_METER_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)BRIGHTNESS_METER_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

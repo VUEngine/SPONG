@@ -88,6 +88,7 @@ StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
 	// Sound config
 	{
 		__DEFAULT_PCM_HZ,
+		0
 	},
 
 	// level
@@ -147,9 +148,6 @@ StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
 
 	// rendering
 	{
-		// number of cycles the texture writing is idle
-		__TARGET_FPS / 10,
-
 		// maximum number of texture's rows to write each time the texture writing is active
 		64,
 
@@ -280,12 +278,12 @@ StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		LANG_SELECT_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)LANG_SELECT_SCREEN_STAGE_ST_ENTITIES,
 	},
 
 	// post processing effects

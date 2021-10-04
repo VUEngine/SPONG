@@ -110,6 +110,12 @@ TextureROMSpec CIRCLE_BACKGROUND_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec CIRCLE_BACKGROUND_L_SPRITE =
@@ -184,6 +190,12 @@ TextureROMSpec CIRCLE_BACKGROUND_R_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec CIRCLE_BACKGROUND_R_SPRITE =
@@ -229,11 +241,20 @@ AnimatedEntityROMSpec CIRCLE_BACKGROUND_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
-		// behaviors 
+		// children
+		NULL,
+
+		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)CIRCLE_BACKGROUND_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

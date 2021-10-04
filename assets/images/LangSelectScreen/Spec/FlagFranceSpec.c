@@ -71,6 +71,12 @@ TextureROMSpec FLAG_FRANCE_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec FLAG_FRANCE_SPRITE =
@@ -111,11 +117,20 @@ EntityROMSpec FLAG_FRANCE_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)FLAG_FRANCE_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	NULL,

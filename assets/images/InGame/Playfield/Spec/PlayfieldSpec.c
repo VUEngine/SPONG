@@ -73,6 +73,12 @@ TextureROMSpec PLAYFIELD_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PLAYFIELD_L_SPRITE =
@@ -131,6 +137,12 @@ TextureROMSpec PLAYFIELD_R_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PLAYFIELD_R_SPRITE =
@@ -174,11 +186,20 @@ EntityROMSpec PLAYFIELD_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)PLAYFIELD_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

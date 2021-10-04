@@ -75,6 +75,12 @@ TextureROMSpec PONG_BALL_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PONG_BALL_L_SPRITE =
@@ -132,6 +138,12 @@ TextureROMSpec PONG_BALL_R_TX =
 	0,
 
 	// recyclable
+	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
 	false,
 };
 
@@ -229,11 +241,20 @@ PongBallROMSpec PONG_BALL_PB =
 				// class allocator
 				__TYPE(PongBall),
 
+				// children
+				NULL,
+
 				// behaviors
+				NULL,
+
+				// extra
 				NULL,
 
 				// sprites
 				(SpriteSpec**)PONG_BALL_SPRITES,
+
+				// use z displacement in projection
+				false,
 
 				// collision shapes
 				(ShapeSpec*)PONG_BALL_SHAPES,

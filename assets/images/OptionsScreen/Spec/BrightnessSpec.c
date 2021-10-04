@@ -73,6 +73,12 @@ TextureROMSpec OPTIONS_BRIGHTNESS_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec OPTIONS_BRIGHTNESS_SPRITE =
@@ -114,11 +120,20 @@ LocalizedEntityROMSpec OPTIONS_BRIGHTNESS_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)OPTIONS_BRIGHTNESS_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

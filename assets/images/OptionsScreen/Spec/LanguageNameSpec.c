@@ -71,6 +71,12 @@ TextureROMSpec LANGUAGE_NAME_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec LANGUAGE_NAME_SPRITE =
@@ -112,11 +118,20 @@ LocalizedEntityROMSpec LANGUAGE_NAME_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
-		// behaviors 
+		// children
+		NULL,
+
+		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)LANGUAGE_NAME_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

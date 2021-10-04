@@ -113,7 +113,7 @@ void PongBall::onPositionTransmitted(Object eventFirer __attribute__((unused)))
 {
 	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
 	{
-		const Vector3D* otherWorldPosition = (Vector3D*)CommunicationManager::getData(CommunicationManager::getInstance());
+		const Vector3D* otherWorldPosition = (Vector3D*)CommunicationManager::getReceivedData(CommunicationManager::getInstance());
 		Entity::setLocalPosition(this, otherWorldPosition);
 	}
 }

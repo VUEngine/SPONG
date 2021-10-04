@@ -72,6 +72,12 @@ TextureROMSpec CREDITS_A_GAME_BY_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec CREDITS_A_GAME_BY_SPRITE =
@@ -113,11 +119,20 @@ LocalizedEntityROMSpec CREDITS_A_GAME_BY_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)CREDITS_A_GAME_BY_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

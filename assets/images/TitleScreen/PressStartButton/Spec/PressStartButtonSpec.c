@@ -189,6 +189,12 @@ TextureROMSpec PRESS_START_BUTTON_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PRESS_START_BUTTON_SPRITE =
@@ -230,11 +236,20 @@ LocalizedEntityROMSpec PRESS_START_BUTTON_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
-		// behaviors 
+		// children
+		NULL,
+
+		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)PRESS_START_BUTTON_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

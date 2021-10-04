@@ -104,6 +104,13 @@ TextureROMSpec PONG_BALL_PARTICLE_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
+
 };
 
 ObjectSpriteROMSpec PONG_BALL_PARTICLE_SPRITE =
@@ -135,9 +142,9 @@ ObjectSpriteROMSpec PONG_BALL_PARTICLE_SPRITE =
 //---------------------------------------------------------------------------------------------------------
 
 
-ObjectSpriteROMSpec* const PONG_BALL_PARTICLE_SPRITES[] =
+SpriteSpec* const PONG_BALL_PARTICLE_SPRITES[] =
 {
-	&PONG_BALL_PARTICLE_SPRITE,
+	(SpriteSpec*)&PONG_BALL_PARTICLE_SPRITE,
 	NULL
 };
 
@@ -181,11 +188,20 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 		// class allocator
 		__TYPE(ParticleSystem),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)NULL,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -210,11 +226,14 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 	// maximum generation delay in milliseconds
 	50,
 
-	// maximum total particles
+	// maximum number of alive particles
 	6,
 
+	// maximum number of particles to spawn in each cycle
+	1,
+
 	// array of textures
-	(const ObjectSpriteSpec**)PONG_BALL_PARTICLE_SPRITES,
+	(const SpriteSpec**)PONG_BALL_PARTICLE_SPRITES,
 
 	// auto start
 	false,

@@ -70,6 +70,12 @@ TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITE =
@@ -110,11 +116,20 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_IM =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

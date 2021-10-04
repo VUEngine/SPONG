@@ -75,6 +75,7 @@ StageROMSpec PAUSE_SCREEN_STAGE_ST =
 	// Sound config
 	{
 		__DEFAULT_PCM_HZ,
+		0
 	},
 
 	// level
@@ -134,9 +135,6 @@ StageROMSpec PAUSE_SCREEN_STAGE_ST =
 
 	// rendering
 	{
-		// number of cycles the texture writing is idle
-		__TARGET_FPS / 10,
-
 		// maximum number of texture's rows to write each time the texture writing is active
 		64,
 
@@ -267,12 +265,12 @@ StageROMSpec PAUSE_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			PAUSE_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)PAUSE_SCREEN_STAGE_ST_UI_ENTITIES,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		PAUSE_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)PAUSE_SCREEN_STAGE_ST_ENTITIES,
 	},
 
 	// post processing effects

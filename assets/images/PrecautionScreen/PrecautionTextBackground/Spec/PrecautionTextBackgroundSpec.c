@@ -70,6 +70,12 @@ TextureROMSpec PRECAUTION_TEXT_BACKGROUND_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PRECAUTION_TEXT_BACKGROUND_SPRITE =
@@ -110,11 +116,20 @@ EntityROMSpec PRECAUTION_TEXT_BACKGROUND_IM =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)PRECAUTION_TEXT_BACKGROUND_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

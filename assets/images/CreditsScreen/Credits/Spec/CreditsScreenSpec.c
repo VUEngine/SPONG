@@ -70,6 +70,12 @@ TextureROMSpec CREDITS_SCREEN_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec CREDITS_SCREEN_SPRITE =
@@ -110,11 +116,20 @@ EntityROMSpec CREDITS_SCREEN_EN =
 	// class allocator
 	__TYPE(Entity),
 
-	// behaviors 
+	// children
+	NULL,
+
+	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)CREDITS_SCREEN_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

@@ -73,6 +73,12 @@ TextureROMSpec DEMO_BADGE_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec DEMO_BADGE_SPRITE =
@@ -114,11 +120,20 @@ LocalizedEntityROMSpec DEMO_BADGE_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)DEMO_BADGE_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

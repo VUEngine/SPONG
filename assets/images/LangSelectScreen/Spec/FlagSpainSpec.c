@@ -71,6 +71,12 @@ TextureROMSpec FLAG_SPAIN_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec FLAG_SPAIN_SPRITE =
@@ -111,11 +117,20 @@ EntityROMSpec FLAG_SPAIN_EN =
 	// class allocator
 	__TYPE(Entity),
 
+	// children
+	NULL,
+
 	// behaviors
+	NULL,
+
+	// extra
 	NULL,
 
 	// sprites
 	(SpriteSpec**)FLAG_SPAIN_SPRITES,
+
+	// use z displacement in projection
+	false,
 
 	// collision shapes
 	NULL,

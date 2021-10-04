@@ -191,6 +191,12 @@ TextureROMSpec VOLUME_METER_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec VOLUME_METER_SPRITE =
@@ -232,11 +238,20 @@ AnimatedEntityROMSpec VOLUME_METER_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)VOLUME_METER_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

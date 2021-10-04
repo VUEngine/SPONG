@@ -125,6 +125,12 @@ TextureROMSpec OPTIONS_CHECKBOX_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec OPTIONS_CHECKBOX_SPRITE =
@@ -166,11 +172,20 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)OPTIONS_CHECKBOX_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

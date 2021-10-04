@@ -149,6 +149,12 @@ TextureROMSpec TRANSITION_LAYER_A_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec TRANSITION_LAYER_A_SPRITE =
@@ -190,11 +196,20 @@ TransitionEntityROMSpec TRANSITION_LAYER_A_AE =
 		// class allocator
 		__TYPE(TransitionEntity),
 
-		// behaviors 
+		// children
+		NULL,
+
+		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)TRANSITION_LAYER_A_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

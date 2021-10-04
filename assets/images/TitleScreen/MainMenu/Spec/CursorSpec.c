@@ -103,6 +103,12 @@ TextureROMSpec MAIN_MENU_CURSOR_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec MAIN_MENU_CURSOR_SPRITE =
@@ -144,11 +150,20 @@ AnimatedEntityROMSpec MAIN_MENU_CURSOR_AE =
 		// class allocator
 		__TYPE(AnimatedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)MAIN_MENU_CURSOR_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

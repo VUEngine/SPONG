@@ -73,6 +73,12 @@ TextureROMSpec MAIN_MENU_OPTIONS_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec MAIN_MENU_OPTIONS_SPRITE =
@@ -114,11 +120,20 @@ LocalizedEntityROMSpec MAIN_MENU_OPTIONS_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)MAIN_MENU_OPTIONS_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

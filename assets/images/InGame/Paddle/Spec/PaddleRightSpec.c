@@ -82,6 +82,12 @@ TextureROMSpec PADDLE_RIGHT_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec PADDLE_RIGHT_L_SPRITE =
@@ -154,6 +160,12 @@ TextureROMSpec PADDLE_RIGHT_R_TX =
 	0,
 
 	// recyclable
+	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
 	false,
 };
 
@@ -262,11 +274,20 @@ PaddleROMSpec PADDLE_RIGHT_AC =
 				// class allocator
 				__TYPE(Paddle),
 
+				// children
+				NULL,
+
 				// behaviors
+				NULL,
+
+				// extra
 				NULL,
 
 				// sprites
 				(SpriteSpec**)PADDLE_RIGHT_SPRITES,
+
+				// use z displacement in projection
+				false,
 
 				// collision shapes
 				(ShapeSpec*)PADDLE_RIGHT_AC_SHAPES,

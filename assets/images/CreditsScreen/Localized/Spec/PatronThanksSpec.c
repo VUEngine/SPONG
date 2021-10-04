@@ -72,6 +72,12 @@ TextureROMSpec CREDITS_PATRON_THANKS_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec CREDITS_PATRON_THANKS_SPRITE =
@@ -113,11 +119,20 @@ LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)CREDITS_PATRON_THANKS_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

@@ -133,14 +133,12 @@ void PongState::processUserInput(UserInput userInput)
 
 	if(this->isVersusMode)
 	{
-	//	PongBall pongBall = Player::getPongBall(Player::getInstance());
-		DataToTransmit dataToTransmit;
-	//	dataToTransmit.ballLocalPosition = *Container::getLocalPosition(Container::safeCast(pongBall));
-		dataToTransmit.resumedUserInput.pressedKey = userInput.pressedKey;
-		dataToTransmit.resumedUserInput.releasedKey = userInput.releasedKey;
-		dataToTransmit.resumedUserInput.holdKey = userInput.holdKey;
+		this->opponentData.resumedUserInput.pressedKey = userInput.pressedKey;
+		this->opponentData.resumedUserInput.releasedKey = userInput.releasedKey;
+		this->opponentData.resumedUserInput.holdKey = userInput.holdKey;
 
-		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), (BYTE*)&dataToTransmit, (BYTE*)&this->opponentData, sizeof(dataToTransmit));
+		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kCommunicationMessageSendAndReceiveInput, (BYTE*)&this->opponentData, sizeof(this->opponentData));
+
 /*
 		if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
 		{
@@ -160,7 +158,6 @@ bool PongState::processUserInputRegardlessOfInput()
 
 void PongState::onUserInputTransmitted(Object eventFirer __attribute__ ((unused)))
 {
-	this->opponentData = *((DataToTransmit*)CommunicationManager::getData(CommunicationManager::getInstance()));
 /*
 	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
 	{

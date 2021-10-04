@@ -77,6 +77,12 @@ TextureROMSpec HIGHSCORES_HEADER_L_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec HIGHSCORES_HEADER_L_SPRITE =
@@ -150,6 +156,12 @@ TextureROMSpec HIGHSCORES_HEADER_R_TX =
 
 	// recyclable
 	false,
+
+	// vertical flip
+	false,
+
+	// horizontal flip
+	false,
 };
 
 BgmapSpriteROMSpec HIGHSCORES_HEADER_R_SPRITE =
@@ -194,11 +206,20 @@ LocalizedEntityROMSpec HIGHSCORES_HEADER_LE =
 		// class allocator
 		__TYPE(LocalizedEntity),
 
+		// children
+		NULL,
+
 		// behaviors
+		NULL,
+
+		// extra
 		NULL,
 
 		// sprites
 		(SpriteSpec**)HIGHSCORES_HEADER_SPRITES,
+
+		// use z displacement in projection
+		false,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

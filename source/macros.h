@@ -52,6 +52,12 @@ enum SpongMessageTypes
 	kMessageShowScreen,
 };
 
+enum CommunicationMessages
+{
+	kCommunicationMessageSendAndReceiveInput = kMessageLastCommunicationMessage + 1,
+	kCommunicationMessageStartVersusMatch
+};
+
 #define PONG_BALL_NAME			"PongBall"
 #define PADDLE_LEFT_NAME		"LeftPd"
 #define PADDLE_RIGHT_NAME		"RightPd"

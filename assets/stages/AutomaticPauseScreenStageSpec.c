@@ -32,7 +32,7 @@ extern EntitySpec LOW_POWER_INDICATOR_LB;
 
 PositionedEntityROMSpec AUTO_PAUSE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-	{&AUTO_PAUSE_LOGO_EN,		{200, 112, 0, 0}, 0, NULL, NULL, NULL, false},
+//	{&AUTO_PAUSE_LOGO_EN,		{200, 112, 0, 0}, 0, NULL, NULL, NULL, false},
 
 	{&TRANSITION_LAYER_B_AE,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
 
@@ -78,6 +78,7 @@ StageROMSpec AUTO_PAUSE_SCREEN_STAGE_ST =
 	// Sound config
 	{
 		__DEFAULT_PCM_HZ,
+		0
 	},
 
 	// level
@@ -137,9 +138,6 @@ StageROMSpec AUTO_PAUSE_SCREEN_STAGE_ST =
 
 	// rendering
 	{
-		// number of cycles the texture writing is idle
-		__TARGET_FPS / 10,
-
 		// maximum number of texture's rows to write each time the texture writing is active
 		64,
 
@@ -270,12 +268,12 @@ StageROMSpec AUTO_PAUSE_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			AUTO_PAUSE_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)AUTO_PAUSE_SCREEN_STAGE_ST_UI_ENTITIES,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		AUTO_PAUSE_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)AUTO_PAUSE_SCREEN_STAGE_ST_ENTITIES,
 	},
 
 	// post processing effects
