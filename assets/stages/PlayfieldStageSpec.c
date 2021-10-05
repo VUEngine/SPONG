@@ -289,7 +289,7 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 
 		// bgmap segments configuration
 		// number of segments reserved for the param table
-		1,
+		2,
 
 		// obj segments sizes (must total 1024)
 		{

@@ -21,7 +21,7 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec AUTO_PAUSE_LOGO_EN;
+extern EntitySpec AUTOMATIC_PAUSE_LOGO_EN;
 extern EntitySpec TRANSITION_LAYER_B_AE;
 extern EntitySpec LOW_POWER_INDICATOR_LB;
 
@@ -32,7 +32,7 @@ extern EntitySpec LOW_POWER_INDICATOR_LB;
 
 PositionedEntityROMSpec AUTO_PAUSE_SCREEN_STAGE_ST_ENTITIES[] =
 {
-//	{&AUTO_PAUSE_LOGO_EN,		{200, 112, 0, 0}, 0, NULL, NULL, NULL, false},
+	{&AUTOMATIC_PAUSE_LOGO_EN,		{200, 112, 0, 0}, 0, NULL, NULL, NULL, false},
 
 	{&TRANSITION_LAYER_B_AE,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
 
