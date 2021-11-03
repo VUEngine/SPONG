@@ -4,34 +4,29 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-// IMPORTANT: Ensure that this file is encoded in Windows-1252 to make use of the full
-//            character set including special characters of European languages.
-//---------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------------------------
-//												INCLUDES
+//                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
 #include <I18n.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
+//                                              DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
 extern EntitySpec FLAG_FRANCE_EN;
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
+//                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-const char* const LANGUAGE_FR_STRINGS[] =
+const char* const FrenchLanguageStrings[] =
 {
 	
 };
 
-const LangROMSpec LANGUAGE_FR =
+const LangROMSpec FrenchLanguage =
 {
 	// language name
 	"Français",
@@ -40,5 +35,5 @@ const LangROMSpec LANGUAGE_FR =
 	&FLAG_FRANCE_EN,
 	
 	// strings
-	(const char**)LANGUAGE_FR_STRINGS
+	(const char**)FrenchLanguageStrings
 };

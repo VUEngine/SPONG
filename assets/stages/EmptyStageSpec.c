@@ -50,7 +50,7 @@ PositionedEntityROMSpec EMPTY_STAGE_ST_UI_ENTITIES[] =
 
 FontROMSpec* const EMPTY_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
+	&IndustrialFont,
 
 	NULL
 };

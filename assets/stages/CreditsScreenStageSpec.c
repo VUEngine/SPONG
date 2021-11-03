@@ -60,7 +60,7 @@ PositionedEntityROMSpec CREDITS_SCREEN_STAGE_ST_UI_ENTITIES[] =
 
 FontROMSpec* const CREDITS_SCREEN_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
+	&IndustrialFont,
 
 	NULL
 };

@@ -128,7 +128,7 @@ PositionedEntityROMSpec PLAYFIELD_STAGE_ST_UI_ENTITIES[] =
 
 FontROMSpec* const PLAYFIELD_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
+	&IndustrialFont,
 
 	NULL
 };

@@ -63,7 +63,7 @@ PositionedEntityROMSpec LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 
 FontROMSpec* const LANG_SELECT_SCREEN_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
+	&IndustrialFont,
 
 	NULL
 };

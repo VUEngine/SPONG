@@ -1,0 +1,9 @@
+[
+	"ShowScreen",
+	"TransitionInComplete",
+	"TransitionOutComplete",
+	"UserInput",
+	"PongBallHitCeiling",
+	"PongBallHitFloor",
+	"PongBallHitPaddle"
+]

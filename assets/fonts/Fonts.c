@@ -4,22 +4,22 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//												INCLUDES
+//                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
 #include <Fonts.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
+//                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
 FontSpec* const __FONTS[] =
 {
-	(FontSpec*)&DEFAULT_FONT,
-	(FontSpec*)&PROFILER_FONT,
-	(FontSpec*)&INDUSTRIAL_FONT,
-	(FontSpec*)&INDUSTRIAL_EXT_FONT,
+	(FontSpec*)&DefaultFont,
+	(FontSpec*)&ProfilerFont,
+	(FontSpec*)&IndustrialFont,
+	(FontSpec*)&IndustrialExtFont,
 	
 	NULL
 };

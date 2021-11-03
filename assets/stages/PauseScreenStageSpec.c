@@ -50,7 +50,7 @@ PositionedEntityROMSpec PAUSE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 
 FontROMSpec* const PAUSE_SCREEN_STAGE_ST_FONTS[] =
 {
-	&INDUSTRIAL_FONT,
+	&IndustrialFont,
 
 	NULL
 };

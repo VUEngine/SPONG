@@ -4,41 +4,52 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-// IMPORTANT: Ensure that this file is encoded in Windows-1252 to make use of the full
-//            character set including special characters of European languages.
+//                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------------------------------------
-//												INCLUDES
-//---------------------------------------------------------------------------------------------------------
-
-#include <I18n.h>
+#include <Printing.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
+//                                              DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec FLAG_UNITED_KINGDOM_EN;
+extern BYTE VUEngineProfilerFontTiles[];
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
+//                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-const char* const LANGUAGE_EN_STRINGS[] =
+CharSetROMSpec ProfilerFontCharSet =
 {
-	
+	// number of chars
+	45,
+
+	// allocation type
+	__NOT_ANIMATED,
+
+	// char spec
+	VUEngineProfilerFontTiles,
 };
 
-const LangROMSpec LANGUAGE_EN =
+FontROMSpec ProfilerFont =
 {
-	// language name
-	"English",
+	// font charset spec pointer
+	(CharSetSpec*)&ProfilerFontCharSet,
 
-	// flag entity
-	&FLAG_UNITED_KINGDOM_EN,
-	
-	// strings
-	(const char**)LANGUAGE_EN_STRINGS
+	// character number at which the font starts, allows you to skip the control characters for example
+	46,
+
+	// number of characters in this font
+	45,
+
+	// number of characters per line in charset
+	45,
+
+	// size of a single character (in chars) ({width, height})
+	{1, 1},
+
+	// font's name
+	"Profiler",
 };

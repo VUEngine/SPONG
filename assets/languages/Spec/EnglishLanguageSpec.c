@@ -2,31 +2,38 @@
 //                              THIS FILE WAS AUTO-GENERATED - DO NOT EDIT                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef GAME_EVENTS_H_
-#define GAME_EVENTS_H_
-
 
 //---------------------------------------------------------------------------------------------------------
 //                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Events.h>
+#include <I18n.h>
+
+
+//---------------------------------------------------------------------------------------------------------
+//                                              DECLARATIONS
+//---------------------------------------------------------------------------------------------------------
+
+extern EntitySpec FLAG_UNITED_KINGDOM_EN;
 
 
 //---------------------------------------------------------------------------------------------------------
 //                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-enum GameEvents
+const char* const EnglishLanguageStrings[] =
 {
-	kEventShowScreen = kEventEngineLast + 1,
-	kEventTransitionInComplete,
-	kEventTransitionOutComplete,
-	kEventUserInput,
-	kEventPongBallHitCeiling,
-	kEventPongBallHitFloor,
-	kEventPongBallHitPaddle,
+	
 };
 
+const LangROMSpec EnglishLanguage =
+{
+	// language name
+	"English",
 
-#endif
+	// flag entity
+	&FLAG_UNITED_KINGDOM_EN,
+	
+	// strings
+	(const char**)EnglishLanguageStrings
+};

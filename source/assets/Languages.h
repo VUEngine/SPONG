@@ -5,18 +5,16 @@
 #ifndef LANGUAGES_H_
 #define LANGUAGES_H_
 
-
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
+//                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
 enum LanguageIdentifiers
 {
-	LNG_EN,
-	LNG_DE,
-	LNG_ES,
-	LNG_FR,
-	
+	kLanguageEnglish,
+	kLanguageGerman,
+	kLanguageSpanish,
+	kLanguageFrench,
 };
 
 

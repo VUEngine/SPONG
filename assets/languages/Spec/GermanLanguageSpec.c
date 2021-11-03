@@ -4,41 +4,36 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-// IMPORTANT: Ensure that this file is encoded in Windows-1252 to make use of the full
-//            character set including special characters of European languages.
-//---------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------------------------
-//												INCLUDES
+//                                                INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
 #include <I18n.h>
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DECLARATIONS
+//                                              DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec FLAG_SPAIN_EN;
+extern EntitySpec FLAG_GERMANY_EN;
 
 
 //---------------------------------------------------------------------------------------------------------
-//												DEFINITIONS
+//                                               DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-const char* const LANGUAGE_ES_STRINGS[] =
+const char* const GermanLanguageStrings[] =
 {
 	
 };
 
-const LangROMSpec LANGUAGE_ES =
+const LangROMSpec GermanLanguage =
 {
 	// language name
-	"Español",
+	"Deutsch",
 
 	// flag entity
-	&FLAG_SPAIN_EN,
+	&FLAG_GERMANY_EN,
 	
 	// strings
-	(const char**)LANGUAGE_ES_STRINGS
+	(const char**)GermanLanguageStrings
 };

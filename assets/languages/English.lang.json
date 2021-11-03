@@ -1,0 +1,7 @@
+{
+    "id": "English",
+    "flag": "FLAG_UNITED_KINGDOM_EN",
+    "name": "English",
+	"order": 1,
+    "strings": {}
+}
