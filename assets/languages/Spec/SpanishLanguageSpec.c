@@ -23,7 +23,10 @@ extern EntitySpec FLAG_SPAIN_EN;
 
 const char* const SpanishLanguageStrings[] =
 {
-	
+	/* kStringAutomaticPauseBody: */
+	"¡Por favor, tómese un descanso!",
+	/* kStringAutomaticPauseTitle: */
+	"PAUSA AUTOMÁTICA",
 };
 
 const LangROMSpec SpanishLanguage =

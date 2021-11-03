@@ -23,7 +23,10 @@ extern EntitySpec FLAG_UNITED_KINGDOM_EN;
 
 const char* const EnglishLanguageStrings[] =
 {
-	
+	/* kStringAutomaticPauseBody: */
+	"Please take a rest!",
+	/* kStringAutomaticPauseTitle: */
+	"AUTOMATIC PAUSE",
 };
 
 const LangROMSpec EnglishLanguage =

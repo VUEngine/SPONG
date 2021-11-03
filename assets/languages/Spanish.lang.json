@@ -1,5 +1,6 @@
 {
     "id": "Spanish",
+	"code": "es",
     "flag": "FLAG_SPAIN_EN",
     "name": "Español",
 	"order": 3,

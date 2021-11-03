@@ -1,5 +1,6 @@
 {
     "id": "French",
+	"code": "fr",
     "flag": "FLAG_FRANCE_EN",
     "name": "Français",
 	"order": 4,

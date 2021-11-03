@@ -23,7 +23,10 @@ extern EntitySpec FLAG_GERMANY_EN;
 
 const char* const GermanLanguageStrings[] =
 {
-	
+	/* kStringAutomaticPauseBody: */
+	"Bitte mache eine Pause!",
+	/* kStringAutomaticPauseTitle: */
+	"AUTOMATISCHE PAUSE",
 };
 
 const LangROMSpec GermanLanguage =

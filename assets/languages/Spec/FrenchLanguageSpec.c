@@ -23,7 +23,10 @@ extern EntitySpec FLAG_FRANCE_EN;
 
 const char* const FrenchLanguageStrings[] =
 {
-	
+	/* kStringAutomaticPauseBody: */
+	"Se il vous plaît, prendre un repos!",
+	/* kStringAutomaticPauseTitle: */
+	"PAUSE AUTOMATIQUE",
 };
 
 const LangROMSpec FrenchLanguage =

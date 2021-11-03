@@ -17,5 +17,11 @@ enum LanguageIdentifiers
 	kLanguageFrench,
 };
 
+enum LanguageStrings
+{
+	kStringAutomaticPauseBody,
+	kStringAutomaticPauseTitle,
+};
+
 
 #endif
