@@ -7,7 +7,7 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//                                             ROM HEADER INFO
+//                                             ROM HEADER INFO                                             
 //---------------------------------------------------------------------------------------------------------
 
 // game title (20 chars) 	 ####################
@@ -15,7 +15,7 @@
 // maker code (2 chars)		 ##
 #define __MAKER_CODE		"VU"
 // game code (4 chars)		 ####
-#define __GAME_CODE			"Vunu"
+#define __GAME_CODE			"VSPM"
 // revision (1.x)			 #
 #define __ROM_VERSION		 0
 

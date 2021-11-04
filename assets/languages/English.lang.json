@@ -1,8 +1,8 @@
 {
-    "id": "English",
+	"id": "English",
 	"code": "en",
-    "flag": "FLAG_UNITED_KINGDOM_EN",
-    "name": "English",
+	"flag": "FLAG_UNITED_KINGDOM_EN",
+	"name": "English",
 	"order": 1,
-    "strings": {}
+	"strings": {}
 }
