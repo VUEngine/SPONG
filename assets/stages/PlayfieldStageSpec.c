@@ -22,30 +22,30 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec PONG_BALL_PB;
-extern EntitySpec PADDLE_LEFT_AC;
-extern EntitySpec PADDLE_RIGHT_AC;
-extern EntitySpec PLAYFIELD_EN;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec COLLISION_WALL_CL;
-extern EntitySpec COLLISION_CEILING_CL;
-extern EntitySpec COLLISION_FLOOR_CL;
-extern EntitySpec PONG_BALL_LIGHT_IM;
-extern EntitySpec PONG_BALL_PARTICLES_PS;
+extern EntitySpec PongBallPb;
+extern EntitySpec PaddleLeftEntity;
+extern EntitySpec PaddleRightEntity;
+extern EntitySpec PlayfieldEntity;
+extern EntitySpec LowPowerIndicatorEntity;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec CollisionWallCl;
+extern EntitySpec CollisionCeilingCl;
+extern EntitySpec CollisionFloorCl;
+extern EntitySpec PongBallLightEntity;
+extern EntitySpec PongBallParticlesParticleSystem;
 
-extern CharSetSpec PADDLE_LEFT_L_CH;
-extern CharSetSpec PADDLE_LEFT_R_CH;
-extern CharSetSpec PADDLE_RIGHT_L_CH;
-extern CharSetSpec PADDLE_RIGHT_R_CH;
-extern CharSetSpec PLAYFIELD_CH;
+extern CharSetSpec PaddleLeftLCharset;
+extern CharSetSpec PaddleLeftRCharset;
+extern CharSetSpec PaddleRightLCharset;
+extern CharSetSpec PaddleRightRCharset;
+extern CharSetSpec PlayfieldCharset;
 
-extern TextureSpec PADDLE_LEFT_L_TX;
-extern TextureSpec PADDLE_LEFT_R_TX;
-extern TextureSpec PADDLE_RIGHT_L_TX;
-extern TextureSpec PADDLE_RIGHT_R_TX;
-extern TextureSpec PLAYFIELD_L_TX;
-extern TextureSpec PLAYFIELD_R_TX;
+extern TextureSpec PaddleLeftLTexture;
+extern TextureSpec PaddleLeftRTexture;
+extern TextureSpec PaddleRightLTexture;
+extern TextureSpec PaddleRightRTexture;
+extern TextureSpec PlayfieldLTexture;
+extern TextureSpec PlayfieldRTexture;
 
 extern uint16 GAME_BGM_1[][2];
 
@@ -84,39 +84,39 @@ const CollisionExtraInfo splitterCollision =
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec PONG_BALL_CHILDREN[] =
+PositionedEntityROMSpec PongBallChildren[] =
 {
-	{&PONG_BALL_PARTICLES_PS, 			{0,	0,	 1, 0}, 	0, "Partcls", NULL, NULL, false},
+	{&PongBallParticlesParticleSystem, 			{0,	0,	 1, 0}, 	0, "Partcls", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
 
-PositionedEntityROMSpec PLAYFIELD_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec PlayfieldStageEntities[] =
 {
-	{&PLAYFIELD_EN, 			{192,	120,	 96+8, 0}, 	0, NULL, NULL, NULL, false},
+	{&PlayfieldEntity, 			{192,	120,	 96+8, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&PADDLE_LEFT_AC, 			{192-96, 112,	 96, 0}, 	0, PADDLE_LEFT_NAME, NULL, NULL, false},
-	{&PADDLE_RIGHT_AC, 			{192+96, 112,	 96, 0}, 	0, PADDLE_RIGHT_NAME, NULL, NULL, false},
-	{&PONG_BALL_PB, 			{192,	112,	 0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PONG_BALL_CHILDREN, NULL, false},
-	{&PONG_BALL_LIGHT_IM,		{192,	112,	 96+8+1, 0}, 	0, NULL, NULL, NULL, false},
+	{&PaddleLeftEntity, 			{192-96, 112,	 96, 0}, 	0, PADDLE_LEFT_NAME, NULL, NULL, false},
+	{&PaddleRightEntity, 			{192+96, 112,	 96, 0}, 	0, PADDLE_RIGHT_NAME, NULL, NULL, false},
+	{&PongBallPb, 			{192,	112,	 0, 0}, 	0, PONG_BALL_NAME, (struct PositionedEntity*)PongBallChildren, NULL, false},
+	{&PongBallLightEntity,		{192,	112,	 96+8+1, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&COLLISION_FLOOR_CL,		{192, 112,	 96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
-	{&COLLISION_CEILING_CL,		{192,	112,	  -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
-	{&COLLISION_WALL_CL,		{ 12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
-	{&COLLISION_WALL_CL,		{384-12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
-	{&COLLISION_WALL_CL,		{192,	16+12,	0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
-	{&COLLISION_WALL_CL,		{192,	224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
-	{&COLLISION_WALL_CL,		{192,	112,	 48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
+	{&CollisionFloorCl,		{192, 112,	 96+16, 0},	0, NULL, NULL, (void*)&floorCollision, false}, // far border
+	{&CollisionCeilingCl,		{192,	112,	  -48, 0},	0, NULL, NULL, (void*)&ceilingCollision, false}, // front border
+	{&CollisionWallCl,		{ 12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // left border
+	{&CollisionWallCl,		{384-12, 112,	  0, 0},	0, NULL, NULL, (void*)&verticalWallCollision, false}, // right border
+	{&CollisionWallCl,		{192,	16+12,	0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // top border
+	{&CollisionWallCl,		{192,	224-12,   0, 0},	0, NULL, NULL, (void*)&horizontalWallCollision, false}, // bottom border
+	{&CollisionWallCl,		{192,	112,	 48, 0},	0, NULL, NULL, (void*)&splitterCollision, false}, // splitter border
 
-	{&TRANSITION_LAYER_B_AE,	{192,	112,	  0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,	{192,	112,	  0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec PLAYFIELD_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec PlayfieldStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 	{ 25,  	 25, 	  -1, 0},	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 	{ 25,  	 25, 	  -1, 0},	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -126,32 +126,32 @@ PositionedEntityROMSpec PLAYFIELD_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const PLAYFIELD_STAGE_ST_FONTS[] =
+FontROMSpec* const PlayfieldStageFonts[] =
 {
 	&IndustrialFont,
 
 	NULL
 };
 
-CharSetROMSpec* const PLAYFIELD_STAGE_ST_CHARSETS[] =
+CharSetROMSpec* const PlayfieldStageCharsets[] =
 {
-	&PADDLE_LEFT_L_CH,
-	&PADDLE_LEFT_R_CH,
-	&PADDLE_RIGHT_L_CH,
-	&PADDLE_RIGHT_R_CH,
-	&PLAYFIELD_CH,
+	&PaddleLeftLCharset,
+	&PaddleLeftRCharset,
+	&PaddleRightLCharset,
+	&PaddleRightRCharset,
+	&PlayfieldCharset,
 
 	NULL
 };
 
-TextureSpec* const PLAYFIELD_STAGE_ST_TEXTURES[] =
+TextureSpec* const PlayfieldStageTextures[] =
 {
-	&PADDLE_LEFT_L_TX,
-	&PADDLE_LEFT_R_TX,
-	&PADDLE_RIGHT_L_TX,
-	&PADDLE_RIGHT_R_TX,
-	&PLAYFIELD_L_TX,
-	&PLAYFIELD_R_TX,
+	&PaddleLeftLTexture,
+	&PaddleLeftRTexture,
+	&PaddleRightLTexture,
+	&PaddleRightRTexture,
+	&PlayfieldLTexture,
+	&PlayfieldRTexture,
 
 	NULL
 };
@@ -161,7 +161,7 @@ TextureSpec* const PLAYFIELD_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec PLAYFIELD_STAGE_ST =
+StageROMSpec PlayfieldStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -350,13 +350,13 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)PLAYFIELD_STAGE_ST_FONTS,
+		(FontSpec**)PlayfieldStageFonts,
 
 		// char sets to preload
-		(CharSetSpec**)PLAYFIELD_STAGE_ST_CHARSETS,
+		(CharSetSpec**)PlayfieldStageCharsets,
 
 		// textures to preload
-		(TextureSpec**)PLAYFIELD_STAGE_ST_TEXTURES,
+		(TextureSpec**)PlayfieldStageTextures,
 
 		// background music
 		(Sound**)NULL,
@@ -366,12 +366,12 @@ StageROMSpec PLAYFIELD_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)PLAYFIELD_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)PlayfieldStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)PLAYFIELD_STAGE_ST_ENTITIES,
+		(PositionedEntity*)PlayfieldStageEntities,
 	},
 
 	// post processing effects

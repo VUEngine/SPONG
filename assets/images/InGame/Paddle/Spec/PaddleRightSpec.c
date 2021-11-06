@@ -35,12 +35,12 @@ extern BYTE PaddleRightRMap[];
 
 /* Animations */
 
-extern AnimationDescription PADDLE_ANIM;
+extern AnimationDescription PaddleAnimation;
 
 
 /* Left Sprite */
 
-CharSetROMSpec PADDLE_RIGHT_L_CH =
+CharSetROMSpec PaddleRightLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -55,10 +55,10 @@ CharSetROMSpec PADDLE_RIGHT_L_CH =
 	PaddleRightLTiles,
 };
 
-TextureROMSpec PADDLE_RIGHT_L_TX =
+TextureROMSpec PaddleRightLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PADDLE_RIGHT_L_CH,
+	(CharSetSpec*)&PaddleRightLCharset,
 
 	// bgmap spec
 	PaddleRightLMap,
@@ -90,14 +90,14 @@ TextureROMSpec PADDLE_RIGHT_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PADDLE_RIGHT_L_SPRITE =
+BgmapSpriteROMSpec PaddleRightLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PADDLE_RIGHT_L_TX,
+		(TextureSpec*)&PaddleRightLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -119,7 +119,7 @@ BgmapSpriteROMSpec PADDLE_RIGHT_L_SPRITE =
 
 /* Right Sprite */
 
-CharSetROMSpec PADDLE_RIGHT_R_CH =
+CharSetROMSpec PaddleRightRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -134,10 +134,10 @@ CharSetROMSpec PADDLE_RIGHT_R_CH =
 	PaddleRightRTiles,
 };
 
-TextureROMSpec PADDLE_RIGHT_R_TX =
+TextureROMSpec PaddleRightRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PADDLE_RIGHT_R_CH,
+	(CharSetSpec*)&PaddleRightRCharset,
 
 	// bgmap spec
 	PaddleRightRMap,
@@ -169,14 +169,14 @@ TextureROMSpec PADDLE_RIGHT_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PADDLE_RIGHT_R_SPRITE =
+BgmapSpriteROMSpec PaddleRightRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PADDLE_RIGHT_R_TX,
+		(TextureSpec*)&PaddleRightRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -198,14 +198,14 @@ BgmapSpriteROMSpec PADDLE_RIGHT_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const PADDLE_RIGHT_SPRITES[] =
+BgmapSpriteROMSpec* const PaddleRightSprites[] =
 {
-	&PADDLE_RIGHT_L_SPRITE,
-	&PADDLE_RIGHT_R_SPRITE,
+	&PaddleRightLSprite,
+	&PaddleRightRSprite,
 	NULL
 };
 
-ShapeROMSpec PADDLE_RIGHT_AC_SHAPES[] =
+ShapeROMSpec PaddleRightShapes[] =
 {
 	// wall collider
 	{
@@ -264,9 +264,9 @@ ShapeROMSpec PADDLE_RIGHT_AC_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
 };
 
-extern PhysicalSpecification PADDLE_AC_PHYSICAL_PROPERTIES;
+extern PhysicalSpecification PaddlePhysicalProperties;
 
-PaddleROMSpec PADDLE_RIGHT_AC =
+PaddleROMSpec PaddleRightEntity =
 {
 	{
 		{
@@ -284,13 +284,13 @@ PaddleROMSpec PADDLE_RIGHT_AC =
 				NULL,
 
 				// sprites
-				(SpriteSpec**)PADDLE_RIGHT_SPRITES,
+				(SpriteSpec**)PaddleRightSprites,
 
 				// use z displacement in projection
 				false,
 
 				// collision shapes
-				(ShapeSpec*)PADDLE_RIGHT_AC_SHAPES,
+				(ShapeSpec*)PaddleRightShapes,
 
 				// size
 				// if 0, width and height will be inferred from the first sprite's texture's size
@@ -300,11 +300,11 @@ PaddleROMSpec PADDLE_RIGHT_AC =
 				kTypePaddle,
 
 				// physical specification
-				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
+				(PhysicalSpecification*)&PaddlePhysicalProperties,
 			},
 
 			// pointer to the animation spec for the item
-			(AnimationDescription*)&PADDLE_ANIM,
+			(AnimationDescription*)&PaddleAnimation,
 
 			// initial animation
 			"Ejected",

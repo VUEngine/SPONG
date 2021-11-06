@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE HighscoresHeaderLTiles[];
 extern BYTE HighscoresHeaderRTiles[];
 extern BYTE HighscoresHeaderLMap[];
@@ -35,7 +35,7 @@ extern BYTE HighscoresHeaderRMap[];
 
 /* Left */
 
-CharSetROMSpec HIGHSCORES_HEADER_L_CH =
+CharSetROMSpec HighscoresHeaderLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -50,10 +50,10 @@ CharSetROMSpec HIGHSCORES_HEADER_L_CH =
 	HighscoresHeaderLTiles,
 };
 
-TextureROMSpec HIGHSCORES_HEADER_L_TX =
+TextureROMSpec HighscoresHeaderLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&HIGHSCORES_HEADER_L_CH,
+	(CharSetSpec*)&HighscoresHeaderLCharset,
 
 	// bgmap spec
 	HighscoresHeaderLMap,
@@ -85,14 +85,14 @@ TextureROMSpec HIGHSCORES_HEADER_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec HIGHSCORES_HEADER_L_SPRITE =
+BgmapSpriteROMSpec HighscoresHeaderLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&HIGHSCORES_HEADER_L_TX,
+		(TextureSpec*)&HighscoresHeaderLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -114,7 +114,7 @@ BgmapSpriteROMSpec HIGHSCORES_HEADER_L_SPRITE =
 
 /* Right */
 
-CharSetROMSpec HIGHSCORES_HEADER_R_CH =
+CharSetROMSpec HighscoresHeaderRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -129,10 +129,10 @@ CharSetROMSpec HIGHSCORES_HEADER_R_CH =
 	HighscoresHeaderRTiles,
 };
 
-TextureROMSpec HIGHSCORES_HEADER_R_TX =
+TextureROMSpec HighscoresHeaderRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&HIGHSCORES_HEADER_R_CH,
+	(CharSetSpec*)&HighscoresHeaderRCharset,
 
 	// bgmap spec
 	HighscoresHeaderRMap,
@@ -164,14 +164,14 @@ TextureROMSpec HIGHSCORES_HEADER_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec HIGHSCORES_HEADER_R_SPRITE =
+BgmapSpriteROMSpec HighscoresHeaderRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&HIGHSCORES_HEADER_R_TX,
+		(TextureSpec*)&HighscoresHeaderRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -193,14 +193,14 @@ BgmapSpriteROMSpec HIGHSCORES_HEADER_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const HIGHSCORES_HEADER_SPRITES[] =
+BgmapSpriteROMSpec* const HighscoresHeaderSprites[] =
 {
-	&HIGHSCORES_HEADER_L_SPRITE,
-	&HIGHSCORES_HEADER_R_SPRITE,
+	&HighscoresHeaderLSprite,
+	&HighscoresHeaderRSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec HIGHSCORES_HEADER_LE =
+LocalizedEntityROMSpec HighscoresHeaderLe =
 {
 	{
 		// class allocator
@@ -216,7 +216,7 @@ LocalizedEntityROMSpec HIGHSCORES_HEADER_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)HIGHSCORES_HEADER_SPRITES,
+		(SpriteSpec**)HighscoresHeaderSprites,
 
 		// use z displacement in projection
 		false,
@@ -236,7 +236,7 @@ LocalizedEntityROMSpec HIGHSCORES_HEADER_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

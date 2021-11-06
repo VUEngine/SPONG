@@ -21,24 +21,24 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec EMPTY_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec EmptyStageEntities[] =
 {
-	{&TRANSITION_LAYER_B_AE,	{192, 112, 0, 0}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,	{192, 112, 0, 0}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec EMPTY_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec EmptyStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 	{ 16,  12, -1, 0}, 	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 	{ 16,  12, -1, 0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -48,7 +48,7 @@ PositionedEntityROMSpec EMPTY_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const EMPTY_STAGE_ST_FONTS[] =
+FontROMSpec* const EmptyStageFonts[] =
 {
 	&IndustrialFont,
 
@@ -60,7 +60,7 @@ FontROMSpec* const EMPTY_STAGE_ST_FONTS[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec EMPTY_STAGE_ST =
+StageROMSpec EmptyStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -249,7 +249,7 @@ StageROMSpec EMPTY_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)EMPTY_STAGE_ST_FONTS,
+		(FontSpec**)EmptyStageFonts,
 
 		// char sets to preload
 		(CharSetSpec**)NULL,
@@ -265,12 +265,12 @@ StageROMSpec EMPTY_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)EMPTY_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)EmptyStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)EMPTY_STAGE_ST_ENTITIES,
+		(PositionedEntity*)EmptyStageEntities,
 	},
 
 	// post processing effects

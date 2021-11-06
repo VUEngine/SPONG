@@ -30,7 +30,7 @@ extern BYTE OptionsCursorMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec OPTIONS_CURSOR_DEFAULT_ANIM =
+AnimationFunctionROMSpec OptionsCursorDefaultAnimation =
 {
 	// number of frames of this animation function
 	6,
@@ -52,16 +52,16 @@ AnimationFunctionROMSpec OPTIONS_CURSOR_DEFAULT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec OPTIONS_CURSOR_ANIM =
+AnimationDescriptionROMSpec OptionsCursorAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&OPTIONS_CURSOR_DEFAULT_ANIM,
+		(AnimationFunction*)&OptionsCursorDefaultAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec OPTIONS_CURSOR_CH =
+CharSetROMSpec OptionsCursorCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -76,10 +76,10 @@ CharSetROMSpec OPTIONS_CURSOR_CH =
 	OptionsCursorTiles,
 };
 
-TextureROMSpec OPTIONS_CURSOR_TX =
+TextureROMSpec OptionsCursorTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_CURSOR_CH,
+	(CharSetSpec*)&OptionsCursorCharset,
 
 	// bgmap spec
 	OptionsCursorMap,
@@ -111,14 +111,14 @@ TextureROMSpec OPTIONS_CURSOR_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_CURSOR_SPRITE =
+BgmapSpriteROMSpec OptionsCursorSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_CURSOR_TX,
+		(TextureSpec*)&OptionsCursorTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -138,13 +138,13 @@ BgmapSpriteROMSpec OPTIONS_CURSOR_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const OPTIONS_CURSOR_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsCursorSprites[] =
 {
-	&OPTIONS_CURSOR_SPRITE,
+	&OptionsCursorSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
+AnimatedEntityROMSpec OptionsCursorAe =
 {
 	{
 		// class allocator
@@ -160,7 +160,7 @@ AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_CURSOR_SPRITES,
+		(SpriteSpec**)OptionsCursorSprites,
 
 		// use z displacement in projection
 		false,
@@ -180,7 +180,7 @@ AnimatedEntityROMSpec OPTIONS_CURSOR_AE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&OPTIONS_CURSOR_ANIM,
+	(AnimationDescription*)&OptionsCursorAnimation,
 
 	// initial animation
 	"Default"

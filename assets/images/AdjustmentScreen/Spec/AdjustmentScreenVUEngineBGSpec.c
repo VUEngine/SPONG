@@ -28,7 +28,7 @@ extern BYTE AdjustmentScreenVUEngineBGMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_CH =
+CharSetROMSpec AdjustmentScreenVUEngineBgCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -43,10 +43,10 @@ CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_CH =
 	AdjustmentScreenVUEngineBGTiles,
 };
 
-TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_TX =
+TextureROMSpec AdjustmentScreenVUEngineBgTexture =
 {
 	// charset spec
-	(CharSetSpec*)&ADJUSTMENT_SCREEN_VUENGINE_BG_CH,
+	(CharSetSpec*)&AdjustmentScreenVUEngineBgCharset,
 
 	// bgmap spec
 	AdjustmentScreenVUEngineBGMap,
@@ -78,14 +78,14 @@ TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_TX =
 	false,
 };
 
-BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITE =
+BgmapSpriteROMSpec AdjustmentScreenVUEngineBgSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&ADJUSTMENT_SCREEN_VUENGINE_BG_TX,
+		(TextureSpec*)&AdjustmentScreenVUEngineBgTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -105,13 +105,13 @@ BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITES[] =
+BgmapSpriteROMSpec* const AdjustmentScreenVUEngineBgSprites[] =
 {
-	&ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITE,
+	&AdjustmentScreenVUEngineBgSprite,
 	NULL
 };
 
-EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_IM =
+EntityROMSpec AdjustmentScreenVUEngineBgEntity =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -126,7 +126,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_BG_IM =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_BG_SPRITES,
+	(SpriteSpec**)AdjustmentScreenVUEngineBgSprites,
 
 	// use z displacement in projection
 	false,

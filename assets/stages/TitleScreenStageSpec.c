@@ -21,21 +21,21 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec COPYRIGHT_EN;
-extern EntitySpec RHOMBUS_BACKGROUND_AE;
-extern EntitySpec DEMO_BADGE_LE;
-extern EntitySpec MAIN_MENU_CHALLENGE_MODE_LE;
-extern EntitySpec MAIN_MENU_CREDITS_LE;
-extern EntitySpec MAIN_MENU_CURSOR_AE;
-extern EntitySpec MAIN_MENU_HIGHSCORES_LE;
-extern EntitySpec MAIN_MENU_MARATHON_MODE_LE;
-extern EntitySpec MAIN_MENU_OPTIONS_LE;
-extern EntitySpec MAIN_MENU_VERSUS_MODE_LE;
-extern EntitySpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE;
-extern EntitySpec PRESS_START_BUTTON_LE;
-extern EntitySpec LOGO_AE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec CopyrightEntity;
+extern EntitySpec RhombusBackgroundAe;
+extern EntitySpec DemoBadgeLe;
+extern EntitySpec MainMenuChallengeModeLe;
+extern EntitySpec MainMenuCreditsLe;
+extern EntitySpec MainMenuCursorAe;
+extern EntitySpec MainMenuHighscoresLe;
+extern EntitySpec MainMenuMarathonModeLe;
+extern EntitySpec MainMenuOptionsLe;
+extern EntitySpec MainMenuVersusModeLe;
+extern EntitySpec MainMenuWaitingForOtherPlayerLe;
+extern EntitySpec PressStartButtonLe;
+extern EntitySpec LogoAe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 extern uint16 TITLE_BGM[][2];
 
@@ -44,7 +44,7 @@ extern uint16 TITLE_BGM[][2];
 //												ASSETS
 //---------------------------------------------------------------------------------------------------------
 
-EntityROMSpec MAIN_MENU_CONTAINER =
+EntityROMSpec MainMenuContainer =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -78,15 +78,15 @@ EntityROMSpec MAIN_MENU_CONTAINER =
 	NULL,
 };
 
-PositionedEntityROMSpec MAIN_MENU_CHILDREN[] =
+PositionedEntityROMSpec MainMenuChildren[] =
 {
-	{&MAIN_MENU_CURSOR_AE, 			{0,   0, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
-	{&MAIN_MENU_MARATHON_MODE_LE, 	{0, -24, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_CHALLENGE_MODE_LE, 	{0, -12, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_VERSUS_MODE_LE,		{0,   0, 0, 0}, 	0, "MMVersus", NULL, NULL, false},
-	{&MAIN_MENU_HIGHSCORES_LE, 		{0,  12, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_OPTIONS_LE, 		{0,  24, 0, 0}, 	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_CREDITS_LE, 		{0,  36, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MainMenuCursorAe, 			{0,   0, 0, 0}, 	0, "MMCursor", NULL, NULL, false},
+	{&MainMenuMarathonModeLe, 	{0, -24, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MainMenuChallengeModeLe, 	{0, -12, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MainMenuVersusModeLe,		{0,   0, 0, 0}, 	0, "MMVersus", NULL, NULL, false},
+	{&MainMenuHighscoresLe, 		{0,  12, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MainMenuOptionsLe, 		{0,  24, 0, 0}, 	0, NULL, NULL, NULL, false},
+	{&MainMenuCreditsLe, 		{0,  36, 0, 0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -96,24 +96,24 @@ PositionedEntityROMSpec MAIN_MENU_CHILDREN[] =
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec TITLE_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec TitleScreenStageEntities[] =
 {
-	{&RHOMBUS_BACKGROUND_AE,					{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&LOGO_AE, 									{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
-	{&DEMO_BADGE_LE, 							{314, 104,  0,  0}, 	0, NULL, NULL, NULL, false},
-	{(EntitySpec*)&MAIN_MENU_CONTAINER, 		{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MAIN_MENU_CHILDREN, NULL, false},
-	{&PRESS_START_BUTTON_LE, 					{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
-	{&COPYRIGHT_EN, 							{192, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&RhombusBackgroundAe,					{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&LogoAe, 									{192,  88,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{&DemoBadgeLe, 							{314, 104,  0,  0}, 	0, NULL, NULL, NULL, false},
+	{(EntitySpec*)&MainMenuContainer, 		{192, 156,  0,  0}, 	0, "MainMenu", (struct PositionedEntity*)MainMenuChildren, NULL, false},
+	{&PressStartButtonLe, 					{192, 168,  0,  0}, 	0, "PrssStrt", NULL, NULL, false},
+	{&CopyrightEntity, 							{192, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,					{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
-	{&MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE, 	{192, 168, -1,  0}, 	0, "Waiting", NULL, NULL, false},
+	{&TransitionLayerBAe,					{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
+	{&MainMenuWaitingForOtherPlayerLe, 	{192, 168, -1,  0}, 	0, "Waiting", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec TitleScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0},		0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 		{ 16,  12,  -1,  0},		0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -123,19 +123,19 @@ PositionedEntityROMSpec TITLE_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const TITLE_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const TitleScreenStageFonts[] =
 {
 	&IndustrialFont,
 
 	NULL
 };
 
-CharSetROMSpec* const TITLE_SCREEN_STAGE_ST_CHARSETS[] =
+CharSetROMSpec* const TitleScreenStageCharsets[] =
 {
 	NULL
 };
 
-TextureSpec* const TITLE_SCREEN_STAGE_ST_TEXTURES[] =
+TextureSpec* const TitleScreenStageTextures[] =
 {
 	NULL
 };
@@ -145,7 +145,7 @@ TextureSpec* const TITLE_SCREEN_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec TITLE_SCREEN_STAGE_ST =
+StageROMSpec TitleScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -334,13 +334,13 @@ StageROMSpec TITLE_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)TITLE_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)TitleScreenStageFonts,
 
 		// char sets to preload
-		(CharSetSpec**)TITLE_SCREEN_STAGE_ST_CHARSETS,
+		(CharSetSpec**)TitleScreenStageCharsets,
 
 		// textures to preload
-		(TextureSpec**)TITLE_SCREEN_STAGE_ST_TEXTURES,
+		(TextureSpec**)TitleScreenStageTextures,
 
 		// background music
 		(Sound**)NULL,
@@ -350,12 +350,12 @@ StageROMSpec TITLE_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)TITLE_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)TitleScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)TITLE_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)TitleScreenStageEntities,
 	},
 
 	// post processing effects

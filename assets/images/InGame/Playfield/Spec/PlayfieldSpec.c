@@ -29,7 +29,7 @@ extern BYTE PlayfieldRMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec PLAYFIELD_CH =
+CharSetROMSpec PlayfieldCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec PLAYFIELD_CH =
 
 /* Left */
 
-TextureROMSpec PLAYFIELD_L_TX =
+TextureROMSpec PlayfieldLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PLAYFIELD_CH,
+	(CharSetSpec*)&PlayfieldCharset,
 
 	// bgmap spec
 	PlayfieldLMap,
@@ -81,14 +81,14 @@ TextureROMSpec PLAYFIELD_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PLAYFIELD_L_SPRITE =
+BgmapSpriteROMSpec PlayfieldLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&PLAYFIELD_L_TX,
+		(TextureSpec*)&PlayfieldLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -110,10 +110,10 @@ BgmapSpriteROMSpec PLAYFIELD_L_SPRITE =
 
 /* Right */
 
-TextureROMSpec PLAYFIELD_R_TX =
+TextureROMSpec PlayfieldRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PLAYFIELD_CH,
+	(CharSetSpec*)&PlayfieldCharset,
 
 	// bgmap spec
 	PlayfieldRMap,
@@ -145,14 +145,14 @@ TextureROMSpec PLAYFIELD_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PLAYFIELD_R_SPRITE =
+BgmapSpriteROMSpec PlayfieldRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&PLAYFIELD_R_TX,
+		(TextureSpec*)&PlayfieldRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -174,14 +174,14 @@ BgmapSpriteROMSpec PLAYFIELD_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const PLAYFIELD_SPRITES[] =
+BgmapSpriteROMSpec* const PlayfieldSprites[] =
 {
-	&PLAYFIELD_L_SPRITE,
-	&PLAYFIELD_R_SPRITE,
+	&PlayfieldLSprite,
+	&PlayfieldRSprite,
 	NULL
 };
 
-EntityROMSpec PLAYFIELD_EN =
+EntityROMSpec PlayfieldEntity =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -196,7 +196,7 @@ EntityROMSpec PLAYFIELD_EN =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)PLAYFIELD_SPRITES,
+	(SpriteSpec**)PlayfieldSprites,
 
 	// use z displacement in projection
 	false,

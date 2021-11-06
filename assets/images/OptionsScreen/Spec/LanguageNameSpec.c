@@ -20,7 +20,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE LanguageNameTiles[];
 extern BYTE LanguageNameMap[];
 
@@ -29,7 +29,7 @@ extern BYTE LanguageNameMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec LANGUAGE_NAME_CH =
+CharSetROMSpec LanguageNameCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -44,10 +44,10 @@ CharSetROMSpec LANGUAGE_NAME_CH =
 	LanguageNameTiles,
 };
 
-TextureROMSpec LANGUAGE_NAME_TX =
+TextureROMSpec LanguageNameTexture =
 {
 	// charset spec
-	(CharSetSpec*)&LANGUAGE_NAME_CH,
+	(CharSetSpec*)&LanguageNameCharset,
 
 	// bgmap spec
 	LanguageNameMap,
@@ -79,14 +79,14 @@ TextureROMSpec LANGUAGE_NAME_TX =
 	false,
 };
 
-BgmapSpriteROMSpec LANGUAGE_NAME_SPRITE =
+BgmapSpriteROMSpec LanguageNameSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&LANGUAGE_NAME_TX,
+		(TextureSpec*)&LanguageNameTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -106,13 +106,13 @@ BgmapSpriteROMSpec LANGUAGE_NAME_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const LANGUAGE_NAME_SPRITES[] =
+BgmapSpriteROMSpec* const LanguageNameSprites[] =
 {
-	&LANGUAGE_NAME_SPRITE,
+	&LanguageNameSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec LANGUAGE_NAME_LE =
+LocalizedEntityROMSpec LanguageNameLe =
 {
 	{
 		// class allocator
@@ -128,7 +128,7 @@ LocalizedEntityROMSpec LANGUAGE_NAME_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)LANGUAGE_NAME_SPRITES,
+		(SpriteSpec**)LanguageNameSprites,
 
 		// use z displacement in projection
 		false,
@@ -148,7 +148,7 @@ LocalizedEntityROMSpec LANGUAGE_NAME_LE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0",

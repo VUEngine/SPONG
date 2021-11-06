@@ -33,7 +33,7 @@ extern BYTE CircleBackgroundRightMap[];
 
 /* Animation */
 
-AnimationFunctionROMSpec CIRCLE_BACKGROUND_DEFAULT_ANIM =
+AnimationFunctionROMSpec CircleBackgroundDefaultAnimation =
 {
 	// number of frames of this animation function
 	16,
@@ -56,11 +56,11 @@ AnimationFunctionROMSpec CIRCLE_BACKGROUND_DEFAULT_ANIM =
 	"Default",
 };
 
-AnimationDescriptionROMSpec CIRCLE_BACKGROUND_ANIM =
+AnimationDescriptionROMSpec CircleBackgroundAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&CIRCLE_BACKGROUND_DEFAULT_ANIM,
+		(AnimationFunction*)&CircleBackgroundDefaultAnimation,
 		NULL,
 	}
 };
@@ -68,7 +68,7 @@ AnimationDescriptionROMSpec CIRCLE_BACKGROUND_ANIM =
 
 /* Left */
 
-CharSetROMSpec CIRCLE_BACKGROUND_L_CH =
+CharSetROMSpec CircleBackgroundLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -83,10 +83,10 @@ CharSetROMSpec CIRCLE_BACKGROUND_L_CH =
 	CircleBackgroundLeftTiles,
 };
 
-TextureROMSpec CIRCLE_BACKGROUND_L_TX =
+TextureROMSpec CircleBackgroundLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&CIRCLE_BACKGROUND_L_CH,
+	(CharSetSpec*)&CircleBackgroundLCharset,
 
 	// bgmap spec
 	CircleBackgroundLeftMap,
@@ -118,14 +118,14 @@ TextureROMSpec CIRCLE_BACKGROUND_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec CIRCLE_BACKGROUND_L_SPRITE =
+BgmapSpriteROMSpec CircleBackgroundLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&CIRCLE_BACKGROUND_L_TX,
+		(TextureSpec*)&CircleBackgroundLTexture,
 
 		// transparent
 		false,
@@ -148,7 +148,7 @@ BgmapSpriteROMSpec CIRCLE_BACKGROUND_L_SPRITE =
 
 /* Right */
 
-CharSetROMSpec CIRCLE_BACKGROUND_R_CH =
+CharSetROMSpec CircleBackgroundRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -163,10 +163,10 @@ CharSetROMSpec CIRCLE_BACKGROUND_R_CH =
 	CircleBackgroundRightTiles,
 };
 
-TextureROMSpec CIRCLE_BACKGROUND_R_TX =
+TextureROMSpec CircleBackgroundRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&CIRCLE_BACKGROUND_R_CH,
+	(CharSetSpec*)&CircleBackgroundRCharset,
 
 	// bgmap spec
 	CircleBackgroundRightMap,
@@ -198,14 +198,14 @@ TextureROMSpec CIRCLE_BACKGROUND_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec CIRCLE_BACKGROUND_R_SPRITE =
+BgmapSpriteROMSpec CircleBackgroundRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&CIRCLE_BACKGROUND_R_TX,
+		(TextureSpec*)&CircleBackgroundRTexture,
 
 		// transparent
 		false,
@@ -228,14 +228,14 @@ BgmapSpriteROMSpec CIRCLE_BACKGROUND_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const CIRCLE_BACKGROUND_SPRITES[] =
+BgmapSpriteROMSpec* const CircleBackgroundSprites[] =
 {
-	&CIRCLE_BACKGROUND_L_SPRITE,
-	&CIRCLE_BACKGROUND_R_SPRITE,
+	&CircleBackgroundLSprite,
+	&CircleBackgroundRSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec CIRCLE_BACKGROUND_AE =
+AnimatedEntityROMSpec CircleBackgroundAe =
 {
 	{
 		// class allocator
@@ -251,7 +251,7 @@ AnimatedEntityROMSpec CIRCLE_BACKGROUND_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)CIRCLE_BACKGROUND_SPRITES,
+		(SpriteSpec**)CircleBackgroundSprites,
 
 		// use z displacement in projection
 		false,
@@ -271,7 +271,7 @@ AnimatedEntityROMSpec CIRCLE_BACKGROUND_AE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&CIRCLE_BACKGROUND_ANIM,
+	(AnimationDescription*)&CircleBackgroundAnimation,
 
 	// initial animation
 	"Default",

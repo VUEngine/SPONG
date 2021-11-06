@@ -28,7 +28,7 @@ extern BYTE AdjustmentScreenVUEngineLogoMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_CH =
+CharSetROMSpec AdjustmentScreenVUEngineLogoCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -43,10 +43,10 @@ CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_CH =
 	AdjustmentScreenVUEngineLogoTiles,
 };
 
-TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX =
+TextureROMSpec AdjustmentScreenVUEngineLogoTexture =
 {
 	// charset spec
-	(CharSetSpec*)&ADJUSTMENT_SCREEN_VUENGINE_LOGO_CH,
+	(CharSetSpec*)&AdjustmentScreenVUEngineLogoCharset,
 
 	// bgmap spec
 	AdjustmentScreenVUEngineLogoMap,
@@ -78,14 +78,14 @@ TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX =
 	false,
 };
 
-BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE =
+BgmapSpriteROMSpec AdjustmentScreenVUEngineLogoSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&ADJUSTMENT_SCREEN_VUENGINE_LOGO_TX,
+		(TextureSpec*)&AdjustmentScreenVUEngineLogoTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -105,13 +105,13 @@ BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES[] =
+BgmapSpriteROMSpec* const ADJUSTMENT_SCREEN_VUENGINE_LogoSprites[] =
 {
-	&ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITE,
+	&AdjustmentScreenVUEngineLogoSprite,
 	NULL
 };
 
-EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM =
+EntityROMSpec AdjustmentScreenVUEngineLogoEntity =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -126,7 +126,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_LOGO_SPRITES,
+	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_LogoSprites,
 
 	// use z displacement in projection
 	false,

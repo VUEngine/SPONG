@@ -28,7 +28,7 @@ extern BYTE AdjustmentScreenVUEngineIconMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_CH =
+CharSetROMSpec AdjustmentScreenVUEngineIconCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -43,10 +43,10 @@ CharSetROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_CH =
 	AdjustmentScreenVUEngineIconTiles,
 };
 
-TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_TX =
+TextureROMSpec AdjustmentScreenVUEngineIconTexture =
 {
 	// charset spec
-	(CharSetSpec*)&ADJUSTMENT_SCREEN_VUENGINE_ICON_CH,
+	(CharSetSpec*)&AdjustmentScreenVUEngineIconCharset,
 
 	// bgmap spec
 	AdjustmentScreenVUEngineIconMap,
@@ -78,14 +78,14 @@ TextureROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_TX =
 	false,
 };
 
-BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITE =
+BgmapSpriteROMSpec AdjustmentScreenVUEngineIconLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&ADJUSTMENT_SCREEN_VUENGINE_ICON_TX,
+		(TextureSpec*)&AdjustmentScreenVUEngineIconTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -105,20 +105,20 @@ BgmapSpriteROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITE =
 	__WORLD_LON,
 };
 
-BgmapSpriteROMSpec* const ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITES[] =
+BgmapSpriteROMSpec* const AdjustmentScreenVUEngineIconLSprites[] =
 {
-	&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITE,
+	&AdjustmentScreenVUEngineIconLSprite,
 	NULL
 };
 
-BgmapSpriteROMSpec const ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITE =
+BgmapSpriteROMSpec const AdjustmentScreenVUEngineIconR_SPRITE =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&ADJUSTMENT_SCREEN_VUENGINE_ICON_TX,
+		(TextureSpec*)&AdjustmentScreenVUEngineIconTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -138,14 +138,14 @@ BgmapSpriteROMSpec const ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITE =
 	__WORLD_RON,
 };
 
-BgmapSpriteROMSpec* const ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITES[] =
+BgmapSpriteROMSpec* const AdjustmentScreenVUEngineIconRSprites[] =
 {
-	&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITE,
+	&AdjustmentScreenVUEngineIconR_SPRITE,
 	NULL
 
 };
 
-EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
+EntityROMSpec AdjustmentScreenVUEngineIconL =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -160,7 +160,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L_SPRITES,
+	(SpriteSpec**)AdjustmentScreenVUEngineIconLSprites,
 
 	// use z displacement in projection
 	false,
@@ -179,7 +179,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L =
 	(PhysicalSpecification*)NULL,
 };
 
-EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
+EntityROMSpec AdjustmentScreenVUEngineIconR =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -194,7 +194,7 @@ EntityROMSpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R_SPRITES,
+	(SpriteSpec**)AdjustmentScreenVUEngineIconRSprites,
 
 	// use z displacement in projection
 	false,

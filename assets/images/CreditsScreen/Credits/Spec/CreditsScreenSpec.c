@@ -28,7 +28,7 @@ extern BYTE CreditsScreenMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec CREDITS_SCREEN_CH =
+CharSetROMSpec CreditsScreenCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -43,10 +43,10 @@ CharSetROMSpec CREDITS_SCREEN_CH =
 	CreditsScreenTiles,
 };
 
-TextureROMSpec CREDITS_SCREEN_TX =
+TextureROMSpec CreditsScreenTexture =
 {
 	// charset spec
-	(CharSetSpec*)&CREDITS_SCREEN_CH,
+	(CharSetSpec*)&CreditsScreenCharset,
 
 	// bgmap spec
 	CreditsScreenMap,
@@ -78,14 +78,14 @@ TextureROMSpec CREDITS_SCREEN_TX =
 	false,
 };
 
-BgmapSpriteROMSpec CREDITS_SCREEN_SPRITE =
+BgmapSpriteROMSpec CreditsScreenSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&CREDITS_SCREEN_TX,
+		(TextureSpec*)&CreditsScreenTexture,
 
 		// transparent
 		false,
@@ -105,13 +105,13 @@ BgmapSpriteROMSpec CREDITS_SCREEN_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const CREDITS_SCREEN_SPRITES[] =
+BgmapSpriteROMSpec* const CreditsScreenSprites[] =
 {
-	&CREDITS_SCREEN_SPRITE,
+	&CreditsScreenSprite,
 	NULL
 };
 
-EntityROMSpec CREDITS_SCREEN_EN =
+EntityROMSpec CreditsScreenEntity =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -126,7 +126,7 @@ EntityROMSpec CREDITS_SCREEN_EN =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)CREDITS_SCREEN_SPRITES,
+	(SpriteSpec**)CreditsScreenSprites,
 
 	// use z displacement in projection
 	false,

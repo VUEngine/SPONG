@@ -37,7 +37,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec PLAYFIELD_STAGE_ST;
+extern StageROMSpec PlayfieldStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void PongState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PLAYFIELD_STAGE_ST, NULL, true, false);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PlayfieldStage, NULL, true, false);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));

@@ -30,7 +30,7 @@ extern BYTE CursorMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec MAIN_MENU_CURSOR_DEFAULT_ANIM =
+AnimationFunctionROMSpec MainMenuCursorDefaultAnimation =
 {
 	// number of frames of this animation function
 	6,
@@ -52,16 +52,16 @@ AnimationFunctionROMSpec MAIN_MENU_CURSOR_DEFAULT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec MAIN_MENU_CURSOR_ANIM =
+AnimationDescriptionROMSpec MainMenuCursorAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&MAIN_MENU_CURSOR_DEFAULT_ANIM,
+		(AnimationFunction*)&MainMenuCursorDefaultAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec MAIN_MENU_CURSOR_CH =
+CharSetROMSpec MainMenuCursorCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -76,10 +76,10 @@ CharSetROMSpec MAIN_MENU_CURSOR_CH =
 	CursorTiles,
 };
 
-TextureROMSpec MAIN_MENU_CURSOR_TX =
+TextureROMSpec MainMenuCursorTexture =
 {
 	// charset spec
-	(CharSetSpec*)&MAIN_MENU_CURSOR_CH,
+	(CharSetSpec*)&MainMenuCursorCharset,
 
 	// bgmap spec
 	CursorMap,
@@ -111,14 +111,14 @@ TextureROMSpec MAIN_MENU_CURSOR_TX =
 	false,
 };
 
-BgmapSpriteROMSpec MAIN_MENU_CURSOR_SPRITE =
+BgmapSpriteROMSpec MainMenuCursorSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&MAIN_MENU_CURSOR_TX,
+		(TextureSpec*)&MainMenuCursorTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -138,13 +138,13 @@ BgmapSpriteROMSpec MAIN_MENU_CURSOR_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const MAIN_MENU_CURSOR_SPRITES[] =
+BgmapSpriteROMSpec* const MainMenuCursorSprites[] =
 {
-	&MAIN_MENU_CURSOR_SPRITE,
+	&MainMenuCursorSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec MAIN_MENU_CURSOR_AE =
+AnimatedEntityROMSpec MainMenuCursorAe =
 {
 	{
 		// class allocator
@@ -160,7 +160,7 @@ AnimatedEntityROMSpec MAIN_MENU_CURSOR_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)MAIN_MENU_CURSOR_SPRITES,
+		(SpriteSpec**)MainMenuCursorSprites,
 
 		// use z displacement in projection
 		false,
@@ -180,7 +180,7 @@ AnimatedEntityROMSpec MAIN_MENU_CURSOR_AE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&MAIN_MENU_CURSOR_ANIM,
+	(AnimationDescription*)&MainMenuCursorAnimation,
 
 	// initial animation
 	"Default"

@@ -35,7 +35,7 @@ extern BYTE PaddleLeftRMap[];
 
 /* Animations */
 
-AnimationFunctionROMSpec PADDLE_RETRACTED_ANIM =
+AnimationFunctionROMSpec PaddleRetractedAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -56,7 +56,7 @@ AnimationFunctionROMSpec PADDLE_RETRACTED_ANIM =
 	"Retracted",
 };
 
-AnimationFunctionROMSpec PADDLE_EJECTED_ANIM =
+AnimationFunctionROMSpec PaddleEjectedAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -77,7 +77,7 @@ AnimationFunctionROMSpec PADDLE_EJECTED_ANIM =
 	"Ejected",
 };
 
-AnimationFunctionROMSpec PADDLE_EJECT_ANIM =
+AnimationFunctionROMSpec PaddleEjectAnimation =
 {
 	// number of frames of this animation function
 	2,
@@ -98,7 +98,7 @@ AnimationFunctionROMSpec PADDLE_EJECT_ANIM =
 	"Eject",
 };
 
-AnimationFunctionROMSpec PADDLE_RETRACT_ANIM =
+AnimationFunctionROMSpec PaddleRetractAnimation =
 {
 	// number of frames of this animation function
 	3,
@@ -120,21 +120,21 @@ AnimationFunctionROMSpec PADDLE_RETRACT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PADDLE_ANIM =
+AnimationDescriptionROMSpec PaddleAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&PADDLE_RETRACTED_ANIM,
-		(AnimationFunction*)&PADDLE_EJECTED_ANIM,
-		(AnimationFunction*)&PADDLE_EJECT_ANIM,
-		(AnimationFunction*)&PADDLE_RETRACT_ANIM,
+		(AnimationFunction*)&PaddleRetractedAnimation,
+		(AnimationFunction*)&PaddleEjectedAnimation,
+		(AnimationFunction*)&PaddleEjectAnimation,
+		(AnimationFunction*)&PaddleRetractAnimation,
 		NULL,
 	}
 };
 
 /* Left Sprite */
 
-CharSetROMSpec PADDLE_LEFT_L_CH =
+CharSetROMSpec PaddleLeftLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -149,10 +149,10 @@ CharSetROMSpec PADDLE_LEFT_L_CH =
 	PaddleLeftLTiles,
 };
 
-TextureROMSpec PADDLE_LEFT_L_TX =
+TextureROMSpec PaddleLeftLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PADDLE_LEFT_L_CH,
+	(CharSetSpec*)&PaddleLeftLCharset,
 
 	// bgmap spec
 	PaddleLeftLMap,
@@ -184,14 +184,14 @@ TextureROMSpec PADDLE_LEFT_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PADDLE_LEFT_L_SPRITE =
+BgmapSpriteROMSpec PaddleLeftLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PADDLE_LEFT_L_TX,
+		(TextureSpec*)&PaddleLeftLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -213,7 +213,7 @@ BgmapSpriteROMSpec PADDLE_LEFT_L_SPRITE =
 
 /* Right Sprite */
 
-CharSetROMSpec PADDLE_LEFT_R_CH =
+CharSetROMSpec PaddleLeftRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -228,10 +228,10 @@ CharSetROMSpec PADDLE_LEFT_R_CH =
 	PaddleLeftRTiles,
 };
 
-TextureROMSpec PADDLE_LEFT_R_TX =
+TextureROMSpec PaddleLeftRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PADDLE_LEFT_R_CH,
+	(CharSetSpec*)&PaddleLeftRCharset,
 
 	// bgmap spec
 	PaddleLeftRMap,
@@ -263,14 +263,14 @@ TextureROMSpec PADDLE_LEFT_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PADDLE_LEFT_R_SPRITE =
+BgmapSpriteROMSpec PaddleLeftRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PADDLE_LEFT_R_TX,
+		(TextureSpec*)&PaddleLeftRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -292,15 +292,15 @@ BgmapSpriteROMSpec PADDLE_LEFT_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const PADDLE_LEFT_SPRITES[] =
+BgmapSpriteROMSpec* const PaddleLeftSprites[] =
 {
-	&PADDLE_LEFT_L_SPRITE,
-	&PADDLE_LEFT_R_SPRITE,
+	&PaddleLeftLSprite,
+	&PaddleLeftRSprite,
 	NULL
 };
 
 
-ShapeROMSpec PADDLE_LEFT_AC_SHAPES[] =
+ShapeROMSpec PaddleLeftShapes[] =
 {
 	// wall collider
 	{
@@ -359,7 +359,7 @@ ShapeROMSpec PADDLE_LEFT_AC_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
 };
 
-PhysicalSpecificationROMSpec PADDLE_AC_PHYSICAL_PROPERTIES =
+PhysicalSpecificationROMSpec PaddlePhysicalProperties =
 {
 	// mass
 	__F_TO_FIX10_6(0.55f),
@@ -377,7 +377,7 @@ PhysicalSpecificationROMSpec PADDLE_AC_PHYSICAL_PROPERTIES =
 	__I_TO_FIX10_6(8)
 };
 
-PaddleROMSpec PADDLE_LEFT_AC =
+PaddleROMSpec PaddleLeftEntity =
 {
 	{
 		{
@@ -395,13 +395,13 @@ PaddleROMSpec PADDLE_LEFT_AC =
 				NULL,
 
 				// sprites
-				(SpriteSpec**)PADDLE_LEFT_SPRITES,
+				(SpriteSpec**)PaddleLeftSprites,
 
 				// use z displacement in projection
 				false,
 
 				// collision shapes
-				(ShapeSpec*)PADDLE_LEFT_AC_SHAPES,
+				(ShapeSpec*)PaddleLeftShapes,
 
 				// size
 				// if 0, width and height will be inferred from the first sprite's texture's size
@@ -411,11 +411,11 @@ PaddleROMSpec PADDLE_LEFT_AC =
 				kTypePaddle,
 
 				// physical specification
-				(PhysicalSpecification*)&PADDLE_AC_PHYSICAL_PROPERTIES,
+				(PhysicalSpecification*)&PaddlePhysicalProperties,
 			},
 
 			// pointer to the animation spec for the item
-			(AnimationDescription*)&PADDLE_ANIM,
+			(AnimationDescription*)&PaddleAnimation,
 
 			// initial animation
 			"Ejected",

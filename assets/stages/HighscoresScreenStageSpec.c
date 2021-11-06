@@ -21,31 +21,31 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec HEXAGON_BACKGROUND_AE;
-extern EntitySpec HIGHSCORES_HEADER_LE;
-extern EntitySpec MAIN_MENU_MARATHON_MODE_LE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec HexagonBackgroundAe;
+extern EntitySpec HighscoresHeaderLe;
+extern EntitySpec MainMenuMarathonModeLe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec HIGHSCORES_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec HighscoresScreenStageEntities[] =
 {
-	{&HEXAGON_BACKGROUND_AE,		{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
-	{&HIGHSCORES_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
-	{&MAIN_MENU_MARATHON_MODE_LE,	{192, 96,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&HexagonBackgroundAe,		{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
+	{&HighscoresHeaderLe,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&MainMenuMarathonModeLe,	{192, 96,   0,  0},   	0, NULL, NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec HIGHSCORES_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec HighscoresScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 		{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -55,19 +55,19 @@ PositionedEntityROMSpec HIGHSCORES_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const HIGHSCORES_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const HighscoresScreenStageFonts[] =
 {
 	&IndustrialFont,
 
 	NULL
 };
 
-CharSetROMSpec* const HIGHSCORES_SCREEN_STAGE_ST_CHARSETS[] =
+CharSetROMSpec* const HighscoresScreenStageCharsets[] =
 {
 	NULL
 };
 
-TextureSpec* const HIGHSCORES_SCREEN_STAGE_ST_TEXTURES[] =
+TextureSpec* const HighscoresScreenStageTextures[] =
 {
 	NULL
 };
@@ -77,7 +77,7 @@ TextureSpec* const HIGHSCORES_SCREEN_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec HIGHSCORES_SCREEN_STAGE_ST =
+StageROMSpec HighscoresScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -266,13 +266,13 @@ StageROMSpec HIGHSCORES_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)HIGHSCORES_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)HighscoresScreenStageFonts,
 
 		// char sets to preload
-		(CharSetSpec**)HIGHSCORES_SCREEN_STAGE_ST_CHARSETS,
+		(CharSetSpec**)HighscoresScreenStageCharsets,
 
 		// textures to preload
-		(TextureSpec**)HIGHSCORES_SCREEN_STAGE_ST_TEXTURES,
+		(TextureSpec**)HighscoresScreenStageTextures,
 
 		// background music
 		(Sound**)NULL,
@@ -282,12 +282,12 @@ StageROMSpec HIGHSCORES_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)HIGHSCORES_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)HighscoresScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)HIGHSCORES_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)HighscoresScreenStageEntities,
 	},
 
 	// post processing effects

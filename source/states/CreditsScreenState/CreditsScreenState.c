@@ -36,7 +36,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec CREDITS_SCREEN_STAGE_ST;
+extern StageROMSpec CreditsScreenStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void CreditsScreenState::enter(void* owner)
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&CREDITS_SCREEN_STAGE_ST, NULL, true, false);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&CreditsScreenStage, NULL, true, false);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));

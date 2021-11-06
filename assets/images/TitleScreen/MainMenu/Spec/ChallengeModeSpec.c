@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE ChallengeModeTiles[];
 extern BYTE ChallengeModeMap[];
 
@@ -31,7 +31,7 @@ extern BYTE ChallengeModeMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec MAIN_MENU_CHALLENGE_MODE_CH =
+CharSetROMSpec MainMenuChallengeModeCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec MAIN_MENU_CHALLENGE_MODE_CH =
 	ChallengeModeTiles,
 };
 
-TextureROMSpec MAIN_MENU_CHALLENGE_MODE_TX =
+TextureROMSpec MainMenuChallengeModeTexture =
 {
 	// charset spec
-	(CharSetSpec*)&MAIN_MENU_CHALLENGE_MODE_CH,
+	(CharSetSpec*)&MainMenuChallengeModeCharset,
 
 	// bgmap spec
 	ChallengeModeMap,
@@ -81,14 +81,14 @@ TextureROMSpec MAIN_MENU_CHALLENGE_MODE_TX =
 	false,
 };
 
-BgmapSpriteROMSpec MAIN_MENU_CHALLENGE_MODE_SPRITE =
+BgmapSpriteROMSpec MainMenuChallengeModeSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&MAIN_MENU_CHALLENGE_MODE_TX,
+		(TextureSpec*)&MainMenuChallengeModeTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec MAIN_MENU_CHALLENGE_MODE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const MAIN_MENU_CHALLENGE_MODE_SPRITES[] =
+BgmapSpriteROMSpec* const MainMenuChallengeModeSprites[] =
 {
-	&MAIN_MENU_CHALLENGE_MODE_SPRITE,
+	&MainMenuChallengeModeSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
+LocalizedEntityROMSpec MainMenuChallengeModeLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)MAIN_MENU_CHALLENGE_MODE_SPRITES,
+		(SpriteSpec**)MainMenuChallengeModeSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec MAIN_MENU_CHALLENGE_MODE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

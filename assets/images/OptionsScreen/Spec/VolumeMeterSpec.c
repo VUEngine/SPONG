@@ -30,7 +30,7 @@ extern BYTE VolumeMeterMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec VOLUME_METER_1_ANIM =
+AnimationFunctionROMSpec VolumeMeter1Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -51,7 +51,7 @@ AnimationFunctionROMSpec VOLUME_METER_1_ANIM =
 	"0",
 };
 
-AnimationFunctionROMSpec VOLUME_METER_2_ANIM =
+AnimationFunctionROMSpec VolumeMeter2Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -72,7 +72,7 @@ AnimationFunctionROMSpec VOLUME_METER_2_ANIM =
 	"1",
 };
 
-AnimationFunctionROMSpec VOLUME_METER_3_ANIM =
+AnimationFunctionROMSpec VolumeMeter3Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -93,7 +93,7 @@ AnimationFunctionROMSpec VOLUME_METER_3_ANIM =
 	"2",
 };
 
-AnimationFunctionROMSpec VOLUME_METER_4_ANIM =
+AnimationFunctionROMSpec VolumeMeter4Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -114,7 +114,7 @@ AnimationFunctionROMSpec VOLUME_METER_4_ANIM =
 	"3",
 };
 
-AnimationFunctionROMSpec VOLUME_METER_5_ANIM =
+AnimationFunctionROMSpec VolumeMeter5Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -136,20 +136,20 @@ AnimationFunctionROMSpec VOLUME_METER_5_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec VOLUME_METER_ANIM =
+AnimationDescriptionROMSpec VolumeMeterAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&VOLUME_METER_1_ANIM,
-		(AnimationFunction*)&VOLUME_METER_2_ANIM,
-		(AnimationFunction*)&VOLUME_METER_3_ANIM,
-		(AnimationFunction*)&VOLUME_METER_4_ANIM,
-		(AnimationFunction*)&VOLUME_METER_5_ANIM,
+		(AnimationFunction*)&VolumeMeter1Animation,
+		(AnimationFunction*)&VolumeMeter2Animation,
+		(AnimationFunction*)&VolumeMeter3Animation,
+		(AnimationFunction*)&VolumeMeter4Animation,
+		(AnimationFunction*)&VolumeMeter5Animation,
 		NULL,
 	}
 };
 
-CharSetROMSpec VOLUME_METER_CH =
+CharSetROMSpec VolumeMeterCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -164,10 +164,10 @@ CharSetROMSpec VOLUME_METER_CH =
 	VolumeMeterTiles,
 };
 
-TextureROMSpec VOLUME_METER_TX =
+TextureROMSpec VolumeMeterTexture =
 {
 	// charset spec
-	(CharSetSpec*)&VOLUME_METER_CH,
+	(CharSetSpec*)&VolumeMeterCharset,
 
 	// bgmap spec
 	VolumeMeterMap,
@@ -199,14 +199,14 @@ TextureROMSpec VOLUME_METER_TX =
 	false,
 };
 
-BgmapSpriteROMSpec VOLUME_METER_SPRITE =
+BgmapSpriteROMSpec VolumeMeterSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&VOLUME_METER_TX,
+		(TextureSpec*)&VolumeMeterTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -226,13 +226,13 @@ BgmapSpriteROMSpec VOLUME_METER_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const VOLUME_METER_SPRITES[] =
+BgmapSpriteROMSpec* const VolumeMeterSprites[] =
 {
-	&VOLUME_METER_SPRITE,
+	&VolumeMeterSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec VOLUME_METER_AE =
+AnimatedEntityROMSpec VolumeMeterAe =
 {
 	{
 		// class allocator
@@ -248,7 +248,7 @@ AnimatedEntityROMSpec VOLUME_METER_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)VOLUME_METER_SPRITES,
+		(SpriteSpec**)VolumeMeterSprites,
 
 		// use z displacement in projection
 		false,
@@ -268,7 +268,7 @@ AnimatedEntityROMSpec VOLUME_METER_AE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&VOLUME_METER_ANIM,
+	(AnimationDescription*)&VolumeMeterAnimation,
 
 	// initial animation
 	"2"

@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE AutomaticPauseTiles[];
 extern BYTE AutomaticPauseMap[];
 
@@ -31,7 +31,7 @@ extern BYTE AutomaticPauseMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec OPTIONS_AUTOMATIC_PAUSE_CH =
+CharSetROMSpec OptionsAutomaticPauseCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec OPTIONS_AUTOMATIC_PAUSE_CH =
 	AutomaticPauseTiles,
 };
 
-TextureROMSpec OPTIONS_AUTOMATIC_PAUSE_TX =
+TextureROMSpec OptionsAutomaticPauseTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_AUTOMATIC_PAUSE_CH,
+	(CharSetSpec*)&OptionsAutomaticPauseCharset,
 
 	// bgmap spec
 	AutomaticPauseMap,
@@ -81,14 +81,14 @@ TextureROMSpec OPTIONS_AUTOMATIC_PAUSE_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_AUTOMATIC_PAUSE_SPRITE =
+BgmapSpriteROMSpec OptionsAutomaticPauseSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_AUTOMATIC_PAUSE_TX,
+		(TextureSpec*)&OptionsAutomaticPauseTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec OPTIONS_AUTOMATIC_PAUSE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const OPTIONS_AUTOMATIC_PAUSE_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsAutomaticPauseSprites[] =
 {
-	&OPTIONS_AUTOMATIC_PAUSE_SPRITE,
+	&OptionsAutomaticPauseSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec OPTIONS_AUTOMATIC_PAUSE_LE =
+LocalizedEntityROMSpec OptionsAutomaticPauseLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec OPTIONS_AUTOMATIC_PAUSE_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_AUTOMATIC_PAUSE_SPRITES,
+		(SpriteSpec**)OptionsAutomaticPauseSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec OPTIONS_AUTOMATIC_PAUSE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

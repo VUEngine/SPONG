@@ -21,34 +21,34 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec HEXAGON_BACKGROUND_AE;
-extern EntitySpec CREDITS_SCREEN_EN;
-extern EntitySpec CREDITS_A_GAME_BY_LE;
-extern EntitySpec CREDITS_PATRON_THANKS_LE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec HexagonBackgroundAe;
+extern EntitySpec CreditsScreenEntity;
+extern EntitySpec CreditsAGameByLe;
+extern EntitySpec CreditsPatronThanksLe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec CREDITS_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec CreditsScreenStageEntities[] =
 {
-	{&HEXAGON_BACKGROUND_AE,	{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
+	{&HexagonBackgroundAe,	{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
 
-	{&CREDITS_SCREEN_EN,		{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&CREDITS_A_GAME_BY_LE,		{192,  12,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&CREDITS_PATRON_THANKS_LE,	{192,  58,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&CreditsScreenEntity,		{192, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&CreditsAGameByLe,		{192,  12,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&CreditsPatronThanksLe,	{192,  58,  0,  0},   	0, NULL, NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,	{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,	{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec CREDITS_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec CreditsScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 	{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 	{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -58,19 +58,19 @@ PositionedEntityROMSpec CREDITS_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const CREDITS_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const CreditsScreenStageFonts[] =
 {
 	&IndustrialFont,
 
 	NULL
 };
 
-CharSetROMSpec* const CREDITS_SCREEN_STAGE_ST_CHARSETS[] =
+CharSetROMSpec* const CreditsScreenStageCharsets[] =
 {
 	NULL
 };
 
-TextureSpec* const CREDITS_SCREEN_STAGE_ST_TEXTURES[] =
+TextureSpec* const CreditsScreenStageTextures[] =
 {
 	NULL
 };
@@ -80,7 +80,7 @@ TextureSpec* const CREDITS_SCREEN_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec CREDITS_SCREEN_STAGE_ST =
+StageROMSpec CreditsScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -269,13 +269,13 @@ StageROMSpec CREDITS_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)CREDITS_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)CreditsScreenStageFonts,
 
 		// char sets to preload
-		(CharSetSpec**)CREDITS_SCREEN_STAGE_ST_CHARSETS,
+		(CharSetSpec**)CreditsScreenStageCharsets,
 
 		// textures to preload
-		(TextureSpec**)CREDITS_SCREEN_STAGE_ST_TEXTURES,
+		(TextureSpec**)CreditsScreenStageTextures,
 
 		// background music
 		(Sound**)NULL,
@@ -285,12 +285,12 @@ StageROMSpec CREDITS_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)CREDITS_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)CreditsScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)CREDITS_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)CreditsScreenStageEntities,
 	},
 
 	// post processing effects

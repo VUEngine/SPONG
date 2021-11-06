@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE OptionsHeaderLTiles[];
 extern BYTE OptionsHeaderRTiles[];
 extern BYTE OptionsHeaderLMap[];
@@ -35,7 +35,7 @@ extern BYTE OptionsHeaderRMap[];
 
 /* Left */
 
-CharSetROMSpec OPTIONS_HEADER_L_CH =
+CharSetROMSpec OptionsHeaderLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -50,10 +50,10 @@ CharSetROMSpec OPTIONS_HEADER_L_CH =
 	OptionsHeaderLTiles,
 };
 
-TextureROMSpec OPTIONS_HEADER_L_TX =
+TextureROMSpec OptionsHeaderLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_HEADER_L_CH,
+	(CharSetSpec*)&OptionsHeaderLCharset,
 
 	// bgmap spec
 	OptionsHeaderLMap,
@@ -85,14 +85,14 @@ TextureROMSpec OPTIONS_HEADER_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_HEADER_L_SPRITE =
+BgmapSpriteROMSpec OptionsHeaderLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_HEADER_L_TX,
+		(TextureSpec*)&OptionsHeaderLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -114,7 +114,7 @@ BgmapSpriteROMSpec OPTIONS_HEADER_L_SPRITE =
 
 /* Right */
 
-CharSetROMSpec OPTIONS_HEADER_R_CH =
+CharSetROMSpec OptionsHeaderRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -129,10 +129,10 @@ CharSetROMSpec OPTIONS_HEADER_R_CH =
 	OptionsHeaderRTiles,
 };
 
-TextureROMSpec OPTIONS_HEADER_R_TX =
+TextureROMSpec OptionsHeaderRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_HEADER_R_CH,
+	(CharSetSpec*)&OptionsHeaderRCharset,
 
 	// bgmap spec
 	OptionsHeaderRMap,
@@ -164,14 +164,14 @@ TextureROMSpec OPTIONS_HEADER_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_HEADER_R_SPRITE =
+BgmapSpriteROMSpec OptionsHeaderRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_HEADER_R_TX,
+		(TextureSpec*)&OptionsHeaderRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -193,14 +193,14 @@ BgmapSpriteROMSpec OPTIONS_HEADER_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const OPTIONS_HEADER_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsHeaderSprites[] =
 {
-	&OPTIONS_HEADER_L_SPRITE,
-	&OPTIONS_HEADER_R_SPRITE,
+	&OptionsHeaderLSprite,
+	&OptionsHeaderRSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec OPTIONS_HEADER_LE =
+LocalizedEntityROMSpec OptionsHeaderLe =
 {
 	{
 		// class allocator
@@ -216,7 +216,7 @@ LocalizedEntityROMSpec OPTIONS_HEADER_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_HEADER_SPRITES,
+		(SpriteSpec**)OptionsHeaderSprites,
 
 		// use z displacement in projection
 		false,
@@ -236,7 +236,7 @@ LocalizedEntityROMSpec OPTIONS_HEADER_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

@@ -30,7 +30,7 @@ extern BYTE BrightnessMeterMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec BRIGHTNESS_METER_1_ANIM =
+AnimationFunctionROMSpec BrightnessMeter1Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -51,7 +51,7 @@ AnimationFunctionROMSpec BRIGHTNESS_METER_1_ANIM =
 	"0",
 };
 
-AnimationFunctionROMSpec BRIGHTNESS_METER_2_ANIM =
+AnimationFunctionROMSpec BrightnessMeter2Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -72,7 +72,7 @@ AnimationFunctionROMSpec BRIGHTNESS_METER_2_ANIM =
 	"1",
 };
 
-AnimationFunctionROMSpec BRIGHTNESS_METER_3_ANIM =
+AnimationFunctionROMSpec BrightnessMeter3Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -93,7 +93,7 @@ AnimationFunctionROMSpec BRIGHTNESS_METER_3_ANIM =
 	"2",
 };
 
-AnimationFunctionROMSpec BRIGHTNESS_METER_4_ANIM =
+AnimationFunctionROMSpec BrightnessMeter4Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -114,7 +114,7 @@ AnimationFunctionROMSpec BRIGHTNESS_METER_4_ANIM =
 	"3",
 };
 
-AnimationFunctionROMSpec BRIGHTNESS_METER_5_ANIM =
+AnimationFunctionROMSpec BrightnessMeter5Animation =
 {
 	// number of frames of this animation function
 	1,
@@ -136,20 +136,20 @@ AnimationFunctionROMSpec BRIGHTNESS_METER_5_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec BRIGHTNESS_METER_ANIM =
+AnimationDescriptionROMSpec BrightnessMeterAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&BRIGHTNESS_METER_1_ANIM,
-		(AnimationFunction*)&BRIGHTNESS_METER_2_ANIM,
-		(AnimationFunction*)&BRIGHTNESS_METER_3_ANIM,
-		(AnimationFunction*)&BRIGHTNESS_METER_4_ANIM,
-		(AnimationFunction*)&BRIGHTNESS_METER_5_ANIM,
+		(AnimationFunction*)&BrightnessMeter1Animation,
+		(AnimationFunction*)&BrightnessMeter2Animation,
+		(AnimationFunction*)&BrightnessMeter3Animation,
+		(AnimationFunction*)&BrightnessMeter4Animation,
+		(AnimationFunction*)&BrightnessMeter5Animation,
 		NULL,
 	}
 };
 
-CharSetROMSpec BRIGHTNESS_METER_CH =
+CharSetROMSpec BrightnessMeterCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -164,10 +164,10 @@ CharSetROMSpec BRIGHTNESS_METER_CH =
 	BrightnessMeterTiles,
 };
 
-TextureROMSpec BRIGHTNESS_METER_TX =
+TextureROMSpec BrightnessMeterTexture =
 {
 	// charset spec
-	(CharSetSpec*)&BRIGHTNESS_METER_CH,
+	(CharSetSpec*)&BrightnessMeterCharset,
 
 	// bgmap spec
 	BrightnessMeterMap,
@@ -199,14 +199,14 @@ TextureROMSpec BRIGHTNESS_METER_TX =
 	false,
 };
 
-BgmapSpriteROMSpec BRIGHTNESS_METER_SPRITE =
+BgmapSpriteROMSpec BrightnessMeterSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&BRIGHTNESS_METER_TX,
+		(TextureSpec*)&BrightnessMeterTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -226,13 +226,13 @@ BgmapSpriteROMSpec BRIGHTNESS_METER_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const BRIGHTNESS_METER_SPRITES[] =
+BgmapSpriteROMSpec* const BrightnessMeterSprites[] =
 {
-	&BRIGHTNESS_METER_SPRITE,
+	&BrightnessMeterSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec BRIGHTNESS_METER_AE =
+AnimatedEntityROMSpec BrightnessMeterAe =
 {
 	{
 		// class allocator
@@ -248,7 +248,7 @@ AnimatedEntityROMSpec BRIGHTNESS_METER_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)BRIGHTNESS_METER_SPRITES,
+		(SpriteSpec**)BrightnessMeterSprites,
 
 		// use z displacement in projection
 		false,
@@ -268,7 +268,7 @@ AnimatedEntityROMSpec BRIGHTNESS_METER_AE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&BRIGHTNESS_METER_ANIM,
+	(AnimationDescription*)&BrightnessMeterAnimation,
 
 	// initial animation
 	"2"

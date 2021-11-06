@@ -28,7 +28,7 @@ extern BYTE PrecautionTextBackgroundMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec PRECAUTION_TEXT_BACKGROUND_CH =
+CharSetROMSpec PrecautionTextBackgroundCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -43,10 +43,10 @@ CharSetROMSpec PRECAUTION_TEXT_BACKGROUND_CH =
 	PrecautionTextBackgroundTiles,
 };
 
-TextureROMSpec PRECAUTION_TEXT_BACKGROUND_TX =
+TextureROMSpec PrecautionTextBackgroundTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PRECAUTION_TEXT_BACKGROUND_CH,
+	(CharSetSpec*)&PrecautionTextBackgroundCharset,
 
 	// bgmap spec
 	PrecautionTextBackgroundMap,
@@ -78,14 +78,14 @@ TextureROMSpec PRECAUTION_TEXT_BACKGROUND_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PRECAUTION_TEXT_BACKGROUND_SPRITE =
+BgmapSpriteROMSpec PrecautionTextBackgroundSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&PRECAUTION_TEXT_BACKGROUND_TX,
+		(TextureSpec*)&PrecautionTextBackgroundTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -105,13 +105,13 @@ BgmapSpriteROMSpec PRECAUTION_TEXT_BACKGROUND_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const PRECAUTION_TEXT_BACKGROUND_SPRITES[] =
+BgmapSpriteROMSpec* const PrecautionTextBackgroundSprites[] =
 {
-	&PRECAUTION_TEXT_BACKGROUND_SPRITE,
+	&PrecautionTextBackgroundSprite,
 	NULL
 };
 
-EntityROMSpec PRECAUTION_TEXT_BACKGROUND_IM =
+EntityROMSpec PrecautionTextBackgroundEntity =
 {
 	// class allocator
 	__TYPE(Entity),
@@ -126,7 +126,7 @@ EntityROMSpec PRECAUTION_TEXT_BACKGROUND_IM =
 	NULL,
 
 	// sprites
-	(SpriteSpec**)PRECAUTION_TEXT_BACKGROUND_SPRITES,
+	(SpriteSpec**)PrecautionTextBackgroundSprites,
 
 	// use z displacement in projection
 	false,

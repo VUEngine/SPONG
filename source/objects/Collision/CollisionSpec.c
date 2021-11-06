@@ -22,7 +22,7 @@
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-PhysicalSpecificationROMSpec COLLISION_CL_PHYSICAL_PROPERTIES =
+PhysicalSpecificationROMSpec CollisionClPhysicalProperties =
 {
 	// mass
 	__F_TO_FIX10_6(0),
@@ -40,7 +40,7 @@ PhysicalSpecificationROMSpec COLLISION_CL_PHYSICAL_PROPERTIES =
 	__I_TO_FIX10_6(0)
 };
 
-CollisionROMSpec COLLISION_WALL_CL =
+CollisionROMSpec CollisionWallCl =
 {
 	// class allocator
 	__TYPE(Collision),
@@ -71,10 +71,10 @@ CollisionROMSpec COLLISION_WALL_CL =
 	kTypeWall,
 
 	// physical specification
-	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
+	(PhysicalSpecification*)&CollisionClPhysicalProperties,
 };
 
-CollisionROMSpec COLLISION_FLOOR_CL =
+CollisionROMSpec CollisionFloorCl =
 {
 	// class allocator
 	__TYPE(Collision),
@@ -105,10 +105,10 @@ CollisionROMSpec COLLISION_FLOOR_CL =
 	kTypeFloor,
 
 	// physical specification
-	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
+	(PhysicalSpecification*)&CollisionClPhysicalProperties,
 };
 
-CollisionROMSpec COLLISION_CEILING_CL =
+CollisionROMSpec CollisionCeilingCl =
 {
 	// class allocator
 	__TYPE(Collision),
@@ -139,5 +139,5 @@ CollisionROMSpec COLLISION_CEILING_CL =
 	kTypeCeiling,
 
 	// physical specification
-	(PhysicalSpecification*)&COLLISION_CL_PHYSICAL_PROPERTIES,
+	(PhysicalSpecification*)&CollisionClPhysicalProperties,
 };

@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE WaitingForOtherPlayerTiles[];
 extern BYTE WaitingForOtherPlayerMap[];
 
@@ -31,7 +31,7 @@ extern BYTE WaitingForOtherPlayerMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_CH =
+CharSetROMSpec MainMenuWaitingForOtherPlayerCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_CH =
 	WaitingForOtherPlayerTiles,
 };
 
-TextureROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_TX =
+TextureROMSpec MainMenuWaitingForOtherPlayerTexture =
 {
 	// charset spec
-	(CharSetSpec*)&MAIN_MENU_WAITING_FOR_OTHER_PLAYER_CH,
+	(CharSetSpec*)&MainMenuWaitingForOtherPlayerCharset,
 
 	// bgmap spec
 	WaitingForOtherPlayerMap,
@@ -81,14 +81,14 @@ TextureROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_TX =
 	false,
 };
 
-BgmapSpriteROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITE =
+BgmapSpriteROMSpec MainMenuWaitingForOtherPlayerSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&MAIN_MENU_WAITING_FOR_OTHER_PLAYER_TX,
+		(TextureSpec*)&MainMenuWaitingForOtherPlayerTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITES[] =
+BgmapSpriteROMSpec* const MainMenuWaitingForOtherPlayerSprites[] =
 {
-	&MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITE,
+	&MainMenuWaitingForOtherPlayerSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE =
+LocalizedEntityROMSpec MainMenuWaitingForOtherPlayerLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)MAIN_MENU_WAITING_FOR_OTHER_PLAYER_SPRITES,
+		(SpriteSpec**)MainMenuWaitingForOtherPlayerSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec MAIN_MENU_WAITING_FOR_OTHER_PLAYER_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

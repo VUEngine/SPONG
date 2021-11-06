@@ -21,37 +21,37 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec FLAG_CURSOR_EN;
-extern EntitySpec FLAG_FRANCE_EN;
-extern EntitySpec FLAG_GERMANY_EN;
-extern EntitySpec FLAG_SPAIN_EN;
-extern EntitySpec FLAG_UNITED_KINGDOM_EN;
-extern EntitySpec LANGUAGE_NAME_LE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec FlagCursorEntity;
+extern EntitySpec FlagFranceEntity;
+extern EntitySpec FlagGermanyEntity;
+extern EntitySpec FlagSpainEntity;
+extern EntitySpec FlagUnitedKingdomEntity;
+extern EntitySpec LanguageNameLe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec LANG_SELECT_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec LangSelectScreenStageEntities[] =
 {
-	{&FLAG_UNITED_KINGDOM_EN, 	{120,  96, 0,  0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_GERMANY_EN, 			{168,  96, 0,  0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_SPAIN_EN, 			{216,  96, 0,  0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_FRANCE_EN, 			{264,  96, 0,  0}, 0, NULL, NULL, NULL, false},
-	{&FLAG_CURSOR_EN, 			{120,  96, 0,  0}, 0, "Cursor", NULL, NULL, false},
-	{&LANGUAGE_NAME_LE,			{192, 124, 0,  0}, 0, "LangName", NULL, NULL, false},
+	{&FlagUnitedKingdomEntity, 	{120,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FlagGermanyEntity, 			{168,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FlagSpainEntity, 			{216,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FlagFranceEntity, 			{264,  96, 0,  0}, 0, NULL, NULL, NULL, false},
+	{&FlagCursorEntity, 			{120,  96, 0,  0}, 0, "Cursor", NULL, NULL, false},
+	{&LanguageNameLe,			{192, 124, 0,  0}, 0, "LangName", NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,	{192, 112, 0,  0}, 0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec LangSelectScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 	{ 16,  12, -1,  0}, 0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 	{ 16,  12, -1,  0}, 0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -61,7 +61,7 @@ PositionedEntityROMSpec LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const LANG_SELECT_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const LangSelectScreenStageFonts[] =
 {
 	&IndustrialFont,
 
@@ -73,7 +73,7 @@ FontROMSpec* const LANG_SELECT_SCREEN_STAGE_ST_FONTS[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
+StageROMSpec LangSelectScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -262,7 +262,7 @@ StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)LANG_SELECT_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)LangSelectScreenStageFonts,
 
 		// char sets to preload
 		(CharSetSpec**)NULL,
@@ -278,12 +278,12 @@ StageROMSpec LANG_SELECT_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)LANG_SELECT_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)LangSelectScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)LANG_SELECT_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)LangSelectScreenStageEntities,
 	},
 
 	// post processing effects

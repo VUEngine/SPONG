@@ -20,29 +20,29 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec PRECAUTION_TEXT_BACKGROUND_IM;
-extern EntitySpec PRECAUTION_TEXT_LE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec PrecautionTextBackgroundEntity;
+extern EntitySpec PrecautionTextLe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec PRECAUTION_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec PrecautionScreenStageEntities[] =
 {
-	{&PRECAUTION_TEXT_BACKGROUND_IM, 	{192, 112, 16, 0}, 	0, NULL, NULL, NULL, false},
-	{&PRECAUTION_TEXT_LE, 				{192, 112,  0, 0}, 	0, NULL, NULL, NULL, false},
+	{&PrecautionTextBackgroundEntity, 	{192, 112, 16, 0}, 	0, NULL, NULL, NULL, false},
+	{&PrecautionTextLe, 				{192, 112,  0, 0}, 	0, NULL, NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE, 			{192, 112,  0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe, 			{192, 112,  0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec PRECAUTION_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec PrecautionScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 			{ 16,  12,  -1, 0},	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 			{ 16,  12,  -1, 0},	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -52,7 +52,7 @@ PositionedEntityROMSpec PRECAUTION_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const PRECAUTION_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const PrecautionScreenStageFonts[] =
 {
 	NULL
 };
@@ -62,7 +62,7 @@ FontROMSpec* const PRECAUTION_SCREEN_STAGE_ST_FONTS[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec PRECAUTION_SCREEN_STAGE_ST =
+StageROMSpec PrecautionScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -251,7 +251,7 @@ StageROMSpec PRECAUTION_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)PRECAUTION_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)PrecautionScreenStageFonts,
 
 		// char sets to preload
 		(CharSetSpec**)NULL,
@@ -267,12 +267,12 @@ StageROMSpec PRECAUTION_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)PRECAUTION_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)PrecautionScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)PRECAUTION_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)PrecautionScreenStageEntities,
 	},
 
 	// post processing effects

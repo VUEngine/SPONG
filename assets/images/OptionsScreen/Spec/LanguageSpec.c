@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE LanguageTiles[];
 extern BYTE LanguageMap[];
 
@@ -31,7 +31,7 @@ extern BYTE LanguageMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec OPTIONS_LANGUAGE_CH =
+CharSetROMSpec OptionsLanguageCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec OPTIONS_LANGUAGE_CH =
 	LanguageTiles,
 };
 
-TextureROMSpec OPTIONS_LANGUAGE_TX =
+TextureROMSpec OptionsLanguageTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_LANGUAGE_CH,
+	(CharSetSpec*)&OptionsLanguageCharset,
 
 	// bgmap spec
 	LanguageMap,
@@ -81,14 +81,14 @@ TextureROMSpec OPTIONS_LANGUAGE_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_LANGUAGE_SPRITE =
+BgmapSpriteROMSpec OptionsLanguageSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_LANGUAGE_TX,
+		(TextureSpec*)&OptionsLanguageTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec OPTIONS_LANGUAGE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const OPTIONS_LANGUAGE_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsLanguageSprites[] =
 {
-	&OPTIONS_LANGUAGE_SPRITE,
+	&OptionsLanguageSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec OPTIONS_LANGUAGE_LE =
+LocalizedEntityROMSpec OptionsLanguageLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec OPTIONS_LANGUAGE_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_LANGUAGE_SPRITES,
+		(SpriteSpec**)OptionsLanguageSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec OPTIONS_LANGUAGE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

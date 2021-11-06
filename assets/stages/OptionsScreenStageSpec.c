@@ -21,45 +21,45 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec BRIGHTNESS_METER_AE;
-extern EntitySpec CIRCLE_BACKGROUND_AE;
-extern EntitySpec OPTIONS_AUTOMATIC_PAUSE_LE;
-extern EntitySpec OPTIONS_BRIGHTNESS_LE;
-extern EntitySpec OPTIONS_CHECKBOX_AE;
-extern EntitySpec OPTIONS_CURSOR_AE;
-extern EntitySpec OPTIONS_HEADER_LE;
-extern EntitySpec OPTIONS_LANGUAGE_LE;
-extern EntitySpec LANGUAGE_NAME_LE;
-extern EntitySpec TRANSITION_LAYER_B_AE;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
+extern EntitySpec BrightnessMeterAe;
+extern EntitySpec CircleBackgroundAe;
+extern EntitySpec OptionsAutomaticPauseLe;
+extern EntitySpec OptionsBrightnessLe;
+extern EntitySpec OptionsCheckboxAe;
+extern EntitySpec OptionsCursorAe;
+extern EntitySpec OptionsHeaderLe;
+extern EntitySpec OptionsLanguageLe;
+extern EntitySpec LanguageNameLe;
+extern EntitySpec TransitionLayerBAe;
+extern EntitySpec LowPowerIndicatorEntity;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec OPTIONS_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec OptionsScreenStageEntities[] =
 {
-	{&CIRCLE_BACKGROUND_AE,			{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
+	{&CircleBackgroundAe,			{192, 112, 32,  0},   	0, NULL, NULL, NULL, false},
 
-	{&OPTIONS_HEADER_LE,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
+	{&OptionsHeaderLe,			{192, 64,   0,  0},   	0, NULL, NULL, NULL, false},
 
-	{&OPTIONS_LANGUAGE_LE,			{152, 100,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&LANGUAGE_NAME_LE,				{232, 100,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&OPTIONS_CURSOR_AE,			{234, 100,  0,  0},   	0, "Cursor", NULL, NULL, false},
-	{&OPTIONS_AUTOMATIC_PAUSE_LE,	{116, 112,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&OPTIONS_CHECKBOX_AE,			{208, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
-	{&OPTIONS_BRIGHTNESS_LE,		{144, 124,  0,  0},   	0, NULL, NULL, NULL, false},
-	{&BRIGHTNESS_METER_AE,			{232, 124,  0,  0},   	0, "BrghtnMt", NULL, NULL, false},
+	{&OptionsLanguageLe,			{152, 100,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&LanguageNameLe,				{232, 100,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&OptionsCursorAe,			{234, 100,  0,  0},   	0, "Cursor", NULL, NULL, false},
+	{&OptionsAutomaticPauseLe,	{116, 112,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&OptionsCheckboxAe,			{208, 112,  0,  0},   	0, "APChckBx", NULL, NULL, false},
+	{&OptionsBrightnessLe,		{144, 124,  0,  0},   	0, NULL, NULL, NULL, false},
+	{&BrightnessMeterAe,			{232, 124,  0,  0},   	0, "BrghtnMt", NULL, NULL, false},
 
-	{&TRANSITION_LAYER_B_AE,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe,		{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec OPTIONS_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec OptionsScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 		{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 		{ 16,  12,  -1,  0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -69,19 +69,19 @@ PositionedEntityROMSpec OPTIONS_SCREEN_STAGE_ST_UI_ENTITIES[] =
 // 											PRELOAD LISTS
 //---------------------------------------------------------------------------------------------------------
 
-FontROMSpec* const OPTIONS_SCREEN_STAGE_ST_FONTS[] =
+FontROMSpec* const OptionsScreenStageFonts[] =
 {
 	&IndustrialFont,
 
 	NULL
 };
 
-CharSetROMSpec* const OPTIONS_SCREEN_STAGE_ST_CHARSETS[] =
+CharSetROMSpec* const OptionsScreenStageCharsets[] =
 {
 	NULL
 };
 
-TextureSpec* const OPTIONS_SCREEN_STAGE_ST_TEXTURES[] =
+TextureSpec* const OptionsScreenStageTextures[] =
 {
 	NULL
 };
@@ -91,7 +91,7 @@ TextureSpec* const OPTIONS_SCREEN_STAGE_ST_TEXTURES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec OPTIONS_SCREEN_STAGE_ST =
+StageROMSpec OptionsScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -280,13 +280,13 @@ StageROMSpec OPTIONS_SCREEN_STAGE_ST =
 	// assets
 	{
 		// fonts to preload
-		(FontSpec**)OPTIONS_SCREEN_STAGE_ST_FONTS,
+		(FontSpec**)OptionsScreenStageFonts,
 
 		// char sets to preload
-		(CharSetSpec**)OPTIONS_SCREEN_STAGE_ST_CHARSETS,
+		(CharSetSpec**)OptionsScreenStageCharsets,
 
 		// textures to preload
-		(TextureSpec**)OPTIONS_SCREEN_STAGE_ST_TEXTURES,
+		(TextureSpec**)OptionsScreenStageTextures,
 
 		// background music
 		(Sound**)NULL,
@@ -296,12 +296,12 @@ StageROMSpec OPTIONS_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)OPTIONS_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)OptionsScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)OPTIONS_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)OptionsScreenStageEntities,
 	},
 
 	// post processing effects

@@ -32,7 +32,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec PAUSE_SCREEN_STAGE_ST;
+extern StageROMSpec PauseScreenStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void PauseScreenState::enter(void* owner __attribute__ ((unused)))
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PAUSE_SCREEN_STAGE_ST, NULL, true, false);
+	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&PauseScreenStage, NULL, true, false);
 
 	// print pause text
 /*

@@ -33,7 +33,7 @@ extern BYTE RhombusBackgroundRightMap[];
 
 /* Animation */
 
-AnimationFunctionROMSpec RHOMBUS_BACKGROUND_DEFAULT_ANIM =
+AnimationFunctionROMSpec RhombusBackgroundDefaultAnimation =
 {
 	// number of frames of this animation function
 	16,
@@ -56,11 +56,11 @@ AnimationFunctionROMSpec RHOMBUS_BACKGROUND_DEFAULT_ANIM =
 	"Default",
 };
 
-AnimationDescriptionROMSpec RHOMBUS_BACKGROUND_ANIM =
+AnimationDescriptionROMSpec RhombusBackgroundAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&RHOMBUS_BACKGROUND_DEFAULT_ANIM,
+		(AnimationFunction*)&RhombusBackgroundDefaultAnimation,
 		NULL,
 	}
 };
@@ -68,7 +68,7 @@ AnimationDescriptionROMSpec RHOMBUS_BACKGROUND_ANIM =
 
 /* Left */
 
-CharSetROMSpec RHOMBUS_BACKGROUND_L_CH =
+CharSetROMSpec RhombusBackgroundLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -83,10 +83,10 @@ CharSetROMSpec RHOMBUS_BACKGROUND_L_CH =
 	RhombusBackgroundLeftTiles,
 };
 
-TextureROMSpec RHOMBUS_BACKGROUND_L_TX =
+TextureROMSpec RhombusBackgroundLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&RHOMBUS_BACKGROUND_L_CH,
+	(CharSetSpec*)&RhombusBackgroundLCharset,
 
 	// bgmap spec
 	RhombusBackgroundLeftMap,
@@ -118,14 +118,14 @@ TextureROMSpec RHOMBUS_BACKGROUND_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec RHOMBUS_BACKGROUND_L_SPRITE =
+BgmapSpriteROMSpec RhombusBackgroundLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&RHOMBUS_BACKGROUND_L_TX,
+		(TextureSpec*)&RhombusBackgroundLTexture,
 
 		// transparent
 		false,
@@ -148,7 +148,7 @@ BgmapSpriteROMSpec RHOMBUS_BACKGROUND_L_SPRITE =
 
 /* Right */
 
-CharSetROMSpec RHOMBUS_BACKGROUND_R_CH =
+CharSetROMSpec RhombusBackgroundRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -163,10 +163,10 @@ CharSetROMSpec RHOMBUS_BACKGROUND_R_CH =
 	RhombusBackgroundRightTiles,
 };
 
-TextureROMSpec RHOMBUS_BACKGROUND_R_TX =
+TextureROMSpec RhombusBackgroundRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&RHOMBUS_BACKGROUND_R_CH,
+	(CharSetSpec*)&RhombusBackgroundRCharset,
 
 	// bgmap spec
 	RhombusBackgroundRightMap,
@@ -198,14 +198,14 @@ TextureROMSpec RHOMBUS_BACKGROUND_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec RHOMBUS_BACKGROUND_R_SPRITE =
+BgmapSpriteROMSpec RhombusBackgroundRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&RHOMBUS_BACKGROUND_R_TX,
+		(TextureSpec*)&RhombusBackgroundRTexture,
 
 		// transparent
 		false,
@@ -228,14 +228,14 @@ BgmapSpriteROMSpec RHOMBUS_BACKGROUND_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const RHOMBUS_BACKGROUND_SPRITES[] =
+BgmapSpriteROMSpec* const RhombusBackgroundSprites[] =
 {
-	&RHOMBUS_BACKGROUND_L_SPRITE,
-	&RHOMBUS_BACKGROUND_R_SPRITE,
+	&RhombusBackgroundLSprite,
+	&RhombusBackgroundRSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec RHOMBUS_BACKGROUND_AE =
+AnimatedEntityROMSpec RhombusBackgroundAe =
 {
 	{
 		// class allocator
@@ -251,7 +251,7 @@ AnimatedEntityROMSpec RHOMBUS_BACKGROUND_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)RHOMBUS_BACKGROUND_SPRITES,
+		(SpriteSpec**)RhombusBackgroundSprites,
 
 		// use z displacement in projection
 		false,
@@ -271,7 +271,7 @@ AnimatedEntityROMSpec RHOMBUS_BACKGROUND_AE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&RHOMBUS_BACKGROUND_ANIM,
+	(AnimationDescription*)&RhombusBackgroundAnimation,
 
 	// initial animation
 	"Default",

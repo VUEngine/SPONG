@@ -31,7 +31,7 @@ extern BYTE PongBallRMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec PONG_BALL_CH =
+CharSetROMSpec PongBallCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -48,10 +48,10 @@ CharSetROMSpec PONG_BALL_CH =
 
 /* Left */
 
-TextureROMSpec PONG_BALL_L_TX =
+TextureROMSpec PongBallLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PONG_BALL_CH,
+	(CharSetSpec*)&PongBallCharset,
 
 	// bgmap spec
 	PongBallLMap,
@@ -83,14 +83,14 @@ TextureROMSpec PONG_BALL_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PONG_BALL_L_SPRITE =
+BgmapSpriteROMSpec PongBallLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&PONG_BALL_L_TX,
+		(TextureSpec*)&PongBallLTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -112,10 +112,10 @@ BgmapSpriteROMSpec PONG_BALL_L_SPRITE =
 
 /* Right */
 
-TextureROMSpec PONG_BALL_R_TX =
+TextureROMSpec PongBallRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PONG_BALL_CH,
+	(CharSetSpec*)&PongBallCharset,
 
 	// bgmap spec
 	PongBallRMap,
@@ -147,14 +147,14 @@ TextureROMSpec PONG_BALL_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PONG_BALL_R_SPRITE =
+BgmapSpriteROMSpec PongBallRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapSprite),
 
 		// texture spec
-		(TextureSpec*)&PONG_BALL_R_TX,
+		(TextureSpec*)&PongBallRTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -176,14 +176,14 @@ BgmapSpriteROMSpec PONG_BALL_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const PONG_BALL_SPRITES[] =
+BgmapSpriteROMSpec* const PongBallSprites[] =
 {
-	&PONG_BALL_L_SPRITE,
-	&PONG_BALL_R_SPRITE,
+	&PongBallLSprite,
+	&PongBallRSprite,
 	NULL
 };
 
-ShapeROMSpec PONG_BALL_SHAPES[] =
+ShapeROMSpec PongBallShapes[] =
 {
 	// ball
 	{
@@ -215,7 +215,7 @@ ShapeROMSpec PONG_BALL_SHAPES[] =
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
 };
 
-PhysicalSpecificationROMSpec PONG_BALL_PHYSICAL_PROPERTIES =
+PhysicalSpecificationROMSpec PongBallPhysicalProperties =
 {
 	// mass
 	__F_TO_FIX10_6(0.4f),
@@ -233,7 +233,7 @@ PhysicalSpecificationROMSpec PONG_BALL_PHYSICAL_PROPERTIES =
 	__I_TO_FIX10_6(0)
 };
 
-PongBallROMSpec PONG_BALL_PB =
+PongBallROMSpec PongBallPb =
 {
 	{
 		{
@@ -251,13 +251,13 @@ PongBallROMSpec PONG_BALL_PB =
 				NULL,
 
 				// sprites
-				(SpriteSpec**)PONG_BALL_SPRITES,
+				(SpriteSpec**)PongBallSprites,
 
 				// use z displacement in projection
 				false,
 
 				// collision shapes
-				(ShapeSpec*)PONG_BALL_SHAPES,
+				(ShapeSpec*)PongBallShapes,
 
 				// size
 				// if 0, width and height will be inferred from the first sprite's texture's size
@@ -267,7 +267,7 @@ PongBallROMSpec PONG_BALL_PB =
 				kTypePongBall,
 
 				// physical specification
-				(PhysicalSpecification*)&PONG_BALL_PHYSICAL_PROPERTIES,
+				(PhysicalSpecification*)&PongBallPhysicalProperties,
 			},
 
 			// pointer to the animation spec for the character

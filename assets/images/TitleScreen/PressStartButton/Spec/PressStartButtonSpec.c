@@ -28,7 +28,7 @@ extern BYTE PressStartButtonMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec PRESS_START_BUTTON_EN_ANIM =
+AnimationFunctionROMSpec PressStartButtonEnglishAnimation =
 {
 	// number of frames of this animation function
 	8,
@@ -49,7 +49,7 @@ AnimationFunctionROMSpec PRESS_START_BUTTON_EN_ANIM =
 	"0",
 };
 
-AnimationFunctionROMSpec PRESS_START_BUTTON_DE_ANIM =
+AnimationFunctionROMSpec PressStartButtonGermanAnimation =
 {
 	// number of frames of this animation function
 	8,
@@ -70,7 +70,7 @@ AnimationFunctionROMSpec PRESS_START_BUTTON_DE_ANIM =
 	"1",
 };
 
-AnimationFunctionROMSpec PRESS_START_BUTTON_ES_ANIM =
+AnimationFunctionROMSpec PressStartButtonSpanishAnimation =
 {
 	// number of frames of this animation function
 	8,
@@ -91,7 +91,7 @@ AnimationFunctionROMSpec PRESS_START_BUTTON_ES_ANIM =
 	"2",
 };
 
-AnimationFunctionROMSpec PRESS_START_BUTTON_FR_ANIM =
+AnimationFunctionROMSpec PressStartButtonFrenchAnimation =
 {
 	// number of frames of this animation function
 	8,
@@ -112,7 +112,7 @@ AnimationFunctionROMSpec PRESS_START_BUTTON_FR_ANIM =
 	"3",
 };
 
-AnimationFunctionROMSpec PRESS_START_BUTTON_TRANSPARENT_ANIM =
+AnimationFunctionROMSpec PressStartButtonTransparentAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -134,20 +134,20 @@ AnimationFunctionROMSpec PRESS_START_BUTTON_TRANSPARENT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PRESS_START_BUTTON_ANIM =
+AnimationDescriptionROMSpec PressStartButtonAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&PRESS_START_BUTTON_EN_ANIM,
-		(AnimationFunction*)&PRESS_START_BUTTON_DE_ANIM,
-		(AnimationFunction*)&PRESS_START_BUTTON_ES_ANIM,
-		(AnimationFunction*)&PRESS_START_BUTTON_FR_ANIM,
-		(AnimationFunction*)&PRESS_START_BUTTON_TRANSPARENT_ANIM,
+		(AnimationFunction*)&PressStartButtonEnglishAnimation,
+		(AnimationFunction*)&PressStartButtonGermanAnimation,
+		(AnimationFunction*)&PressStartButtonSpanishAnimation,
+		(AnimationFunction*)&PressStartButtonFrenchAnimation,
+		(AnimationFunction*)&PressStartButtonTransparentAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec PRESS_START_BUTTON_CH =
+CharSetROMSpec PressStartButtonCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -162,10 +162,10 @@ CharSetROMSpec PRESS_START_BUTTON_CH =
 	PressStartButtonTiles,
 };
 
-TextureROMSpec PRESS_START_BUTTON_TX =
+TextureROMSpec PressStartButtonTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PRESS_START_BUTTON_CH,
+	(CharSetSpec*)&PressStartButtonCharset,
 
 	// bgmap spec
 	PressStartButtonMap,
@@ -197,14 +197,14 @@ TextureROMSpec PRESS_START_BUTTON_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PRESS_START_BUTTON_SPRITE =
+BgmapSpriteROMSpec PressStartButtonSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PRESS_START_BUTTON_TX,
+		(TextureSpec*)&PressStartButtonTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -224,13 +224,13 @@ BgmapSpriteROMSpec PRESS_START_BUTTON_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const PRESS_START_BUTTON_SPRITES[] =
+BgmapSpriteROMSpec* const PressStartButtonSprites[] =
 {
-	&PRESS_START_BUTTON_SPRITE,
+	&PressStartButtonSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec PRESS_START_BUTTON_LE =
+LocalizedEntityROMSpec PressStartButtonLe =
 {
 	{
 		// class allocator
@@ -246,7 +246,7 @@ LocalizedEntityROMSpec PRESS_START_BUTTON_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)PRESS_START_BUTTON_SPRITES,
+		(SpriteSpec**)PressStartButtonSprites,
 
 		// use z displacement in projection
 		false,
@@ -266,7 +266,7 @@ LocalizedEntityROMSpec PRESS_START_BUTTON_LE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&PRESS_START_BUTTON_ANIM,
+	(AnimationDescription*)&PressStartButtonAnimation,
 
 	// initial animation
 	"Transparent",

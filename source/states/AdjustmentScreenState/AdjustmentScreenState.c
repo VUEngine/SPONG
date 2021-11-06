@@ -24,7 +24,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec ADJUSTMENT_SCREEN_STAGE_ST;
+extern StageROMSpec AdjustmentScreenStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ void AdjustmentScreenState::constructor()
 	Base::constructor();
 
 	SplashScreenState::setNextState(SplashScreenState::safeCast(this), GameState::safeCast(LangSelectScreenState::getInstance()));
-	this->stageSpec = (StageSpec*)&ADJUSTMENT_SCREEN_STAGE_ST;
+	this->stageSpec = (StageSpec*)&AdjustmentScreenStage;
 }
 
 void AdjustmentScreenState::destructor()

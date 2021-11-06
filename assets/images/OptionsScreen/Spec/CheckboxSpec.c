@@ -30,7 +30,7 @@ extern BYTE CheckboxMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec OPTIONS_CHECKBOX_OFF_ANIM =
+AnimationFunctionROMSpec OptionsCheckboxOffAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -51,7 +51,7 @@ AnimationFunctionROMSpec OPTIONS_CHECKBOX_OFF_ANIM =
 	"0",
 };
 
-AnimationFunctionROMSpec OPTIONS_CHECKBOX_ON_ANIM =
+AnimationFunctionROMSpec OptionsCheckboxOnAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -73,17 +73,17 @@ AnimationFunctionROMSpec OPTIONS_CHECKBOX_ON_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec OPTIONS_CHECKBOX_ANIM =
+AnimationDescriptionROMSpec OptionsCheckboxAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&OPTIONS_CHECKBOX_ON_ANIM,
-		(AnimationFunction*)&OPTIONS_CHECKBOX_OFF_ANIM,
+		(AnimationFunction*)&OptionsCheckboxOnAnimation,
+		(AnimationFunction*)&OptionsCheckboxOffAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec OPTIONS_CHECKBOX_CH =
+CharSetROMSpec OptionsCheckboxCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -98,10 +98,10 @@ CharSetROMSpec OPTIONS_CHECKBOX_CH =
 	CheckboxTiles,
 };
 
-TextureROMSpec OPTIONS_CHECKBOX_TX =
+TextureROMSpec OptionsCheckboxTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_CHECKBOX_CH,
+	(CharSetSpec*)&OptionsCheckboxCharset,
 
 	// bgmap spec
 	CheckboxMap,
@@ -133,14 +133,14 @@ TextureROMSpec OPTIONS_CHECKBOX_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_CHECKBOX_SPRITE =
+BgmapSpriteROMSpec OptionsCheckboxSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_CHECKBOX_TX,
+		(TextureSpec*)&OptionsCheckboxTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -160,13 +160,13 @@ BgmapSpriteROMSpec OPTIONS_CHECKBOX_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const OPTIONS_CHECKBOX_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsCheckboxSprites[] =
 {
-	&OPTIONS_CHECKBOX_SPRITE,
+	&OptionsCheckboxSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
+AnimatedEntityROMSpec OptionsCheckboxAe =
 {
 	{
 		// class allocator
@@ -182,7 +182,7 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_CHECKBOX_SPRITES,
+		(SpriteSpec**)OptionsCheckboxSprites,
 
 		// use z displacement in projection
 		false,
@@ -202,7 +202,7 @@ AnimatedEntityROMSpec OPTIONS_CHECKBOX_AE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&OPTIONS_CHECKBOX_ANIM,
+	(AnimationDescription*)&OptionsCheckboxAnimation,
 
 	// initial animation
 	"0"

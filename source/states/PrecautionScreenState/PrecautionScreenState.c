@@ -31,7 +31,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec PRECAUTION_SCREEN_STAGE_ST;
+extern StageROMSpec PrecautionScreenStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ void PrecautionScreenState::constructor()
 	Base::constructor();
 
 	SplashScreenState::setNextState(SplashScreenState::safeCast(this), GameState::safeCast(AdjustmentScreenState::getInstance()));
-	this->stageSpec = (StageSpec*)&PRECAUTION_SCREEN_STAGE_ST;
+	this->stageSpec = (StageSpec*)&PrecautionScreenStage;
 }
 
 void PrecautionScreenState::destructor()

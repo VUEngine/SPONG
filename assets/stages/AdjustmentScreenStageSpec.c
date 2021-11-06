@@ -20,35 +20,35 @@
 //											DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec ADJUSTMENT_SCREEN_VUENGINE_BG_IM;
-extern EntitySpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L;
-extern EntitySpec ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R;
-extern EntitySpec ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM;
-extern EntitySpec LOW_POWER_INDICATOR_LB;
-extern EntitySpec TRANSITION_LAYER_B_AE;
+extern EntitySpec AdjustmentScreenVUEngineBgEntity;
+extern EntitySpec AdjustmentScreenVUEngineIconL;
+extern EntitySpec AdjustmentScreenVUEngineIconR;
+extern EntitySpec AdjustmentScreenVUEngineLogoEntity;
+extern EntitySpec LowPowerIndicatorEntity;
+extern EntitySpec TransitionLayerBAe;
 
 
 //---------------------------------------------------------------------------------------------------------
 // 											ENTITY LISTS
 //---------------------------------------------------------------------------------------------------------
 
-PositionedEntityROMSpec ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES[] =
+PositionedEntityROMSpec AdjustmentScreenStageEntities[] =
 {
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, 	{12, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, 	{12, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Left (Right Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_BG_IM, 		{192, 112, 16, 0}, 	0, NULL, NULL, NULL, false}, // Background
-	{&ADJUSTMENT_SCREEN_VUENGINE_LOGO_IM, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false}, // Logo
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_L, 	{372, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Right (Left Eye)
-	{&ADJUSTMENT_SCREEN_VUENGINE_ICON_IM_R, 	{372, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Right (Right Eye)
+	{&AdjustmentScreenVUEngineIconL, 	{12, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Left (Left Eye)
+	{&AdjustmentScreenVUEngineIconR, 	{12, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Left (Right Eye)
+	{&AdjustmentScreenVUEngineBgEntity, 		{192, 112, 16, 0}, 	0, NULL, NULL, NULL, false}, // Background
+	{&AdjustmentScreenVUEngineLogoEntity, 		{192, 112, 0, 0}, 	0, NULL, NULL, NULL, false}, // Logo
+	{&AdjustmentScreenVUEngineIconL, 	{372, 212, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Bottom Right (Left Eye)
+	{&AdjustmentScreenVUEngineIconR, 	{372, 12, 0, 0}, 	0, NULL, NULL, NULL, false}, // Icon Top Right (Right Eye)
 
-	{&TRANSITION_LAYER_B_AE, 					{192, 112, 0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
+	{&TransitionLayerBAe, 					{192, 112, 0, 0}, 	0, "TRNSLYR", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
 
-PositionedEntityROMSpec ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES[] =
+PositionedEntityROMSpec AdjustmentScreenStageUiEntities[] =
 {
-	{&LOW_POWER_INDICATOR_LB, 					{40, 12, -1, 0}, 	0, NULL, NULL, NULL, false},
+	{&LowPowerIndicatorEntity, 					{40, 12, -1, 0}, 	0, NULL, NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
@@ -58,7 +58,7 @@ PositionedEntityROMSpec ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES[] =
 //											STAGE DEFINITION
 //---------------------------------------------------------------------------------------------------------
 
-StageROMSpec ADJUSTMENT_SCREEN_STAGE_ST =
+StageROMSpec AdjustmentScreenStage =
 {
 	// allocator
 	__TYPE(Stage),
@@ -263,12 +263,12 @@ StageROMSpec ADJUSTMENT_SCREEN_STAGE_ST =
 	{
 		// ui
 		{
-			(PositionedEntity*)ADJUSTMENT_SCREEN_STAGE_ST_UI_ENTITIES,
+			(PositionedEntity*)AdjustmentScreenStageUiEntities,
 			__TYPE(UIContainer),
 		},
 
 		// children
-		(PositionedEntity*)ADJUSTMENT_SCREEN_STAGE_ST_ENTITIES,
+		(PositionedEntity*)AdjustmentScreenStageEntities,
 	},
 
 	// post processing effects

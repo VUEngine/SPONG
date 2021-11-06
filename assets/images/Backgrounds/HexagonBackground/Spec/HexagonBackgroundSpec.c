@@ -33,7 +33,7 @@ extern BYTE HexagonBackgroundRightMap[];
 
 /* Animation */
 
-AnimationFunctionROMSpec HEXAGON_BACKGROUND_DEFAULT_ANIM =
+AnimationFunctionROMSpec HexagonBackgroundDefaultAnimation =
 {
 	// number of frames of this animation function
 	8,
@@ -56,11 +56,11 @@ AnimationFunctionROMSpec HEXAGON_BACKGROUND_DEFAULT_ANIM =
 	"Default",
 };
 
-AnimationDescriptionROMSpec HEXAGON_BACKGROUND_ANIM =
+AnimationDescriptionROMSpec HexagonBackgroundAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&HEXAGON_BACKGROUND_DEFAULT_ANIM,
+		(AnimationFunction*)&HexagonBackgroundDefaultAnimation,
 		NULL,
 	}
 };
@@ -68,7 +68,7 @@ AnimationDescriptionROMSpec HEXAGON_BACKGROUND_ANIM =
 
 /* Left */
 
-CharSetROMSpec HEXAGON_BACKGROUND_L_CH =
+CharSetROMSpec HexagonBackgroundLCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -83,10 +83,10 @@ CharSetROMSpec HEXAGON_BACKGROUND_L_CH =
 	HexagonBackgroundLeftTiles,
 };
 
-TextureROMSpec HEXAGON_BACKGROUND_L_TX =
+TextureROMSpec HexagonBackgroundLTexture =
 {
 	// charset spec
-	(CharSetSpec*)&HEXAGON_BACKGROUND_L_CH,
+	(CharSetSpec*)&HexagonBackgroundLCharset,
 
 	// bgmap spec
 	HexagonBackgroundLeftMap,
@@ -118,14 +118,14 @@ TextureROMSpec HEXAGON_BACKGROUND_L_TX =
 	false,
 };
 
-BgmapSpriteROMSpec HEXAGON_BACKGROUND_L_SPRITE =
+BgmapSpriteROMSpec HexagonBackgroundLSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&HEXAGON_BACKGROUND_L_TX,
+		(TextureSpec*)&HexagonBackgroundLTexture,
 
 		// transparent
 		false,
@@ -148,7 +148,7 @@ BgmapSpriteROMSpec HEXAGON_BACKGROUND_L_SPRITE =
 
 /* Right */
 
-CharSetROMSpec HEXAGON_BACKGROUND_R_CH =
+CharSetROMSpec HexagonBackgroundRCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -163,10 +163,10 @@ CharSetROMSpec HEXAGON_BACKGROUND_R_CH =
 	HexagonBackgroundRightTiles,
 };
 
-TextureROMSpec HEXAGON_BACKGROUND_R_TX =
+TextureROMSpec HexagonBackgroundRTexture =
 {
 	// charset spec
-	(CharSetSpec*)&HEXAGON_BACKGROUND_R_CH,
+	(CharSetSpec*)&HexagonBackgroundRCharset,
 
 	// bgmap spec
 	HexagonBackgroundRightMap,
@@ -198,14 +198,14 @@ TextureROMSpec HEXAGON_BACKGROUND_R_TX =
 	false,
 };
 
-BgmapSpriteROMSpec HEXAGON_BACKGROUND_R_SPRITE =
+BgmapSpriteROMSpec HexagonBackgroundRSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&HEXAGON_BACKGROUND_R_TX,
+		(TextureSpec*)&HexagonBackgroundRTexture,
 
 		// transparent
 		false,
@@ -228,14 +228,14 @@ BgmapSpriteROMSpec HEXAGON_BACKGROUND_R_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const HEXAGON_BACKGROUND_SPRITES[] =
+BgmapSpriteROMSpec* const HexagonBackgroundSprites[] =
 {
-	&HEXAGON_BACKGROUND_L_SPRITE,
-	&HEXAGON_BACKGROUND_R_SPRITE,
+	&HexagonBackgroundLSprite,
+	&HexagonBackgroundRSprite,
 	NULL
 };
 
-AnimatedEntityROMSpec HEXAGON_BACKGROUND_AE =
+AnimatedEntityROMSpec HexagonBackgroundAe =
 {
 	{
 		// class allocator
@@ -251,7 +251,7 @@ AnimatedEntityROMSpec HEXAGON_BACKGROUND_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)HEXAGON_BACKGROUND_SPRITES,
+		(SpriteSpec**)HexagonBackgroundSprites,
 
 		// use z displacement in projection
 		false,
@@ -271,7 +271,7 @@ AnimatedEntityROMSpec HEXAGON_BACKGROUND_AE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&HEXAGON_BACKGROUND_ANIM,
+	(AnimationDescription*)&HexagonBackgroundAnimation,
 
 	// initial animation
 	"Default",

@@ -25,7 +25,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern StageROMSpec AUTO_PAUSE_SCREEN_STAGE_ST;
+extern StageROMSpec AUTO_PauseScreenStage;
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void AutomaticPauseScreenState::enter(void* owner __attribute__ ((unused)))
 	Base::enter(this, owner);
 
 	// load stage
-	GameState::loadStage(this, (StageSpec*)&AUTO_PAUSE_SCREEN_STAGE_ST, NULL, true, false);
+	GameState::loadStage(this, (StageSpec*)&AUTO_PauseScreenStage, NULL, true, false);
 
 	// start clocks to start animations
 	GameState::startClocks(this);

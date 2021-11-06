@@ -21,7 +21,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE AGameByTiles[];
 extern BYTE AGameByMap[];
 
@@ -30,7 +30,7 @@ extern BYTE AGameByMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec CREDITS_A_GAME_BY_CH =
+CharSetROMSpec CreditsAGameByCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -45,10 +45,10 @@ CharSetROMSpec CREDITS_A_GAME_BY_CH =
 	AGameByTiles,
 };
 
-TextureROMSpec CREDITS_A_GAME_BY_TX =
+TextureROMSpec CreditsAGameByTexture =
 {
 	// charset spec
-	(CharSetSpec*)&CREDITS_A_GAME_BY_CH,
+	(CharSetSpec*)&CreditsAGameByCharset,
 
 	// bgmap spec
 	AGameByMap,
@@ -80,14 +80,14 @@ TextureROMSpec CREDITS_A_GAME_BY_TX =
 	false,
 };
 
-BgmapSpriteROMSpec CREDITS_A_GAME_BY_SPRITE =
+BgmapSpriteROMSpec CreditsAGameBySprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&CREDITS_A_GAME_BY_TX,
+		(TextureSpec*)&CreditsAGameByTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -107,13 +107,13 @@ BgmapSpriteROMSpec CREDITS_A_GAME_BY_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const CREDITS_A_GAME_BY_SPRITES[] =
+BgmapSpriteROMSpec* const CreditsAGameBySprites[] =
 {
-	&CREDITS_A_GAME_BY_SPRITE,
+	&CreditsAGameBySprite,
 	NULL
 };
 
-LocalizedEntityROMSpec CREDITS_A_GAME_BY_LE =
+LocalizedEntityROMSpec CreditsAGameByLe =
 {
 	{
 		// class allocator
@@ -129,7 +129,7 @@ LocalizedEntityROMSpec CREDITS_A_GAME_BY_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)CREDITS_A_GAME_BY_SPRITES,
+		(SpriteSpec**)CreditsAGameBySprites,
 
 		// use z displacement in projection
 		false,
@@ -149,7 +149,7 @@ LocalizedEntityROMSpec CREDITS_A_GAME_BY_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

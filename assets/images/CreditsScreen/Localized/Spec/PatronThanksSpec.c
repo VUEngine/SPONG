@@ -21,7 +21,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE PatronThanksTiles[];
 extern BYTE PatronThanksMap[];
 
@@ -30,7 +30,7 @@ extern BYTE PatronThanksMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec CREDITS_PATRON_THANKS_CH =
+CharSetROMSpec CreditsPatronThanksCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -45,10 +45,10 @@ CharSetROMSpec CREDITS_PATRON_THANKS_CH =
 	PatronThanksTiles,
 };
 
-TextureROMSpec CREDITS_PATRON_THANKS_TX =
+TextureROMSpec CreditsPatronThanksTexture =
 {
 	// charset spec
-	(CharSetSpec*)&CREDITS_PATRON_THANKS_CH,
+	(CharSetSpec*)&CreditsPatronThanksCharset,
 
 	// bgmap spec
 	PatronThanksMap,
@@ -80,14 +80,14 @@ TextureROMSpec CREDITS_PATRON_THANKS_TX =
 	false,
 };
 
-BgmapSpriteROMSpec CREDITS_PATRON_THANKS_SPRITE =
+BgmapSpriteROMSpec CreditsPatronThanksSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&CREDITS_PATRON_THANKS_TX,
+		(TextureSpec*)&CreditsPatronThanksTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -107,13 +107,13 @@ BgmapSpriteROMSpec CREDITS_PATRON_THANKS_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const CREDITS_PATRON_THANKS_SPRITES[] =
+BgmapSpriteROMSpec* const CreditsPatronThanksSprites[] =
 {
-	&CREDITS_PATRON_THANKS_SPRITE,
+	&CreditsPatronThanksSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
+LocalizedEntityROMSpec CreditsPatronThanksLe =
 {
 	{
 		// class allocator
@@ -129,7 +129,7 @@ LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)CREDITS_PATRON_THANKS_SPRITES,
+		(SpriteSpec**)CreditsPatronThanksSprites,
 
 		// use z displacement in projection
 		false,
@@ -149,7 +149,7 @@ LocalizedEntityROMSpec CREDITS_PATRON_THANKS_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

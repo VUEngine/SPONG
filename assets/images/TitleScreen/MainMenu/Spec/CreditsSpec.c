@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE CreditsTiles[];
 extern BYTE CreditsMap[];
 
@@ -31,7 +31,7 @@ extern BYTE CreditsMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec MAIN_MENU_CREDITS_CH =
+CharSetROMSpec MainMenuCreditsCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec MAIN_MENU_CREDITS_CH =
 	CreditsTiles,
 };
 
-TextureROMSpec MAIN_MENU_CREDITS_TX =
+TextureROMSpec MainMenuCreditsTexture =
 {
 	// charset spec
-	(CharSetSpec*)&MAIN_MENU_CREDITS_CH,
+	(CharSetSpec*)&MainMenuCreditsCharset,
 
 	// bgmap spec
 	CreditsMap,
@@ -81,14 +81,14 @@ TextureROMSpec MAIN_MENU_CREDITS_TX =
 	false,
 };
 
-BgmapSpriteROMSpec MAIN_MENU_CREDITS_SPRITE =
+BgmapSpriteROMSpec MainMenuCreditsSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&MAIN_MENU_CREDITS_TX,
+		(TextureSpec*)&MainMenuCreditsTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec MAIN_MENU_CREDITS_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const MAIN_MENU_CREDITS_SPRITES[] =
+BgmapSpriteROMSpec* const MainMenuCreditsSprites[] =
 {
-	&MAIN_MENU_CREDITS_SPRITE,
+	&MainMenuCreditsSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec MAIN_MENU_CREDITS_LE =
+LocalizedEntityROMSpec MainMenuCreditsLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec MAIN_MENU_CREDITS_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)MAIN_MENU_CREDITS_SPRITES,
+		(SpriteSpec**)MainMenuCreditsSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec MAIN_MENU_CREDITS_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

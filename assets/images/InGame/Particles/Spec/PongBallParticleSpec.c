@@ -31,7 +31,7 @@ extern BYTE PongBallParticleMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-AnimationFunctionROMSpec PONG_BALL_PARTICLE_DEFAULT_ANIM =
+AnimationFunctionROMSpec PongBallParticleDefaultAnimation =
 {
 	// number of frames of this animation function
 	4,
@@ -53,16 +53,16 @@ AnimationFunctionROMSpec PONG_BALL_PARTICLE_DEFAULT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PONG_BALL_PARTICLE_ANIM =
+AnimationDescriptionROMSpec PongBallParticleAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&PONG_BALL_PARTICLE_DEFAULT_ANIM,
+		(AnimationFunction*)&PongBallParticleDefaultAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec PONG_BALL_PARTICLE_CH =
+CharSetROMSpec PongBallParticleCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -77,10 +77,10 @@ CharSetROMSpec PONG_BALL_PARTICLE_CH =
 	PongBallParticleTiles,
 };
 
-TextureROMSpec PONG_BALL_PARTICLE_TX =
+TextureROMSpec PongBallParticleTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PONG_BALL_PARTICLE_CH,
+	(CharSetSpec*)&PongBallParticleCharset,
 
 	// bgmap spec
 	PongBallParticleMap,
@@ -113,14 +113,14 @@ TextureROMSpec PONG_BALL_PARTICLE_TX =
 
 };
 
-ObjectSpriteROMSpec PONG_BALL_PARTICLE_SPRITE =
+ObjectSpriteROMSpec PongBallParticleSprite =
 {
 	{
 		// sprite's type
 		__TYPE(ObjectAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PONG_BALL_PARTICLE_TX,
+		(TextureSpec*)&PongBallParticleTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -138,18 +138,18 @@ ObjectSpriteROMSpec PONG_BALL_PARTICLE_SPRITE =
 };
 
 //---------------------------------------------------------------------------------------------------------
-//											OBJECT PONG_BALL_PARTICLE
+//											OBJECT PongBallParticle
 //---------------------------------------------------------------------------------------------------------
 
 
-SpriteSpec* const PONG_BALL_PARTICLE_SPRITES[] =
+SpriteSpec* const PongBallParticleSprites[] =
 {
-	(SpriteSpec*)&PONG_BALL_PARTICLE_SPRITE,
+	(SpriteSpec*)&PongBallParticleSprite,
 	NULL
 };
 
 // particle's spec
-PhysicalParticleROMSpec PONG_BALL_PARTICLE =
+PhysicalParticleROMSpec PongBallParticle =
 {
 	{
 		// allocator
@@ -166,7 +166,7 @@ PhysicalParticleROMSpec PONG_BALL_PARTICLE =
 		NULL,
 
 		// animation description (used only if sprite is animated)
-		(AnimationDescription*)&PONG_BALL_PARTICLE_ANIM,
+		(AnimationDescription*)&PongBallParticleAnimation,
 
 		// name of animation to play
 		"Default"
@@ -182,7 +182,7 @@ PhysicalParticleROMSpec PONG_BALL_PARTICLE =
 	__NO_AXIS,
 };
 
-ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
+ParticleSystemROMSpec PongBallParticlesParticleSystem =
 {
 	{
 		// class allocator
@@ -233,13 +233,13 @@ ParticleSystemROMSpec PONG_BALL_PARTICLES_PS =
 	1,
 
 	// array of textures
-	(const SpriteSpec**)PONG_BALL_PARTICLE_SPRITES,
+	(const SpriteSpec**)PongBallParticleSprites,
 
 	// auto start
 	false,
 
 	// particle spec
-	(ParticleSpec*)&PONG_BALL_PARTICLE,
+	(ParticleSpec*)&PongBallParticle,
 
 	// minimum relative spawn position (x, y, z)
 	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(-0.5f), __F_TO_FIX10_6(0)},

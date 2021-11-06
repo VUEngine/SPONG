@@ -30,7 +30,7 @@ extern BYTE TransitionLayerBMap[];
 //---------------------------------------------------------------------------------------------------------
 
 // a function which defines the frames to play
-AnimationFunctionROMSpec TRANSITION_LAYER_B_HIDDEN_ANIM =
+AnimationFunctionROMSpec TransitionLayerBHiddenAnimation =
 {
 	// number of frames of this animation function
 	1,
@@ -52,7 +52,7 @@ AnimationFunctionROMSpec TRANSITION_LAYER_B_HIDDEN_ANIM =
 };
 
 // a function which defines the frames to play
-AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_IN_ANIM =
+AnimationFunctionROMSpec TransitionLayerBFadeInAnimation =
 {
 	// number of frames of this animation function
 	18,
@@ -76,7 +76,7 @@ AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_IN_ANIM =
 };
 
 // a function which defines the frames to play
-AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_OUT_ANIM =
+AnimationFunctionROMSpec TransitionLayerBFadeOutAnimation =
 {
 	// number of frames of this animation function
 	18,
@@ -100,18 +100,18 @@ AnimationFunctionROMSpec TRANSITION_LAYER_B_FADE_OUT_ANIM =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec TRANSITION_LAYER_B_ANIM =
+AnimationDescriptionROMSpec TransitionLayerBAnimation =
 {
 	// animation functions
 	{
-		(AnimationFunction*)&TRANSITION_LAYER_B_HIDDEN_ANIM,
-		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_IN_ANIM,
-		(AnimationFunction*)&TRANSITION_LAYER_B_FADE_OUT_ANIM,
+		(AnimationFunction*)&TransitionLayerBHiddenAnimation,
+		(AnimationFunction*)&TransitionLayerBFadeInAnimation,
+		(AnimationFunction*)&TransitionLayerBFadeOutAnimation,
 		NULL,
 	}
 };
 
-CharSetROMSpec TRANSITION_LAYER_B_CH =
+CharSetROMSpec TransitionLayerBCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -126,10 +126,10 @@ CharSetROMSpec TRANSITION_LAYER_B_CH =
 	TransitionLayerBTiles,
 };
 
-TextureROMSpec TRANSITION_LAYER_B_TX =
+TextureROMSpec TransitionLayerBTexture =
 {
 	// charset spec
-	(CharSetSpec*)&TRANSITION_LAYER_B_CH,
+	(CharSetSpec*)&TransitionLayerBCharset,
 
 	// bgmap spec
 	TransitionLayerBMap,
@@ -161,14 +161,14 @@ TextureROMSpec TRANSITION_LAYER_B_TX =
 	false,
 };
 
-BgmapSpriteROMSpec TRANSITION_LAYER_B_SPRITE =
+BgmapSpriteROMSpec TransitionLayerBSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&TRANSITION_LAYER_B_TX,
+		(TextureSpec*)&TransitionLayerBTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -188,13 +188,13 @@ BgmapSpriteROMSpec TRANSITION_LAYER_B_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const TRANSITION_LAYER_B_SPRITES[] =
+BgmapSpriteROMSpec* const TransitionLayerBSprites[] =
 {
-	&TRANSITION_LAYER_B_SPRITE,
+	&TransitionLayerBSprite,
 	NULL
 };
 
-TransitionEntityROMSpec TRANSITION_LAYER_B_AE =
+TransitionEntityROMSpec TransitionLayerBAe =
 {
 	{
 		// class allocator
@@ -210,7 +210,7 @@ TransitionEntityROMSpec TRANSITION_LAYER_B_AE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)TRANSITION_LAYER_B_SPRITES,
+		(SpriteSpec**)TransitionLayerBSprites,
 
 		// use z displacement in projection
 		false,
@@ -230,7 +230,7 @@ TransitionEntityROMSpec TRANSITION_LAYER_B_AE =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&TRANSITION_LAYER_B_ANIM,
+	(AnimationDescription*)&TransitionLayerBAnimation,
 
 	// initial animation
 	"Hidden",

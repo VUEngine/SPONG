@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE BrightnessTiles[];
 extern BYTE BrightnessMap[];
 
@@ -31,7 +31,7 @@ extern BYTE BrightnessMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec OPTIONS_BRIGHTNESS_CH =
+CharSetROMSpec OptionsBrightnessCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec OPTIONS_BRIGHTNESS_CH =
 	BrightnessTiles,
 };
 
-TextureROMSpec OPTIONS_BRIGHTNESS_TX =
+TextureROMSpec OptionsBrightnessTexture =
 {
 	// charset spec
-	(CharSetSpec*)&OPTIONS_BRIGHTNESS_CH,
+	(CharSetSpec*)&OptionsBrightnessCharset,
 
 	// bgmap spec
 	BrightnessMap,
@@ -81,14 +81,14 @@ TextureROMSpec OPTIONS_BRIGHTNESS_TX =
 	false,
 };
 
-BgmapSpriteROMSpec OPTIONS_BRIGHTNESS_SPRITE =
+BgmapSpriteROMSpec OptionsBrightnessSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&OPTIONS_BRIGHTNESS_TX,
+		(TextureSpec*)&OptionsBrightnessTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec OPTIONS_BRIGHTNESS_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const OPTIONS_BRIGHTNESS_SPRITES[] =
+BgmapSpriteROMSpec* const OptionsBrightnessSprites[] =
 {
-	&OPTIONS_BRIGHTNESS_SPRITE,
+	&OptionsBrightnessSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec OPTIONS_BRIGHTNESS_LE =
+LocalizedEntityROMSpec OptionsBrightnessLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec OPTIONS_BRIGHTNESS_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)OPTIONS_BRIGHTNESS_SPRITES,
+		(SpriteSpec**)OptionsBrightnessSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec OPTIONS_BRIGHTNESS_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"

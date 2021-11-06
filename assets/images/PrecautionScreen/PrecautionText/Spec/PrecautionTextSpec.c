@@ -21,7 +21,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE PrecautionTextTiles[];
 extern BYTE PrecautionTextMap[];
 
@@ -30,7 +30,7 @@ extern BYTE PrecautionTextMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec PRECAUTION_TEXT_CH =
+CharSetROMSpec PrecautionTextCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -45,10 +45,10 @@ CharSetROMSpec PRECAUTION_TEXT_CH =
 	PrecautionTextTiles,
 };
 
-TextureROMSpec PRECAUTION_TEXT_TX =
+TextureROMSpec PrecautionTextTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PRECAUTION_TEXT_CH,
+	(CharSetSpec*)&PrecautionTextCharset,
 
 	// bgmap spec
 	PrecautionTextMap,
@@ -80,14 +80,14 @@ TextureROMSpec PRECAUTION_TEXT_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PRECAUTION_TEXT_SPRITE =
+BgmapSpriteROMSpec PrecautionTextSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PRECAUTION_TEXT_TX,
+		(TextureSpec*)&PrecautionTextTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -107,13 +107,13 @@ BgmapSpriteROMSpec PRECAUTION_TEXT_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const PRECAUTION_TEXT_SPRITES[] =
+BgmapSpriteROMSpec* const PrecautionTextSprites[] =
 {
-	&PRECAUTION_TEXT_SPRITE,
+	&PrecautionTextSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
+LocalizedEntityROMSpec PrecautionTextLe =
 {
 	{
 		// class allocator
@@ -129,7 +129,7 @@ LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)PRECAUTION_TEXT_SPRITES,
+		(SpriteSpec**)PrecautionTextSprites,
 
 		// use z displacement in projection
 		false,
@@ -149,7 +149,7 @@ LocalizedEntityROMSpec PRECAUTION_TEXT_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0",

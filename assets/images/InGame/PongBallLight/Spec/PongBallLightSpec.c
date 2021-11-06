@@ -29,7 +29,7 @@ extern BYTE PongBallLightMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec PONG_BALL_LIGHT_CH =
+CharSetROMSpec PongBallLightCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -44,10 +44,10 @@ CharSetROMSpec PONG_BALL_LIGHT_CH =
 	PongBallLightTiles,
 };
 
-TextureROMSpec PONG_BALL_LIGHT_TX =
+TextureROMSpec PongBallLightTexture =
 {
 	// charset spec
-	(CharSetSpec*)&PONG_BALL_LIGHT_CH,
+	(CharSetSpec*)&PongBallLightCharset,
 
 	// bgmap spec
 	PongBallLightMap,
@@ -79,14 +79,14 @@ TextureROMSpec PONG_BALL_LIGHT_TX =
 	false,
 };
 
-BgmapSpriteROMSpec PONG_BALL_LIGHT_SPRITE =
+BgmapSpriteROMSpec PongBallLightSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&PONG_BALL_LIGHT_TX,
+		(TextureSpec*)&PongBallLightTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -109,13 +109,13 @@ BgmapSpriteROMSpec PONG_BALL_LIGHT_SPRITE =
 
 /* Entity */
 
-BgmapSpriteROMSpec* const PONG_BALL_LIGHT_SPRITES[] =
+BgmapSpriteROMSpec* const PongBallLightSprites[] =
 {
-	&PONG_BALL_LIGHT_SPRITE,
+	&PongBallLightSprite,
 	NULL
 };
 
-PongBallLightROMSpec PONG_BALL_LIGHT_IM =
+PongBallLightROMSpec PongBallLightEntity =
 {
 	{
 		// class allocator
@@ -131,7 +131,7 @@ PongBallLightROMSpec PONG_BALL_LIGHT_IM =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)PONG_BALL_LIGHT_SPRITES,
+		(SpriteSpec**)PongBallLightSprites,
 
 		// use z displacement in projection
 		false,

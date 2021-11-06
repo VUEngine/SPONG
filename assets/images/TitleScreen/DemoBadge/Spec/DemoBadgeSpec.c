@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LOCALIZED_ENTITY_ANIM;
+extern AnimationDescription LocalizedEntityAnimation;
 extern BYTE DemoBadgeTiles[];
 extern BYTE DemoBadgeMap[];
 
@@ -31,7 +31,7 @@ extern BYTE DemoBadgeMap[];
 //												DEFINITIONS
 //---------------------------------------------------------------------------------------------------------
 
-CharSetROMSpec DEMO_BADGE_CH =
+CharSetROMSpec DemoBadgeCharset =
 {
 	// number of chars, depending on allocation type:
 	// __ANIMATED_SINGLE*, __ANIMATED_SHARED*: number of chars of a single animation frame (cols * rows)
@@ -46,10 +46,10 @@ CharSetROMSpec DEMO_BADGE_CH =
 	DemoBadgeTiles,
 };
 
-TextureROMSpec DEMO_BADGE_TX =
+TextureROMSpec DemoBadgeTexture =
 {
 	// charset spec
-	(CharSetSpec*)&DEMO_BADGE_CH,
+	(CharSetSpec*)&DemoBadgeCharset,
 
 	// bgmap spec
 	DemoBadgeMap,
@@ -81,14 +81,14 @@ TextureROMSpec DEMO_BADGE_TX =
 	false,
 };
 
-BgmapSpriteROMSpec DEMO_BADGE_SPRITE =
+BgmapSpriteROMSpec DemoBadgeSprite =
 {
 	{
 		// sprite's type
 		__TYPE(BgmapAnimatedSprite),
 
 		// texture spec
-		(TextureSpec*)&DEMO_BADGE_TX,
+		(TextureSpec*)&DemoBadgeTexture,
 
 		// transparent (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -108,13 +108,13 @@ BgmapSpriteROMSpec DEMO_BADGE_SPRITE =
 	__WORLD_ON,
 };
 
-BgmapSpriteROMSpec* const DEMO_BADGE_SPRITES[] =
+BgmapSpriteROMSpec* const DemoBadgeSprites[] =
 {
-	&DEMO_BADGE_SPRITE,
+	&DemoBadgeSprite,
 	NULL
 };
 
-LocalizedEntityROMSpec DEMO_BADGE_LE =
+LocalizedEntityROMSpec DemoBadgeLe =
 {
 	{
 		// class allocator
@@ -130,7 +130,7 @@ LocalizedEntityROMSpec DEMO_BADGE_LE =
 		NULL,
 
 		// sprites
-		(SpriteSpec**)DEMO_BADGE_SPRITES,
+		(SpriteSpec**)DemoBadgeSprites,
 
 		// use z displacement in projection
 		false,
@@ -150,7 +150,7 @@ LocalizedEntityROMSpec DEMO_BADGE_LE =
 	},
 
 	// pointer to the animation spec for the character
-	(AnimationDescription*)&LOCALIZED_ENTITY_ANIM,
+	(AnimationDescription*)&LocalizedEntityAnimation,
 
 	// initial animation
 	"0"
