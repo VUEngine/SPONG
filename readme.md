@@ -6,7 +6,7 @@ A simple Pong-like game that demonstrates VUEngine's multiplayer capabilities.
 LICENSE
 -------
 
-© Jorge Eremiev jorgech3@gmail.com and Christian Radke c.radke@posteo.de
+© Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>
 
 This software is licensed under the MIT License, which means you can basically do with it whatever you
 want as long as you include the original copyright and license notice in any copy of the software/source.
