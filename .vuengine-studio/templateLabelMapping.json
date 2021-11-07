@@ -5,6 +5,7 @@
 	"authors": [
 		"Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>"
 	],
+	"description": "A simple Pong-like game that demonstrates VUEngine's multiplayer capabilities.",
 	"headerName": "SPONG",
 	"makerCode": "VU"
 }
