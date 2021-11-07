@@ -2,6 +2,7 @@
 	"name": [
 		"SPONG"
 	],
+	"gameCode": "VSPM",
 	"authors": [
 		"Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>"
 	],
