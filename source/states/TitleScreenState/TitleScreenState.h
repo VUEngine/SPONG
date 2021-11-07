@@ -15,7 +15,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ enum TitleScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class TitleScreenState : SpongScreenState
+singleton class TitleScreenState : GameScreenState
 {
 	// entity references
 	Entity entityMainMenu;

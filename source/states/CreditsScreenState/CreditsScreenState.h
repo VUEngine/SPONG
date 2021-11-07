@@ -15,14 +15,14 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class CreditsScreenState : SpongScreenState
+singleton class CreditsScreenState : GameScreenState
 {
 	static CreditsScreenState getInstance();
 

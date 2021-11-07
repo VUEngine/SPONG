@@ -15,14 +15,14 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class AutomaticPauseScreenState : SpongScreenState
+singleton class AutomaticPauseScreenState : GameScreenState
 {
 	static AutomaticPauseScreenState getInstance();
 	override void processUserInput(UserInput userInput);

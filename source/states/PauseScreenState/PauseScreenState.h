@@ -15,7 +15,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 #include <OptionsSelector.h>
 
 
@@ -41,7 +41,7 @@ enum PauseScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class PauseScreenState : SpongScreenState
+singleton class PauseScreenState : GameScreenState
 {
 	uint8 mode;
 	OptionsSelector optionsSelector;

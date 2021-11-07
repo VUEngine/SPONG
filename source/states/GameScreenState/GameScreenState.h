@@ -7,8 +7,8 @@
  * that was distributed with this source code.
  */
 
-#ifndef SPONG_SCREEN_STATE_H_
-#define SPONG_SCREEN_STATE_H_
+#ifndef GAME_SCREEN_STATE_H_
+#define GAME_SCREEN_STATE_H_
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-abstract class SpongScreenState : GameState
+abstract class GameScreenState : GameState
 {
 	void constructor();
 

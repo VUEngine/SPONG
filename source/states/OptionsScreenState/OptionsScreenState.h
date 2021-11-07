@@ -15,7 +15,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ enum OptionsScreenOptions
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class OptionsScreenState : SpongScreenState
+singleton class OptionsScreenState : GameScreenState
 {
 	// entity references
 	Entity entityCursor;

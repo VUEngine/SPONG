@@ -45,7 +45,7 @@ enum CollisionLayers
 	kLayerAll							= 0xFFFFFFFF,
 };
 
-enum SpongMessageTypes
+enum GameMessageTypes
 {
 	kMessageFollowPongBall = kMessageLastEngine + 1,
 	kMessageAddBonusScore,

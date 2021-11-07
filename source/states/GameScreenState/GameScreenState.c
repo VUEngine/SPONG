@@ -15,33 +15,33 @@
 #include <Game.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //												CLASS'S METHODS
 //---------------------------------------------------------------------------------------------------------
 
-void SpongScreenState::constructor()
+void GameScreenState::constructor()
 {
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionInComplete, kEventTransitionInComplete);
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
+	Object::addEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
-void SpongScreenState::destructor()
+void GameScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionInComplete, kEventTransitionInComplete);
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)SpongScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
+	Object::removeEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();
 }
 
-void SpongScreenState::resume(void* owner)
+void GameScreenState::resume(void* owner)
 {
 	Base::resume(this, owner);
 
@@ -49,27 +49,27 @@ void SpongScreenState::resume(void* owner)
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
 }
 
-void SpongScreenState::suspend(void* owner)
+void GameScreenState::suspend(void* owner)
 {
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
 	Base::suspend(this, owner);
 }
 
-void SpongScreenState::switchState()
+void GameScreenState::switchState()
 {
 	// hide screen
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 }
 
-void SpongScreenState::onTransitionInComplete(Object eventFirer __attribute__ ((unused)))
+void GameScreenState::onTransitionInComplete(Object eventFirer __attribute__ ((unused)))
 {
 	// enable user input
 	Game::enableKeypad(Game::getInstance());
 }
 
 
-void SpongScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void GameScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
 {
-	SpongScreenState::switchState(this);
+	GameScreenState::switchState(this);
 }

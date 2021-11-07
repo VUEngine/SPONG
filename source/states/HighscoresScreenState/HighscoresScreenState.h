@@ -15,14 +15,14 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class HighscoresScreenState : SpongScreenState
+singleton class HighscoresScreenState : GameScreenState
 {
 	static HighscoresScreenState getInstance();
 	override void enter(void* owner);

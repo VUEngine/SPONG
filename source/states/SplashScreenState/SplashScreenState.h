@@ -15,7 +15,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ enum SplashScreensMessageTypes
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-abstract class SplashScreenState : SpongScreenState
+abstract class SplashScreenState : GameScreenState
 {
 	// state to enter after this one
 	GameState nextState;

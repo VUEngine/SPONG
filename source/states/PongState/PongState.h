@@ -15,7 +15,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <SpongScreenState.h>
+#include <GameScreenState.h>
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ typedef struct DataToTransmit
 	ResumedUserInput resumedUserInput;
 } DataToTransmit;
 
-singleton class PongState : SpongScreenState
+singleton class PongState : GameScreenState
 {
 	DataToTransmit opponentData;
 	bool isVersusMode;
