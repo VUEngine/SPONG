@@ -136,6 +136,8 @@ void PongBall::startMovement()
 	localPosition.x = paddlePosition->x;
 	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) / 100.0f);
 	Entity::setLocalPosition(this, &localPosition);
+
+	Body::setMovementType(this->body, __UNIFORM_MOVEMENT, __X_AXIS | __Y_AXIS);
 }
 
 // move back to ejector
