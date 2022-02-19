@@ -20,8 +20,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE AdjustmentScreenVUEngineLogoTiles[];
-extern BYTE AdjustmentScreenVUEngineLogoMap[];
+extern uint32 AdjustmentScreenVUEngineLogoTiles[];
+extern uint16 AdjustmentScreenVUEngineLogoMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -41,6 +41,9 @@ CharSetROMSpec AdjustmentScreenVUEngineLogoCharset =
 
 	// char spec
 	AdjustmentScreenVUEngineLogoTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec AdjustmentScreenVUEngineLogoTexture =

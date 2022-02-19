@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE OptionsTiles[];
-extern BYTE OptionsMap[];
+extern uint32 OptionsTiles[];
+extern uint16 OptionsMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuOptionsCharset =
 
 	// char spec
 	OptionsTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuOptionsTexture =

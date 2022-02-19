@@ -22,8 +22,9 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE AGameByTiles[];
-extern BYTE AGameByMap[];
+extern uint32 AGameByTiles[];
+extern uint32 AGameByTilesFrameOffsets[];
+extern uint16 AGameByMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,6 +44,9 @@ CharSetROMSpec CreditsAGameByCharset =
 
 	// char spec
 	AGameByTiles,
+
+	// pointer to the frames offsets
+	AGameByTilesFrameOffsets,
 };
 
 TextureROMSpec CreditsAGameByTexture =

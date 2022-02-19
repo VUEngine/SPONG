@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE BrightnessTiles[];
-extern BYTE BrightnessMap[];
+extern uint32 BrightnessTiles[];
+extern uint16 BrightnessMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec OptionsBrightnessCharset =
 
 	// char spec
 	BrightnessTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsBrightnessTexture =

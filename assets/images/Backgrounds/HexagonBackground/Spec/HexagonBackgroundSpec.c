@@ -21,10 +21,12 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE HexagonBackgroundLeftMap[];
-extern BYTE HexagonBackgroundLeftTiles[];
-extern BYTE HexagonBackgroundRightTiles[];
-extern BYTE HexagonBackgroundRightMap[];
+extern uint32 HexagonBackgroundLeftTiles[];
+extern uint32 HexagonBackgroundRightTiles[];
+extern uint32 HexagonBackgroundLeftTilesFrameOffsets[];
+extern uint32 HexagonBackgroundRightTilesFrameOffsets[];
+extern uint16 HexagonBackgroundLeftMap[];
+extern uint16 HexagonBackgroundRightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -81,6 +83,9 @@ CharSetROMSpec HexagonBackgroundLCharset =
 
 	// char spec
 	HexagonBackgroundLeftTiles,
+
+	// pointer to the frames offsets
+	HexagonBackgroundLeftTilesFrameOffsets,
 };
 
 TextureROMSpec HexagonBackgroundLTexture =
@@ -161,6 +166,9 @@ CharSetROMSpec HexagonBackgroundRCharset =
 
 	// char spec
 	HexagonBackgroundRightTiles,
+
+	// pointer to the frames offsets
+	HexagonBackgroundRightTilesFrameOffsets,
 };
 
 TextureROMSpec HexagonBackgroundRTexture =

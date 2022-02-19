@@ -20,8 +20,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE AdjustmentScreenVUEngineIconTiles[];
-extern BYTE AdjustmentScreenVUEngineIconMap[];
+extern uint32 AdjustmentScreenVUEngineIconTiles[];
+extern uint16 AdjustmentScreenVUEngineIconMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -41,6 +41,9 @@ CharSetROMSpec AdjustmentScreenVUEngineIconCharset =
 
 	// char spec
 	AdjustmentScreenVUEngineIconTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec AdjustmentScreenVUEngineIconTexture =

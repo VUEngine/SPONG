@@ -22,8 +22,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE VolumeMeterTiles[];
-extern BYTE VolumeMeterMap[];
+extern uint32 VolumeMeterTiles[];
+extern uint16 VolumeMeterMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -162,6 +162,9 @@ CharSetROMSpec VolumeMeterCharset =
 
 	// char spec
 	VolumeMeterTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec VolumeMeterTexture =

@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE WaitingForOtherPlayerTiles[];
-extern BYTE WaitingForOtherPlayerMap[];
+extern uint32 WaitingForOtherPlayerTiles[];
+extern uint16 WaitingForOtherPlayerMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuWaitingForOtherPlayerCharset =
 
 	// char spec
 	WaitingForOtherPlayerTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuWaitingForOtherPlayerTexture =

@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE ChallengeModeTiles[];
-extern BYTE ChallengeModeMap[];
+extern uint32 ChallengeModeTiles[];
+extern uint16 ChallengeModeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuChallengeModeCharset =
 
 	// char spec
 	ChallengeModeTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuChallengeModeTexture =

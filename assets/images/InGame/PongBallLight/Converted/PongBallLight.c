@@ -1,24 +1,22 @@
-//======================================================================
+//---------------------------------------------------------------------------------------------------------
 //
-//	PongBallLight, 24x24@2, 
-//	+ 5 tiles (t|f reduced) not compressed
-//	+ regular map (flat), not compressed, 3x3 
-//	Total size: 80 + 20 = 100
+//  PongBallLight
+//  • 24×24 pixels
+//  • 4 tiles, reduced by non-unique and flipped tiles, not compressed
+//  • 3×3 map, not compressed
+//  Size: 68 + 18 = 86
 //
-//	Exported by Cearn's GBA Image Transmogrifier, v0.8.6
-//	( http://www.coranac.com/projects/#grit )
-//
-//======================================================================
+//---------------------------------------------------------------------------------------------------------
 
-const uint32 PongBallLightTiles[20] __attribute__((aligned(4)))=
+const uint32 PongBallLightTiles[17] __attribute__((aligned(4))) =
 {
-	0x00000000,0x00000000,0x00000000,0x00000000,0xA0000000,0xAA00A800,0xAAA0AA80,0xAAA8AAA8,
-	0xAAAA2AA8,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAA8,0xAAAAAAAA,0xAAAAAAAA,0xAAA8AAAA,
-	0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,
+    0x00000000,0xA0000000,0xAA00A800,0xAAA0AA80,0xAAA8AAA8,0xAAAA2AA8,0xAAAAAAAA,0xAAAAAAAA,
+    0xAAAAAAAA,0xAAAAAAA8,0xAAAAAAAA,0xAAAAAAAA,0xAAA8AAAA,0xAAAAAAAA,0xAAAAAAAA,0xAAAAAAAA,
+    0xAAAAAAAA,
 };
 
-const uint16 PongBallLightMap[10] __attribute__((aligned(4)))=
+const uint16 PongBallLightMap[9] __attribute__((aligned(4))) =
 {
-	0x0001,0x0002,0x2001,0x0003,0x0004,0x2003,0x1001,0x3002,
-	0x3001,0x0000,
+    0x0000,0x0001,0x2000,0x0002,0x0003,0x2002,0x1000,0x3001,
+    0x3000,
 };

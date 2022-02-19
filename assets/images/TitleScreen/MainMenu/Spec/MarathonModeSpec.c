@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE MarathonModeTiles[];
-extern BYTE MarathonModeMap[];
+extern uint32 MarathonModeTiles[];
+extern uint16 MarathonModeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuMarathonModeCharset =
 
 	// char spec
 	MarathonModeTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuMarathonModeTexture =

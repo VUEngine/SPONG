@@ -22,8 +22,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE BrightnessMeterTiles[];
-extern BYTE BrightnessMeterMap[];
+extern uint32 BrightnessMeterTiles[];
+extern uint16 BrightnessMeterMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -162,6 +162,9 @@ CharSetROMSpec BrightnessMeterCharset =
 
 	// char spec
 	BrightnessMeterTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec BrightnessMeterTexture =

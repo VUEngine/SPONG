@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE CreditsTiles[];
-extern BYTE CreditsMap[];
+extern uint32 CreditsTiles[];
+extern uint16 CreditsMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuCreditsCharset =
 
 	// char spec
 	CreditsTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuCreditsTexture =

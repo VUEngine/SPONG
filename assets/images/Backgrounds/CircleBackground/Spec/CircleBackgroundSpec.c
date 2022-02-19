@@ -21,10 +21,12 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CircleBackgroundLeftMap[];
-extern BYTE CircleBackgroundLeftTiles[];
-extern BYTE CircleBackgroundRightTiles[];
-extern BYTE CircleBackgroundRightMap[];
+extern uint32 CircleBackgroundLeftTiles[];
+extern uint32 CircleBackgroundRightTiles[];
+extern uint32 CircleBackgroundLeftTilesFrameOffsets[];
+extern uint32 CircleBackgroundRightTilesFrameOffsets[];
+extern uint16 CircleBackgroundLeftMap[];
+extern uint16 CircleBackgroundRightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -81,6 +83,9 @@ CharSetROMSpec CircleBackgroundLCharset =
 
 	// char spec
 	CircleBackgroundLeftTiles,
+
+	// pointer to the frames offsets
+	CircleBackgroundLeftTilesFrameOffsets,
 };
 
 TextureROMSpec CircleBackgroundLTexture =
@@ -161,6 +166,9 @@ CharSetROMSpec CircleBackgroundRCharset =
 
 	// char spec
 	CircleBackgroundRightTiles,
+
+	// pointer to the frames offsets
+	CircleBackgroundRightTilesFrameOffsets,
 };
 
 TextureROMSpec CircleBackgroundRTexture =

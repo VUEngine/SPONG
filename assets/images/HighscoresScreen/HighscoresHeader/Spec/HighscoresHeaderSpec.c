@@ -23,10 +23,11 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE HighscoresHeaderLTiles[];
-extern BYTE HighscoresHeaderRTiles[];
-extern BYTE HighscoresHeaderLMap[];
-extern BYTE HighscoresHeaderRMap[];
+extern uint32 HighscoresHeaderLTiles[];
+extern uint32 HighscoresHeaderRTiles[];
+extern uint32 HighscoresHeaderTilesFrameOffsets[];
+extern uint16 HighscoresHeaderLMap[];
+extern uint16 HighscoresHeaderRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -48,6 +49,9 @@ CharSetROMSpec HighscoresHeaderLCharset =
 
 	// char spec
 	HighscoresHeaderLTiles,
+
+	// pointer to the frames offsets
+	HighscoresHeaderTilesFrameOffsets,
 };
 
 TextureROMSpec HighscoresHeaderLTexture =
@@ -127,6 +131,9 @@ CharSetROMSpec HighscoresHeaderRCharset =
 
 	// char spec
 	HighscoresHeaderRTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec HighscoresHeaderRTexture =

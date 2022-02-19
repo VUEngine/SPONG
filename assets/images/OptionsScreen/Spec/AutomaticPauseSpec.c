@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE AutomaticPauseTiles[];
-extern BYTE AutomaticPauseMap[];
+extern uint32 AutomaticPauseTiles[];
+extern uint16 AutomaticPauseMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec OptionsAutomaticPauseCharset =
 
 	// char spec
 	AutomaticPauseTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsAutomaticPauseTexture =

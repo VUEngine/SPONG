@@ -21,8 +21,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE FlagSpainTiles[];
-extern BYTE FlagSpainMap[];
+extern uint32 FlagSpainTiles[];
+extern uint16 FlagSpainMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,6 +42,9 @@ CharSetROMSpec FlagSpainCharset =
 
 	// char spec
 	FlagSpainTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec FlagSpainTexture =

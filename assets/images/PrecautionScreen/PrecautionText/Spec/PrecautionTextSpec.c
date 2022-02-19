@@ -22,8 +22,9 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE PrecautionTextTiles[];
-extern BYTE PrecautionTextMap[];
+extern uint32 PrecautionTextTiles[];
+extern uint32 PrecautionTextTilesFrameOffsets[];
+extern uint16 PrecautionTextMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,6 +44,9 @@ CharSetROMSpec PrecautionTextCharset =
 
 	// char spec
 	PrecautionTextTiles,
+
+	// pointer to the frames offsets
+	PrecautionTextTilesFrameOffsets,
 };
 
 TextureROMSpec PrecautionTextTexture =

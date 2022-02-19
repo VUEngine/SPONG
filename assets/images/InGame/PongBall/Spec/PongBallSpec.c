@@ -22,9 +22,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PongBallTiles[];
-extern BYTE PongBallLMap[];
-extern BYTE PongBallRMap[];
+extern uint32 PongBallTiles[];
+extern uint16 PongBallLMap[];
+extern uint16 PongBallRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec PongBallCharset =
 
 	// char spec
 	PongBallTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 /* Left */

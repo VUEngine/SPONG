@@ -23,8 +23,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PongBallParticleTiles[];
-extern BYTE PongBallParticleMap[];
+extern uint32 PongBallParticleTiles[];
+extern uint32 PongBallParticleTilesFrameOffsets[];
+extern uint16 PongBallParticleMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -75,6 +76,9 @@ CharSetROMSpec PongBallParticleCharset =
 
 	// char spec
 	PongBallParticleTiles,
+
+	// pointer to the frames offsets
+	PongBallParticleTilesFrameOffsets,
 };
 
 TextureROMSpec PongBallParticleTexture =

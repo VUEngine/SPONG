@@ -23,10 +23,10 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE OptionsHeaderLTiles[];
-extern BYTE OptionsHeaderRTiles[];
-extern BYTE OptionsHeaderLMap[];
-extern BYTE OptionsHeaderRMap[];
+extern uint32 OptionsHeaderLTiles[];
+extern uint32 OptionsHeaderRTiles[];
+extern uint16 OptionsHeaderLMap[];
+extern uint16 OptionsHeaderRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -48,6 +48,9 @@ CharSetROMSpec OptionsHeaderLCharset =
 
 	// char spec
 	OptionsHeaderLTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsHeaderLTexture =
@@ -127,6 +130,9 @@ CharSetROMSpec OptionsHeaderRCharset =
 
 	// char spec
 	OptionsHeaderRTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsHeaderRTexture =

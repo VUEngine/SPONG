@@ -22,8 +22,9 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE PatronThanksTiles[];
-extern BYTE PatronThanksMap[];
+extern uint32 PatronThanksTiles[];
+extern uint32 PatronThanksTilesFrameOffsets[];
+extern uint16 PatronThanksMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -43,6 +44,9 @@ CharSetROMSpec CreditsPatronThanksCharset =
 
 	// char spec
 	PatronThanksTiles,
+
+	// pointer to the frames offsets
+	PatronThanksTilesFrameOffsets,
 };
 
 TextureROMSpec CreditsPatronThanksTexture =

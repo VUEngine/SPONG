@@ -23,10 +23,12 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PaddleRightLTiles[];
-extern BYTE PaddleRightLMap[];
-extern BYTE PaddleRightRTiles[];
-extern BYTE PaddleRightRMap[];
+extern uint32 PaddleRightLTiles[];
+extern uint32 PaddleRightRTiles[];
+extern uint32 PaddleRightLTilesFrameOffsets[];
+extern uint32 PaddleRightRTilesFrameOffsets[];
+extern uint16 PaddleRightLMap[];
+extern uint16 PaddleRightRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -53,6 +55,9 @@ CharSetROMSpec PaddleRightLCharset =
 
 	// char spec
 	PaddleRightLTiles,
+
+	// pointer to the frames offsets
+	PaddleRightLTilesFrameOffsets,
 };
 
 TextureROMSpec PaddleRightLTexture =
@@ -132,6 +137,9 @@ CharSetROMSpec PaddleRightRCharset =
 
 	// char spec
 	PaddleRightRTiles,
+
+	// pointer to the frames offsets
+	PaddleRightRTilesFrameOffsets,
 };
 
 TextureROMSpec PaddleRightRTexture =

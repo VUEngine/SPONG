@@ -21,8 +21,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE TransitionLayerBTiles[];
-extern BYTE TransitionLayerBMap[];
+extern uint32 TransitionLayerBTiles[];
+extern uint32 TransitionLayerBTilesFrameOffsets[];
+extern uint16 TransitionLayerBMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -124,6 +125,9 @@ CharSetROMSpec TransitionLayerBCharset =
 
 	// char spec
 	TransitionLayerBTiles,
+
+	// pointer to the frames offsets
+	TransitionLayerBTilesFrameOffsets,
 };
 
 TextureROMSpec TransitionLayerBTexture =

@@ -22,8 +22,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE OptionsCursorTiles[];
-extern BYTE OptionsCursorMap[];
+extern uint32 OptionsCursorTiles[];
+extern uint16 OptionsCursorMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -74,6 +74,9 @@ CharSetROMSpec OptionsCursorCharset =
 
 	// char spec
 	OptionsCursorTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsCursorTexture =

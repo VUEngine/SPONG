@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE VersusModeTiles[];
-extern BYTE VersusModeMap[];
+extern uint32 VersusModeTiles[];
+extern uint16 VersusModeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuVersusModeCharset =
 
 	// char spec
 	VersusModeTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuVersusModeTexture =

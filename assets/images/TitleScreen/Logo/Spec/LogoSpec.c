@@ -20,10 +20,12 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE LogoLTiles[];
-extern BYTE LogoRTiles[];
-extern BYTE LogoLMap[];
-extern BYTE LogoRMap[];
+extern uint32 LogoLTiles[];
+extern uint32 LogoRTiles[];
+extern uint32 LogoLTilesFrameOffsets[];
+extern uint32 LogoRTilesFrameOffsets[];
+extern uint16 LogoLMap[];
+extern uint16 LogoRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -81,6 +83,9 @@ CharSetROMSpec LogoLCharset =
 
 	// char spec
 	LogoLTiles,
+
+	// pointer to the frames offsets
+	LogoLTilesFrameOffsets,
 };
 
 TextureROMSpec LogoLTexture =
@@ -160,6 +165,9 @@ CharSetROMSpec LogoRCharset =
 
 	// char spec
 	LogoRTiles,
+
+	// pointer to the frames offsets
+	LogoRTilesFrameOffsets,
 };
 
 TextureROMSpec LogoRTexture =

@@ -22,8 +22,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CursorTiles[];
-extern BYTE CursorMap[];
+extern uint32 CursorTiles[];
+extern uint16 CursorMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -74,6 +74,9 @@ CharSetROMSpec MainMenuCursorCharset =
 
 	// char spec
 	CursorTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuCursorTexture =

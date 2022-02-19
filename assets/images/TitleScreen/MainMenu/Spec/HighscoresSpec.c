@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE HighscoresTiles[];
-extern BYTE HighscoresMap[];
+extern uint32 HighscoresTiles[];
+extern uint16 HighscoresMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ CharSetROMSpec MainMenuHighscoresCharset =
 
 	// char spec
 	HighscoresTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec MainMenuHighscoresTexture =

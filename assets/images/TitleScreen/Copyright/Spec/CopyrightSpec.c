@@ -20,8 +20,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CopyrightTiles[];
-extern BYTE CopyrightMap[];
+extern uint32 CopyrightTiles[];
+extern uint16 CopyrightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -41,6 +41,9 @@ CharSetROMSpec CopyrightCharset =
 
 	// char spec
 	CopyrightTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec CopyrightTexture =

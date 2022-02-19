@@ -21,8 +21,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE LanguageNameTiles[];
-extern BYTE LanguageNameMap[];
+extern uint32 LanguageNameTiles[];
+extern uint16 LanguageNameMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,6 +42,9 @@ CharSetROMSpec LanguageNameCharset =
 
 	// char spec
 	LanguageNameTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec LanguageNameTexture =

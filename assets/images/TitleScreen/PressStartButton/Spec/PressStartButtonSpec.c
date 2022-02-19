@@ -20,8 +20,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PressStartButtonTiles[];
-extern BYTE PressStartButtonMap[];
+extern uint32 PressStartButtonTiles[];
+extern uint32 PressStartButtonTilesFrameOffsets[];
+extern uint16 PressStartButtonMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -160,6 +161,9 @@ CharSetROMSpec PressStartButtonCharset =
 
 	// char spec
 	PressStartButtonTiles,
+
+	// pointer to the frames offsets
+	PressStartButtonTilesFrameOffsets,
 };
 
 TextureROMSpec PressStartButtonTexture =

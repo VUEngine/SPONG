@@ -21,10 +21,12 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE RhombusBackgroundLeftMap[];
-extern BYTE RhombusBackgroundLeftTiles[];
-extern BYTE RhombusBackgroundRightTiles[];
-extern BYTE RhombusBackgroundRightMap[];
+extern uint32 RhombusBackgroundLeftTiles[];
+extern uint32 RhombusBackgroundRightTiles[];
+extern uint32 RhombusBackgroundLeftTilesFrameOffsets[];
+extern uint32 RhombusBackgroundRightTilesFrameOffsets[];
+extern uint16 RhombusBackgroundLeftMap[];
+extern uint16 RhombusBackgroundRightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -81,6 +83,9 @@ CharSetROMSpec RhombusBackgroundLCharset =
 
 	// char spec
 	RhombusBackgroundLeftTiles,
+
+	// pointer to the frames offsets
+	RhombusBackgroundLeftTilesFrameOffsets,
 };
 
 TextureROMSpec RhombusBackgroundLTexture =
@@ -161,6 +166,9 @@ CharSetROMSpec RhombusBackgroundRCharset =
 
 	// char spec
 	RhombusBackgroundRightTiles,
+
+	// pointer to the frames offsets
+	RhombusBackgroundRightTilesFrameOffsets,
 };
 
 TextureROMSpec RhombusBackgroundRTexture =

@@ -23,8 +23,9 @@
 //---------------------------------------------------------------------------------------------------------
 
 extern AnimationDescription LocalizedEntityAnimation;
-extern BYTE DemoBadgeTiles[];
-extern BYTE DemoBadgeMap[];
+extern uint32 DemoBadgeTiles[];
+extern uint32 DemoBadgeTilesFrameOffsets[];
+extern uint16 DemoBadgeMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -44,6 +45,9 @@ CharSetROMSpec DemoBadgeCharset =
 
 	// char spec
 	DemoBadgeTiles,
+
+	// pointer to the frames offsets
+	DemoBadgeTilesFrameOffsets,
 };
 
 TextureROMSpec DemoBadgeTexture =

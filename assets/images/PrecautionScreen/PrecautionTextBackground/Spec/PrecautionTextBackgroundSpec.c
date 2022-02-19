@@ -20,8 +20,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PrecautionTextBackgroundTiles[];
-extern BYTE PrecautionTextBackgroundMap[];
+extern uint32 PrecautionTextBackgroundTiles[];
+extern uint16 PrecautionTextBackgroundMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -41,6 +41,9 @@ CharSetROMSpec PrecautionTextBackgroundCharset =
 
 	// char spec
 	PrecautionTextBackgroundTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec PrecautionTextBackgroundTexture =

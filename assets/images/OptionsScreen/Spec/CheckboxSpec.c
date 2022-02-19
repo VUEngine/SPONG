@@ -22,8 +22,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CheckboxTiles[];
-extern BYTE CheckboxMap[];
+extern uint32 CheckboxTiles[];
+extern uint16 CheckboxMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -96,6 +96,9 @@ CharSetROMSpec OptionsCheckboxCharset =
 
 	// char spec
 	CheckboxTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec OptionsCheckboxTexture =

@@ -21,8 +21,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PongBallLightTiles[];
-extern BYTE PongBallLightMap[];
+extern uint32 PongBallLightTiles[];
+extern uint16 PongBallLightMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,6 +42,9 @@ CharSetROMSpec PongBallLightCharset =
 
 	// char spec
 	PongBallLightTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec PongBallLightTexture =

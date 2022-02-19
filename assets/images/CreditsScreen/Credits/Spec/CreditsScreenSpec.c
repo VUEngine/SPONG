@@ -20,8 +20,8 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE CreditsScreenTiles[];
-extern BYTE CreditsScreenMap[];
+extern uint32 CreditsScreenTiles[];
+extern uint16 CreditsScreenMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -41,6 +41,9 @@ CharSetROMSpec CreditsScreenCharset =
 
 	// char spec
 	CreditsScreenTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 TextureROMSpec CreditsScreenTexture =

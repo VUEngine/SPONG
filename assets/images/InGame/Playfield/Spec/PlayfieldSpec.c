@@ -20,9 +20,9 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern BYTE PlayfieldTiles[];
-extern BYTE PlayfieldLMap[];
-extern BYTE PlayfieldRMap[];
+extern uint32 PlayfieldTiles[];
+extern uint16 PlayfieldLMap[];
+extern uint16 PlayfieldRMap[];
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,6 +42,9 @@ CharSetROMSpec PlayfieldCharset =
 
 	// char spec
 	PlayfieldTiles,
+
+	// pointer to the frames offsets
+	NULL,
 };
 
 /* Left */
