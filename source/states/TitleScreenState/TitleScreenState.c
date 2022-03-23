@@ -93,8 +93,14 @@ void TitleScreenState::enter(void* owner)
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
 
-	// Enable communications
-	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, Object::safeCast(this));
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		TitleScreenState::enableVersusMode(this);
+	}
+	else
+	{
+		CommunicationManager::addEventListener(CommunicationManager::getInstance(), Object::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
+	}
 
 	// show screen
 	BrightnessManager::delayedShowScreen(BrightnessManager::getInstance());
@@ -102,6 +108,8 @@ void TitleScreenState::enter(void* owner)
 
 void TitleScreenState::exit(void* owner)
 {
+	CommunicationManager::removeEventListener(CommunicationManager::getInstance(), Object::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
+
 	this->entityPressStart = NULL;
 	this->entityMainMenu = NULL;
 	this->entityMainMenuVersus = NULL;
@@ -115,6 +123,11 @@ void TitleScreenState::exit(void* owner)
 }
 
 void TitleScreenState::onConnectedWithRemoteSystem(Object eventFirer __attribute__ ((unused)))
+{
+	TitleScreenState::enableVersusMode(this);
+}
+
+void TitleScreenState::enableVersusMode()
 {
 	if(!isDeleted(this->entityMainMenuVersus))
 	{
@@ -135,6 +148,7 @@ void TitleScreenState::updateCursorPosition()
 		__PIXELS_TO_METERS((this->option * 12) - 24),
 		0,
 	};
+
 	Entity::setLocalPosition(this->entityCursor, &position);
 
 	// change parallax
@@ -173,6 +187,10 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 		if(this->option == kTitleScreenOptionVersusMode && !CommunicationManager::isConnected(CommunicationManager::getInstance()))
 		{
 			return;
+		}
+		else
+		{
+			Entity::show(this->entityWaitingForOtherPlayer);
 		}
 
 		// disable user input
@@ -271,35 +289,33 @@ void TitleScreenState::switchState()
 
 		case kTitleScreenOptionVersusMode:
 		{
-			if(this->option == kTitleScreenOptionVersusMode)
+			// disable user input
+			Game::disableKeypad(Game::getInstance());
+
+			// stop all sounds
+			SoundManager::stopAllSounds(SoundManager::getInstance(), true);
+			SoundManager::reset(SoundManager::getInstance());
+
+			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 			{
-				// disable user input
-				Game::disableKeypad(Game::getInstance());
+				uint32 sentMessage = kCommunicationMessageStartVersusMatch;
+				uint32 receivedMessage = sentMessage + 1;
+				uint32 dummyData = 0xFAB12;
+				uint32 receivedData = dummyData + 1;
 
-				// stop all sounds
-				SoundManager::stopAllSounds(SoundManager::getInstance(), true);
-				SoundManager::reset(SoundManager::getInstance());
-
-				Entity::show(this->entityWaitingForOtherPlayer);
-
-				if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+				do
 				{
+					CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), sentMessage, (BYTE*)&dummyData, sizeof(dummyData));
 
-					uint32 message = kCommunicationMessageStartVersusMatch;
-
-					do
-					{
-						CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kCommunicationMessageStartVersusMatch, (BYTE*)&message, sizeof(message));
-
-						message = *((uint32*)CommunicationManager::getReceivedMessage(CommunicationManager::getInstance()));
-					}
-					while(kCommunicationMessageStartVersusMatch != message);
-
-					PongState::setVersusMode(PongState::getInstance(), true);
-
-					BrightnessManager::hideScreen(BrightnessManager::getInstance());
-					Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
+					receivedMessage = CommunicationManager::getReceivedMessage(CommunicationManager::getInstance());
+					receivedData = *(uint32*)CommunicationManager::getReceivedData(CommunicationManager::getInstance());
 				}
+				while(receivedMessage != sentMessage && receivedData != dummyData);
+
+				PongState::setVersusMode(PongState::getInstance(), true);
+
+				BrightnessManager::hideScreen(BrightnessManager::getInstance());
+				Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
 			}
 			break;
 		}

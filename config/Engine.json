@@ -68,7 +68,7 @@
 		}
 	},
 	"communications": {
-		"enable": false
+		"enable": true
 	},
 	"debug": {
 		"alertForTornFrames": false,

@@ -137,7 +137,18 @@ void PongState::processUserInput(UserInput userInput)
 		this->opponentData.resumedUserInput.releasedKey = userInput.releasedKey;
 		this->opponentData.resumedUserInput.holdKey = userInput.holdKey;
 
-		CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kCommunicationMessageSendAndReceiveInput, (BYTE*)&this->opponentData, sizeof(this->opponentData));
+		uint32 sentMessage = kCommunicationMessageSendAndReceiveInput;
+		uint32 receivedMessage = sentMessage + 1;
+
+		do
+		{
+			CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), sentMessage, (BYTE*)&this->opponentData, sizeof(this->opponentData));
+
+			receivedMessage = CommunicationManager::getReceivedMessage(CommunicationManager::getInstance());
+		}
+		while(receivedMessage != sentMessage);
+
+		this->opponentData = *(DataToTransmit*)CommunicationManager::getReceivedData(CommunicationManager::getInstance());
 
 /*
 		if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))

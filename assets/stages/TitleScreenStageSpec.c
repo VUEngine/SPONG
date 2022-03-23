@@ -106,7 +106,7 @@ PositionedEntityROMSpec TitleScreenStageEntities[] =
 	{&CopyrightEntity, 							{192, 212,  0,  0}, 	0, NULL, NULL, NULL, false},
 
 	{&TransitionLayerBAe,					{192, 112,  0,  0},  	0, "TRNSLYR", NULL, NULL, false},
-	{&MainMenuWaitingForOtherPlayerLe, 	{192, 168, -1,  0}, 	0, "Waiting", NULL, NULL, false},
+	{&MainMenuWaitingForOtherPlayerLe, 	{192, 32, -1,  0}, 	0, "Waiting", NULL, NULL, false},
 
 	{NULL, {0,0,0,0}, 0, NULL, NULL, NULL, false},
 };
