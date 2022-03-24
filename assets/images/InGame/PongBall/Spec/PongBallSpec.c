@@ -212,7 +212,7 @@ ShapeROMSpec PongBallShapes[] =
 		kLayerPlayField | kLayerPlayFieldBall,
 
 		// layers to ignore when checking for collisions
-		kLayerPlayFieldBall | kLayerPlayFieldSplitter | kLayerPlayFieldPaddleHelper,
+		kLayerPlayFieldBall | kLayerPlayFieldSplitter | kLayerPlayFieldPaddleHelper | kLayerParticles,
 	},
 
 	{NULL, {0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0}, {0, 0, 0}, false, kLayerNone, kLayerNone}
@@ -292,6 +292,7 @@ PongBallROMSpec PongBallPb =
 
 	// minimum velocity
 	{0, 0, 0},
+	
 	// maximum velocity
 	{__I_TO_FIX10_6(10), __I_TO_FIX10_6(9), __I_TO_FIX10_6(13)},
 

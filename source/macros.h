@@ -28,6 +28,7 @@ enum InGameTypes
 	kTypePaddle,
 	kTypePongBall,
 	kTypeWall,
+	kTypeParticle
 };
 
 // entity collision layers
@@ -42,6 +43,7 @@ enum CollisionLayers
 	kLayerPlayFieldBall					= 1 << (kLayerNone + 7), 	// hex 00000080
 	kLayerPlayFieldPaddle				= 1 << (kLayerNone + 8), 	// hex 00000100
 	kLayerPlayFieldPaddleHelper			= 1 << (kLayerNone + 9), 	// hex 00000200
+	kLayerParticles						= 1 << (kLayerNone + 10), 	// hex 00000400
 	kLayerAll							= 0xFFFFFFFF,
 };
 

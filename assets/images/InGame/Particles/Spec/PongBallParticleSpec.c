@@ -13,7 +13,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 #include <Libgccvb.h>
-#include <PhysicalParticle.h>
+#include <SolidParticle.h>
 #include <ParticleSystem.h>
 #include <ObjectAnimatedSprite.h>
 #include <AnimatedEntity.h>
@@ -41,7 +41,7 @@ AnimationFunctionROMSpec PongBallParticleDefaultAnimation =
 	{0, 1, 2, 3},
 
 	// number of cycles a frame of animation is displayed
-	16,
+	32,
 
 	// whether to play it in loop or not
 	false,
@@ -153,37 +153,60 @@ SpriteSpec* const PongBallParticleSprites[] =
 };
 
 // particle's spec
-PhysicalParticleROMSpec PongBallParticle =
+SolidParticleROMSpec PongBallParticle =
 {
 	{
-		// allocator
-		__TYPE(PhysicalParticle),
+		{
+			// allocator
+			__TYPE(SolidParticle),
 
-		// particle's minimum life span in milliseconds
-		100,
+			// particle's minimum life span in milliseconds
+			500,
 
-		// particle's life span delta in milliseconds (maximum = minimum + delta)
-		1000,
+			// particle's life span delta in milliseconds (maximum = minimum + delta)
+			700,
 
-		// function pointer to control particle's behavior
-		//(void (*)(Particle))&dustParticleBehavior,
-		NULL,
+			// function pointer to control particle's behavior
+			//(void (*)(Particle))&dustParticleBehavior,
+			NULL,
 
-		// animation description (used only if sprite is animated)
-		(AnimationDescription*)&PongBallParticleAnimation,
+			// animation description (used only if sprite is animated)
+			(AnimationDescription*)&PongBallParticleAnimation,
 
-		// name of animation to play
-		"Default"
+			// name of animation to play
+			"Default"
+		},
+
+		// particle's minimum mass
+		__F_TO_FIX10_6(0.1f),
+
+		// particle's mass delta (maximum = minimum + delta)
+		__F_TO_FIX10_6(0),
+
+		// axis subject to gravity (bitwise or of __X_AXIS, __Y_AXIS, __Z_AXIS, or false to disable)
+		__Z_AXIS,
 	},
 
-	// particle's minimum mass
-	__F_TO_FIX10_6(0.1f),
+	/// ball's radius
+	__PIXELS_TO_METERS(4),
 
-	// particle's mass delta (maximum = minimum + delta)
+	/// friction for physics
+	__F_TO_FIX10_6(1),
+
+	/// bounciness for physics
 	__F_TO_FIX10_6(0),
 
-	// axis subject to gravity (bitwise or of __X_AXIS, __Y_AXIS, __Z_AXIS, or false to disable)
-	__NO_AXIS,
+	/// object's in-game type
+	kTypeParticle,
+
+	/// layers in which I live
+	kLayerParticles,
+
+	/// layers to ignore when checking for collisions
+	kLayerAll & (~kLayerPlayFieldFloor),
+
+	/// disable collision detection when the particle stops
+	true
 };
 
 ParticleSystemROMSpec PongBallParticlesParticleSystem =
@@ -225,13 +248,13 @@ ParticleSystemROMSpec PongBallParticlesParticleSystem =
 	true,
 
 	// minimum generation delay in milliseconds
-	20,
-
-	// maximum generation delay in milliseconds
 	50,
 
+	// maximum generation delay in milliseconds
+	80,
+
 	// maximum number of alive particles
-	6,
+	12,
 
 	// maximum number of particles to spawn in each cycle
 	1,
@@ -253,12 +276,15 @@ ParticleSystemROMSpec PongBallParticlesParticleSystem =
 
 	// minimum force to apply (x, y, z)
 	// (use int values in the spec to avoid overflow)
-	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(-12), 0},
+	{__F_TO_FIX10_6(0.5f), __F_TO_FIX10_6(0.5f), 0},
 
 	// maximum force to apply (x, y, z)
 	// (use int values in the spec to avoid overflow)
-	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(12), 0},
+	{__F_TO_FIX10_6(2), __F_TO_FIX10_6(2), 0},
 
 	// movement type (__UNIFORM_MOVEMENT or __ACCELERATED_MOVEMENT)
-	__ACCELERATED_MOVEMENT
+	__ACCELERATED_MOVEMENT,
+
+	// use particle system movement vector for the force to apply to the particles
+	true
 };

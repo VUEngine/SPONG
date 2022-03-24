@@ -72,9 +72,11 @@ void PongBall::ready(bool recursive)
 	// call base
 	Base::ready(this, recursive);
 
-	this->particles = ParticleSystem::safeCast(Container::getChildByName(Container::safeCast(this), "Partcls", true));
-
-	ParticleSystem::setLoop(this->particles, false);
+	if(!GameState::isVersusMode(Game::getCurrentState(Game::getInstance())))
+	{
+		this->particles = ParticleSystem::safeCast(Container::getChildByName(Container::safeCast(this), "Partcls", true));
+		ParticleSystem::setLoop(this->particles, true);
+	}
 
 	PongBall::startMovement(this);
 }
@@ -137,6 +139,7 @@ void PongBall::startMovement()
 	localPosition.y = paddlePosition->y + 0*__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) / 100.0f);
 	Entity::setLocalPosition(this, &localPosition);
 
+	// Force uniform movement along the X and Y axis, while Z is accelerated and handled by gravity
 	Body::setMovementType(this->body, __UNIFORM_MOVEMENT, __X_AXIS | __Y_AXIS);
 }
 
@@ -191,9 +194,9 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 					velocityModifier.y = __FIX10_6_DIV(__F_TO_FIX10_6(Utilities::random(Utilities::randomSeed(), 10) - 5), __I_TO_FIX10_6(100));
 				}
 
-				if(this->particles)
+				if(!isDeleted(this->particles))
 				{
-					ParticleSystem::setLoop(this->particles, false);
+					ParticleSystem::setLoop(this->particles, true);
 					ParticleSystem::start(this->particles);
 				}
 
@@ -363,10 +366,9 @@ void PongBall::startRolling()
 	velocity.z = -velocity.z;
 	Body::modifyVelocity(this->body, &velocity);
 
-	if(this->particles)
+	if(!isDeleted(this->particles))
 	{
 		ParticleSystem::setLoop(this->particles, true);
-
 		ParticleSystem::start(this->particles);
 	}
 }

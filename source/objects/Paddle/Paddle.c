@@ -101,7 +101,7 @@ void Paddle::moveTowards(Direction direction)
 		0
 	};
 
-	Actor::addForce(this, &force, false);
+	Actor::applyForce(this, &force, false);
 }
 
 void Paddle::stopTowards(Direction direction)
