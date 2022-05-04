@@ -137,6 +137,9 @@ LocalizedEntityROMSpec PrecautionTextLe =
 
 		// use z displacement in projection
 		false,
+			
+		/// meshes
+		(MeshSpec*)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,

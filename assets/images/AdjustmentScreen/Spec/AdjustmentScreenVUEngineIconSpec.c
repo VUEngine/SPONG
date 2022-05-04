@@ -167,6 +167,9 @@ EntityROMSpec AdjustmentScreenVUEngineIconL =
 
 	// use z displacement in projection
 	false,
+			
+	/// meshes
+	(MeshSpec*)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -201,6 +204,9 @@ EntityROMSpec AdjustmentScreenVUEngineIconR =
 
 	// use z displacement in projection
 	false,
+			
+	/// meshes
+	(MeshSpec*)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
