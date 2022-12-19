@@ -73,14 +73,11 @@ AnimationFunctionROMSpec OptionsCheckboxOnAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec OptionsCheckboxAnimation =
+AnimationFunctionROMSpec* const OptionsCheckboxAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&OptionsCheckboxOnAnimation,
-		(AnimationFunction*)&OptionsCheckboxOffAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&OptionsCheckboxOnAnimation,
+    (AnimationFunction*)&OptionsCheckboxOffAnimation,
+    NULL,
 };
 
 CharSetROMSpec OptionsCheckboxCharset =
@@ -190,8 +187,8 @@ AnimatedEntityROMSpec OptionsCheckboxAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -207,8 +204,8 @@ AnimatedEntityROMSpec OptionsCheckboxAe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&OptionsCheckboxAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&OptionsCheckboxAnimation,
 
 	// initial animation
 	"0"

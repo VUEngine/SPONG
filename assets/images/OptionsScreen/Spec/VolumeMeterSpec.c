@@ -136,17 +136,14 @@ AnimationFunctionROMSpec VolumeMeter5Animation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec VolumeMeterAnimation =
+AnimationFunctionROMSpec* const VolumeMeterAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&VolumeMeter1Animation,
-		(AnimationFunction*)&VolumeMeter2Animation,
-		(AnimationFunction*)&VolumeMeter3Animation,
-		(AnimationFunction*)&VolumeMeter4Animation,
-		(AnimationFunction*)&VolumeMeter5Animation,
-		NULL,
-	}
+    (AnimationFunction*)&VolumeMeter1Animation,
+    (AnimationFunction*)&VolumeMeter2Animation,
+    (AnimationFunction*)&VolumeMeter3Animation,
+    (AnimationFunction*)&VolumeMeter4Animation,
+    (AnimationFunction*)&VolumeMeter5Animation,
+    NULL,
 };
 
 CharSetROMSpec VolumeMeterCharset =
@@ -256,8 +253,8 @@ AnimatedEntityROMSpec VolumeMeterAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -273,8 +270,8 @@ AnimatedEntityROMSpec VolumeMeterAe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&VolumeMeterAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&VolumeMeterAnimation,
 
 	// initial animation
 	"2"

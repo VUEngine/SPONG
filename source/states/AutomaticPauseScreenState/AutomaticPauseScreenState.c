@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Printing.h>
 #include <MessageDispatcher.h>
 #include <AnimatedEntity.h>
@@ -69,10 +69,10 @@ void AutomaticPauseScreenState::processUserInput(UserInput userInput)
 	if(K_STA & userInput.pressedKey)
 	{
 		// disable user input
-		Game::disableKeypad(Game::getInstance());
+		VUEngine::disableKeypad(VUEngine::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -85,5 +85,5 @@ void AutomaticPauseScreenState::switchState()
 	Base::switchState(this);
 
 	// resume game
-	Game::unpause(Game::getInstance(), GameState::safeCast(this));
+	VUEngine::unpause(VUEngine::getInstance(), GameState::safeCast(this));
 }

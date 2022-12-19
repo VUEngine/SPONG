@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <BrightnessManager.h>
 #include <VirtualList.h>
 #include <CameraEffectManager.h>
@@ -47,13 +47,13 @@ void BrightnessManager::delayedShowScreen()
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 
 	// show screen in a moment
-	MessageDispatcher::dispatchMessage(50, Object::safeCast(this), Object::safeCast(this), kMessageShowScreen, NULL);
+	MessageDispatcher::dispatchMessage(50, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kMessageShowScreen, NULL);
 }
 
 void BrightnessManager::showScreen()
 {
 	BrightnessManager::setDefaultBrightness(this);
-	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventShowScreen);
+	ListenerObject::fireEvent(VUEngine::getCurrentState(VUEngine::getInstance()), kEventShowScreen);
 }
 
 void BrightnessManager::hideScreen()
@@ -99,6 +99,7 @@ bool BrightnessManager::handleMessage(Telegram telegram)
 			BrightnessManager::showScreen(this);
 			break;
 	}
+
 	return true;
 }
 

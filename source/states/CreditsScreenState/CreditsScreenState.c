@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -80,10 +80,10 @@ void CreditsScreenState::processUserInput(UserInput userInput)
 	if((K_A | K_B | K_STA | K_SEL) & userInput.pressedKey)
 	{
 		// disable user input
-		Game::disableKeypad(Game::getInstance());
+		VUEngine::disableKeypad(VUEngine::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -95,5 +95,5 @@ void CreditsScreenState::switchState()
 {
 	Base::switchState(this);
 
-	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
+	VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

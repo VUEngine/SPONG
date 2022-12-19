@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -45,7 +45,7 @@ void PauseScreenState::constructor()
 
 	// init members
 	this->mode = kPauseScreenModeShowOptions;
-	this->optionsSelector = new OptionsSelector(1, 3, NULL);
+	this->optionsSelector = new OptionsSelector(1, 3, NULL, NULL, NULL);
 }
 
 void PauseScreenState::destructor()
@@ -141,10 +141,10 @@ void PauseScreenState::processUserInput(UserInput userInput)
 				case kPauseScreenOptionOptions:
 
 					// disable user input
-					Game::disableKeypad(Game::getInstance());
+					VUEngine::disableKeypad(VUEngine::getInstance());
 
 					// transition layer animation
-					AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+					AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 					if(transitionLayerEntity)
 					{
 						AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -182,10 +182,10 @@ void PauseScreenState::processUserInput(UserInput userInput)
 		else if(this->mode == kPauseScreenModeShowConfirmQuit)
 		{
 			// disable user input
-			Game::disableKeypad(Game::getInstance());
+			VUEngine::disableKeypad(VUEngine::getInstance());
 
 			// transition layer animation
-			AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+			AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 			if(transitionLayerEntity)
 			{
 				AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -222,20 +222,20 @@ void PauseScreenState::switchState()
 		case kPauseScreenOptionContinue:
 
 			// resume game
-			Game::unpause(Game::getInstance(), GameState::safeCast(this));
+			VUEngine::unpause(VUEngine::getInstance(), GameState::safeCast(this));
 			break;
 /*
 		case kPauseScreenOptionOptions:
 
 			// switch to options state
 			OptionsScreenState::setNextState(OptionsScreenState::getInstance(), GameState::safeCast(this));
-			Game::changeState(Game::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
+			VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
 			break;
 */
 		case kPauseScreenOptionQuitLevel:
 
 			// switch to overworld after deleting paused game state
-			//Game::cleanAndChangeState(Game::getInstance(), GameState::safeCast(PlatformerLevelState::getInstance()));
+			//VUEngine::cleanAndChangeState(VUEngine::getInstance(), GameState::safeCast(PlatformerLevelState::getInstance()));
 
 			break;
 	}

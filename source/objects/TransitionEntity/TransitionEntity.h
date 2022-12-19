@@ -34,8 +34,8 @@ typedef const TransitionEntitySpec TransitionEntityROMSpec;
 class TransitionEntity : AnimatedEntity
 {
 	void constructor(const TransitionEntitySpec* TransitionEntitySpec, int16 internalId, const char* const name);
-	void onTransitionInComplete(Object eventFirer);
-	void onTransitionOutComplete(Object eventFirer);
+	void onTransitionInComplete(ListenerObject eventFirer);
+	void onTransitionOutComplete(ListenerObject eventFirer);
 }
 
 

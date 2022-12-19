@@ -136,17 +136,14 @@ AnimationFunctionROMSpec BrightnessMeter5Animation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec BrightnessMeterAnimation =
+AnimationFunctionROMSpec* const BrightnessMeterAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&BrightnessMeter1Animation,
-		(AnimationFunction*)&BrightnessMeter2Animation,
-		(AnimationFunction*)&BrightnessMeter3Animation,
-		(AnimationFunction*)&BrightnessMeter4Animation,
-		(AnimationFunction*)&BrightnessMeter5Animation,
-		NULL,
-	}
+    (AnimationFunction*)&BrightnessMeter1Animation,
+    (AnimationFunction*)&BrightnessMeter2Animation,
+    (AnimationFunction*)&BrightnessMeter3Animation,
+    (AnimationFunction*)&BrightnessMeter4Animation,
+    (AnimationFunction*)&BrightnessMeter5Animation,
+    NULL,
 };
 
 CharSetROMSpec BrightnessMeterCharset =
@@ -256,8 +253,8 @@ AnimatedEntityROMSpec BrightnessMeterAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -273,8 +270,8 @@ AnimatedEntityROMSpec BrightnessMeterAe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&BrightnessMeterAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&BrightnessMeterAnimation,
 
 	// initial animation
 	"2"

@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <KeypadManager.h>
@@ -64,19 +64,19 @@ bool PrecautionScreenState::processMessage(void* owner __attribute__ ((unused)),
 				//SoundManager::playFxSound(SoundManager::getInstance(), COLLECT_SND, position);
 
 				// show this screen for at least 2 seconds, as defined by Nintendo in the official development manual (Appendix 1)
-				MessageDispatcher::dispatchMessage(2000, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenAllowUserInput, NULL);
+				MessageDispatcher::dispatchMessage(2000, ListenerObject::safeCast(this), ListenerObject::safeCast(VUEngine::getInstance()), kScreenAllowUserInput, NULL);
 
 				// call base class' method
 				Base::processMessage(this, owner, telegram);
 
 				// make sure that keypad is not yet enabled
-				Game::disableKeypad(Game::getInstance());
+				VUEngine::disableKeypad(VUEngine::getInstance());
 			}
 			break;
 
 		case kScreenAllowUserInput:
 			{
-				Game::enableKeypad(Game::getInstance());
+				VUEngine::enableKeypad(VUEngine::getInstance());
 			}
 			break;
 	}

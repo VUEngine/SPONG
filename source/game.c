@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <ProgressManager.h>
 #include <AutomaticPauseManager.h>
 #include <AutomaticPauseScreenState.h>
@@ -23,7 +23,7 @@
 //											GAME'S MAIN LOOP
 //---------------------------------------------------------------------------------------------------------
 
-int main(void)
+int32 game(void)
 {
 	// initialize plugins
 	ProgressManager::restoreSettings(ProgressManager::getInstance());
@@ -31,7 +31,7 @@ int main(void)
 	AutomaticPauseManager::setActive(AutomaticPauseManager::getInstance(), true);
 
 	// start the game
-	Game::start(Game::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
+	VUEngine::start(VUEngine::getInstance(), GameState::safeCast(PrecautionScreenState::getInstance()));
 
 	// end program
 	return true;

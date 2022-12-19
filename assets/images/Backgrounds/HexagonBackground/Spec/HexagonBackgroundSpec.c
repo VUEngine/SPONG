@@ -58,13 +58,10 @@ AnimationFunctionROMSpec HexagonBackgroundDefaultAnimation =
 	"Default",
 };
 
-AnimationDescriptionROMSpec HexagonBackgroundAnimation =
+AnimationFunctionROMSpec* const HexagonBackgroundAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&HexagonBackgroundDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&HexagonBackgroundDefaultAnimation,
+    NULL,
 };
 
 
@@ -264,8 +261,8 @@ AnimatedEntityROMSpec HexagonBackgroundAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -282,7 +279,7 @@ AnimatedEntityROMSpec HexagonBackgroundAe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&HexagonBackgroundAnimation,
+	(const AnimationFunction**)&HexagonBackgroundAnimation,
 
 	// initial animation
 	"Default",

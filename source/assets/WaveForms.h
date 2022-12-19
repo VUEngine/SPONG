@@ -7,12 +7,13 @@
 
 
 //---------------------------------------------------------------------------------------------------------
-//                                                INCLUDES                                                 
+//                                              DECLARATIONS                                               
 //---------------------------------------------------------------------------------------------------------
 
 extern const int8 GlockenWaveForm[];
 extern const int8 LinearWaveForm[];
 extern const int8 OrganWaveForm[];
+extern const int8 PCMWaveForm[];
 extern const int8 PianoWaveForm[];
 extern const int8 SawSquareWaveForm[];
 extern const int8 SawtoothWaveForm[];

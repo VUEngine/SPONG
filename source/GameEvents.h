@@ -19,13 +19,13 @@
 
 enum GameEvents
 {
-	kEventShowScreen = kEventEngineLast + 1,
+	kEventPongBallHitCeiling = kEventEngineLast + 1,
+	kEventPongBallHitFloor,
+	kEventPongBallHitPaddle,
+	kEventShowScreen,
 	kEventTransitionInComplete,
 	kEventTransitionOutComplete,
 	kEventUserInput,
-	kEventPongBallHitCeiling,
-	kEventPongBallHitFloor,
-	kEventPongBallHitPaddle,
 };
 
 

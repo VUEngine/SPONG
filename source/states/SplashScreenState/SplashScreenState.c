@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <SplashScreenState.h>
@@ -53,7 +53,7 @@ void SplashScreenState::enter(void* owner)
 	SplashScreenState::print(this);
 
 	// start fade in effect in 1 ms, because a full render cycle is needed to put everything in place
-	MessageDispatcher::dispatchMessage(1, Object::safeCast(this), Object::safeCast(Game::getInstance()), kScreenStarted, NULL);
+	MessageDispatcher::dispatchMessage(1, ListenerObject::safeCast(this), ListenerObject::safeCast(VUEngine::getInstance()), kScreenStarted, NULL);
 
 	// start clocks to start animations
 	GameState::startClocks(GameState::safeCast(this));
@@ -107,10 +107,10 @@ void SplashScreenState::setNextState(GameState nextState)
 void SplashScreenState::loadNextState()
 {
 	// disable user input
-	Game::disableKeypad(Game::getInstance());
+	VUEngine::disableKeypad(VUEngine::getInstance());
 
 	// transition layer animation
-	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+	AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 	if(transitionLayerEntity)
 	{
 		AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -122,5 +122,5 @@ void SplashScreenState::switchState()
 	Base::switchState(this);
 
 	// change to next stage
-	Game::changeState(Game::getInstance(), this->nextState);
+	VUEngine::changeState(VUEngine::getInstance(), this->nextState);
 }

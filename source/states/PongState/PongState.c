@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Utilities.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
@@ -118,14 +118,14 @@ void PongState::processUserInput(UserInput userInput)
 //				SplashScreenState::setNextState(SplashScreenState::safeCast(AdjustmentScreenState::getInstance()), NULL);
 
 			// pause game and switch to adjustment screen state
-//				Game::pause(Game::getInstance(), GameState::safeCast(AdjustmentScreenState::getInstance()));
+//				VUEngine::pause(VUEngine::getInstance(), GameState::safeCast(AdjustmentScreenState::getInstance()));
 
 			return;
 		}
 		else if(K_STA & userInput.pressedKey)
 		{
 			// pause game and switch to pause screen state
-//				Game::pause(Game::getInstance(), GameState::safeCast(PauseScreenState::getInstance()));
+//				VUEngine::pause(VUEngine::getInstance(), GameState::safeCast(PauseScreenState::getInstance()));
 
 			return;
 		}
@@ -159,7 +159,7 @@ void PongState::processUserInput(UserInput userInput)
 	//	CommunicationManager::sendAndReceiveDataAsync(CommunicationManager::getInstance(), (BYTE*)&dataToTransmit, sizeof(dataToTransmit), (EventListener)PongState::onUserInputTransmitted, Object::safeCast(this));
 	}
 
-	Object::fireEvent(this, kEventUserInput);
+	ListenerObject::fireEvent(this, kEventUserInput);
 }
 
 bool PongState::processUserInputRegardlessOfInput()
@@ -167,7 +167,7 @@ bool PongState::processUserInputRegardlessOfInput()
 	return true;
 }
 
-void PongState::onUserInputTransmitted(Object eventFirer __attribute__ ((unused)))
+void PongState::onUserInputTransmitted(ListenerObject eventFirer __attribute__ ((unused)))
 {
 /*
 	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))

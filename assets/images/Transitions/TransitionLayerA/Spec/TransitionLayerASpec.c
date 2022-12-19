@@ -97,15 +97,12 @@ AnimationFunctionROMSpec TransitionLayerAFadeOutAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec TransitionLayerAAnimation =
+AnimationFunctionROMSpec* const TransitionLayerAAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&TransitionLayerAHiddenAnimation,
-		(AnimationFunction*)&TransitionLayerAFadeInAnimation,
-		(AnimationFunction*)&TransitionLayerAFadeOutAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&TransitionLayerAHiddenAnimation,
+    (AnimationFunction*)&TransitionLayerAFadeInAnimation,
+    (AnimationFunction*)&TransitionLayerAFadeOutAnimation,
+    NULL,
 };
 
 CharSetROMSpec TransitionLayerACharset =
@@ -215,8 +212,8 @@ TransitionEntityROMSpec TransitionLayerAAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -233,7 +230,7 @@ TransitionEntityROMSpec TransitionLayerAAe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&TransitionLayerAAnimation,
+	(const AnimationFunction**)&TransitionLayerAAnimation,
 
 	// initial animation
 	"Hidden",

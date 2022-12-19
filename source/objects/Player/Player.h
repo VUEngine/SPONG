@@ -27,7 +27,7 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class Player : Object
+singleton class Player : ListenerObject
 {
 	/* spec pointer */
 	PongBall pongBall;

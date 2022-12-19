@@ -58,13 +58,10 @@ AnimationFunctionROMSpec RhombusBackgroundDefaultAnimation =
 	"Default",
 };
 
-AnimationDescriptionROMSpec RhombusBackgroundAnimation =
+AnimationFunctionROMSpec* const RhombusBackgroundAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&RhombusBackgroundDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&RhombusBackgroundDefaultAnimation,
+    NULL,
 };
 
 
@@ -264,8 +261,8 @@ AnimatedEntityROMSpec RhombusBackgroundAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -282,7 +279,7 @@ AnimatedEntityROMSpec RhombusBackgroundAe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&RhombusBackgroundAnimation,
+	(const AnimationFunction**)&RhombusBackgroundAnimation,
 
 	// initial animation
 	"Default",

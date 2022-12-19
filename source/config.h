@@ -15,6 +15,22 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//                                            GAME ENTRY POINT                                             
+//---------------------------------------------------------------------------------------------------------
+
+#ifndef __GAME_ENTRY_POINT
+#define __GAME_ENTRY_POINT											game
+#endif
+
+
+//---------------------------------------------------------------------------------------------------------
+//                                          FIXED POINT DATA TYPE                                          
+//---------------------------------------------------------------------------------------------------------
+
+#define __FIXED_POINT_TYPE 											6
+
+
+//---------------------------------------------------------------------------------------------------------
 //                                             COMMUNICATIONS                                              
 //---------------------------------------------------------------------------------------------------------
 
@@ -49,10 +65,10 @@
 #undef __DIMM_FOR_PROFILING
 
 // alert vip's overtime
-#define __SHOW_VIP_OVERTIME_COUNT
+#undef __SHOW_VIP_OVERTIME_COUNT
 
 // stack headroom
-#define __STACK_HEADROOM								1000
+#define __STACK_HEADROOM											1000
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -109,44 +125,59 @@
 
 
 //---------------------------------------------------------------------------------------------------------
+//                                               WIREFRAMES                                                
+//---------------------------------------------------------------------------------------------------------
+
+// Sort the wireframes based on their distance to the camera to cull off those that are far off if necessary.
+#undef __WIREFRAME_MANAGER_SORT_FOR_DRAWING
+
+
+// The distance to start interlacing wireframe graphics.
+#define __DIRECT_DRAW_INTERLACED_THRESHOLD							__PIXELS_TO_METERS(8191) 
+
+
+//---------------------------------------------------------------------------------------------------------
 //                                           OPTICS / PROJECTION                                           
 //---------------------------------------------------------------------------------------------------------
 
+// legacy coordinate system (0, 0, 0) is at the top left corner of the screen
+#define __LEGACY_COORDINATE_PROJECTION
+
 // screen width in pixels
-#define __SCREEN_WIDTH								384
+#define __SCREEN_WIDTH												384
 
 // screen height in pixels
-#define __SCREEN_HEIGHT								224
+#define __SCREEN_HEIGHT												224
 
 // screen depth in pixels
-#define __SCREEN_DEPTH								2048
-
-// distance from player's eyes to the virtual screen
-#define __DISTANCE_EYE_SCREEN						384
+#define __SCREEN_DEPTH												2048
 
 // maximum x view distance (depth) (power of two)
-#define __MAXIMUM_X_VIEW_DISTANCE					2048
+#define __MAXIMUM_X_VIEW_DISTANCE									2048
 
 // maximum y view distance (depth) (power of two)
-#define __MAXIMUM_Y_VIEW_DISTANCE					2048
+#define __MAXIMUM_Y_VIEW_DISTANCE									2048
+
+// distance from player's eyes to the virtual screen
+#define __CAMERA_NEAR_PLANE											16
 
 // distance between eyes
-#define __BASE_FACTOR								32
+#define __BASE_FACTOR												32
 
 // player's eyes' horizontal position
-#define __HORIZONTAL_VIEW_POINT_CENTER				192
+#define __HORIZONTAL_VIEW_POINT_CENTER								192
 
 // player's eyes' vertical position
-#define __VERTICAL_VIEW_POINT_CENTER				112
+#define __VERTICAL_VIEW_POINT_CENTER								112
 
 // parallax values are divide by this factor to control their strength
-#define __PARALLAX_CORRECTION_FACTOR				2
+#define __PARALLAX_CORRECTION_FACTOR								2
 
 // affects the strength of the scaling
-#define __SCALING_MODIFIER_FACTOR					0.1f
+#define __SCALING_MODIFIER_FACTOR									0.1f
 
 // minimum number of pixels that the camera can move
-#define __CAMERA_MINIMUM_DISPLACEMENT_PIXELS_POWER	1
+#define __CAMERA_MINIMUM_DISPLACEMENT_PIXELS_POWER					1
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -158,20 +189,20 @@
 #undef __FORCE_VIP_SYNC
 
 // timer resolution
-#define __TIMER_RESOLUTION							10
+#define __TIMER_RESOLUTION											10
 
 // __FRAME_CYCLE = 0 means __TARGET_FPS = 50
 // __FRAME_CYCLE = 1 means __TARGET_FPS = 25
-#define	__FRAME_CYCLE								0
+#define	__FRAME_CYCLE												0
 
 // target frames per second
-#define __TARGET_FPS 								(50 >> __FRAME_CYCLE)
+#define __TARGET_FPS 												(__MAXIMUM_FPS >> __FRAME_CYCLE)
 
 // milliseconds that must take to complete a game cycle
-#define __GAME_FRAME_DURATION						(__MILLISECONDS_PER_SECOND / __TARGET_FPS)
+#define __GAME_FRAME_DURATION										(__MILLISECONDS_PER_SECOND / __TARGET_FPS)
 
 // target frames per second
-#define __OPTIMUM_FPS 								(__TARGET_FPS >> __FRAME_CYCLE)
+#define __OPTIMUM_FPS 												(__TARGET_FPS >> __FRAME_CYCLE)
 
 // define to dispatch the delayed messages every other game frame cycle
 #undef __RUN_DELAYED_MESSAGES_DISPATCHING_AT_HALF_FRAME_RATE
@@ -182,13 +213,10 @@
 //---------------------------------------------------------------------------------------------------------
 
 // maximum length of an animation function's name
-#define __MAX_ANIMATION_FUNCTION_NAME_LENGTH		16
+#define __MAX_ANIMATION_FUNCTION_NAME_LENGTH						16
 
 // maximum number of frames per animation function
-#define __MAX_FRAMES_PER_ANIMATION_FUNCTION			64
-
-// maximum number of animation functions per description
-#define __MAX_ANIMATION_FUNCTIONS					8
+#define __MAX_FRAMES_PER_ANIMATION_FUNCTION							64
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -200,7 +228,7 @@
 #undef __MEMORY_POOL_CLEAN_UP
 
 #undef __MEMORY_POOLS
-#define __MEMORY_POOLS								11
+#define __MEMORY_POOLS												11
 
 #undef __MEMORY_POOL_ARRAYS
 #define __MEMORY_POOL_ARRAYS \
@@ -231,7 +259,7 @@
 	__SET_MEMORY_POOL_ARRAY(16) \
 
 // percentage (0-100) above which the memory pool's status shows the pool usage
-#define __MEMORY_POOL_WARNING_THRESHOLD				85
+#define __MEMORY_POOL_WARNING_THRESHOLD								85
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -240,7 +268,7 @@
 
 // amount of available sram space, in bytes
 // • the vb allows up to 16 mb, but all known carts support only 8 kb of sram
-#define __TOTAL_SAVE_RAM 							8192
+#define __TOTAL_SAVE_RAM 											8192
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -248,7 +276,7 @@
 //---------------------------------------------------------------------------------------------------------
 
 // total number of available chars in char memory
-#define __CHAR_MEMORY_TOTAL_CHARS 					2048
+#define __CHAR_MEMORY_TOTAL_CHARS 									2048
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -256,10 +284,10 @@
 //---------------------------------------------------------------------------------------------------------
 
 // total number of layers (basically the number of worlds)
-#define __TOTAL_LAYERS								32
+#define __TOTAL_LAYERS												32
 
 // Account for VIP's design to draw 8 pixel when BGMAP WORLD's height is less than 8
-#undef __HACK_BGMAP_SPRITE_HEIGHT
+#define __HACK_BGMAP_SPRITE_HEIGHT
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -267,22 +295,22 @@
 //---------------------------------------------------------------------------------------------------------
 
 // total number of bgmap segments
-#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 			11
+#define __TOTAL_NUMBER_OF_BGMAPS_SEGMENTS 							11
 
 // number of segments for param tables
-#define __PARAM_TABLE_SEGMENTS						1
+#define __PARAM_TABLE_SEGMENTS										1
 
 // bgmap segments to use (1 for printing)
-#define __MAX_NUMBER_OF_BGMAPS_SEGMENTS 			(__TOTAL_NUMBER_OF_BGMAPS_SEGMENTS - __PARAM_TABLE_SEGMENTS)
+#define __MAX_NUMBER_OF_BGMAPS_SEGMENTS 							(__TOTAL_NUMBER_OF_BGMAPS_SEGMENTS - __PARAM_TABLE_SEGMENTS)
 
 // number of bgmap specs in each bgmap segment
-#define __NUM_BGMAPS_PER_SEGMENT 					16
+#define __NUM_BGMAPS_PER_SEGMENT 									16
 
 // printing area
-#define __PRINTING_BGMAP_X_OFFSET					0
-#define __PRINTING_BGMAP_Y_OFFSET					(64 * 8 - __SCREEN_HEIGHT)
-#define __PRINTING_BGMAP_PARALLAX_OFFSET			0
-#define __PRINTABLE_BGMAP_AREA 						1792
+#define __PRINTING_BGMAP_X_OFFSET									0
+#define __PRINTING_BGMAP_Y_OFFSET									(64 * 8 - __SCREEN_HEIGHT)
+#define __PRINTING_BGMAP_PARALLAX_OFFSET							0
+#define __PRINTABLE_BGMAP_AREA				 						1792
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -290,45 +318,55 @@
 //---------------------------------------------------------------------------------------------------------
 
 // maximum possible scale: affects param table allocation space
-#define __MAXIMUM_SCALE								4
+#define __MAXIMUM_SCALE												4
 
 // maximum number of rows to write on each call to affine calculation functions
-#define __MAXIMUM_AFFINE_ROWS_PER_CALL				16
+#define __MAXIMUM_AFFINE_ROWS_PER_CALL								16
 
 
 //---------------------------------------------------------------------------------------------------------
 //                                                 PHYSICS                                                 
 //---------------------------------------------------------------------------------------------------------
 
-#define __GRAVITY									17.6f
+#define __GRAVITY													17.6f
 
 // number of bodies to check for gravity on each cycle
-#define __BODIES_TO_CHECK_FOR_GRAVITY				10
+#define __BODIES_TO_CHECK_FOR_GRAVITY								10
+
+// maximum friction coefficient
+#define __MAXIMUM_FRICTION_COEFFICIENT								__I_TO_FIXED(1)
 
 // divisor to speed up physics simulations, bigger numbers equal faster computations
-#define __PHYSICS_TIME_ELAPSED_DIVISOR				1
+#define __PHYSICS_TIME_ELAPSED_DIVISOR								1
+
+// define to use fix7.9 computation on Body's direction
+#undef 		__PHYSICS_HIGH_PRECISION
 
 // thresholds to stop bodies
-#define __STOP_VELOCITY_THRESHOLD					__PIXELS_TO_METERS(8)
-#define __STOP_BOUNCING_VELOCITY_THRESHOLD 			__PIXELS_TO_METERS(48)
+#define __STOP_VELOCITY_THRESHOLD									__PIXELS_TO_METERS(8)
+#define __STOP_BOUNCING_VELOCITY_THRESHOLD 							__PIXELS_TO_METERS(48)
 
 // maximum bounciness coefficient allowed
-#define __MAXIMUM_BOUNCINESS_COEFFICIENT			5.5f
+#define __MAXIMUM_BOUNCINESS_COEFFICIENT							5.5f
 
-#define __FRICTION_FORCE_FACTOR_POWER				4
+#define __FRICTION_FORCE_FACTOR_POWER								4
+
+// smaller values allow movement to start when colliding against a shape and trying to move towards it
+#define __SHAPE_ANGLE_TO_PREVENT_DISPLACEMENT						__F_TO_FIXED(0.01f)
+
+// maximum size of shapes allows to avoid checks against far away shapes
+#define __SHAPE_MAXIMUM_SIZE										__PIXELS_TO_METERS(256)
 
 
 //---------------------------------------------------------------------------------------------------------
 //                                                  SOUND                                                  
 //---------------------------------------------------------------------------------------------------------
 
-#define __LEFT_EAR_CENTER							96
-#define __RIGHT_EAR_CENTER							288
+#define __EAR_DISPLACEMENT											384
 
 // affects the amount of attenuation caused by the distance between the x coordinate and each ear's
-// position defined by __LEFT_EAR_CENTER and __RIGHT_EAR_CENTER
-#define __SOUND_STEREO_HORIZONTAL_ATTENUATION_FACTOR		50
-#define __SOUND_STEREO_VERTICAL_ATTENUATION_FACTOR			50
+// position defined by __EAR_DISPLACEMENT
+#define __SOUND_STEREO_ATTENUATION_DISTANCE							1024
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -338,32 +376,32 @@
 // default brightness settings, actual values are set in stage specs
 // • for a nice progression, each shade should be about twice as big as the previous one
 // • _BRIGHT_RED must be larger than _DARK_RED + _MEDIUM_RED
-#define __BRIGHTNESS_DARK_RED						16
-#define __BRIGHTNESS_MEDIUM_RED						64
-#define __BRIGHTNESS_BRIGHT_RED						128
+#define __BRIGHTNESS_DARK_RED										16
+#define __BRIGHTNESS_MEDIUM_RED										64
+#define __BRIGHTNESS_BRIGHT_RED										128
 
 // default delay between steps in fade effect
-#define __FADE_DELAY								8
+#define __FADE_DELAY												8
 
 // defaul step increment in fade transitions
-#define __CAMERA_EFFECT_FADE_INCREMENT				1
+#define __CAMERA_EFFECT_FADE_INCREMENT								1
 
 //---------------------------------------------------------------------------------------------------------
 //                                             COLOR PALETTES                                              
 //---------------------------------------------------------------------------------------------------------
 
-#define __PRINTING_PALETTE							0
+#define __PRINTING_PALETTE											0
 
 // default palette values, actual values are set in stage specs
-#define __BGMAP_PALETTE_0							0b11100100
-#define __BGMAP_PALETTE_1							0b11100000
-#define __BGMAP_PALETTE_2							0b10010000
-#define __BGMAP_PALETTE_3							0b01010000
+#define __BGMAP_PALETTE_0											0b11100100
+#define __BGMAP_PALETTE_1											0b11100000
+#define __BGMAP_PALETTE_2											0b10010000
+#define __BGMAP_PALETTE_3											0b01010000
 
-#define __OBJECT_PALETTE_0							0b11100100
-#define __OBJECT_PALETTE_1							0b11100000
-#define __OBJECT_PALETTE_2							0b10010000
-#define __OBJECT_PALETTE_3							0b01010000
+#define __OBJECT_PALETTE_0											0b11100100
+#define __OBJECT_PALETTE_1											0b11100000
+#define __OBJECT_PALETTE_2											0b10010000
+#define __OBJECT_PALETTE_3											0b01010000
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -378,8 +416,8 @@
 //---------------------------------------------------------------------------------------------------------
 
 // camera coordinates for the output of exceptions
-#define __EXCEPTION_COLUMN							0
-#define __EXCEPTION_LINE							0
+#define __EXCEPTION_COLUMN											0
+#define __EXCEPTION_LINE											0
 
 
 #endif

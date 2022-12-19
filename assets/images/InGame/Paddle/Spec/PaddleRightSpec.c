@@ -37,7 +37,7 @@ extern uint16 PaddleRightRMap[];
 
 /* Animations */
 
-extern AnimationDescription PaddleAnimation;
+extern AnimationFunctionROMSpec* const PaddleAnimation[];
 
 
 /* Left Sprite */
@@ -297,8 +297,8 @@ PaddleROMSpec PaddleRightEntity =
 				// use z displacement in projection
 				false,
 			
-				/// meshes
-				(MeshSpec*)NULL,
+				// wireframes
+				(WireframeSpec**)NULL,
 
 				// collision shapes
 				(ShapeSpec*)PaddleRightShapes,
@@ -315,7 +315,7 @@ PaddleROMSpec PaddleRightEntity =
 			},
 
 			// pointer to the animation spec for the item
-			(AnimationDescription*)&PaddleAnimation,
+			(const AnimationFunction**)&PaddleAnimation,
 
 			// initial animation
 			"Ejected",

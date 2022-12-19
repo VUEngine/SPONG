@@ -2,40 +2,21 @@
 //                              THIS FILE WAS AUTO-GENERATED - DO NOT EDIT                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef RUMBLE_EFFECTS_H_
+#define RUMBLE_EFFECTS_H_
+
+
 //---------------------------------------------------------------------------------------------------------
 //                                                INCLUDES                                                 
 //---------------------------------------------------------------------------------------------------------
 
-#include <I18n.h>
+#include <RumbleManager.h>
 
 
 //---------------------------------------------------------------------------------------------------------
 //                                              DECLARATIONS                                               
 //---------------------------------------------------------------------------------------------------------
 
-extern EntitySpec FlagSpainEntity;
 
 
-//---------------------------------------------------------------------------------------------------------
-//                                               DEFINITIONS                                               
-//---------------------------------------------------------------------------------------------------------
-
-const char* const SpanishLanguageStrings[] =
-{
-	/* kStringAutomaticPauseBody: */
-	"¡Por favor, tómese un descanso!",
-	/* kStringAutomaticPauseTitle: */
-	"PAUSA AUTOMÁTICA",
-};
-
-const LangROMSpec SpanishLanguage =
-{
-	// language name
-	"Español",
-
-	// flag entity
-	&FlagSpainEntity,
-	
-	// strings
-	(const char**)SpanishLanguageStrings
-};
+#endif

@@ -59,13 +59,10 @@ AnimationFunctionROMSpec LogoDefaultAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec LogoAnimation =
+AnimationFunctionROMSpec* const LogoAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&LogoDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&LogoDefaultAnimation,
+    NULL,
 };
 
 /* Left */
@@ -262,8 +259,8 @@ AnimatedEntityROMSpec LogoAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -280,7 +277,7 @@ AnimatedEntityROMSpec LogoAe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&LogoAnimation,
+	(const AnimationFunction**)&LogoAnimation,
 
 	// initial animation
 	"Default",

@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <I18n.h>
 #include <Utilities.h>
 #include <GameEvents.h>
@@ -29,13 +29,13 @@ void TransitionEntity::constructor(const TransitionEntitySpec* transitionEntityS
 	Base::constructor((AnimatedEntitySpec*)transitionEntitySpec, internalId, name);
 
 	// add event listeners
-	Object::addEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);
+	ListenerObject::addEventListener(VUEngine::getCurrentState(VUEngine::getInstance()), ListenerObject::safeCast(this), (EventListener)TransitionEntity::onShowScreen, kEventShowScreen);
 }
 
 void TransitionEntity::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(Game::getCurrentState(Game::getInstance()), Object::safeCast(this), (EventListener)TransitionEntity_onShowScreen, kEventShowScreen);
+	ListenerObject::removeEventListener(VUEngine::getCurrentState(VUEngine::getInstance()), ListenerObject::safeCast(this), (EventListener)TransitionEntity::onShowScreen, kEventShowScreen);
 
 	// destroy the super object
 	// must always be called at the end of the destructor
@@ -43,18 +43,18 @@ void TransitionEntity::destructor()
 }
 
 // handle event
-void TransitionEntity::onTransitionInComplete(Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onTransitionInComplete(ListenerObject eventFirer __attribute__ ((unused)))
 {
-	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventTransitionInComplete);
+	ListenerObject::fireEvent(VUEngine::getCurrentState(VUEngine::getInstance()), kEventTransitionInComplete);
 }
 
-void TransitionEntity::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onTransitionOutComplete(ListenerObject eventFirer __attribute__ ((unused)))
 {
-	Object::fireEvent(Game::getCurrentState(Game::getInstance()), kEventTransitionOutComplete);
+	ListenerObject::fireEvent(VUEngine::getCurrentState(VUEngine::getInstance()), kEventTransitionOutComplete);
 }
 
 // handle event
-void TransitionEntity::onShowScreen(Object eventFirer __attribute__ ((unused)))
+void TransitionEntity::onShowScreen(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	AnimatedEntity::playAnimation(this, "FadeIn");
 }

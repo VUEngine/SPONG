@@ -52,13 +52,10 @@ AnimationFunctionROMSpec OptionsCursorDefaultAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec OptionsCursorAnimation =
+AnimationFunctionROMSpec* const OptionsCursorAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&OptionsCursorDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&OptionsCursorDefaultAnimation,
+    NULL,
 };
 
 CharSetROMSpec OptionsCursorCharset =
@@ -168,8 +165,8 @@ AnimatedEntityROMSpec OptionsCursorAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -185,8 +182,8 @@ AnimatedEntityROMSpec OptionsCursorAe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&OptionsCursorAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&OptionsCursorAnimation,
 
 	// initial animation
 	"Default"

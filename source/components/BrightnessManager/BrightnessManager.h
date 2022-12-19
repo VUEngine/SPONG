@@ -29,7 +29,7 @@
 //											CLASS'S DECLARATION
 //---------------------------------------------------------------------------------------------------------
 
-singleton class BrightnessManager : Object
+singleton class BrightnessManager : ListenerObject
 {
 	int8 brightnessFactor;
 

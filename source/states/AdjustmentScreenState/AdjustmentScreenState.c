@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <AdjustmentScreenState.h>
@@ -60,7 +60,7 @@ void AdjustmentScreenState::processInput(uint32 pressedKey __attribute__ ((unuse
 	if(this->nextState == NULL)
 	{
 		Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-		Game::unpause(Game::getInstance(), GameState::safeCast(this));
+		VUEngine::unpause(VUEngine::getInstance(), GameState::safeCast(this));
 	}
 	else
 	{

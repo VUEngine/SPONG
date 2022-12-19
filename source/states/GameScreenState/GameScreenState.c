@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <BrightnessManager.h>
 #include <GameEvents.h>
 #include <GameScreenState.h>
@@ -27,15 +27,15 @@ void GameScreenState::constructor()
 	Base::constructor();
 
 	// add event listeners
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
-	Object::addEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	ListenerObject::addEventListener(this, ListenerObject::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
+	ListenerObject::addEventListener(this, ListenerObject::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 }
 
 void GameScreenState::destructor()
 {
 	// remove event listeners
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
-	Object::removeEventListener(this, Object::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
+	ListenerObject::removeEventListener(this, ListenerObject::safeCast(this), (EventListener)GameScreenState::onTransitionInComplete, kEventTransitionInComplete);
+	ListenerObject::removeEventListener(this, ListenerObject::safeCast(this), (EventListener)GameScreenState::onTransitionOutComplete, kEventTransitionOutComplete);
 
 	// destroy base
 	Base::destructor();
@@ -62,14 +62,14 @@ void GameScreenState::switchState()
 	BrightnessManager::hideScreen(BrightnessManager::getInstance());
 }
 
-void GameScreenState::onTransitionInComplete(Object eventFirer __attribute__ ((unused)))
+void GameScreenState::onTransitionInComplete(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	// enable user input
-	Game::enableKeypad(Game::getInstance());
+	VUEngine::enableKeypad(VUEngine::getInstance());
 }
 
 
-void GameScreenState::onTransitionOutComplete(Object eventFirer __attribute__ ((unused)))
+void GameScreenState::onTransitionOutComplete(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	GameScreenState::switchState(this);
 }

@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <AnimatedEntity.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
@@ -93,7 +93,7 @@ void LangSelectScreenState::print()
 {
 	// move cursor entity
 	Entity cursorEntity = Entity::safeCast(Container::getChildByName(
-		Container::safeCast(Game::getStage(Game::getInstance())),
+		Container::safeCast(VUEngine::getStage(VUEngine::getInstance())),
 		"Cursor",
 		false
 	));
@@ -102,7 +102,7 @@ void LangSelectScreenState::print()
 
 	// move cursor entity
 	AnimatedEntity LangNameEntity = AnimatedEntity::safeCast(Container::getChildByName(
-		Container::safeCast(Game::getStage(Game::getInstance())),
+		Container::safeCast(VUEngine::getStage(VUEngine::getInstance())),
 		"LangName",
 		false
 	));

@@ -16,7 +16,7 @@
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <Actor.h>
-#include <Game.h>
+#include <VUEngine.h>
 #include <PhysicalWorld.h>
 #include <Utilities.h>
 #include <VIPManager.h>
@@ -118,10 +118,10 @@ void CustomCameraEffectManager::fxShakeStart(uint16 duration)
 	this->lastShakeOffset.x = __PIXELS_TO_METERS(4);
 
 	// discard pending messages from previously started fx
-	MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), Object::safeCast(this), kShake);
+	MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), ListenerObject::safeCast(this), kShake);
 
 	// instantly send message to self to start fx
-	MessageDispatcher::dispatchMessage(0, Object::safeCast(this), Object::safeCast(this), kShake, NULL);
+	MessageDispatcher::dispatchMessage(0, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kShake, NULL);
 }
 
 // stop shaking the _camera
@@ -156,8 +156,8 @@ void CustomCameraEffectManager::onScreenShake()
 	this->lastShakeOffset.x = -this->lastShakeOffset.x;
 
 	// move screen a bit
-	Camera::move(_camera, this->lastShakeOffset, false);
+    Camera::translate(_camera, this->lastShakeOffset, false);
 
 	// send message for next screen movement
-	MessageDispatcher::dispatchMessage(nextShakeDelay, Object::safeCast(this), Object::safeCast(this), kShake, NULL);
+	MessageDispatcher::dispatchMessage(nextShakeDelay, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kShake, NULL);
 }

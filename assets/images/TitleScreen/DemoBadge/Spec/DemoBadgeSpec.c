@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LocalizedEntityAnimation;
+extern AnimationFunctionROMSpec* const LocalizedEntityAnimations[];
 extern uint32 DemoBadgeTiles[];
 extern uint32 DemoBadgeTilesFrameOffsets[];
 extern uint16 DemoBadgeMap[];
@@ -139,8 +139,8 @@ LocalizedEntityROMSpec DemoBadgeLe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -156,8 +156,8 @@ LocalizedEntityROMSpec DemoBadgeLe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&LocalizedEntityAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&LocalizedEntityAnimations,
 
 	// initial animation
 	"0"

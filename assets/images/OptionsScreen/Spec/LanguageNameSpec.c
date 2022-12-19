@@ -20,7 +20,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LocalizedEntityAnimation;
+extern AnimationFunctionROMSpec* const LocalizedEntityAnimations[];
 extern uint32 LanguageNameTiles[];
 extern uint16 LanguageNameMap[];
 
@@ -136,8 +136,8 @@ LocalizedEntityROMSpec LanguageNameLe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -154,7 +154,7 @@ LocalizedEntityROMSpec LanguageNameLe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&LocalizedEntityAnimation,
+	(const AnimationFunction**)&LocalizedEntityAnimations,
 
 	// initial animation
 	"0",

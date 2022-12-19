@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -79,11 +79,11 @@ void TitleScreenState::enter(void* owner)
 	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&TitleScreenStage, NULL, true, false);
 
 	// get entity references
-	this->entityPressStart = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "PrssStrt", true));
-	this->entityMainMenu = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "MainMenu", true));
-	this->entityMainMenuVersus = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "MMVersus", true));
-	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "MMCursor", true));
-	this->entityWaitingForOtherPlayer = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "Waiting", true));
+	this->entityPressStart = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "PrssStrt", true));
+	this->entityMainMenu = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "MainMenu", true));
+	this->entityMainMenuVersus = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "MMVersus", true));
+	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "MMCursor", true));
+	this->entityWaitingForOtherPlayer = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "Waiting", true));
 
 	// initial entity states
 	Entity::hide(this->entityMainMenu);
@@ -99,7 +99,7 @@ void TitleScreenState::enter(void* owner)
 	}
 	else
 	{
-		CommunicationManager::addEventListener(CommunicationManager::getInstance(), Object::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
+		CommunicationManager::addEventListener(CommunicationManager::getInstance(), ListenerObject::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
 	}
 
 	// show screen
@@ -108,7 +108,7 @@ void TitleScreenState::enter(void* owner)
 
 void TitleScreenState::exit(void* owner)
 {
-	CommunicationManager::removeEventListener(CommunicationManager::getInstance(), Object::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
+	CommunicationManager::removeEventListener(CommunicationManager::getInstance(), ListenerObject::safeCast(this), (EventListener)TitleScreenState::onConnectedWithRemoteSystem, kEventCommunicationsConnected);
 
 	this->entityPressStart = NULL;
 	this->entityMainMenu = NULL;
@@ -122,7 +122,7 @@ void TitleScreenState::exit(void* owner)
 	Base::exit(this, owner);
 }
 
-void TitleScreenState::onConnectedWithRemoteSystem(Object eventFirer __attribute__ ((unused)))
+void TitleScreenState::onConnectedWithRemoteSystem(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	TitleScreenState::enableVersusMode(this);
 }
@@ -194,10 +194,10 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 		}
 
 		// disable user input
-		Game::disableKeypad(Game::getInstance());
+		VUEngine::disableKeypad(VUEngine::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -215,7 +215,7 @@ void TitleScreenState::processUserInputModeShowOptions(UserInput userInput)
 	}
 }
 
-void TitleScreenState::onStartMatchMessageSend(Object eventFirer __attribute__ ((unused)))
+void TitleScreenState::onStartMatchMessageSend(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	uint32 message = *((uint32*)CommunicationManager::getReceivedMessage(CommunicationManager::getInstance()));
 
@@ -224,7 +224,7 @@ void TitleScreenState::onStartMatchMessageSend(Object eventFirer __attribute__ (
 		PongState::setVersusMode(PongState::getInstance(), true);
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -262,38 +262,38 @@ void TitleScreenState::switchState()
 		case kTitleScreenOptionChallengeMode:
 		{
 			BrightnessManager::hideScreen(BrightnessManager::getInstance());
-			Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
+			VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(PongState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionHighscores:
 		{
 			BrightnessManager::hideScreen(BrightnessManager::getInstance());
-			Game::changeState(Game::getInstance(), GameState::safeCast(HighscoresScreenState::getInstance()));
+			VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(HighscoresScreenState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionOptions:
 		{
 			BrightnessManager::hideScreen(BrightnessManager::getInstance());
-			Game::changeState(Game::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
+			VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(OptionsScreenState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionCredits:
 		{
 			BrightnessManager::hideScreen(BrightnessManager::getInstance());
-			Game::changeState(Game::getInstance(), GameState::safeCast(CreditsScreenState::getInstance()));
+			VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(CreditsScreenState::getInstance()));
 			break;
 		}
 
 		case kTitleScreenOptionVersusMode:
 		{
 			// disable user input
-			Game::disableKeypad(Game::getInstance());
+			VUEngine::disableKeypad(VUEngine::getInstance());
 
 			// stop all sounds
-			SoundManager::stopAllSounds(SoundManager::getInstance(), true);
+			SoundManager::stopAllSounds(SoundManager::getInstance(), true, NULL);
 			SoundManager::reset(SoundManager::getInstance());
 
 			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
@@ -315,7 +315,7 @@ void TitleScreenState::switchState()
 				PongState::setVersusMode(PongState::getInstance(), true);
 
 				BrightnessManager::hideScreen(BrightnessManager::getInstance());
-				Game::changeState(Game::getInstance(), GameState::safeCast(PongState::getInstance()));
+				VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(PongState::getInstance()));
 			}
 			break;
 		}

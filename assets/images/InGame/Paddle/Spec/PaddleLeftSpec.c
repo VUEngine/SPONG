@@ -122,16 +122,13 @@ AnimationFunctionROMSpec PaddleRetractAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PaddleAnimation =
+AnimationFunctionROMSpec* const PaddleAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&PaddleRetractedAnimation,
-		(AnimationFunction*)&PaddleEjectedAnimation,
-		(AnimationFunction*)&PaddleEjectAnimation,
-		(AnimationFunction*)&PaddleRetractAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&PaddleRetractedAnimation,
+    (AnimationFunction*)&PaddleEjectedAnimation,
+    (AnimationFunction*)&PaddleEjectAnimation,
+    (AnimationFunction*)&PaddleRetractAnimation,
+    NULL,
 };
 
 /* Left Sprite */
@@ -408,8 +405,8 @@ PaddleROMSpec PaddleLeftEntity =
 				// use z displacement in projection
 				false,
 			
-				/// meshes
-				(MeshSpec*)NULL,
+				// wireframes
+				(WireframeSpec**)NULL,
 
 				// collision shapes
 				(ShapeSpec*)PaddleLeftShapes,
@@ -426,7 +423,7 @@ PaddleROMSpec PaddleLeftEntity =
 			},
 
 			// pointer to the animation spec for the item
-			(AnimationDescription*)&PaddleAnimation,
+			(const AnimationFunction**)&PaddleAnimation,
 
 			// initial animation
 			"Ejected",

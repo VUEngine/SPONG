@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <KeypadManager.h>
 #include <MessageDispatcher.h>
 #include <GameEvents.h>
@@ -66,7 +66,7 @@ void Player::destructor()
 	Base::destructor();
 }
 
-bool Player::handleMessage(Telegram telegram __attribute__ ((unused)))
+bool Player::handleMessage(Telegram telegram)
 {
 	switch(Telegram::getMessage(telegram))
 	{
@@ -77,7 +77,7 @@ bool Player::handleMessage(Telegram telegram __attribute__ ((unused)))
 			//SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(this->pongBall)));
 			Player::printScore(this);
 
-			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kMessageAddBonusScore, NULL);
+			MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kMessageAddBonusScore, NULL);
 			break;
 	}
 
@@ -103,31 +103,31 @@ void Player::getReady(GameState gameState)
 
 	if(kPlayerAlone == this->playerNumber)
 	{
-		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
-		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
 		ASSERT(2 == VirtualList::getSize(this->playerPaddles), "Player::getReady: not all paddles found");
 	}
 	else if(kPlayerOne == this->playerNumber)
 	{
-		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find left paddle");
-		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
 	}
 	else if(kPlayerTwo == this->playerNumber)
 	{
-		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
+		VirtualList::pushBack(this->playerPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_RIGHT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->playerPaddles), "Player::getReady: didn't find right paddle");
-		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
+		VirtualList::pushBack(this->opponentPaddles, Paddle::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PADDLE_LEFT_NAME, true)));
 		ASSERT(1 == VirtualList::getSize(this->opponentPaddles), "Player::getReady: didn't find left paddle");
 	}
 
-	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
+	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PONG_BALL_NAME, true));
 
-	Object::addEventListener(gameState, Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
-	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
+	ListenerObject::addEventListener(gameState, ListenerObject::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	ListenerObject::addEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	ListenerObject::addEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	ListenerObject::addEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 
 	Player::printScore(this);
 	KeypadManager::registerInput(KeypadManager::getInstance(), __KEY_PRESSED | __KEY_RELEASED | __KEY_HOLD);
@@ -138,14 +138,14 @@ void Player::gameIsOver(GameState gameState)
 	VirtualList::clear(this->playerPaddles);
 	VirtualList::clear(this->opponentPaddles);
 
-	Object::removeEventListener(gameState, Object::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
-	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
-	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
+	ListenerObject::removeEventListener(gameState, ListenerObject::safeCast(this), (EventListener)Player::onUserInput, kEventUserInput);
+	ListenerObject::removeEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitFloor, kEventPongBallHitFloor);
+	ListenerObject::removeEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	ListenerObject::removeEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)Player::onPongBallHitPaddle, kEventPongBallHitPaddle);
 }
 
 // process user input
-void Player::onUserInput(Object eventFirer __attribute__ ((unused)))
+void Player::onUserInput(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	ASSERT(PongState::safeCast(eventFirer), "Player::onUserInput: wrong event firer");
 
@@ -333,13 +333,13 @@ void Player::ejectPaddles(VirtualList paddles)
 	}
 }
 
-void Player::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
+void Player::onPongBallHitFloor(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	if(this->scoreMultiplier >= SCORE_MULTIPLIER_TO_ENABLE_BONUS)
 	{
 		PongBall::startRolling(this->pongBall);
 		this->ballIsRolling = true;
-		MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, Object::safeCast(this), Object::safeCast(this), kMessageAddBonusScore, NULL);
+		MessageDispatcher::dispatchMessage(BONUS_INCREMENT_DELAY, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kMessageAddBonusScore, NULL);
 
 		//SoundManager::playFxSound(SoundManager::getInstance(), BALL_START_ROLLING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 	}
@@ -377,7 +377,7 @@ void Player::totalizeScore()
 	Player::printScore(this);
 }
 
-void Player::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
+void Player::onPongBallHitCeiling(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	switch(PongBall::getPaddleEnum(this->pongBall))
 	{
@@ -400,7 +400,7 @@ void Player::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
 	//SoundManager::playFxSound(SoundManager::getInstance(), BALL_HIT_CEILING_SND, *SpatialObject::getPosition(SpatialObject::safeCast(eventFirer)));
 }
 
-void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
+void Player::onPongBallHitPaddle(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	if(this->ballIsRolling)
 	{
@@ -424,7 +424,7 @@ void Player::onPongBallHitPaddle(Object eventFirer __attribute__ ((unused)))
 
 		Player::totalizeScore(this);
 
-		MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), Object::safeCast(this), kMessageAddBonusScore);
+		MessageDispatcher::discardDelayedMessagesFromSender(MessageDispatcher::getInstance(), ListenerObject::safeCast(this), kMessageAddBonusScore);
 	}
 	else
 	{

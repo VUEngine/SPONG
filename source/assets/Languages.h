@@ -5,6 +5,7 @@
 #ifndef LANGUAGES_H_
 #define LANGUAGES_H_
 
+
 //---------------------------------------------------------------------------------------------------------
 //                                               DEFINITIONS                                               
 //---------------------------------------------------------------------------------------------------------
@@ -19,8 +20,8 @@ enum LanguageIdentifiers
 
 enum LanguageStrings
 {
-	kStringAutomaticPauseBody,
-	kStringAutomaticPauseTitle,
+    kStringAutomaticPauseBody,
+    kStringAutomaticPauseTitle,
 };
 
 

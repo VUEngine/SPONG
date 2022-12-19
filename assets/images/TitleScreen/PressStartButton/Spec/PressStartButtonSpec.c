@@ -135,17 +135,14 @@ AnimationFunctionROMSpec PressStartButtonTransparentAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PressStartButtonAnimation =
+AnimationFunctionROMSpec* const PressStartButtonAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&PressStartButtonEnglishAnimation,
-		(AnimationFunction*)&PressStartButtonGermanAnimation,
-		(AnimationFunction*)&PressStartButtonSpanishAnimation,
-		(AnimationFunction*)&PressStartButtonFrenchAnimation,
-		(AnimationFunction*)&PressStartButtonTransparentAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&PressStartButtonEnglishAnimation,
+    (AnimationFunction*)&PressStartButtonGermanAnimation,
+    (AnimationFunction*)&PressStartButtonSpanishAnimation,
+    (AnimationFunction*)&PressStartButtonFrenchAnimation,
+    (AnimationFunction*)&PressStartButtonTransparentAnimation,
+    NULL,
 };
 
 CharSetROMSpec PressStartButtonCharset =
@@ -255,8 +252,8 @@ LocalizedEntityROMSpec PressStartButtonLe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -273,7 +270,7 @@ LocalizedEntityROMSpec PressStartButtonLe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&PressStartButtonAnimation,
+	(const AnimationFunction**)&PressStartButtonAnimation,
 
 	// initial animation
 	"Transparent",

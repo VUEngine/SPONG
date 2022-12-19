@@ -259,8 +259,8 @@ PongBallROMSpec PongBallPb =
 				// use z displacement in projection
 				false,
 			
-				/// meshes
-				(MeshSpec*)NULL,
+				// wireframes
+				(WireframeSpec**)NULL,
 
 				// collision shapes
 				(ShapeSpec*)PongBallShapes,
@@ -276,8 +276,8 @@ PongBallROMSpec PongBallPb =
 				(PhysicalSpecification*)&PongBallPhysicalProperties,
 			},
 
-			// pointer to the animation spec for the character
-			(AnimationDescription*)NULL,
+			// pointer to the animation spec for the item
+			(const AnimationFunction**)NULL,
 
 			// initial animation
 			NULL,

@@ -54,13 +54,10 @@ AnimationFunctionROMSpec PongBallParticleDefaultAnimation =
 };
 
 // an animation spec
-AnimationDescriptionROMSpec PongBallParticleAnimation =
+AnimationFunctionROMSpec* const PongBallParticleAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&PongBallParticleDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&PongBallParticleDefaultAnimation,
+    NULL,
 };
 
 CharSetROMSpec PongBallParticleCharset =
@@ -171,7 +168,7 @@ SolidParticleROMSpec PongBallParticle =
 			NULL,
 
 			// animation description (used only if sprite is animated)
-			(AnimationDescription*)&PongBallParticleAnimation,
+			(const AnimationFunction**)&PongBallParticleAnimation,
 
 			// name of animation to play
 			"Default"
@@ -230,8 +227,8 @@ ParticleSystemROMSpec PongBallParticlesParticleSystem =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -262,8 +259,11 @@ ParticleSystemROMSpec PongBallParticlesParticleSystem =
 	// maximum number of particles to spawn in each cycle
 	1,
 
-	// array of textures
+	// array of sprites
 	(const SpriteSpec**)PongBallParticleSprites,
+
+	// array of wireframes
+	(const WireframeSpec**)NULL,
 
 	// auto start
 	false,
@@ -272,18 +272,18 @@ ParticleSystemROMSpec PongBallParticlesParticleSystem =
 	(ParticleSpec*)&PongBallParticle,
 
 	// minimum relative spawn position (x, y, z)
-	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(-0.5f), __F_TO_FIX10_6(0)},
+	{__PIXELS_TO_METERS(0), __PIXELS_TO_METERS(-1), __PIXELS_TO_METERS(0)},
 
 	// maximum relative spawn position (x, y, z)
-	{__F_TO_FIX10_6(0), __F_TO_FIX10_6(0.5f), __F_TO_FIX10_6(0)},
+	{__PIXELS_TO_METERS(0), __PIXELS_TO_METERS(1), __PIXELS_TO_METERS(0)},
 
 	// minimum force to apply (x, y, z)
 	// (use int values in the spec to avoid overflow)
-	{__F_TO_FIX10_6(0.5f), __F_TO_FIX10_6(0.5f), 0},
+	{__F_TO_FIXED(0.5f), __F_TO_FIXED(0.5f), 0},
 
 	// maximum force to apply (x, y, z)
 	// (use int values in the spec to avoid overflow)
-	{__F_TO_FIX10_6(2), __F_TO_FIX10_6(2), 0},
+	{__F_TO_FIXED(2), __F_TO_FIXED(2), 0},
 
 	// movement type (__UNIFORM_MOVEMENT or __ACCELERATED_MOVEMENT)
 	__ACCELERATED_MOVEMENT,

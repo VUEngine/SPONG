@@ -60,8 +60,8 @@ CollisionROMSpec CollisionWallCl =
 	// use z displacement in projection
 	false,
 			
-	/// meshes
-	(MeshSpec*)NULL,
+	// wireframes
+	(WireframeSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -97,8 +97,8 @@ CollisionROMSpec CollisionFloorCl =
 	// use z displacement in projection
 	false,
 			
-	/// meshes
-	(MeshSpec*)NULL,
+	// wireframes
+	(WireframeSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,
@@ -134,8 +134,8 @@ CollisionROMSpec CollisionCeilingCl =
 	// use z displacement in projection
 	false,
 			
-	/// meshes
-	(MeshSpec*)NULL,
+	// wireframes
+	(WireframeSpec**)NULL,
 
 	// collision shapes
 	(ShapeSpec*)NULL,

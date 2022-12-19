@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Box.h>
 #include <Optics.h>
 #include <MessageDispatcher.h>
@@ -171,7 +171,7 @@ void Paddle::exitCollision(Shape shape  __attribute__ ((unused)), Shape shapeNot
 	{
 		if(isShapeImpenetrable)
 		{
-			Body::clearNormal(this->body, Object::safeCast(shapeNotCollidingAnymore));
+			Body::clearNormal(this->body, ListenerObject::safeCast(shapeNotCollidingAnymore));
 		}
 	}
 }

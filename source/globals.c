@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Debug.h>
 #include <StageEditor.h>
 #include <AnimationInspector.h>

@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stddef.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <I18n.h>
 #include <Error.h>
 #include <GameEvents.h>

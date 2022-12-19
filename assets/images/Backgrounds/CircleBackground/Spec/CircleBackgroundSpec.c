@@ -58,13 +58,10 @@ AnimationFunctionROMSpec CircleBackgroundDefaultAnimation =
 	"Default",
 };
 
-AnimationDescriptionROMSpec CircleBackgroundAnimation =
+AnimationFunctionROMSpec* const CircleBackgroundAnimation[] =
 {
-	// animation functions
-	{
-		(AnimationFunction*)&CircleBackgroundDefaultAnimation,
-		NULL,
-	}
+    (AnimationFunction*)&CircleBackgroundDefaultAnimation,
+    NULL,
 };
 
 
@@ -264,8 +261,8 @@ AnimatedEntityROMSpec CircleBackgroundAe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -282,7 +279,7 @@ AnimatedEntityROMSpec CircleBackgroundAe =
 	},
 
 	// pointer to the animation spec for the item
-	(AnimationDescription*)&CircleBackgroundAnimation,
+	(const AnimationFunction**)&CircleBackgroundAnimation,
 
 	// initial animation
 	"Default",

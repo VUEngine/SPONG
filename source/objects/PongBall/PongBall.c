@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <CollisionManager.h>
 #include <Optics.h>
 #include <CollisionManager.h>
@@ -72,7 +72,7 @@ void PongBall::ready(bool recursive)
 	// call base
 	Base::ready(this, recursive);
 
-	if(!GameState::isVersusMode(Game::getCurrentState(Game::getInstance())))
+	if(!GameState::isVersusMode(VUEngine::getCurrentState(VUEngine::getInstance())))
 	{
 		this->particles = ParticleSystem::safeCast(Container::getChildByName(Container::safeCast(this), "Partcls", true));
 		ParticleSystem::setLoop(this->particles, true);
@@ -111,7 +111,7 @@ void PongBall::update(uint32 elapsedTime)
 	*/
 }
 
-void PongBall::onPositionTransmitted(Object eventFirer __attribute__((unused)))
+void PongBall::onPositionTransmitted(ListenerObject eventFirer __attribute__((unused)))
 {
 	if(kPlayerTwo == Player::getPlayerNumber(Player::getInstance()))
 	{
@@ -130,7 +130,7 @@ void PongBall::startMovement()
 		paddleName = PADDLE_RIGHT_NAME;
 	}
 
-	Entity paddle = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)paddleName, true));
+	Entity paddle = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)paddleName, true));
 	NM_ASSERT(paddle, "PongBall::startMovement: paddle not found");
 
 	Vector3D localPosition = this->transformation.localPosition;
@@ -204,7 +204,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 
 				Body::setMaximumVelocity(this->body, this->pongBallSpec->maximumVelocity);
 
-				Object::fireEvent(this, kEventPongBallHitPaddle);
+				ListenerObject::fireEvent(this, kEventPongBallHitPaddle);
 			}
 
 			break;
@@ -212,7 +212,7 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 		case kTypeCeiling:
 			{
 //			PRINT_TEXT("Ceil  ", 20, 3);
-//				Object::fireEvent(this, kEventPongBallHitCeiling);
+//				ListenerObject::fireEvent(this, kEventPongBallHitCeiling);
 				break;
 			}
 
@@ -221,15 +221,15 @@ bool PongBall::enterCollision(const CollisionInformation* collisionInformation)
 //			PRINT_TEXT("Floor  ", 20, 3);
 				//const Vector3D* collidingObjectPosition =  SpatialObject::getPosition(collidingObject);
 
-				Object::fireEvent(this, kEventPongBallHitFloor);
+				ListenerObject::fireEvent(this, kEventPongBallHitFloor);
 /*
 				if(this->transformation.globalPosition.x < collidingObjectPosition->x - __PIXELS_TO_METERS(8))
 				{
-					Object::fireEvent(this, kEventPongBallHitFloor);
+					ListenerObject::fireEvent(this, kEventPongBallHitFloor);
 				}
 				else if(this->transformation.globalPosition.x > collidingObjectPosition->x + __PIXELS_TO_METERS(8))
 				{
-					Object::fireEvent(this, kEventPongBallHitFloor);
+					ListenerObject::fireEvent(this, kEventPongBallHitFloor);
 				}
 				*/
 			}

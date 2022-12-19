@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <Camera.h>
 #include <MessageDispatcher.h>
 #include <I18n.h>
@@ -71,7 +71,7 @@ void OptionsScreenState::enter(void* owner)
 	GameState::loadStage(GameState::safeCast(this), (StageSpec*)&OptionsScreenStage, NULL, true, false);
 
 	// get entity references
-	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "Cursor", true));
+	this->entityCursor = Entity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "Cursor", true));
 
 	// initial entity states
 	OptionsScreenState::updateCursorPosition(this);
@@ -117,7 +117,7 @@ void OptionsScreenState::switchLanguage(bool forward)
 void OptionsScreenState::updateAutomaticPauseCheckBox()
 {
 	bool AutomaticPauseEnabled = AutomaticPauseManager::isActive(AutomaticPauseManager::getInstance());
-	AnimatedEntity AutomaticPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "APChckBx", true));
+	AnimatedEntity AutomaticPauseCheckBoxEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "APChckBx", true));
 	if(AutomaticPauseCheckBoxEntity)
 	{
 		AnimatedEntity::playAnimation(AutomaticPauseCheckBoxEntity, Utilities::itoa(AutomaticPauseEnabled, 10, 1));
@@ -127,7 +127,7 @@ void OptionsScreenState::updateAutomaticPauseCheckBox()
 void OptionsScreenState::updateBrightnessMeter()
 {
 	int8 brightnessFactor = BrightnessManager::getBrightnessFactor(BrightnessManager::getInstance());
-	AnimatedEntity brightnessMeterEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "BrghtnMt", true));
+	AnimatedEntity brightnessMeterEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "BrghtnMt", true));
 	if(brightnessMeterEntity)
 	{
 		char* charBrightness = Utilities::itoa(brightnessFactor + 2, 10, 1);
@@ -169,10 +169,10 @@ void OptionsScreenState::processUserInputModeShowOptions(UserInput userInput)
 	if((K_A | K_B | K_STA | K_SEL) & userInput.pressedKey)
 	{
 		// disable user input
-		Game::disableKeypad(Game::getInstance());
+		VUEngine::disableKeypad(VUEngine::getInstance());
 
 		// transition layer animation
-		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), "TRNSLYR", true));
+		AnimatedEntity transitionLayerEntity = AnimatedEntity::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), "TRNSLYR", true));
 		if(transitionLayerEntity)
 		{
 			AnimatedEntity::playAnimation(transitionLayerEntity, "FadeOut");
@@ -224,5 +224,5 @@ void OptionsScreenState::switchState()
 {
 	Base::switchState(this);
 
-	Game::changeState(Game::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
+	VUEngine::changeState(VUEngine::getInstance(), GameState::safeCast(TitleScreenState::getInstance()));
 }

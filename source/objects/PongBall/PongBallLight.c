@@ -12,7 +12,7 @@
 //												INCLUDES
 //---------------------------------------------------------------------------------------------------------
 
-#include <Game.h>
+#include <VUEngine.h>
 #include <CollisionManager.h>
 #include <Optics.h>
 #include <CollisionManager.h>
@@ -49,8 +49,8 @@ void PongBallLight::constructor(PongBallLightSpec* PongBallLightSpec, int16 inte
 
 void PongBallLight::destructor()
 {
-	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::removeEventListener(this->pongBall, Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	ListenerObject::removeEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
+	ListenerObject::removeEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
 	this->pongBall = NULL;
 
 	// delete the super object
@@ -63,12 +63,12 @@ void PongBallLight::ready(bool recursive)
 	// call base
 	Base::ready(this, recursive);
 
-	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(Game::getStage(Game::getInstance())), (char*)PONG_BALL_NAME, true));
+	this->pongBall = PongBall::safeCast(Container::getChildByName(Container::safeCast(VUEngine::getStage(VUEngine::getInstance())), (char*)PONG_BALL_NAME, true));
 	NM_ASSERT(this->pongBall, "PongBallLight::ready: null pongBall");
 	this->pongBallInitialZDistance = this->transformation.globalPosition.z -  SpatialObject::getPosition(this->pongBall)->z;
 	this->followPongBall = true;
-	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
-	Object::addEventListener(this->pongBall, Object::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
+	ListenerObject::addEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)PongBallLight::onPongBallHitFloor, kEventPongBallHitFloor);
+	ListenerObject::addEventListener(this->pongBall, ListenerObject::safeCast(this), (EventListener)PongBallLight::onPongBallHitCeiling, kEventPongBallHitCeiling);
 }
 
 void PongBallLight::update(uint32 elapsedTime)
@@ -94,16 +94,16 @@ void PongBallLight::update(uint32 elapsedTime)
 	}
 }
 
-void PongBallLight::onPongBallHitFloor(Object eventFirer __attribute__ ((unused)))
+void PongBallLight::onPongBallHitFloor(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kMessageFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kMessageFollowPongBall, NULL);
 }
 
-void PongBallLight::onPongBallHitCeiling(Object eventFirer __attribute__ ((unused)))
+void PongBallLight::onPongBallHitCeiling(ListenerObject eventFirer __attribute__ ((unused)))
 {
 	this->followPongBall = false;
-	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, Object::safeCast(this), Object::safeCast(this), kMessageFollowPongBall, NULL);
+	MessageDispatcher::dispatchMessage(WAIT_AFTER_PONG_BALL_HIT_FLOOR_OR_CEILING, ListenerObject::safeCast(this), ListenerObject::safeCast(this), kMessageFollowPongBall, NULL);
 /*
 	PixelVector displacement = *Sprite::getDisplacement(VirtualList::front(this->sprites));
 	displacement.parallax = -5;

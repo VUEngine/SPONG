@@ -22,7 +22,7 @@
 //												DECLARATIONS
 //---------------------------------------------------------------------------------------------------------
 
-extern AnimationDescription LocalizedEntityAnimation;
+extern AnimationFunctionROMSpec* const LocalizedEntityAnimations[];
 extern uint32 HighscoresTiles[];
 extern uint16 HighscoresMap[];
 
@@ -138,8 +138,8 @@ LocalizedEntityROMSpec MainMenuHighscoresLe =
 		// use z displacement in projection
 		false,
 			
-		/// meshes
-		(MeshSpec*)NULL,
+		// wireframes
+		(WireframeSpec**)NULL,
 
 		// collision shapes
 		(ShapeSpec*)NULL,
@@ -155,8 +155,8 @@ LocalizedEntityROMSpec MainMenuHighscoresLe =
 		(PhysicalSpecification*)NULL,
 	},
 
-	// pointer to the animation spec for the character
-	(AnimationDescription*)&LocalizedEntityAnimation,
+	// pointer to the animation spec for the item
+	(const AnimationFunction**)&LocalizedEntityAnimations,
 
 	// initial animation
 	"0"
